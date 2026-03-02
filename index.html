@@ -332,7 +332,167 @@
       nav{justify-content:flex-start}
       .cta{justify-content:flex-start}
     }
-  </style>
+  
+    /* Convenios / Alianzas */
+    .partners-grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap:12px;
+      align-items:stretch;
+    }
+    .partner{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      box-shadow: var(--shadow2);
+      height:84px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      position:relative;
+    }
+    .partner img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      padding:14px;
+      display:block;
+      background:#fff;
+    }
+    .partner .fallback{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      padding:12px;
+      text-align:center;
+      color:var(--muted);
+      font-weight:900;
+      font-size:12px;
+      background:linear-gradient(180deg, rgba(246,249,252,.92), rgba(255,255,255,.92));
+    }
+
+    /* Cuerpo de docentes */
+    .faculty-grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    .faculty-card{
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:#fff;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height: 220px;
+    }
+    .faculty-head{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+    }
+    .avatar{
+      width:64px;
+      height:64px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      background: radial-gradient(320px 160px at 20% 20%, rgba(74,167,218,.22), transparent 55%),
+                  radial-gradient(320px 160px at 80% 0%, rgba(177,13,27,.14), transparent 55%),
+                  #fff;
+      display:grid;
+      place-items:center;
+      flex: 0 0 auto;
+      position:relative;
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .avatar .fallback{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:var(--navy);
+      opacity:.75;
+      font-size:11px;
+      text-align:center;
+      padding:8px;
+    }
+    .faculty-name{
+      font-weight:900;
+      color:var(--navy);
+      font-size:13px;
+      line-height:1.2;
+      margin:0;
+    }
+    .faculty-role{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12px;
+      line-height:1.45;
+    }
+    .faculty-badge{
+      margin-top:auto;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .mini-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(46,111,158,.18);
+      background: rgba(46,111,158,.06);
+      color: var(--navy);
+      font-weight:900;
+      font-size:11px;
+      white-space:nowrap;
+    }
+    .plus-card{
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background: linear-gradient(180deg, rgba(46,111,158,.08), rgba(246,249,252,.85));
+    }
+    .plus-bubble{
+      width:86px;
+      height:86px;
+      border-radius:999px;
+      border:1px solid rgba(177,13,27,.25);
+      background: rgba(177,13,27,.06);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color: var(--navy);
+      font-size:22px;
+      box-shadow: 0 14px 26px rgba(14,42,59,.10);
+    }
+
+    @media (max-width:1100px){
+      .partners-grid{ grid-template-columns: repeat(3, 1fr); }
+      .faculty-grid{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width:560px){
+      .partners-grid{ grid-template-columns: 1fr 1fr; }
+      .faculty-grid{ grid-template-columns: 1fr; }
+    }
+
+</style>
 </head>
 
 <body>
@@ -347,6 +507,8 @@
       </div>
 
       <nav aria-label="Menú">
+        <a class="navlink" href="#convenios">Convenios</a>
+        <a class="navlink" href="#docentes">Docentes</a>
         <a class="navlink" href="#oferta">Oferta</a>
         <a class="navlink" href="#areas">Áreas</a>
         <a class="navlink" href="#autoridades">Autoridades</a>
@@ -375,6 +537,7 @@
 
             <div class="hero-actions">
               <a class="btn red" href="#oferta">🎓 Ver oferta académica</a>
+              <a class="btn" href="mailto:direccionacademica.altumlumen@gmail.com">✉️ Dirección Académica</a>
               <a class="btn ghost" href="#verificacion">🛡️ Verificación de autenticidad</a>
             </div>
 
@@ -419,6 +582,173 @@
         </div>
       </div>
     </div>
+    <section id="convenios">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Convenios, Acreditaciones y Alianzas Estratégicas</h3>
+            <p>Espacio institucional para mostrar entidades aliadas (logos horizontales).</p>
+          </div>
+        </div>
+
+        <div class="partners-grid">
+          <div class="partner">
+            <img src="assets/convenio-1.png" alt="Convenio 1" onerror="this.remove();"/>
+            <div class="fallback">assets/convenio-1.png</div>
+          </div>
+          <div class="partner">
+            <img src="assets/convenio-2.png" alt="Convenio 2" onerror="this.remove();"/>
+            <div class="fallback">assets/convenio-2.png</div>
+          </div>
+          <div class="partner">
+            <img src="assets/convenio-3.png" alt="Convenio 3" onerror="this.remove();"/>
+            <div class="fallback">assets/convenio-3.png</div>
+          </div>
+          <div class="partner">
+            <img src="assets/convenio-4.png" alt="Convenio 4" onerror="this.remove();"/>
+            <div class="fallback">assets/convenio-4.png</div>
+          </div>
+          <div class="partner">
+            <img src="assets/convenio-5.png" alt="Convenio 5" onerror="this.remove();"/>
+            <div class="fallback">assets/convenio-5.png</div>
+          </div>
+          <div class="partner">
+            <img src="assets/convenio-6.png" alt="Convenio 6" onerror="this.remove();"/>
+            <div class="fallback">assets/convenio-6.png</div>
+          </div>
+        </div>
+
+        <div class="mini" style="margin-top:10px;">
+          Sube 6 logos en <b>assets</b> con estos nombres: <b>convenio-1.png</b> … <b>convenio-6.png</b>.
+        </div>
+      </div>
+    </section>
+
+    <section id="docentes">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Cuerpo de Docentes y Especialistas</h3>
+            <p>Equipo académico y especialistas invitados por programa.</p>
+          </div>
+        </div>
+
+        <div class="faculty-grid">
+          <article class="faculty-card">
+            <div class="faculty-head">
+              <div class="avatar">
+                <img src="assets/especialista-1.png" alt="Especialista 1" onerror="this.remove();"/>
+                <div class="fallback">especialista-1</div>
+              </div>
+              <div>
+                <p class="faculty-name">Especialista 1 — Nombre y Apellidos</p>
+                <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              </div>
+            </div>
+            <div class="faculty-badge">
+              <span class="mini-pill">⭐ Especialidad</span>
+              <span class="mini-pill">🏛️ Experiencia</span>
+            </div>
+          </article>
+          <article class="faculty-card">
+            <div class="faculty-head">
+              <div class="avatar">
+                <img src="assets/especialista-2.png" alt="Especialista 2" onerror="this.remove();"/>
+                <div class="fallback">especialista-2</div>
+              </div>
+              <div>
+                <p class="faculty-name">Especialista 2 — Nombre y Apellidos</p>
+                <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              </div>
+            </div>
+            <div class="faculty-badge">
+              <span class="mini-pill">⭐ Especialidad</span>
+              <span class="mini-pill">🏛️ Experiencia</span>
+            </div>
+          </article>
+          <article class="faculty-card">
+            <div class="faculty-head">
+              <div class="avatar">
+                <img src="assets/especialista-3.png" alt="Especialista 3" onerror="this.remove();"/>
+                <div class="fallback">especialista-3</div>
+              </div>
+              <div>
+                <p class="faculty-name">Especialista 3 — Nombre y Apellidos</p>
+                <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              </div>
+            </div>
+            <div class="faculty-badge">
+              <span class="mini-pill">⭐ Especialidad</span>
+              <span class="mini-pill">🏛️ Experiencia</span>
+            </div>
+          </article>
+          <article class="faculty-card">
+            <div class="faculty-head">
+              <div class="avatar">
+                <img src="assets/especialista-4.png" alt="Especialista 4" onerror="this.remove();"/>
+                <div class="fallback">especialista-4</div>
+              </div>
+              <div>
+                <p class="faculty-name">Especialista 4 — Nombre y Apellidos</p>
+                <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              </div>
+            </div>
+            <div class="faculty-badge">
+              <span class="mini-pill">⭐ Especialidad</span>
+              <span class="mini-pill">🏛️ Experiencia</span>
+            </div>
+          </article>
+          <article class="faculty-card">
+            <div class="faculty-head">
+              <div class="avatar">
+                <img src="assets/especialista-5.png" alt="Especialista 5" onerror="this.remove();"/>
+                <div class="fallback">especialista-5</div>
+              </div>
+              <div>
+                <p class="faculty-name">Especialista 5 — Nombre y Apellidos</p>
+                <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              </div>
+            </div>
+            <div class="faculty-badge">
+              <span class="mini-pill">⭐ Especialidad</span>
+              <span class="mini-pill">🏛️ Experiencia</span>
+            </div>
+          </article>
+          <article class="faculty-card">
+            <div class="faculty-head">
+              <div class="avatar">
+                <img src="assets/especialista-6.png" alt="Especialista 6" onerror="this.remove();"/>
+                <div class="fallback">especialista-6</div>
+              </div>
+              <div>
+                <p class="faculty-name">Especialista 6 — Nombre y Apellidos</p>
+                <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              </div>
+            </div>
+            <div class="faculty-badge">
+              <span class="mini-pill">⭐ Especialidad</span>
+              <span class="mini-pill">🏛️ Experiencia</span>
+            </div>
+          </article>
+          <article class="faculty-card plus-card">
+            <div class="plus-bubble">+10</div>
+            <div style="margin-top:10px; color:var(--muted); font-weight:800; font-size:12px;">
+              y más especialistas por edición
+            </div>
+          </article>
+        </div>
+
+        <div class="mini" style="margin-top:12px;">
+          Sube las fotos en <b>assets</b> con estos nombres: <b>especialista-1.png</b> … <b>especialista-6.png</b>.
+        </div>
+
+        <div class="callout" style="margin-top:12px;">
+          <b>¿Quieres formar parte del cuerpo de docentes?</b> Déjanos un correo a
+          <a href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN"><b>direccionacademica.altumlumen@gmail.com</b></a>.
+        </div>
+      </div>
+    </section>
+
 
     <section id="oferta">
       <div class="container">
