@@ -572,7 +572,7 @@
               <p style="margin:0;">Respuesta rápida</p>
             </div>
             <div class="callout">
-              Escríbenos y solicita información de fechas, temáticas y costos de nuestros programas.
+              Escríbenos y solicita información sobre fechas, programas académicos y costos.
             </div>
             <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
               <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20informaci%C3%B3n%20sobre%20programas%20y%20fechas%20disponibles." target="_blank" rel="noopener">💬 928 928 767</a>
@@ -612,43 +612,38 @@
     const offers = [
       {
         key: "conferencias",
-        icon: "🎤",
         title: "Conferencias Magistrales",
         pill: "4 horas académicas",
-        bullets: ["Alta convocatoria", "Actualización rápida", "Enfoque directivo"],
+        bullets: ["Se confiere certificación que acredita su participación en calidad de asistente, válido para concursos públicos y privados", "Acceso al material 24/7", "Acceso a las grabaciones 24/7"],
         msg: "Deseo información sobre conferencias disponibles."
       },
       {
         key: "taller_alta",
-        icon: "🧪",
         title: "Talleres de Alta Especialización",
         pill: "08 a 24 horas académicas",
-        bullets: ["Hands-on", "Casos reales", "Aplicación inmediata"],
+        bullets: ["Se confiere certificación que acredita su participación en calidad de asistente, válido para concursos públicos y privados", "Acceso al material 24/7", "Acceso a las grabaciones 24/7"],
         msg: "Deseo información sobre talleres de alta especialización disponibles."
       },
       {
         key: "cursos",
-        icon: "📘",
         title: "Cursos Especializados",
         pill: "48 a 60 horas académicas",
-        bullets: ["Ruta de aprendizaje", "Material y evaluaciones", "Certificación"],
-        msg: "Deseo información sobre cursos especializados disponibles (48–60 horas)."
+        bullets: ["Se confiere certificación que acredita haber aprobado el programa, válido para concursos públicos y privados", "Acceso al material 24/7", "Acceso a las grabaciones 24/7"],
+        msg: "Deseo información sobre cursos especializados disponibles."
       },
       {
         key: "diplomados",
-        icon: "🎓",
         title: "Diplomados Especializados",
         pill: "240 horas · 15 créditos",
-        bullets: ["Malla completa", "Docentes expertos", "Equivalencia académica"],
-        msg: "Deseo información sobre diplomados especializados disponibles (240 horas / 15 créditos)."
+        bullets: ["Se confiere Diploma de Especialista que acredita su expertiz al haber aprobado el programa, válido para concursos públicos y privados", "Reconociemiento mediante Resolución Directoral", "Acceso al material 24/7", "Acceso a las grabaciones 24/7"],
+        msg: "Deseo información sobre diplomados especializados disponibles."
       },
       {
         key: "pae",
-        icon: "🏛️",
         title: "Programas de Alta Especialización (PAE)",
         pill: "384 horas · 24 créditos",
-        bullets: ["Nivel ejecutivo", "Gestión avanzada", "Mayor acreditación"],
-        msg: "Deseo información sobre Programas de Alta Especialización (PAE) disponibles (384 horas / 24 créditos)."
+        bullets: ["Se confiere la Especialización Profesional que acredita su expertiz al haber aprobado el programa, válido para concursos públicos y privados", "Reconociemiento mediante Resolución Directoral", "Acceso al material 24/7", "Acceso a las grabaciones 24/7"],
+        msg: "Deseo información sobre Programas de Alta Especialización (PAE) disponibles."
       }
     ];
 
@@ -666,7 +661,7 @@
         </div>
         <div class="body">
           <h4>${o.title}</h4>
-          <div class="meta">Formato institucional de capacitación para directivos, especialistas y público interesado.</div>
+          <div class="meta">Dirigido a servidores, especialistas y funcionarios públicos de los tres niveles de gobierno, profesionales que desempeñen funciones afines a la materia, y público en general que deseen especializarse y fortalecer su perfil profesional .</div>
           <ul>
             ${o.bullets.map(b => `<li>${b}</li>`).join("")}
           </ul>
