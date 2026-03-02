@@ -4,48 +4,63 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ALTUM LUMEN | Centro de Formación y Capacitación Profesional</title>
-  <meta name="description" content="Diplomados, cursos y programas de especialización para potenciar tu carrera. Modalidad virtual y certificación." />
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="description" content="ALTUM LUMEN — Centro de Formación y Capacitación Profesional. Programas académicos virtuales, certificación y enfoque práctico." />
+  <meta name="theme-color" content="#0E2A3B" />
 
-  <!-- Open Graph (para que se vea bonito al compartir en WhatsApp/LinkedIn) -->
+  <!-- Tipografías (académico + moderno) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/favicon.png">
+
+  <!-- Open Graph (para WhatsApp/LinkedIn) -->
   <meta property="og:title" content="ALTUM LUMEN | Centro de Formación y Capacitación Profesional" />
-  <meta property="og:description" content="Diplomados, cursos y programas de especialización. Modalidad virtual y certificación." />
+  <meta property="og:description" content="Programas académicos virtuales, certificación y enfoque práctico." />
   <meta property="og:type" content="website" />
-  <!-- EDITA AQUÍ: cuando tengas tu dominio/enlace final, ponlo -->
-  <meta property="og:url" content="https://tusitio.com" />
-  <!-- EDITA AQUÍ: sube una imagen y coloca la URL -->
-  <meta property="og:image" content="https://tusitio.com/og-altum-lumen.jpg" />
+  <!-- EDITA AQUÍ: cuando tengas el link final de tu web -->
+  <meta property="og:url" content="https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/" />
+  <meta property="og:image" content="assets/og-altum-lumen.jpg" />
 
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#0f1a30;
-      --muted:#a7b0c3;
-      --text:#eaf0ff;
-      --line:rgba(255,255,255,.10);
-      --brand:#ffd166;   /* dorado suave */
-      --brand2:#4cc9f0;  /* celeste */
-      --ok:#22c55e;
-      --warn:#f59e0b;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --brand:#B10D1B;   /* rojo */
+      --navy:#0E2A3B;    /* azul marino */
+      --bar:#2E6F9E;     /* barras laterales */
+      --text:#0B2233;
+      --muted:#5c6b78;
+      --line:rgba(14,42,59,.14);
+      --bg:#ffffff;
+      --card:#ffffff;
+      --shadow: 0 18px 50px rgba(0,0,0,.10);
       --radius:18px;
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 700px at 20% 0%, rgba(76,201,240,.22), transparent 60%),
-                  radial-gradient(900px 600px at 90% 10%, rgba(255,209,102,.18), transparent 55%),
-                  var(--bg);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
-      line-height:1.5;
+      background:
+        linear-gradient(90deg,
+          rgba(46,111,158,.18) 0 88px,
+          transparent 88px calc(100% - 88px),
+          rgba(46,111,158,.18) calc(100% - 88px)
+        ),
+        radial-gradient(900px 600px at 20% 0%, rgba(177,13,27,.06), transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, rgba(14,42,59,.06), transparent 60%),
+        var(--bg);
+      line-height:1.55;
     }
     a{color:inherit; text-decoration:none}
-    .container{width:min(1100px, 92vw); margin:0 auto}
+    .container{width:min(1120px, 92vw); margin:0 auto}
+
+    /* Header */
     header{
       position:sticky; top:0; z-index:50;
+      background: rgba(255,255,255,.86);
       backdrop-filter: blur(10px);
-      background: rgba(11,18,32,.55);
       border-bottom:1px solid var(--line);
     }
     .nav{
@@ -54,57 +69,537 @@
       gap:14px;
     }
     .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800; letter-spacing:.3px;
+      display:flex; align-items:center; gap:12px;
+      font-family: Cinzel, serif;
+      font-weight:700;
+      letter-spacing:.8px;
     }
-    .logo{
-      width:36px;height:36px;border-radius:12px;
-      background: linear-gradient(135deg, rgba(255,209,102,.95), rgba(76,201,240,.85));
-      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    .logo-img{
+      width:46px; height:46px;
+      object-fit:contain;
+      border-radius:14px;
+      background: rgba(255,255,255,.92);
+      padding:6px;
+      border:1px solid rgba(14,42,59,.18);
+      box-shadow: 0 10px 25px rgba(0,0,0,.10);
     }
-    .navlinks{display:flex; gap:16px; flex-wrap:wrap; align-items:center}
+    .navlinks{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
     .navlinks a{
       color:var(--muted);
       padding:8px 10px;
       border-radius:12px;
+      font-weight:700;
+      font-size:14px;
     }
-    .navlinks a:hover{background:rgba(255,255,255,.06); color:var(--text)}
-    .cta{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-    }
+    .navlinks a:hover{background:rgba(14,42,59,.06); color:var(--text)}
+    .cta{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+
     .btn{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      background: rgba(14,42,59,.03);
       color:var(--text);
       padding:10px 14px;
       border-radius:14px;
-      font-weight:700;
+      font-weight:800;
       display:inline-flex;
       align-items:center;
       gap:10px;
       cursor:pointer;
       transition:.2s transform, .2s background;
+      font-size:14px;
     }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.10)}
+    .btn:hover{transform: translateY(-1px); background: rgba(14,42,59,.06)}
     .btn.primary{
       border:none;
-      background: linear-gradient(135deg, rgba(255,209,102,.95), rgba(76,201,240,.85));
-      color:#06101f;
-      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+      background: var(--brand);
+      color:#fff;
+      box-shadow: 0 12px 28px rgba(177,13,27,.22);
     }
-    .btn.primary:hover{background: linear-gradient(135deg, rgba(255,209,102,1), rgba(76,201,240,1))}
+    .btn.primary:hover{filter:brightness(1.03)}
+    .btn.ghost{
+      border:1px solid rgba(177,13,27,.25);
+      background: rgba(177,13,27,.04);
+      color: var(--brand);
+    }
+
+    /* Hero */
+    main{padding-bottom:34px}
     .hero{
-      padding:56px 0 22px;
+      padding:54px 0 18px;
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:22px;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
       align-items:stretch;
     }
     .hero-card{
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.92);
       border:1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+      padding:26px;
+      overflow:hidden;
+      position:relative;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(46,111,158,.08);
+      color: var(--navy);
+      font-weight:900;
+      font-size:13px;
+      width:fit-content;
+    }
+    h1{
+      margin:12px 0 10px;
+      font-family: Cinzel, serif;
+      font-size: clamp(28px, 3.0vw, 44px);
+      line-height:1.12;
+      letter-spacing:.6px;
+      color: var(--navy);
+    }
+    .subtitle{color:var(--muted); font-size:16px; max-width:65ch}
+    .hero-actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
+    .mini{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:10px;
+    }
+    .pill{
+      background: rgba(14,42,59,.03);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 12px;
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+    }
+    .pill b{color:var(--text)}
+
+    .side{
+      display:grid;
+      gap:12px;
+    }
+    .box{
+      background: rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+    .box h3{
+      margin:0 0 8px;
+      font-family: Cinzel, serif;
+      letter-spacing:.5px;
+      font-size:16px;
+      color:var(--navy);
+    }
+    .box p{margin:0; color:var(--muted)}
+    .crest-wrap{
+      display:flex; align-items:center; justify-content:center;
+      padding:6px 0 10px;
+    }
+    .crest{
+      width:min(360px, 92%);
+      height:auto;
+      filter: drop-shadow(0 18px 35px rgba(0,0,0,.08));
+    }
+
+    /* Sections */
+    section{padding:26px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    h2{
+      margin:0;
+      font-family: Cinzel, serif;
+      letter-spacing:.6px;
+      font-size:24px;
+      color:var(--navy);
+    }
+    .section-title p{margin:0; color:var(--muted)}
+
+    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+    .card{
+      background: rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+    .card h3{
+      margin:0 0 6px;
+      font-size:16px;
+      color:var(--navy);
+      font-weight:900;
+    }
+    .card p{margin:0; color:var(--muted)}
+
+    .tag{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(14,42,59,.03);
+      color:var(--muted);
+      font-weight:900;
+      font-size:12px;
+      margin:10px 8px 0 0;
+    }
+
+    .programs{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+    .program{display:flex; flex-direction:column; gap:10px; min-height:240px}
+    .program .meta{display:flex; gap:10px; flex-wrap:wrap}
+
+    .list{
+      margin:10px 0 0; padding:0; list-style:none;
+      display:grid; gap:10px;
+    }
+    .list li{
+      display:flex; gap:10px; align-items:flex-start;
+      color:var(--muted);
+      background: rgba(14,42,59,.03);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      font-weight:700;
+      font-size:14px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;background:var(--brand);
+      margin-top:6px; flex: 0 0 auto;
+    }
+
+    .callout{
+      border-left:4px solid var(--brand);
+      background: rgba(177,13,27,.04);
+      border-radius: 16px;
+      padding:14px;
+      border:1px solid rgba(177,13,27,.18);
+      color: var(--muted);
+      font-weight:700;
+    }
+
+    /* FAQ */
+    .faq{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
+    details{
+      background: rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:14px 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.05);
+    }
+    summary{cursor:pointer; font-weight:900; color:var(--navy)}
+    details p{margin:10px 0 0; color:var(--muted); font-weight:700}
+
+    /* Contact */
+    .contact{display:grid; grid-template-columns: 1fr 1fr; gap:14px; align-items:stretch}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(14,42,59,.02);
+      color:var(--text);
+      outline:none;
+      font-weight:700;
+    }
+    textarea{min-height:120px; resize:vertical}
+    form{display:grid; gap:10px}
+    small{color:var(--muted); font-weight:700}
+
+    footer{
+      padding:22px 0 40px;
+      color:var(--muted);
+      border-top:1px solid var(--line);
+      margin-top:24px;
+      font-weight:700;
+    }
+
+    /* WhatsApp floating */
+    .wafloat{
+      position:fixed; right:18px; bottom:18px; z-index:80;
+      display:flex; align-items:center; gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      background: #22c55e;
+      color:#071a10;
+      font-weight:900;
+      box-shadow: 0 18px 45px rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+    .wafloat:hover{filter:brightness(1.02)}
+    .waicon{
+      width:18px;height:18px;border-radius:6px;
+      background: rgba(0,0,0,.12);
+      display:inline-block;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{grid-template-columns: 1fr; padding-top:34px}
+      .mini{grid-template-columns: 1fr}
+      .grid{grid-template-columns: 1fr}
+      .programs{grid-template-columns: 1fr}
+      .faq{grid-template-columns: 1fr}
+      .contact{grid-template-columns: 1fr}
+      .navlinks{display:none}
+      body{
+        background:
+          linear-gradient(90deg, rgba(46,111,158,.14) 0 32px, transparent 32px calc(100% - 32px), rgba(46,111,158,.14) calc(100% - 32px)),
+          var(--bg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container">
+    <div class="nav">
+      <a class="brand" href="#inicio" aria-label="ALTUM LUMEN">
+        <img class="logo-img" src="assets/logo-altum-lumen.png" alt="ALTUM LUMEN" />
+        <span>ALTUM LUMEN</span>
+      </a>
+
+      <nav class="navlinks" aria-label="Menú">
+        <a href="#programas">Programas</a>
+        <a href="#metodologia">Metodología</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#inicios">Próximos inicios</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="cta">
+        <!-- EDITA AQUÍ -->
+        <a class="btn ghost" href="https://wa.me/51999999999?text=Hola%20ALTUM%20LUMEN%2C%20quisiera%20informaci%C3%B3n%20sobre%20sus%20programas." target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn primary" href="#programas">Ver programas</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="inicio" class="container">
+  <div class="hero">
+    <div class="hero-card">
+      <div class="badge">🎓 Dirección Académica · Formación y Capacitación Profesional</div>
+      <h1>Centro de Formación y Capacitación Profesional</h1>
+      <p class="subtitle">
+        En <b>ALTUM LUMEN</b> desarrollamos diplomados, cursos y programas especializados con enfoque práctico,
+        contenidos actuales y certificación, orientados a fortalecer tu desempeño profesional.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="#contacto">Solicitar información</a>
+        <a class="btn" href="#metodologia">Cómo enseñamos</a>
+      </div>
+
+      <div class="mini" aria-label="Indicadores">
+        <div class="pill"><b>Modalidad:</b> Virtual / en vivo</div>
+        <div class="pill"><b>Certificación:</b> Horas académicas</div>
+        <div class="pill"><b>Soporte:</b> Material + grabaciones</div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="box">
+        <div class="crest-wrap">
+          <img class="crest" src="assets/logo-altum-lumen.png" alt="Escudo ALTUM LUMEN">
+        </div>
+        <p class="callout">
+          Estilo institucional, académico y profesional: <b>rojo heráldico</b> y <b>azul marino</b>,
+          identidad coherente en todo el sitio.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3>Enfoque formativo</h3>
+        <p>Casos, formatos y herramientas aplicables al trabajo real, con criterio profesional.</p>
+      </div>
+
+      <div class="box">
+        <h3>Respaldo y orden</h3>
+        <p>Comunicación clara, procesos definidos y trazabilidad de materiales y certificación.</p>
+      </div>
+    </div>
+  </div>
+
+  <section id="programas">
+    <div class="section-title">
+      <h2>Programas</h2>
+      <p>Edítalos con tus nombres reales (yo te los ajusto si me los pegas aquí).</p>
+    </div>
+
+    <div class="programs">
+      <div class="card program">
+        <h3>Diplomados</h3>
+        <p><b>Programas de formación integral</b> con desarrollo por módulos, enfoque práctico y evaluación por criterio.</p>
+        <div class="meta">
+          <span class="tag">Virtual en vivo</span>
+          <span class="tag">Certificable</span>
+          <span class="tag">Material</span>
+        </div>
+        <ul class="list">
+          <li><span class="dot"></span><span>Contenido estructurado y aplicable (formatos, guías, herramientas).</span></li>
+          <li><span class="dot"></span><span>Evaluación orientada a desempeño (no solo memoria).</span></li>
+          <li><span class="dot"></span><span>Acompañamiento académico durante el programa.</span></li>
+        </ul>
+      </div>
+
+      <div class="card program">
+        <h3>Cursos Especializados</h3>
+        <p><b>Capacitaciones focalizadas</b> para reforzar competencias específicas y actualizar conocimientos.</p>
+        <div class="meta">
+          <span class="tag">Sesiones cortas</span>
+          <span class="tag">Aplicación inmediata</span>
+          <span class="tag">Certificable</span>
+        </div>
+        <ul class="list">
+          <li><span class="dot"></span><span>Metodología práctica con casos y ejercicios guiados.</span></li>
+          <li><span class="dot"></span><span>Material descargable y recursos de apoyo.</span></li>
+          <li><span class="dot"></span><span>Soporte para dudas y aplicación en tu entorno laboral.</span></li>
+        </ul>
+      </div>
+
+      <div class="card program">
+        <h3>Programas / Talleres</h3>
+        <p><b>Entrenamientos intensivos</b> para resultados rápidos (herramientas, plantillas, entregables).</p>
+        <div class="meta">
+          <span class="tag">Intensivo</span>
+          <span class="tag">Plantillas</span>
+          <span class="tag">Certificación</span>
+        </div>
+        <ul class="list">
+          <li><span class="dot"></span><span>Aprendes haciendo: entregables reales y checklist de calidad.</span></li>
+          <li><span class="dot"></span><span>Guías paso a paso y recomendaciones prácticas.</span></li>
+          <li><span class="dot"></span><span>Orientado a desempeño y resultados medibles.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+      <a class="btn primary" href="#contacto">Solicitar brochure</a>
+      <a class="btn" href="#faq">Ver preguntas frecuentes</a>
+    </div>
+  </section>
+
+  <section id="metodologia">
+    <div class="section-title">
+      <h2>Metodología ALTUM</h2>
+      <p>Aprendizaje aplicado con estructura académica.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>1) Diagnóstico</h3>
+        <p>Identificamos objetivo y nivel: desempeño laboral, ascenso, postulación o mejora de competencias.</p>
+      </div>
+      <div class="card">
+        <h3>2) Aplicación</h3>
+        <p>Casos reales, herramientas y formatos. Enfoque en criterio, orden y evidencia.</p>
+      </div>
+      <div class="card">
+        <h3>3) Evidencia</h3>
+        <p>Evaluación por criterios + certificación. Material y soporte para consolidar el aprendizaje.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="beneficios">
+    <div class="section-title">
+      <h2>Beneficios</h2>
+      <p>Lo que recibes al participar.</p>
+    </div>
+
+    <ul class="list">
+      <li><span class="dot"></span><span><b>Certificado digital</b> y opción de <b>certificado impreso</b> (mayor respaldo en procesos de postulación en algunas instituciones).</span></li>
+      <li><span class="dot"></span><span><b>Material y recursos</b>: guías, plantillas y documentos de apoyo según programa.</span></li>
+      <li><span class="dot"></span><span><b>Soporte</b>: resolución de dudas y acompañamiento para aplicación práctica.</span></li>
+    </ul>
+  </section>
+
+  <section id="inicios">
+    <div class="section-title">
+      <h2>Próximos inicios</h2>
+      <p>Ejemplo editable (puedes reemplazar por tus fechas reales).</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Diplomado — Próxima edición</h3>
+        <p>Inicio: <b>(coloca fecha)</b> · Horario: <b>(coloca horario)</b> · Modalidad: <b>Virtual</b></p>
+        <div class="meta">
+          <span class="tag">Inscripciones abiertas</span>
+          <span class="tag">Cupos limitados</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Curso Especializado</h3>
+        <p>Inicio: <b>(coloca fecha)</b> · Duración: <b>(coloca sesiones)</b> · Certificación incluida</p>
+        <div class="meta">
+          <span class="tag">Acceso a material</span>
+          <span class="tag">En vivo</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Taller / Programa</h3>
+        <p>Inicio: <b>(coloca fecha)</b> · Enfoque: <b>práctico</b> · Entregables guiados</p>
+        <div class="meta">
+          <span class="tag">Plantillas</span>
+          <span class="tag">Intensivo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonios">
+    <div class="section-title">
+      <h2>Testimonios</h2>
+      <p>Coloca aquí comentarios reales de participantes.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>“Muy ordenado y práctico”</h3>
+        <p>Me ayudó a estructurar mis entregables y entender con ejemplos. — <i>Participante</i></p>
+      </div>
+      <div class="card">
+        <h3>“Contenido actual”</h3>
+        <p>Se nota alineado a lo que se exige en el trabajo. — <i>Participante</i></p>
+      </div>
+      <div class="card">
+        <h3>“Acompañamiento real”</h3>
+        <p>Respuesta rápida y guía clara durante todo el proceso. — <i>Participante</i></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="section-title">
+      <h2>Preguntas frecuentes</h2>
+      <p>Respuestas claras para cerrar inscripciones.</p>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>¿La modalidad es virtual?</summary>
+        <p>Sí, modalidad virtual en vivo. (Si tienes híbrido/presencial, lo ajustas aquí).</p>
+      </details>
+      <details>
+        <summary>¿Entregan certificado?</summary>
+        <p>Sí. Certificado digital y opción de certificado impreso según condiciones del programa.</p>
+      </details>
+      <details>
+        <summary>¿Incluye material y grabaciones?</summary>
+        <p>Incluye material. Grabaciones según el programa (puedes detallarlo por curso).</p>
+      </details>
+      <details>
+        <summary>¿Cómo me inscribo?</summary>
+          box-shadow: var(--shadow);
       padding:28px;
       position:relative;
       overflow:hidden;
