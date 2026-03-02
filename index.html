@@ -371,6 +371,14 @@
       font-weight:900;
       font-size:12px;
       background:linear-gradient(180deg, rgba(246,249,252,.92), rgba(255,255,255,.92));
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .partner.missing img{ display:none; }
+    .partner.missing .fallback{
+      opacity:1;
+      pointer-events:auto;
     }
 
     /* Cuerpo de docentes */
@@ -428,8 +436,16 @@
       font-size:11px;
       text-align:center;
       padding:8px;
+      opacity:0;
+      pointer-events:none;
     }
-    .faculty-name{
+    
+    .avatar.missing img{ display:none; }
+    .avatar.missing .fallback{
+      opacity:1;
+      pointer-events:auto;
+    }
+.faculty-name{
       font-weight:900;
       color:var(--navy);
       font-size:13px;
@@ -592,28 +608,22 @@
         </div>
 
         <div class="partners-grid">
-          <div class="partner">
-            <img src="assets-convenio-1.png" alt="Convenio 1" onerror="this.remove();"/>
+          <div class="partner missing"><img src="assets-convenio-1.png" alt="Convenio 1" onerror="this.closest(\'.partner\').classList.add(\'missing\')"/ loading="lazy" onload="this.closest(\'.partner\')?.classList.remove(\'missing\')">
             <div class="fallback">assets-convenio-1.png</div>
           </div>
-          <div class="partner">
-            <img src="assets-convenio-2.png" alt="Convenio 2" onerror="this.remove();"/>
+          <div class="partner missing"><img src="assets-convenio-2.png" alt="Convenio 2" onerror="this.closest(\'.partner\').classList.add(\'missing\')"/ loading="lazy" onload="this.closest(\'.partner\')?.classList.remove(\'missing\')">
             <div class="fallback">assets-convenio-2.png</div>
           </div>
-          <div class="partner">
-            <img src="assets-convenio-3.png" alt="Convenio 3" onerror="this.remove();"/>
+          <div class="partner missing"><img src="assets-convenio-3.png" alt="Convenio 3" onerror="this.closest(\'.partner\').classList.add(\'missing\')"/ loading="lazy" onload="this.closest(\'.partner\')?.classList.remove(\'missing\')">
             <div class="fallback">assets-convenio-3.png</div>
           </div>
-          <div class="partner">
-            <img src="assets-convenio-4.png" alt="Convenio 4" onerror="this.remove();"/>
+          <div class="partner missing"><img src="assets-convenio-4.png" alt="Convenio 4" onerror="this.closest(\'.partner\').classList.add(\'missing\')"/ loading="lazy" onload="this.closest(\'.partner\')?.classList.remove(\'missing\')">
             <div class="fallback">assets-convenio-4.png</div>
           </div>
-          <div class="partner">
-            <img src="assets-convenio-5.png" alt="Convenio 5" onerror="this.remove();"/>
+          <div class="partner missing"><img src="assets-convenio-5.png" alt="Convenio 5" onerror="this.closest(\'.partner\').classList.add(\'missing\')"/ loading="lazy" onload="this.closest(\'.partner\')?.classList.remove(\'missing\')">
             <div class="fallback">assets-convenio-5.png</div>
           </div>
-          <div class="partner">
-            <img src="assets-convenio-6.png" alt="Convenio 6" onerror="this.remove();"/>
+          <div class="partner missing"><img src="assets-convenio-6.png" alt="Convenio 6" onerror="this.closest(\'.partner\').classList.add(\'missing\')"/ loading="lazy" onload="this.closest(\'.partner\')?.classList.remove(\'missing\')">
             <div class="fallback">assets-convenio-6.png</div>
           </div>
         </div>
@@ -636,8 +646,7 @@
         <div class="faculty-grid">
           <article class="faculty-card">
             <div class="faculty-head">
-              <div class="avatar">
-                <img src="assets-especialista-1.png" alt="Especialista 1" onerror="this.remove();"/>
+              <div class="avatar missing"><img src="assets-especialista-1.png" alt="Especialista 1" onerror="this.parentElement.classList.add(\'missing\')"/ loading="lazy" onload="this.parentElement.classList.remove(\'missing\')">
                 <div class="fallback">especialista-1</div>
               </div>
               <div>
@@ -652,8 +661,7 @@
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
-              <div class="avatar">
-                <img src="assets-especialista-2.png" alt="Especialista 2" onerror="this.remove();"/>
+              <div class="avatar missing"><img src="assets-especialista-2.png" alt="Especialista 2" onerror="this.parentElement.classList.add(\'missing\')"/ loading="lazy" onload="this.parentElement.classList.remove(\'missing\')">
                 <div class="fallback">especialista-2</div>
               </div>
               <div>
@@ -668,8 +676,7 @@
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
-              <div class="avatar">
-                <img src="assets-especialista-3.png" alt="Especialista 3" onerror="this.remove();"/>
+              <div class="avatar missing"><img src="assets-especialista-3.png" alt="Especialista 3" onerror="this.parentElement.classList.add(\'missing\')"/ loading="lazy" onload="this.parentElement.classList.remove(\'missing\')">
                 <div class="fallback">especialista-3</div>
               </div>
               <div>
@@ -684,8 +691,7 @@
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
-              <div class="avatar">
-                <img src="assets-especialista-4.png" alt="Especialista 4" onerror="this.remove();"/>
+              <div class="avatar missing"><img src="assets-especialista-4.png" alt="Especialista 4" onerror="this.parentElement.classList.add(\'missing\')"/ loading="lazy" onload="this.parentElement.classList.remove(\'missing\')">
                 <div class="fallback">especialista-4</div>
               </div>
               <div>
@@ -700,8 +706,7 @@
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
-              <div class="avatar">
-                <img src="assets-especialista-5.png" alt="Especialista 5" onerror="this.remove();"/>
+              <div class="avatar missing"><img src="assets-especialista-5.png" alt="Especialista 5" onerror="this.parentElement.classList.add(\'missing\')"/ loading="lazy" onload="this.parentElement.classList.remove(\'missing\')">
                 <div class="fallback">especialista-5</div>
               </div>
               <div>
@@ -716,8 +721,7 @@
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
-              <div class="avatar">
-                <img src="assets-especialista-6.png" alt="Especialista 6" onerror="this.remove();"/>
+              <div class="avatar missing"><img src="assets-especialista-6.png" alt="Especialista 6" onerror="this.parentElement.classList.add(\'missing\')"/ loading="lazy" onload="this.parentElement.classList.remove(\'missing\')">
                 <div class="fallback">especialista-6</div>
               </div>
               <div>
