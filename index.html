@@ -3,25 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ALTUM LUMEN | Centro de Formación y Capacitación Profesional</title>
-  <meta name="description" content="ALTUM LUMEN — Centro de Formación y Capacitación Profesional. Programas académicos virtuales, certificación y enfoque práctico." />
+  <title>ALTUM LUMEN | Plataforma Educativa</title>
+  <meta name="description" content="ALTUM LUMEN — Centro de Formación y Capacitación Profesional. Especialización que impulsa tu carrera y el desarrollo del país." />
   <meta name="theme-color" content="#0E2A3B" />
 
-  <!-- Tipografías (académico + moderno) -->
+  <!-- Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="icon" href="assets/favicon.png">
 
-  <!-- Open Graph (para WhatsApp/LinkedIn) -->
-  <meta property="og:title" content="ALTUM LUMEN | Centro de Formación y Capacitación Profesional" />
-  <meta property="og:description" content="Programas académicos virtuales, certificación y enfoque práctico." />
+  <!-- Open Graph (WhatsApp/LinkedIn) -->
+  <meta property="og:title" content="ALTUM LUMEN | Plataforma Educativa" />
+  <meta property="og:description" content="Especialización que impulsa tu carrera y el desarrollo del país." />
   <meta property="og:type" content="website" />
-  <!-- EDITA AQUÍ: cuando tengas el link final de tu web -->
   <meta property="og:url" content="https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/" />
-  <meta property="og:image" content="assets/og-altum-lumen.jpg" />
+  <meta property="og:image" content="assets/logo-altum-lumen.png" />
 
   <style>
     :root{
@@ -34,13 +33,18 @@
       --bg:#ffffff;
       --card:#ffffff;
       --shadow: 0 18px 50px rgba(0,0,0,.10);
+      --shadow2: 0 10px 26px rgba(0,0,0,.08);
       --radius:18px;
+
+      --ok:#16a34a;
+      --warn:#f59e0b;
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
       background:
         linear-gradient(90deg,
@@ -53,26 +57,27 @@
         var(--bg);
       line-height:1.55;
     }
+
     a{color:inherit; text-decoration:none}
-    .container{width:min(1120px, 92vw); margin:0 auto}
+    .container{width:min(1180px, 92vw); margin:0 auto}
 
     /* Header */
     header{
-      position:sticky; top:0; z-index:50;
-      background: rgba(255,255,255,.86);
+      position:sticky; top:0; z-index:60;
+      background: rgba(255,255,255,.88);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:14px;
+      padding:12px 0;
+      gap:12px;
     }
     .brand{
       display:flex; align-items:center; gap:12px;
-      font-family: Cinzel, serif;
-      font-weight:700;
-      letter-spacing:.8px;
+      font-weight:900;
+      letter-spacing:.6px;
+      color:var(--navy);
     }
     .logo-img{
       width:46px; height:46px;
@@ -83,16 +88,20 @@
       border:1px solid rgba(14,42,59,.18);
       box-shadow: 0 10px 25px rgba(0,0,0,.10);
     }
-    .navlinks{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+    .navlinks{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
     .navlinks a{
       color:var(--muted);
       padding:8px 10px;
       border-radius:12px;
-      font-weight:700;
-      font-size:14px;
+      font-weight:800;
+      font-size:13px;
     }
     .navlinks a:hover{background:rgba(14,42,59,.06); color:var(--text)}
-    .cta{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .cta{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
 
     .btn{
       border:1px solid var(--line);
@@ -100,13 +109,14 @@
       color:var(--text);
       padding:10px 14px;
       border-radius:14px;
-      font-weight:800;
+      font-weight:900;
       display:inline-flex;
       align-items:center;
       gap:10px;
       cursor:pointer;
-      transition:.2s transform, .2s background;
-      font-size:14px;
+      transition:.18s transform, .18s background, .18s filter;
+      font-size:13px;
+      user-select:none;
     }
     .btn:hover{transform: translateY(-1px); background: rgba(14,42,59,.06)}
     .btn.primary{
@@ -121,26 +131,16 @@
       background: rgba(177,13,27,.04);
       color: var(--brand);
     }
+    .btn.navy{
+      border:none;
+      background: var(--navy);
+      color:#fff;
+      box-shadow: 0 12px 28px rgba(14,42,59,.16);
+    }
+    .btn.small{padding:9px 12px; border-radius:12px; font-size:12px}
 
-    /* Hero */
-    main{padding-bottom:34px}
-    .hero{
-      padding:54px 0 18px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    .hero-card{
-      background: rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:26px;
-      overflow:hidden;
-      position:relative;
-    }
-    .badge{
+    /* Pills */
+    .pill{
       display:inline-flex; align-items:center; gap:10px;
       padding:8px 12px;
       border-radius:999px;
@@ -148,156 +148,399 @@
       background: rgba(46,111,158,.08);
       color: var(--navy);
       font-weight:900;
-      font-size:13px;
+      font-size:12px;
       width:fit-content;
     }
-    h1{
-      margin:12px 0 10px;
-      font-family: Cinzel, serif;
-      font-size: clamp(28px, 3.0vw, 44px);
-      line-height:1.12;
-      letter-spacing:.6px;
-      color: var(--navy);
+    .pill.dot::before{
+      content:"";
+      width:8px; height:8px; border-radius:999px;
+      background: var(--brand);
+      display:inline-block;
     }
-    .subtitle{color:var(--muted); font-size:16px; max-width:65ch}
-    .hero-actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
-    .mini{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:10px;
-    }
-    .pill{
-      background: rgba(14,42,59,.03);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px;
-      color:var(--muted);
-      font-weight:800;
-      font-size:13px;
-    }
-    .pill b{color:var(--text)}
 
-    .side{
+    /* Hero */
+    main{padding-bottom:34px}
+    .hero{
+      padding:44px 0 10px;
       display:grid;
-      gap:12px;
+      grid-template-columns: 1.15fr .85fr;
+      gap:16px;
+      align-items:stretch;
     }
-    .box{
-      background: rgba(255,255,255,.92);
+    .card{
+      background: rgba(255,255,255,.94);
       border:1px solid var(--line);
       border-radius: var(--radius);
-      padding:18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+      box-shadow: var(--shadow2);
     }
-    .box h3{
-      margin:0 0 8px;
-      font-family: Cinzel, serif;
-      letter-spacing:.5px;
+    .hero-left{padding:24px}
+    .hero-right{padding:18px}
+    h1{
+      margin:12px 0 10px;
+      font-size: clamp(26px, 3.0vw, 42px);
+      line-height:1.12;
+      letter-spacing:.2px;
+      color: var(--navy);
+      font-weight:900;
+    }
+    .subtitle{
+      color:var(--muted);
+      font-size:15px;
+      max-width:70ch;
+      font-weight:600;
+    }
+    .slogan{
+      margin-top:10px;
+      font-weight:900;
+      color:var(--brand);
+      letter-spacing:.2px;
+    }
+    .legal{
+      margin-top:8px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12px;
+      border-left:4px solid rgba(46,111,158,.35);
+      padding-left:10px;
+    }
+    .hero-actions{
+      margin-top:16px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
+    .stats{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+    .stat{
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background: rgba(14,42,59,.02);
+    }
+    .stat b{
+      display:block;
+      color:var(--navy);
+      font-weight:900;
       font-size:16px;
+    }
+    .stat span{
+      color:var(--muted);
+      font-weight:700;
+      font-size:12px;
+    }
+
+    /* Right panel: portal preview */
+    .portal-head{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:12px;
+    }
+    .portal-title{
+      font-weight:900; color:var(--navy);
+    }
+    .portal{
+      display:grid;
+      gap:10px;
+    }
+    .panel{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background: rgba(14,42,59,.02);
+      padding:12px;
+    }
+    .panel h3{
+      margin:0 0 6px;
+      font-size:13px;
+      font-weight:900;
       color:var(--navy);
     }
-    .box p{margin:0; color:var(--muted)}
-    .crest-wrap{
-      display:flex; align-items:center; justify-content:center;
-      padding:6px 0 10px;
+    .panel p{
+      margin:0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12px;
     }
-    .crest{
-      width:min(360px, 92%);
-      height:auto;
-      filter: drop-shadow(0 18px 35px rgba(0,0,0,.08));
+    .progress{
+      margin-top:10px;
+      display:grid;
+      gap:8px;
+    }
+    .progrow{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+    }
+    .bar{
+      height:10px; border-radius:999px;
+      background: rgba(14,42,59,.10);
+      overflow:hidden;
+      border:1px solid var(--line);
+    }
+    .bar > i{
+      display:block;
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--brand), var(--navy));
+      border-radius:999px;
     }
 
     /* Sections */
-    section{padding:26px 0}
+    section{padding:22px 0}
     .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
       margin-bottom:14px;
     }
     h2{
       margin:0;
-      font-family: Cinzel, serif;
-      letter-spacing:.6px;
-      font-size:24px;
-      color:var(--navy);
-    }
-    .section-title p{margin:0; color:var(--muted)}
-
-    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
-    .card{
-      background: rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.06);
-    }
-    .card h3{
-      margin:0 0 6px;
-      font-size:16px;
+      font-size:22px;
       color:var(--navy);
       font-weight:900;
     }
-    .card p{margin:0; color:var(--muted)}
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+    }
 
-    .tag{
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+
+    .feature{
+      padding:18px;
+    }
+    .feature .icon{
+      width:42px; height:42px; border-radius:14px;
+      display:grid; place-items:center;
+      border:1px solid var(--line);
+      background: rgba(46,111,158,.10);
+      color:var(--navy);
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .feature h3{
+      margin:0 0 6px;
+      font-size:14px;
+      color:var(--navy);
+      font-weight:900;
+    }
+    .feature p{
+      margin:0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12.5px;
+    }
+
+    /* Diplomas */
+    .diplomas{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .catalog{
+      padding:18px;
+    }
+    .catalog-top{
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+      margin-bottom:10px;
+    }
+    .search{
+      flex:1;
+      min-width: 220px;
+      display:flex; gap:8px;
+      align-items:center;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      background: rgba(14,42,59,.02);
+    }
+    .search input{
+      width:100%;
+      border:none;
+      outline:none;
+      background:transparent;
+      font-weight:800;
+      color:var(--text);
+      font-family:inherit;
+      font-size:13px;
+    }
+    .chips{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      color:var(--muted);
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip.active{
+      background: rgba(177,13,27,.08);
+      border-color: rgba(177,13,27,.22);
+      color: var(--brand);
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+    }
+    .dcard{
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .badge2{
       display:inline-flex;
-      padding:6px 10px;
+      gap:8px;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:11px;
+      color: var(--navy);
+      background: rgba(46,111,158,.10);
+      border:1px solid var(--line);
+      width:fit-content;
+    }
+    .dcard h3{
+      margin:10px 0 8px;
+      font-size:14px;
+      color:var(--navy);
+      font-weight:900;
+      line-height:1.2;
+    }
+    .dmeta{
+      display:grid;
+      gap:8px;
+      margin-top:10px;
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+    }
+    .dmeta span b{color:var(--text)}
+    .dactions{
+      margin-top:12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .ribbon{
+      position:absolute;
+      top:-30px; right:-30px;
+      width:120px; height:120px;
+      background: radial-gradient(circle at 30% 30%, rgba(177,13,27,.18), transparent 60%);
+      transform: rotate(12deg);
+      pointer-events:none;
+    }
+
+    /* Side enrollment */
+    .enroll{
+      padding:18px;
+      display:grid;
+      gap:10px;
+    }
+    .enroll .box{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      background: rgba(14,42,59,.02);
+    }
+    .enroll .box h3{margin:0 0 6px; font-size:13px; font-weight:900; color:var(--navy)}
+    .enroll .box p{margin:0; color:var(--muted); font-weight:700; font-size:12px}
+
+    /* Tabs */
+    .tabs{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .tab{
+      padding:9px 12px;
       border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(14,42,59,.03);
+      background: rgba(14,42,59,.02);
       color:var(--muted);
       font-weight:900;
       font-size:12px;
-      margin:10px 8px 0 0;
+      cursor:pointer;
+      user-select:none;
     }
+    .tab.active{
+      background: rgba(46,111,158,.12);
+      color:var(--navy);
+      border-color: rgba(46,111,158,.35);
+    }
+    .tabpanes{display:grid; gap:12px}
+    .pane{display:none}
+    .pane.active{display:block}
+    .pane .grid{grid-template-columns: repeat(3, 1fr)}
 
-    .programs{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
-    .program{display:flex; flex-direction:column; gap:10px; min-height:240px}
-    .program .meta{display:flex; gap:10px; flex-wrap:wrap}
-
-    .list{
-      margin:10px 0 0; padding:0; list-style:none;
-      display:grid; gap:10px;
+    /* Timeline */
+    .timeline{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
     }
-    .list li{
-      display:flex; gap:10px; align-items:flex-start;
-      color:var(--muted);
-      background: rgba(14,42,59,.03);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-      font-weight:700;
-      font-size:14px;
+    .step{
+      padding:16px;
     }
-    .dot{
-      width:10px;height:10px;border-radius:999px;background:var(--brand);
-      margin-top:6px; flex: 0 0 auto;
+    .step b{
+      display:inline-grid; place-items:center;
+      width:34px; height:34px;
+      border-radius:12px;
+      background: rgba(177,13,27,.10);
+      border:1px solid rgba(177,13,27,.22);
+      color:var(--brand);
+      font-weight:900;
+      margin-bottom:10px;
     }
-
-    .callout{
-      border-left:4px solid var(--brand);
-      background: rgba(177,13,27,.04);
-      border-radius: 16px;
-      padding:14px;
-      border:1px solid rgba(177,13,27,.18);
-      color: var(--muted);
-      font-weight:700;
-    }
+    .step h3{margin:0 0 6px; color:var(--navy); font-weight:900; font-size:13px}
+    .step p{margin:0; color:var(--muted); font-weight:700; font-size:12.5px}
 
     /* FAQ */
-    .faq{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
-    details{
-      background: rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:14px 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.05);
+    .faq{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
     }
-    summary{cursor:pointer; font-weight:900; color:var(--navy)}
-    details p{margin:10px 0 0; color:var(--muted); font-weight:700}
+    details{
+      padding:14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 10px 24px rgba(0,0,0,.05);
+    }
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      color:var(--navy);
+      font-size:13px;
+    }
+    details p{margin:10px 0 0; color:var(--muted); font-weight:700; font-size:12.5px}
 
     /* Contact */
-    .contact{display:grid; grid-template-columns: 1fr 1fr; gap:14px; align-items:stretch}
-    input, textarea{
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .contact .box{
+      padding:18px;
+    }
+    .contact p{margin:6px 0 0; color:var(--muted); font-weight:700; font-size:12.5px}
+    form{display:grid; gap:10px; margin-top:10px}
+    input, textarea, select{
       width:100%;
       padding:12px 12px;
       border-radius:14px;
@@ -305,18 +548,31 @@
       background: rgba(14,42,59,.02);
       color:var(--text);
       outline:none;
+      font-family:inherit;
       font-weight:700;
+      font-size:13px;
     }
     textarea{min-height:120px; resize:vertical}
-    form{display:grid; gap:10px}
-    small{color:var(--muted); font-weight:700}
+    small{color:var(--muted); font-weight:700; font-size:11.5px}
 
+    /* Footer */
     footer{
       padding:22px 0 40px;
       color:var(--muted);
       border-top:1px solid var(--line);
       margin-top:24px;
       font-weight:700;
+      font-size:12px;
+    }
+    .footergrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:12px;
+      align-items:start;
+    }
+    .links{
+      display:flex; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
     /* WhatsApp floating */
@@ -338,15 +594,80 @@
       display:inline-block;
     }
 
+    /* Modal */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:100;
+    }
+    .overlay.show{display:flex}
+    .modal{
+      width:min(920px, 96vw);
+      background: #fff;
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow: 0 22px 70px rgba(0,0,0,.35);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    .modal-left{
+      padding:22px;
+      background:
+        radial-gradient(700px 450px at 20% 0%, rgba(177,13,27,.10), transparent 60%),
+        radial-gradient(700px 450px at 90% 10%, rgba(14,42,59,.10), transparent 60%),
+        #fff;
+      border-right:1px solid var(--line);
+    }
+    .modal-right{
+      padding:22px;
+      background: rgba(14,42,59,.02);
+    }
+    .modal-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:10px;
+    }
+    .xbtn{
+      width:38px; height:38px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(14,42,59,.03);
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modal h3{
+      margin:0 0 10px;
+      color:var(--navy);
+      font-weight:900;
+      font-size:16px;
+    }
+    .hint{
+      color:var(--muted);
+      font-weight:700;
+      font-size:12.5px;
+      margin-top:-6px;
+    }
+
     /* Responsive */
-    @media (max-width: 980px){
-      .hero{grid-template-columns: 1fr; padding-top:34px}
-      .mini{grid-template-columns: 1fr}
+    @media (max-width: 1060px){
+      .stats{grid-template-columns: 1fr 1fr}
+      .diplomas{grid-template-columns: 1fr}
+      .cards{grid-template-columns: 1fr}
+      .timeline{grid-template-columns: 1fr 1fr}
       .grid{grid-template-columns: 1fr}
-      .programs{grid-template-columns: 1fr}
       .faq{grid-template-columns: 1fr}
       .contact{grid-template-columns: 1fr}
+    }
+    @media (max-width: 980px){
+      .hero{grid-template-columns: 1fr; padding-top:26px}
       .navlinks{display:none}
+      .modal{grid-template-columns: 1fr}
+      .modal-left{border-right:none; border-bottom:1px solid var(--line)}
       body{
         background:
           linear-gradient(90deg, rgba(46,111,158,.14) 0 32px, transparent 32px calc(100% - 32px), rgba(46,111,158,.14) calc(100% - 32px)),
@@ -366,18 +687,17 @@
       </a>
 
       <nav class="navlinks" aria-label="Menú">
-        <a href="#programas">Programas</a>
-        <a href="#metodologia">Metodología</a>
-        <a href="#beneficios">Beneficios</a>
-        <a href="#inicios">Próximos inicios</a>
+        <a href="#plataforma">Plataforma</a>
+        <a href="#diplomados">Diplomados</a>
+        <a href="#ruta">Ruta</a>
         <a href="#faq">FAQ</a>
         <a href="#contacto">Contacto</a>
       </nav>
 
       <div class="cta">
-        <!-- EDITA AQUÍ -->
-        <a class="btn ghost" href="https://wa.me/51999999999?text=Hola%20ALTUM%20LUMEN%2C%20quisiera%20informaci%C3%B3n%20sobre%20sus%20programas." target="_blank" rel="noopener">WhatsApp</a>
-        <a class="btn primary" href="#programas">Ver programas</a>
+        <a class="btn ghost" id="btnPortal" href="javascript:void(0)">Campus virtual</a>
+        <a class="btn" href="mailto:direccionacademica.altumlumen@gmail.com">Correo</a>
+        <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quisiera%20informaci%C3%B3n%20sobre%20sus%20diplomados." target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </div>
@@ -385,670 +705,48 @@
 
 <main id="inicio" class="container">
   <div class="hero">
-    <div class="hero-card">
-      <div class="badge">🎓 Dirección Académica · Formación y Capacitación Profesional</div>
-      <h1>Centro de Formación y Capacitación Profesional</h1>
+    <section class="card hero-left">
+      <span class="pill dot">Centro de Formación y Capacitación Profesional</span>
+      <h1>Plataforma Educativa ALTUM LUMEN</h1>
       <p class="subtitle">
-        En <b>ALTUM LUMEN</b> desarrollamos diplomados, cursos y programas especializados con enfoque práctico,
-        contenidos actuales y certificación, orientados a fortalecer tu desempeño profesional.
+        Formación con estructura académica, acompañamiento y enfoque práctico:
+        <b>clases en vivo</b>, <b>material</b>, <b>evaluaciones</b> y <b>certificación</b> en un entorno ordenado.
       </p>
+      <div class="slogan">“Especialización que impulsa tu carrera y el desarrollo del país”</div>
+      <div class="legal">
+        Creado y autorizado mediante <b>Resolución de Gerencia General N° 00012-2025-AL/GG</b>.
+      </div>
 
       <div class="hero-actions">
-        <a class="btn primary" href="#contacto">Solicitar información</a>
-        <a class="btn" href="#metodologia">Cómo enseñamos</a>
+        <a class="btn primary" href="#diplomados">Ver diplomados</a>
+        <a class="btn navy" id="btnPortal2" href="javascript:void(0)">Ingresar al campus</a>
+        <a class="btn" href="#contacto">Preinscripción</a>
       </div>
 
-      <div class="mini" aria-label="Indicadores">
-        <div class="pill"><b>Modalidad:</b> Virtual / en vivo</div>
-        <div class="pill"><b>Certificación:</b> Horas académicas</div>
-        <div class="pill"><b>Soporte:</b> Material + grabaciones</div>
-      </div>
-    </div>
-
-    <div class="side">
-      <div class="box">
-        <div class="crest-wrap">
-          <img class="crest" src="assets/logo-altum-lumen.png" alt="Escudo ALTUM LUMEN">
+      <div class="stats">
+        <div class="stat">
+          <b>Virtual en vivo</b>
+          <span>Sesiones + seguimiento</span>
         </div>
-        <p class="callout">
-          Estilo institucional, académico y profesional: <b>rojo heráldico</b> y <b>azul marino</b>,
-          identidad coherente en todo el sitio.
-        </p>
-      </div>
-
-      <div class="box">
-        <h3>Enfoque formativo</h3>
-        <p>Casos, formatos y herramientas aplicables al trabajo real, con criterio profesional.</p>
-      </div>
-
-      <div class="box">
-        <h3>Respaldo y orden</h3>
-        <p>Comunicación clara, procesos definidos y trazabilidad de materiales y certificación.</p>
-      </div>
-    </div>
-  </div>
-
-  <section id="programas">
-    <div class="section-title">
-      <h2>Programas</h2>
-      <p>Edítalos con tus nombres reales (yo te los ajusto si me los pegas aquí).</p>
-    </div>
-
-    <div class="programs">
-      <div class="card program">
-        <h3>Diplomados</h3>
-        <p><b>Programas de formación integral</b> con desarrollo por módulos, enfoque práctico y evaluación por criterio.</p>
-        <div class="meta">
-          <span class="tag">Virtual en vivo</span>
-          <span class="tag">Certificable</span>
-          <span class="tag">Material</span>
+        <div class="stat">
+          <b>Certificación</b>
+          <span>Horas académicas</span>
         </div>
-        <ul class="list">
-          <li><span class="dot"></span><span>Contenido estructurado y aplicable (formatos, guías, herramientas).</span></li>
-          <li><span class="dot"></span><span>Evaluación orientada a desempeño (no solo memoria).</span></li>
-          <li><span class="dot"></span><span>Acompañamiento académico durante el programa.</span></li>
-        </ul>
-      </div>
-
-      <div class="card program">
-        <h3>Cursos Especializados</h3>
-        <p><b>Capacitaciones focalizadas</b> para reforzar competencias específicas y actualizar conocimientos.</p>
-        <div class="meta">
-          <span class="tag">Sesiones cortas</span>
-          <span class="tag">Aplicación inmediata</span>
-          <span class="tag">Certificable</span>
+        <div class="stat">
+          <b>Material</b>
+          <span>Recursos descargables</span>
         </div>
-        <ul class="list">
-          <li><span class="dot"></span><span>Metodología práctica con casos y ejercicios guiados.</span></li>
-          <li><span class="dot"></span><span>Material descargable y recursos de apoyo.</span></li>
-          <li><span class="dot"></span><span>Soporte para dudas y aplicación en tu entorno laboral.</span></li>
-        </ul>
-      </div>
-
-      <div class="card program">
-        <h3>Programas / Talleres</h3>
-        <p><b>Entrenamientos intensivos</b> para resultados rápidos (herramientas, plantillas, entregables).</p>
-        <div class="meta">
-          <span class="tag">Intensivo</span>
-          <span class="tag">Plantillas</span>
-          <span class="tag">Certificación</span>
-        </div>
-        <ul class="list">
-          <li><span class="dot"></span><span>Aprendes haciendo: entregables reales y checklist de calidad.</span></li>
-          <li><span class="dot"></span><span>Guías paso a paso y recomendaciones prácticas.</span></li>
-          <li><span class="dot"></span><span>Orientado a desempeño y resultados medibles.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-      <a class="btn primary" href="#contacto">Solicitar brochure</a>
-      <a class="btn" href="#faq">Ver preguntas frecuentes</a>
-    </div>
-  </section>
-
-  <section id="metodologia">
-    <div class="section-title">
-      <h2>Metodología ALTUM</h2>
-      <p>Aprendizaje aplicado con estructura académica.</p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>1) Diagnóstico</h3>
-        <p>Identificamos objetivo y nivel: desempeño laboral, ascenso, postulación o mejora de competencias.</p>
-      </div>
-      <div class="card">
-        <h3>2) Aplicación</h3>
-        <p>Casos reales, herramientas y formatos. Enfoque en criterio, orden y evidencia.</p>
-      </div>
-      <div class="card">
-        <h3>3) Evidencia</h3>
-        <p>Evaluación por criterios + certificación. Material y soporte para consolidar el aprendizaje.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="beneficios">
-    <div class="section-title">
-      <h2>Beneficios</h2>
-      <p>Lo que recibes al participar.</p>
-    </div>
-
-    <ul class="list">
-      <li><span class="dot"></span><span><b>Certificado digital</b> y opción de <b>certificado impreso</b> (mayor respaldo en procesos de postulación en algunas instituciones).</span></li>
-      <li><span class="dot"></span><span><b>Material y recursos</b>: guías, plantillas y documentos de apoyo según programa.</span></li>
-      <li><span class="dot"></span><span><b>Soporte</b>: resolución de dudas y acompañamiento para aplicación práctica.</span></li>
-    </ul>
-  </section>
-
-  <section id="inicios">
-    <div class="section-title">
-      <h2>Próximos inicios</h2>
-      <p>Ejemplo editable (puedes reemplazar por tus fechas reales).</p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>Diplomado — Próxima edición</h3>
-        <p>Inicio: <b>(coloca fecha)</b> · Horario: <b>(coloca horario)</b> · Modalidad: <b>Virtual</b></p>
-        <div class="meta">
-          <span class="tag">Inscripciones abiertas</span>
-          <span class="tag">Cupos limitados</span>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Curso Especializado</h3>
-        <p>Inicio: <b>(coloca fecha)</b> · Duración: <b>(coloca sesiones)</b> · Certificación incluida</p>
-        <div class="meta">
-          <span class="tag">Acceso a material</span>
-          <span class="tag">En vivo</span>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Taller / Programa</h3>
-        <p>Inicio: <b>(coloca fecha)</b> · Enfoque: <b>práctico</b> · Entregables guiados</p>
-        <div class="meta">
-          <span class="tag">Plantillas</span>
-          <span class="tag">Intensivo</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="testimonios">
-    <div class="section-title">
-      <h2>Testimonios</h2>
-      <p>Coloca aquí comentarios reales de participantes.</p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>“Muy ordenado y práctico”</h3>
-        <p>Me ayudó a estructurar mis entregables y entender con ejemplos. — <i>Participante</i></p>
-      </div>
-      <div class="card">
-        <h3>“Contenido actual”</h3>
-        <p>Se nota alineado a lo que se exige en el trabajo. — <i>Participante</i></p>
-      </div>
-      <div class="card">
-        <h3>“Acompañamiento real”</h3>
-        <p>Respuesta rápida y guía clara durante todo el proceso. — <i>Participante</i></p>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq">
-    <div class="section-title">
-      <h2>Preguntas frecuentes</h2>
-      <p>Respuestas claras para cerrar inscripciones.</p>
-    </div>
-
-    <div class="faq">
-      <details>
-        <summary>¿La modalidad es virtual?</summary>
-        <p>Sí, modalidad virtual en vivo. (Si tienes híbrido/presencial, lo ajustas aquí).</p>
-      </details>
-      <details>
-        <summary>¿Entregan certificado?</summary>
-        <p>Sí. Certificado digital y opción de certificado impreso según condiciones del programa.</p>
-      </details>
-      <details>
-        <summary>¿Incluye material y grabaciones?</summary>
-        <p>Incluye material. Grabaciones según el programa (puedes detallarlo por curso).</p>
-      </details>
-      <details>
-        <summary>¿Cómo me inscribo?</summary>
-          box-shadow: var(--shadow);
-      padding:28px;
-      position:relative;
-      overflow:hidden;
-    }
-    .badge{
-      display:inline-flex; gap:10px; align-items:center;
-      padding:8px 12px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      color:var(--muted);
-      background: rgba(255,255,255,.04);
-      font-weight:700;
-      width:fit-content;
-      margin-bottom:12px;
-    }
-    h1{
-      margin:8px 0 10px;
-      font-size: clamp(28px, 3.2vw, 44px);
-      line-height:1.1;
-      letter-spacing:-.6px;
-    }
-    .subtitle{color:var(--muted); font-size: 16.5px; max-width:60ch}
-    .hero-actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
-    .mini{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:10px;
-    }
-    .pill{
-      background: rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px;
-      color:var(--muted);
-      font-weight:700;
-    }
-    .pill b{color:var(--text)}
-    .side{
-      display:grid;
-      gap:12px;
-    }
-    .side .box{
-      background: rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:18px;
-    }
-    .box h3{margin:0 0 8px; font-size:16px}
-    .box p{margin:0; color:var(--muted)}
-    .grid{
-      padding:22px 0 12px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    section{padding:28px 0}
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      margin-bottom:14px;
-    }
-    .section-title h2{margin:0; font-size:24px}
-    .section-title p{margin:0; color:var(--muted)}
-    .card{
-      background: rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.22);
-    }
-    .card h3{margin:0 0 6px}
-    .card p{margin:0; color:var(--muted)}
-    .tag{
-      display:inline-flex;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color:var(--muted);
-      font-weight:700;
-      font-size:13px;
-      margin:10px 8px 0 0;
-    }
-    .programs{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    .program{
-      display:flex; flex-direction:column; gap:10px;
-      min-height: 220px;
-    }
-    .program .meta{display:flex; gap:10px; flex-wrap:wrap}
-    .kpi{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800;
-      color:#06101f;
-      background: linear-gradient(135deg, rgba(255,209,102,.95), rgba(76,201,240,.85));
-      border-radius:14px;
-      padding:10px 12px;
-      width: fit-content;
-    }
-    .kpi small{font-weight:900; opacity:.8}
-    .list{
-      margin:10px 0 0; padding:0; list-style:none;
-      display:grid; gap:10px;
-    }
-    .list li{
-      display:flex; gap:10px; align-items:flex-start;
-      color:var(--muted);
-      background: rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:999px;background:var(--brand);
-      margin-top:6px; flex: 0 0 auto;
-    }
-    .faq{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
-    details{
-      background: rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:14px 14px;
-    }
-    summary{
-      cursor:pointer;
-      font-weight:800;
-    }
-    details p{margin:10px 0 0; color:var(--muted)}
-    .contact{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:stretch;
-    }
-    .contact form{
-      display:grid; gap:10px;
-    }
-    input, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color:var(--text);
-      outline:none;
-    }
-    textarea{min-height:120px; resize:vertical}
-    footer{
-      padding:26px 0 40px;
-      color:var(--muted);
-      border-top:1px solid var(--line);
-      margin-top:24px;
-    }
-
-    /* WhatsApp Floating */
-    .wafloat{
-      position:fixed; right:18px; bottom:18px; z-index:80;
-      display:flex; align-items:center; gap:10px;
-      padding:12px 14px;
-      border-radius:999px;
-      background: rgba(34,197,94,.92);
-      color:#071a10;
-      font-weight:900;
-      box-shadow: 0 18px 45px rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.18);
-    }
-    .wafloat:hover{filter:brightness(1.03)}
-    .waicon{
-      width:18px;height:18px;border-radius:6px;
-      background: rgba(0,0,0,.12);
-      display:inline-block;
-    }
-
-    /* Responsive */
-    @media (max-width: 920px){
-      .hero{grid-template-columns: 1fr; padding-top:36px}
-      .mini{grid-template-columns: 1fr; }
-      .grid{grid-template-columns: 1fr}
-      .programs{grid-template-columns: 1fr}
-      .faq{grid-template-columns: 1fr}
-      .contact{grid-template-columns: 1fr}
-      .navlinks{display:none}
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <div class="container">
-      <div class="nav">
-        <a class="brand" href="#inicio" aria-label="ALTUM LUMEN">
-          <span class="logo" aria-hidden="true"></span>
-          <span>ALTUM LUMEN</span>
-        </a>
-
-        <nav class="navlinks" aria-label="Menú">
-          <a href="#programas">Programas</a>
-          <a href="#metodologia">Metodología</a>
-          <a href="#beneficios">Beneficios</a>
-          <a href="#testimonios">Testimonios</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
-
-        <div class="cta">
-          <!-- EDITA AQUÍ: tu link de WhatsApp -->
-          <a class="btn" href="https://wa.me/51999999999?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20programas." target="_blank" rel="noopener">WhatsApp</a>
-          <a class="btn primary" href="#programas">Ver programas</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="inicio" class="container">
-    <div class="hero">
-      <div class="hero-card">
-        <div class="badge">🎓 Centro de Formación y Capacitación Profesional</div>
-        <h1>Potencia tu carrera con programas prácticos, actuales y certificables.</h1>
-        <p class="subtitle">
-          En <b>ALTUM LUMEN</b> desarrollamos diplomados, cursos y especializaciones orientadas a resultados,
-          con enfoque aplicable al trabajo real: gestión, proyectos, administración pública y más.
-        </p>
-
-        <div class="hero-actions">
-          <!-- EDITA AQUÍ: link de inscripción (Google Form / WhatsApp / landing de pago) -->
-          <a class="btn primary" href="#contacto">Quiero información</a>
-          <a class="btn" href="#metodologia">Cómo enseñamos</a>
-        </div>
-
-        <div class="mini" aria-label="Indicadores">
-          <div class="pill"><b>Modalidad:</b> Virtual / en vivo</div>
-          <div class="pill"><b>Certificación:</b> Horas académicas</div>
-          <div class="pill"><b>Soporte:</b> Material + grabaciones</div>
-        </div>
-      </div>
-
-      <div class="side">
-        <div class="box">
-          <div class="kpi"><small>✔</small> Enfoque práctico</div>
-          <p>Clases orientadas a casos, formatos y herramientas reales.</p>
-        </div>
-        <div class="box">
-          <div class="kpi"><small>⚡</small> Actualización</div>
-          <p>Contenido alineado a tendencias, normativa y mercado laboral.</p>
-        </div>
-        <div class="box">
-          <div class="kpi"><small>🤝</small> Comunidad</div>
-          <p>Red de contactos, seguimiento y acompañamiento al participante.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>📌 Programas listos para llevar</h3>
-        <p>Diplomados, cursos cortos y especializaciones por módulos.</p>
-      </div>
-      <div class="card">
-        <h3>🧠 Aprendizaje aplicable</h3>
-        <p>Plantillas, guías, ejercicios y evaluación por criterios.</p>
-      </div>
-      <div class="card">
-        <h3>🏅 Certificación</h3>
-        <p>Certificados digitales y opción de certificados impresos.</p>
-      </div>
-    </div>
-
-    <section id="programas">
-      <div class="section-title">
-        <h2>Programas destacados</h2>
-        <p>Edítalos según tu oferta real (yo luego te lo dejo con tus cursos exactos).</p>
-      </div>
-
-      <div class="programs">
-        <div class="card program">
-          <h3>Diplomado Especializado</h3>
-          <p><b>Gestión Pública y Proyectos</b> (enfoque práctico y herramientas).</p>
-          <div class="meta">
-            <span class="tag">Virtual en vivo</span>
-            <span class="tag">Certificación</span>
-            <span class="tag">Material</span>
-          </div>
-          <ul class="list">
-            <li><span class="dot"></span><span>Casos reales + formatos y plantillas.</span></li>
-            <li><span class="dot"></span><span>Evaluaciones por criterio (no memorizar).</span></li>
-            <li><span class="dot"></span><span>Acompañamiento para dudas y entregables.</span></li>
-          </ul>
-        </div>
-
-        <div class="card program">
-          <h3>Curso Especializado</h3>
-          <p><b>Liderazgo y Gestión</b> para equipos y proyectos.</p>
-          <div class="meta">
-            <span class="tag">Sesiones cortas</span>
-            <span class="tag">Aplicación inmediata</span>
-            <span class="tag">Certificable</span>
-          </div>
-          <ul class="list">
-            <li><span class="dot"></span><span>Comunicación, toma de decisiones y gestión del tiempo.</span></li>
-            <li><span class="dot"></span><span>Herramientas para planificación y seguimiento.</span></li>
-            <li><span class="dot"></span><span>Casos y simulaciones para mejorar criterio.</span></li>
-          </ul>
-        </div>
-
-        <div class="card program">
-          <h3>Programa / Taller</h3>
-          <p><b>Gestión de Obras y Construcción</b> (control, costos, cronogramas).</p>
-          <div class="meta">
-            <span class="tag">Herramientas</span>
-            <span class="tag">Formatos</span>
-            <span class="tag">Certificación</span>
-          </div>
-          <ul class="list">
-            <li><span class="dot"></span><span>Costos y presupuestos + control de avance.</span></li>
-            <li><span class="dot"></span><span>Riesgos, calidad y documentación clave.</span></li>
-            <li><span class="dot"></span><span>Enfoque orientado a resultados y evidencias.</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-        <!-- EDITA AQUÍ: link a tu brochure/WhatsApp group -->
-        <a class="btn primary" href="#contacto">Solicitar brochure</a>
-        <a class="btn" href="#faq">Ver preguntas frecuentes</a>
-      </div>
-    </section>
-
-    <section id="metodologia">
-      <div class="section-title">
-        <h2>Metodología ALTUM</h2>
-        <p>Aprendes haciendo: casos, plantillas y guía paso a paso.</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <h3>1) Diagnóstico</h3>
-          <p>Identificamos tu nivel y objetivo (trabajo, ascenso, emprendimiento, postulación).</p>
-        </div>
-        <div class="card">
-          <h3>2) Aplicación</h3>
-          <p>Casos reales + entregables: formatos, reportes, matrices y presentaciones.</p>
-        </div>
-        <div class="card">
-          <h3>3) Evidencia</h3>
-          <p>Evaluación por criterio + certificado. Material y grabaciones para repaso.</p>
+        <div class="stat">
+          <b>Soporte</b>
+          <span>Dirección Académica</span>
         </div>
       </div>
     </section>
 
-    <section id="beneficios">
-      <div class="section-title">
-        <h2>Beneficios</h2>
-        <p>Lo que te llevas al finalizar.</p>
-      </div>
-
-      <ul class="list">
-        <li><span class="dot"></span><span><b>Certificado digital</b> y opción de <b>certificado impreso</b> (mayor respaldo en algunas instituciones).</span></li>
-        <li><span class="dot"></span><span>Acceso a <b>material, plantillas y grabaciones</b> (según programa).</span></li>
-        <li><span class="dot"></span><span>Asesoría y respuesta a dudas para que <b>sí apliques</b> lo aprendido.</span></li>
-      </ul>
-    </section>
-
-    <section id="testimonios">
-      <div class="section-title">
-        <h2>Testimonios</h2>
-        <p>Coloca aquí comentarios reales (te los diseño bonito cuando me los pases).</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <h3>“Súper práctico”</h3>
-          <p>Me ayudó a ordenar mis entregables y entender con ejemplos. — <i>Participante</i></p>
+    <aside class="card hero-right">
+      <div class="portal-head">
+        <div>
+          <div class="portal-title">Vista previa del campus</div>
+          <div class="hint">Panel de estudiante (demo)</div>
         </div>
-        <div class="card">
-          <h3>“Contenido actual”</h3>
-          <p>Se nota que está alineado a lo que piden en el trabajo. — <i>Participante</i></p>
-        </div>
-        <div class="card">
-          <h3>“Buen acompañamiento”</h3>
-          <p>Responden rápido y te guían paso a paso. — <i>Participante</i></p>
-        </div>
-      </div>
-    </section>
-
-    <section id="faq">
-      <div class="section-title">
-        <h2>Preguntas frecuentes</h2>
-        <p>Respuestas claras para cerrar inscripciones más rápido.</p>
-      </div>
-
-      <div class="faq">
-        <details>
-          <summary>¿La modalidad es virtual?</summary>
-          <p>Sí. En vivo por videoconferencia. (Si ofreces híbrido/presencial, lo editamos aquí).</p>
-        </details>
-        <details>
-          <summary>¿Entregan certificado?</summary>
-          <p>Sí. Certificado digital y opción de certificado impreso según disponibilidad del programa.</p>
-        </details>
-        <details>
-          <summary>¿Incluye material y grabaciones?</summary>
-          <p>Incluye material. Grabaciones según el programa (se puede especificar por curso).</p>
-        </details>
-        <details>
-          <summary>¿Cómo me inscribo?</summary>
-          <p>Por WhatsApp o formulario. Te enviamos la ficha, medios de pago y confirmación.</p>
-        </details>
-      </div>
-    </section>
-
-    <section id="contacto">
-      <div class="section-title">
-        <h2>Contacto</h2>
-        <p>Déjanos tus datos y te respondemos.</p>
-      </div>
-
-      <div class="contact">
-        <div class="card">
-          <h3>Datos de contacto</h3>
-          <p style="color:var(--muted); margin-top:6px">
-            <!-- EDITA AQUÍ -->
-            <b>ALTUM LUMEN</b><br/>
-            Correo: <a href="mailto:info@altumlumen.pe">info@altumlumen.pe</a><br/>
-            WhatsApp: <a href="https://wa.me/51999999999" target="_blank" rel="noopener">+51 999 999 999</a><br/>
-            Horario: Lun–Sáb (9:00 a. m. – 7:00 p. m.)<br/>
-          </p>
-
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <!-- EDITA AQUÍ: link WhatsApp + link de inscripción -->
-            <a class="btn primary" href="https://wa.me/51999999999?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20informaci%C3%B3n%20para%20inscribirme." target="_blank" rel="noopener">Hablar por WhatsApp</a>
-            <a class="btn" href="#programas">Ver programas</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Formulario rápido</h3>
-          <p style="color:var(--muted); margin: 6px 0 12px">
-            Este formulario abre tu correo (funciona en cualquier hosting). Si prefieres, lo conectamos a Google Forms.
-          </p>
-
-          <!-- Form simple (abre el correo con mailto). Para algo más pro, luego lo conectamos a Google Forms o backend -->
-          <form id="leadForm">
-            <input required name="nombre" placeholder="Tu nombre y apellido" />
-            <input required name="telefono" placeholder="Tu WhatsApp" />
-            <input required type="email" name="correo" placeholder="Tu correo" />
-            <textarea name="mensaje" placeholder="¿Qué programa te interesa y para qué lo necesitas?"></textarea>
-            <button class="btn primary" type="submit">Enviar</button>
-            <small style="color:var(--muted)">
-              Al enviar, aceptas ser contactad
+        <button class="btn small" id="b
