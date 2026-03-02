@@ -749,4 +749,530 @@
           <div class="portal-title">Vista previa del campus</div>
           <div class="hint">Panel de estudiante (demo)</div>
         </div>
-        <button class="btn small" id="b
+        <button class="btn small" id="btnPortal3">Abrir</button>
+      </div>
+
+      <div class="portal">
+        <div class="panel">
+          <h3>Mis cursos</h3>
+          <p>Acceso a módulos, videos, lecturas y material.</p>
+          <div class="progress">
+            <div class="progrow"><span>Progreso general</span><span><b id="progTxt">0%</b></span></div>
+            <div class="bar"><i id="progBar"></i></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Evaluaciones</h3>
+          <p>Quizzes por módulo + rúbricas por criterio.</p>
+        </div>
+
+        <div class="panel">
+          <h3>Certificación</h3>
+          <p>Registro de participación y emisión según requisitos.</p>
+        </div>
+
+        <div class="panel">
+          <h3>Soporte</h3>
+          <p>Atención por WhatsApp y correo de Dirección Académica.</p>
+          <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
+            <a class="btn small primary" href="https://wa.me/51928928767?text=Hola%20Direcci%C3%B3n%20Acad%C3%A9mica%2C%20necesito%20apoyo%20con%20mi%20acceso%20al%20campus." target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn small" href="mailto:direccionacademica.altumlumen@gmail.com">Correo</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section id="plataforma">
+    <div class="section-title">
+      <h2>¿Qué incluye la plataforma?</h2>
+      <p>Diseñada para aprendizaje ordenado, medible y certificable.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card feature">
+        <div class="icon">🎥</div>
+        <h3>Clases en vivo + grabaciones</h3>
+        <p>Sesiones programadas, control de asistencia y acceso a repaso.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">📚</div>
+        <h3>Material académico</h3>
+        <p>Guías, plantillas, lecturas, normativa y recursos descargables.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">🧠</div>
+        <h3>Evaluaciones por criterio</h3>
+        <p>Instrumentos de evaluación orientados a desempeño, no memorismo.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">🏅</div>
+        <h3>Certificación</h3>
+        <p>Emisión de constancias y certificados con trazabilidad de participación.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">🗂️</div>
+        <h3>Ruta por módulos</h3>
+        <p>Progreso, checklist de actividades y evidencias por tema.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">🤝</div>
+        <h3>Soporte y comunidad</h3>
+        <p>Canal de consultas y acompañamiento de Dirección Académica.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+      <a class="btn primary" href="#diplomados">Explorar diplomados</a>
+      <a class="btn" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quisiera%20recibir%20el%20brochure%20y%20la%20malla%20curricular." target="_blank" rel="noopener">Solicitar brochure</a>
+    </div>
+  </section>
+
+  <section id="diplomados">
+    <div class="section-title">
+      <h2>Diplomados (Catálogo)</h2>
+      <p>Filtra, revisa ficha y solicita preinscripción.</p>
+    </div>
+
+    <div class="diplomas">
+      <div class="card catalog">
+        <div class="catalog-top">
+          <div class="search" role="search">
+            <span style="font-weight:900; color:var(--muted)">🔎</span>
+            <input id="searchInput" placeholder="Buscar diplomado (ej: seguridad, orden interno, contrataciones)..." />
+          </div>
+          <div class="chips" aria-label="Filtros">
+            <div class="chip active" data-filter="all">Todos</div>
+            <div class="chip" data-filter="seguridad">Seguridad</div>
+            <div class="chip" data-filter="contrataciones">Contrataciones</div>
+          </div>
+        </div>
+
+        <div class="cards" id="cards">
+          <!-- 1 -->
+          <article class="card dcard" data-tags="seguridad orden interno seguridad ciudadana">
+            <div class="ribbon"></div>
+            <span class="badge2">🎓 Diplomado</span>
+            <h3>Diplomado en Orden Interno y Seguridad Ciudadana</h3>
+            <div class="dmeta">
+              <span>Modalidad: <b>Virtual en vivo</b></span>
+              <span>Enfoque: <b>gestión, control territorial, indicadores</b></span>
+              <span>Incluye: <b>material + evaluaciones</b></span>
+            </div>
+            <div class="dactions">
+              <button class="btn small navy openFicha" data-name="Diplomado en Orden Interno y Seguridad Ciudadana">Ver ficha</button>
+              <a class="btn small primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20preinscribirme%20al%20Diplomado%20en%20Orden%20Interno%20y%20Seguridad%20Ciudadana." target="_blank" rel="noopener">Preinscripción</a>
+            </div>
+          </article>
+
+          <!-- 2 -->
+          <article class="card dcard" data-tags="seguridad direccion gestion seguridad ciudadana">
+            <div class="ribbon"></div>
+            <span class="badge2">🎓 Diplomado</span>
+            <h3>Diplomado en Dirección y Gestión de la Seguridad Ciudadana</h3>
+            <div class="dmeta">
+              <span>Modalidad: <b>Virtual en vivo</b></span>
+              <span>Enfoque: <b>planeamiento, gestión operativa, articulación</b></span>
+              <span>Incluye: <b>casos + herramientas</b></span>
+            </div>
+            <div class="dactions">
+              <button class="btn small navy openFicha" data-name="Diplomado en Dirección y Gestión de la Seguridad Ciudadana">Ver ficha</button>
+              <a class="btn small primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20preinscribirme%20al%20Diplomado%20en%20Direcci%C3%B3n%20y%20Gesti%C3%B3n%20de%20la%20Seguridad%20Ciudadana." target="_blank" rel="noopener">Preinscripción</a>
+            </div>
+          </article>
+
+          <!-- 3 -->
+          <article class="card dcard" data-tags="contrataciones publicas contrataciones públicas estado proveedores osce">
+            <div class="ribbon"></div>
+            <span class="badge2">🎓 Diplomado</span>
+            <h3>Diplomado en Contrataciones Públicas</h3>
+            <div class="dmeta">
+              <span>Modalidad: <b>Virtual en vivo</b></span>
+              <span>Enfoque: <b>proceso, buenas prácticas, documentación</b></span>
+              <span>Incluye: <b>plantillas + casos</b></span>
+            </div>
+            <div class="dactions">
+              <button class="btn small navy openFicha" data-name="Diplomado en Contrataciones Públicas">Ver ficha</button>
+              <a class="btn small primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20preinscribirme%20al%20Diplomado%20en%20Contrataciones%20P%C3%BAblicas." target="_blank" rel="noopener">Preinscripción</a>
+            </div>
+          </article>
+
+          <!-- extra card: destacable -->
+          <article class="card dcard" data-tags="plataforma aula virtual certificacion evaluaciones material" style="border-color: rgba(177,13,27,.22)">
+            <span class="badge2" style="background: rgba(177,13,27,.08); border-color: rgba(177,13,27,.22); color: var(--brand)">⭐ Beneficio</span>
+            <h3>Certificación y respaldo institucional</h3>
+            <div class="dmeta">
+              <span>Enfoque: <b>orden, evidencia y trazabilidad</b></span>
+              <span>Soporte: <b>Dirección Académica</b></span>
+              <span>Autorización: <b>R.G.G. N° 00012-2025-AL/GG</b></span>
+            </div>
+            <div class="dactions">
+              <a class="btn small primary" href="#contacto">Solicitar info</a>
+              <a class="btn small" href="mailto:direccionacademica.altumlumen@gmail.com">Correo</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <aside class="card enroll">
+        <div class="box">
+          <h3>Acceso rápido</h3>
+          <p>Dirección Académica: <b>direccionacademica.altumlumen@gmail.com</b></p>
+          <p style="margin-top:6px">WhatsApp: <b>+51 928 928 767</b></p>
+          <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
+            <a class="btn small primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quisiera%20informaci%C3%B3n%20de%20sus%20diplomados%20y%20malla%20curricular." target="_blank" rel="noopener">WhatsApp</a>
+            <button class="btn small navy" id="btnPortal4">Campus</button>
+          </div>
+        </div>
+
+        <div class="box">
+          <h3>Cómo funciona (Campus)</h3>
+          <p>• Módulos, material y evaluaciones.</p>
+          <p>• Progreso por unidades.</p>
+          <p>• Certificación según requisitos.</p>
+        </div>
+
+        <div class="box">
+          <h3>Componentes académicos</h3>
+          <div class="tabs" aria-label="Pestañas">
+            <div class="tab active" data-tab="aula">Aula</div>
+            <div class="tab" data-tab="material">Material</div>
+            <div class="tab" data-tab="eval">Evaluación</div>
+            <div class="tab" data-tab="cert">Certificación</div>
+          </div>
+          <div class="tabpanes">
+            <div class="pane active" id="pane-aula">
+              <p style="margin:0; color:var(--muted); font-weight:700; font-size:12.5px">
+                Sesiones en vivo, control de asistencia y repaso.
+              </p>
+            </div>
+            <div class="pane" id="pane-material">
+              <p style="margin:0; color:var(--muted); font-weight:700; font-size:12.5px">
+                Guías, plantillas, lecturas y recursos descargables.
+              </p>
+            </div>
+            <div class="pane" id="pane-eval">
+              <p style="margin:0; color:var(--muted); font-weight:700; font-size:12.5px">
+                Quizzes, rúbricas y evaluación por criterio.
+              </p>
+            </div>
+            <div class="pane" id="pane-cert">
+              <p style="margin:0; color:var(--muted); font-weight:700; font-size:12.5px">
+                Emisión con trazabilidad y validación de cumplimiento.
+              </p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="ruta">
+    <div class="section-title">
+      <h2>Ruta de aprendizaje</h2>
+      <p>Proceso claro: inscripción → campus → evidencia → certificación.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="card step">
+        <b>1</b>
+        <h3>Preinscripción</h3>
+        <p>Te orientamos, enviamos ficha y te guiamos en el proceso.</p>
+      </div>
+      <div class="card step">
+        <b>2</b>
+        <h3>Ingreso al campus</h3>
+        <p>Acceso a módulos, material, cronograma y canales de soporte.</p>
+      </div>
+      <div class="card step">
+        <b>3</b>
+        <h3>Progreso y evaluaciones</h3>
+        <p>Actividades por unidad, evidencia y control por criterio.</p>
+      </div>
+      <div class="card step">
+        <b>4</b>
+        <h3>Certificación</h3>
+        <p>Emisión según requisitos, registro y trazabilidad académica.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+      <a class="btn primary" href="#contacto">Quiero que me contacten</a>
+      <a class="btn" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20informaci%C3%B3n%20y%20la%20malla%20de%20los%203%20diplomados." target="_blank" rel="noopener">Solicitar malla</a>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="section-title">
+      <h2>Preguntas frecuentes</h2>
+      <p>Respuestas directas (para cerrar matrículas más rápido).</p>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>¿La modalidad es virtual?</summary>
+        <p>Sí, modalidad virtual en vivo. Se organiza por módulos y se acompaña el progreso.</p>
+      </details>
+      <details>
+        <summary>¿Cómo se realiza la evaluación?</summary>
+        <p>Evaluación por criterio: actividades por unidad, quizzes y evidencias (según programa).</p>
+      </details>
+      <details>
+        <summary>¿Entregan certificado?</summary>
+        <p>Sí. Se emite conforme al cumplimiento de requisitos académicos y registro de participación.</p>
+      </details>
+      <details>
+        <summary>¿Cómo me inscribo?</summary>
+        <p>Por WhatsApp o correo. Te enviamos ficha, indicaciones y el paso a paso de registro.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="section-title">
+      <h2>Preinscripción / Contacto</h2>
+      <p>Te respondemos por WhatsApp o correo de Dirección Académica.</p>
+    </div>
+
+    <div class="contact">
+      <div class="card box">
+        <span class="pill dot">Dirección Académica</span>
+        <h2 style="margin-top:10px">ALTUM LUMEN</h2>
+        <p><b>Eslogan:</b> Especialización que impulsa tu carrera y el desarrollo del país.</p>
+        <p style="margin-top:8px"><b>Autorización:</b> Resolución de Gerencia General N° 00012-2025-AL/GG</p>
+
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20informaci%C3%B3n%20y%20preinscripci%C3%B3n%20para%20un%20diplomado." target="_blank" rel="noopener">WhatsApp: 928 928 767</a>
+          <a class="btn" href="mailto:direccionacademica.altumlumen@gmail.com">direccionacademica.altumlumen@gmail.com</a>
+        </div>
+
+        <p style="margin-top:12px">
+          Si deseas, indícanos el diplomado de interés y tu objetivo (postulación, mejora laboral, ascenso, etc.).
+        </p>
+      </div>
+
+      <div class="card box">
+        <h3 style="margin:0; color:var(--navy); font-weight:900">Formulario rápido</h3>
+        <p>Esto abre tu correo (sin servidores). Te llega directo a Dirección Académica.</p>
+
+        <form id="leadForm">
+          <input required name="nombre" placeholder="Tu nombre y apellido" />
+          <input required name="telefono" placeholder="Tu WhatsApp" />
+          <input required type="email" name="correo" placeholder="Tu correo" />
+          <select name="programa" required>
+            <option value="">Selecciona un diplomado</option>
+            <option>Diplomado en Orden Interno y Seguridad Ciudadana</option>
+            <option>Diplomado en Dirección y Gestión de la Seguridad Ciudadana</option>
+            <option>Diplomado en Contrataciones Públicas</option>
+          </select>
+          <textarea name="mensaje" placeholder="Cuéntanos tu objetivo (postulación, ascenso, mejorar desempeño, etc.)"></textarea>
+          <button class="btn primary" type="submit">Enviar preinscripción</button>
+          <small>Al enviar, aceptas ser contactado por Dirección Académica de ALTUM LUMEN para brindarte información del programa.</small>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footergrid">
+      <div>
+        © <span id="year"></span> ALTUM LUMEN — Centro de Formación y Capacitación Profesional.<br/>
+        Creado y autorizado mediante Resolución de Gerencia General N° 00012-2025-AL/GG.
+      </div>
+      <div class="links">
+        <a href="#inicio">Inicio</a>
+        <a href="#plataforma">Plataforma</a>
+        <a href="#diplomados">Diplomados</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- WhatsApp floating -->
+<a class="wafloat" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quisiera%20informaci%C3%B3n%20sobre%20sus%20diplomados." target="_blank" rel="noopener" aria-label="WhatsApp ALTUM LUMEN">
+  <span class="waicon" aria-hidden="true"></span> WhatsApp
+</a>
+
+<!-- Modal Campus -->
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Campus Virtual ALTUM LUMEN">
+    <div class="modal-left">
+      <div class="modal-top">
+        <div class="brand" style="gap:10px">
+          <img class="logo-img" src="assets/logo-altum-lumen.png" alt="ALTUM LUMEN" />
+          <span>Campus Virtual</span>
+        </div>
+        <button class="xbtn" id="closeModal" aria-label="Cerrar">✕</button>
+      </div>
+
+      <h3>Panel de estudiante (demo)</h3>
+      <div class="hint">Esto es una maqueta visual para dar sensación de plataforma. Si luego quieres login real, se conecta a un sistema.</div>
+
+      <div style="margin-top:12px" class="grid">
+        <div class="card feature">
+          <div class="icon">📌</div>
+          <h3>Módulos</h3>
+          <p>Unidades, agenda, checklist y evidencias.</p>
+        </div>
+        <div class="card feature">
+          <div class="icon">📝</div>
+          <h3>Evaluaciones</h3>
+          <p>Quizzes + rúbricas por criterio (según programa).</p>
+        </div>
+        <div class="card feature">
+          <div class="icon">📂</div>
+          <h3>Recursos</h3>
+          <p>Material descargable, lecturas y plantillas.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+        <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20quiero%20informaci%C3%B3n%20y%20acceso%20al%20Campus%20Virtual." target="_blank" rel="noopener">Solicitar acceso</a>
+        <a class="btn" href="mailto:direccionacademica.altumlumen@gmail.com">Escribir a Dirección Académica</a>
+      </div>
+    </div>
+
+    <div class="modal-right">
+      <h3>Ingreso (maqueta)</h3>
+      <div class="hint">Campos simulados para una experiencia “tipo plataforma”.</div>
+
+      <form onsubmit="return false;" style="margin-top:12px">
+        <input placeholder="Correo institucional / personal" />
+        <input type="password" placeholder="Contraseña" />
+        <button class="btn navy" style="justify-content:center" type="button" id="fakeLogin">Ingresar</button>
+        <small>¿Aún no tienes acceso? Solicita preinscripción y te orientamos.</small>
+      </form>
+
+      <div class="panel" style="margin-top:12px">
+        <h3>Soporte</h3>
+        <p>WhatsApp: <b>+51 928 928 767</b><br/>Correo: <b>direccionacademica.altumlumen@gmail.com</b></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Año
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Progress demo
+  const progBar = document.getElementById('progBar');
+  const progTxt = document.getElementById('progTxt');
+  let p = 0;
+  const tick = () => {
+    p = (p + 7) % 101;
+    progBar.style.width = p + "%";
+    progTxt.textContent = p + "%";
+  };
+  setInterval(tick, 1400);
+  tick();
+
+  // Filtros (chips) + buscador
+  const chips = document.querySelectorAll('.chip');
+  const cardsWrap = document.getElementById('cards');
+  const allCards = Array.from(cardsWrap.querySelectorAll('.dcard'));
+  const searchInput = document.getElementById('searchInput');
+  let currentFilter = "all";
+
+  function normalize(s){ return (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+
+  function applyFilter(){
+    const q = normalize(searchInput.value.trim());
+    allCards.forEach(card => {
+      const tags = normalize(card.getAttribute('data-tags') || "");
+      const text = normalize(card.innerText || "");
+      const bySearch = !q || tags.includes(q) || text.includes(q);
+
+      let byChip = true;
+      if(currentFilter === "seguridad"){
+        byChip = tags.includes("seguridad") || tags.includes("orden interno");
+      }else if(currentFilter === "contrataciones"){
+        byChip = tags.includes("contrataciones");
+      }
+      card.style.display = (bySearch && byChip) ? "" : "none";
+    });
+  }
+
+  chips.forEach(ch => {
+    ch.addEventListener('click', () => {
+      chips.forEach(x => x.classList.remove('active'));
+      ch.classList.add('active');
+      currentFilter = ch.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  searchInput.addEventListener('input', applyFilter);
+  // Tabs (panel derecho)
+  const tabs = document.querySelectorAll('.tab');
+  const panes = {
+    aula: document.getElementById('pane-aula'),
+    material: document.getElementById('pane-material'),
+    eval: document.getElementById('pane-eval'),
+    cert: document.getElementById('pane-cert'),
+  };
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      Object.values(panes).forEach(p => p.classList.remove('active'));
+      panes[t.dataset.tab].classList.add('active');
+    });
+  });
+
+  // Modal Campus
+  const overlay = document.getElementById('overlay');
+  const openers = ["btnPortal","btnPortal2","btnPortal3","btnPortal4"].map(id => document.getElementById(id)).filter(Boolean);
+  const closeModal = document.getElementById('closeModal');
+
+  function openModal(){
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden','false');
+  }
+  function closeIt(){
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden','true');
+  }
+
+  openers.forEach(b => b.addEventListener('click', openModal));
+  closeModal.addEventListener('click', closeIt);
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeIt(); });
+  document.addEventListener('keydown', (e) => { if(e.key === "Escape") closeIt(); });
+
+  // Botones "Ver ficha" (maqueta)
+  document.querySelectorAll('.openFicha').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const name = btn.dataset.name || "Diplomado";
+      alert("Ficha (demo): " + name + "\\n\\nIncluye: modalidad virtual, material, evaluaciones y certificación.\\n\\nPara recibir la malla curricular y fechas, escríbenos por WhatsApp.");
+    });
+  });
+
+  // Form -> mailto
+  const form = document.getElementById('leadForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    const to = "direccionacademica.altumlumen@gmail.com";
+    const subject = encodeURIComponent("Preinscripción web - ALTUM LUMEN");
+    const body = encodeURIComponent(
+      `Nombre: ${data.get('nombre')}\n` +
+      `WhatsApp: ${data.get('telefono')}\n` +
+      `Correo: ${data.get('correo')}\n` +
+      `Diplomado: ${data.get('programa')}\n\n` +
+      `Mensaje:\n${data.get('mensaje') || '(Sin mensaje)'}\n`
+    );
+
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  });
+
+  // Fake login
+  document.getElementById('fakeLogin').addEventListener('click', () => {
+    alert("Ingreso demo. Para acceso real al Campus Virtual, solicita tu registro por WhatsApp.");
+  });
+</script>
+</body>
+</html>
