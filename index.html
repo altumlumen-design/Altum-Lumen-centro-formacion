@@ -494,6 +494,61 @@
       .faculty-grid{ grid-template-columns: 1fr; }
     }
 
+
+    /* Join faculty card */
+    .join-card{
+      background:
+        radial-gradient(700px 220px at 10% 15%, rgba(74,167,218,.28), transparent 60%),
+        radial-gradient(700px 220px at 90% 0%, rgba(177,13,27,.18), transparent 60%),
+        linear-gradient(180deg, rgba(46,111,158,.06), rgba(246,249,252,.92));
+      border:1px solid rgba(14,42,59,.12);
+    }
+    .join-card .join-title{
+      margin:0;
+      font-weight:900;
+      color:var(--navy);
+      font-size:14px;
+      line-height:1.25;
+    }
+    .join-card .join-text{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12px;
+      line-height:1.55;
+    }
+    .join-card .join-actions{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .join-card .mailpill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px dashed rgba(14,42,59,.22);
+      background: rgba(255,255,255,.75);
+      font-weight:900;
+      font-size:12px;
+      color:var(--navy);
+    }
+    .join-card .spark{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(14,42,59,.12);
+      background: rgba(255,255,255,.85);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:var(--navy);
+      box-shadow: 0 10px 18px rgba(14,42,59,.10);
+    }
+
 </style>
 </head>
 
@@ -647,107 +702,602 @@
               <div class="avatar">
                 <img src="assets-especialista-1.png" alt="Especialista 1" loading="lazy"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-                <div class="fallback">assets-especialista-1.png</div>
+                <div class="fallback">assets-especialista-1.png
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
               <div>
                 <p class="faculty-name">Jeanfranco M. Vargas Luque</p>
                 <p class="faculty-role">Abogado y Contador Público con estudios de maestria en Ing. Civil con mención en Gerencia de la Construcción, con experiencia en contrataciones públicas, gestión de obras, etre otros.</p>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
             <div class="faculty-badge">
               <span class="mini-pill">⭐ Especialidad: Gestión Pública</span>
               <span class="mini-pill">🏛️ Experiencia: +6 años</span>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
               <div class="avatar">
                 <img src="assets-especialista-2.png" alt="Especialista 2" loading="lazy"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-                <div class="fallback">assets-especialista-2.png</div>
+                <div class="fallback">assets-especialista-2.png
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
               <div>
                 <p class="faculty-name">Miguel F. Lostaunau Fuentes</p>
                 <p class="faculty-role">Teniente General PNP (R), Maestro en Administración y Ciencias Policiales con mención en Gestión Pública, ha sido Director General de Dirección General de Seguridad Ciudadana del Despacho Viceministerial de Seguridad Pública Ministerio del Interior</p>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
             <div class="faculty-badge">
               <span class="mini-pill">⭐ Especialidad: Seguridad Ciudadana y Defensa</span>
               <span class="mini-pill">🏛️ Experiencia: +30 años</span>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
               <div class="avatar">
                 <img src="assets-especialista-3.png" alt="Especialista 3" loading="lazy"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-                <div class="fallback">assets-especialista-3.png</div>
+                <div class="fallback">assets-especialista-3.png
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
               <div>
                 <p class="faculty-name">Especialista 3 — Nombre y Apellidos</p>
                 <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
             <div class="faculty-badge">
               <span class="mini-pill">⭐ Especialidad</span>
               <span class="mini-pill">🏛️ Experiencia</span>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
               <div class="avatar">
                 <img src="assets-especialista-4.png" alt="Especialista 4" loading="lazy"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-                <div class="fallback">assets-especialista-4.png</div>
+                <div class="fallback">assets-especialista-4.png
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
               <div>
                 <p class="faculty-name">Especialista 4 — Nombre y Apellidos</p>
                 <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
             <div class="faculty-badge">
               <span class="mini-pill">⭐ Especialidad</span>
               <span class="mini-pill">🏛️ Experiencia</span>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
               <div class="avatar">
                 <img src="assets-especialista-5.png" alt="Especialista 5" loading="lazy"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-                <div class="fallback">assets-especialista-5.png</div>
+                <div class="fallback">assets-especialista-5.png
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
               <div>
                 <p class="faculty-name">Especialista 5 — Nombre y Apellidos</p>
                 <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
             <div class="faculty-badge">
               <span class="mini-pill">⭐ Especialidad</span>
               <span class="mini-pill">🏛️ Experiencia</span>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
           </article>
           <article class="faculty-card">
             <div class="faculty-head">
               <div class="avatar">
                 <img src="assets-especialista-6.png" alt="Especialista 6" loading="lazy"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-                <div class="fallback">assets-especialista-6.png</div>
+                <div class="fallback">assets-especialista-6.png
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
               <div>
                 <p class="faculty-name">Especialista 6 — Nombre y Apellidos</p>
                 <p class="faculty-role">Perfil breve (1–2 líneas): experiencia relevante, especialidad y/o cargo.</p>
+              
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
               </div>
             </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
             <div class="faculty-badge">
               <span class="mini-pill">⭐ Especialidad</span>
               <span class="mini-pill">🏛️ Experiencia</span>
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
             </div>
           </article>
+        </div>
+          </article>
           <article class="faculty-card plus-card">
-            <div class="plus-bubble">+10</div>
+            <div class="plus-bubble">+10
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
             <div style="margin-top:10px; color:var(--muted); font-weight:800; font-size:12px;">
               y más especialistas por edición
+            
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
+            </div>
+          </article>
+        </div>
+          </article>
+        
+
+          <article class="faculty-card join-card">
+            <div class="faculty-head">
+              <div class="spark">✉️</div>
+              <div>
+                <p class="join-title">¿Quieres formar parte del cuerpo de docentes?</p>
+                <p class="join-text">Escríbenos y adjunta tu CV (PDF). Te contactaremos para próximas ediciones y alianzas académicas.</p>
+              </div>
+            </div>
+            <div class="join-actions">
+              <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20formar%20parte%20del%20cuerpo%20de%20docentes%20y%20adjunto%20mi%20CV.%20%C2%BFMe%20brindan%20informaci%C3%B3n%20para%20el%20proceso%3F" target="_blank" rel="noopener">Escríbenos y adjunta tu CV</a>
+              <a class="mailpill" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Postulaci%C3%B3n%20-%20Cuerpo%20de%20Docentes%20ALTUM%20LUMEN" style="text-decoration:none;">✉️ direccionacademica.altumlumen@gmail.com</a>
             </div>
           </article>
         </div>
