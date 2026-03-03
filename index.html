@@ -550,6 +550,46 @@
       box-shadow: 0 10px 18px rgba(14,42,59,.10);
     }
 
+
+    /* Redes sociales */
+    .socialbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .socialbar .label{
+      font-weight:900;
+      color:var(--muted);
+      font-size:12px;
+      margin-right:4px;
+      letter-spacing:.2px;
+    }
+    .socialbtn{
+      width:40px;
+      height:40px;
+      border-radius:999px;
+      border:1px solid rgba(14,42,59,.14);
+      background: rgba(255,255,255,.9);
+      display:grid;
+      place-items:center;
+      box-shadow: 0 10px 18px rgba(14,42,59,.10);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .socialbtn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px rgba(14,42,59,.14);
+    }
+    .socialbtn img{
+      width:22px;
+      height:22px;
+      display:block;
+    }
+    @media (max-width:700px){
+      .socialbar{ justify-content:flex-start; }
+    }
+
 </style>
 </head>
 
@@ -615,7 +655,7 @@
               <b>WhatsApp Asesor</b>
               <span>Escríbenos y recibe información de programas y fechas disponibles.</span>
               <div style="margin-top:10px;">
-                <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20contactar%20con%20un%20asesor%20acad%C3%A9mico." target="_blank" rel="noopener">Deseo hablar con un asesor</a>
+                <a class="btn primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20contactar%20con%20un%20asesor%20acad%C3%A9mico." target="_blank" rel="noopener">Hablar con asesor</a>
               </div>
             </div>
 
@@ -1009,6 +1049,26 @@
           <a class="navlink" href="#oferta">Oferta</a>
           <a class="navlink" href="#verificacion">Verificación</a>
         </div>
+
+        <div class="socialbar" aria-label="Redes sociales">
+          <span class="label">Síguenos:</span>
+          <a class="socialbtn" href="https://www.linkedin.com/company/altumlumen-educativo/" target="_blank" rel="noopener" title="LinkedIn">
+            <img src="assets/social-linkedin.png" alt="LinkedIn">
+          </a>
+          <a class="socialbtn" href="https://www.instagram.com/direccionacademica.altumlumen" target="_blank" rel="noopener" title="Instagram">
+            <img src="assets/social-instagram.png" alt="Instagram">
+          </a>
+          <a class="socialbtn" href="https://www.facebook.com/profile.php?id=61578270885540" target="_blank" rel="noopener" title="Facebook">
+            <img src="assets/social-facebook.png" alt="Facebook">
+          </a>
+          <a class="socialbtn" href="https://www.tiktok.com/@altumlumen" target="_blank" rel="noopener" title="TikTok">
+            <img src="assets/social-tiktok.png" alt="TikTok">
+          </a>
+          <a class="socialbtn" href="https://whatsapp.com/channel/0029Vb6Fybt9mrGYFqpisp2o" target="_blank" rel="noopener" title="Canal WhatsApp">
+            <img src="assets/social-whatsapp.png" alt="WhatsApp">
+          </a>
+        </div>
+
       </div>
     </footer>
   </main>
