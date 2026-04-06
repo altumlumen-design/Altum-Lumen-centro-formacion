@@ -391,7 +391,57 @@
     }
     .guide-box ol{margin:8px 0 0 18px;padding:0}
     .guide-box li{margin-bottom:8px}
-    code{background:#e8f0ff;padding:2px 6px;border-radius:6px}
+    .print-report{display:none}
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+    @media print {
+      body{background:#fff}
+      .overlay{padding:0}
+      .modal{box-shadow:none;border-radius:0;width:100%;padding:0}
+      .close-btn,.tabs,.divider,.search-grid,.guide-box,.contact-note,.status-line{display:none !important}
+      .tab-panel{display:block !important}
+      #guide{display:none !important}
+      .results-panel{
+        display:block !important;
+        max-height:none;
+        overflow:visible;
+        width:100%;
+        margin:0;
+        background:#fff;
+        padding:0;
+      }
+      .results-title{display:none}
+      .print-report{
+        display:block;
+        margin-bottom:12mm;
+        border:1px solid #d9e2f1;
+        padding:10mm 8mm 6mm;
+      }
+      .print-head{
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+        gap:16px;
+      }
+      .print-title h1{
+        margin:0 0 6px;
+        font-size:16pt;
+        color:#163f8f;
+      }
+      .print-title p{
+        margin:0 0 4px;
+        font-size:10.5pt;
+        color:#314f7b;
+      }
+      .print-qr img{
+        width:110px;
+        height:110px;
+        object-fit:contain;
+      }
+      .record{break-inside:avoid}
+    }
     @media (max-width:720px){
       .modal{padding:22px 14px 28px;border-radius:18px}
       .close-btn{top:12px;right:12px;width:42px;height:42px}
@@ -476,6 +526,20 @@
         <div id="statusLine" class="status-line"></div>
 
         <div id="resultsPanel" class="results-panel" aria-live="polite">
+          <div class="print-report" id="printReport">
+            <div class="print-head">
+              <div class="print-title">
+                <h1>Reporte del Registro Público de Certificados, Constancias y Participaciones</h1>
+                <p>Dirección Académica de Altum Lumen S.A.C.</p>
+                <p><strong>Fecha de impresión:</strong> <span id="printDate">-</span></p>
+                <p><strong>Consulta verificable:</strong> https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/verificacion.html</p>
+              </div>
+              <div class="print-qr">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOoAAADqAQAAAACE7+TjAAACUUlEQVR4nNWZUWojQQxEX1vz3wM5gI/Shj3AnilH2hv0HMUHCMifAQ21H2qHZSFh/6JtjG1GP4WoLqlqmvjiHJevqvCt5bO11tq5sz1urTUebeNo+9Faa/v3Qvu6THRJUw5d0jRHPqQpKfosjPwCR9uhTzh43M6ddn09d87Wvh/aV2fLn/PFzWl9/ojjx32nF4D2r+UjHrd43IJBn7WgfXKS58GIPoMBQz6i1+c5kd99/vUBqI1ckqQAGDCA6NPyqUojj67okz5NMyDyCcCozpYuuugzGHLkwxwYAVa854z8I8c0o8s0bV3SysgvOTRhtKvOdrN7e9+JPjfYaquiHDlA9ClfPAdMs7i2BEiCYY45wTCHrmDUZgvysdrepz1XL7qA4siDEYzFEB/mI28o1W8oS0y0JAUwKZlTn+fBMCkYyXnThBGM4nqetsJ8DdOkzeJ8beTZ8GS1HPMRXUq210Yuz0Evukyr4TlPi/dcmjwZQvLcgUFX8Z7nopWjJ6kCI0WmeM8D+Fh0PeVlpiTW7vlm4tyave0w4sEG54sDdt+t9sYVpJ6kDEo+6JOuKM8WSfTJ0z6noTCJ+htXjn4f9BVwRZ/meW1LI09tCZa/MOdD1Yv70OX9+0zafHi6XAYqI3/mLc+d3JdIZoJUGPllRbj3ZvdmnpHLAYNH8UT0klnueZ0pLOd+BINHK++gV5Zr95/BawMT21sz3+1tP/dfhZE/y/11A3POdjuv8/06MwqoAO2zs95ZSEoT6svfRfW95c8sV5mI8nQWtSdR+2/fzf0Gmi3pRE2+zK4AAAAASUVORK5CYII=" alt="QR de verificación" />
+              </div>
+            </div>
+          </div>
+
           <h3 class="results-title">Resultado</h3>
           <div id="resultsContainer"></div>
         </div>
@@ -500,7 +564,7 @@
             <li>Escriba el código de validación visual mostrado en pantalla.</li>
             <li>Presione <strong>Buscar</strong>.</li>
             <li>Si existen varios documentos para el mismo criterio, el sistema mostrará todos.</li>
-            <li>Use <strong>Imprimir</strong> si desea generar una copia de la consulta.</li>
+            <li>Use <strong>Imprimir</strong> para generar una salida en formato A4 con fecha de impresión y código QR de verificación.</li>
           </ol>
           <p><strong>Archivo que consulta esta página:</strong> <code>registros_publicos.json</code></p>
         </div>
@@ -524,6 +588,7 @@
     const resultsContainer = document.getElementById('resultsContainer');
     const statusLine = document.getElementById('statusLine');
     const contactNote = document.getElementById('contactNote');
+    const printDate = document.getElementById('printDate');
 
     tabs.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -582,12 +647,8 @@
 
     function validateCriteria(){
       const filled = [dniInput.value.trim(), nameInput.value.trim(), codeInput.value.trim()].filter(Boolean);
-      if(filled.length === 0){
-        return {ok:false, msg:'Ingrese un criterio de búsqueda.'};
-      }
-      if(filled.length > 1){
-        return {ok:false, msg:'Use solo un criterio: DNI o nombre completo o código de emisión.'};
-      }
+      if(filled.length === 0) return {ok:false, msg:'Ingrese un criterio de búsqueda.'};
+      if(filled.length > 1) return {ok:false, msg:'Use solo un criterio: DNI o nombre completo o código de emisión.'};
       return {ok:true};
     }
 
@@ -693,9 +754,22 @@
       makeCaptcha();
     }
 
+    function formatPrintDate(){
+      const now = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      return `${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    }
+
+    window.addEventListener('beforeprint', () => {
+      printDate.textContent = formatPrintDate();
+    });
+
     document.getElementById('searchBtn').addEventListener('click', search);
     document.getElementById('clearBtn').addEventListener('click', clearSearch);
-    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    document.getElementById('printBtn').addEventListener('click', () => {
+      printDate.textContent = formatPrintDate();
+      window.print();
+    });
     document.getElementById('refreshCaptcha').addEventListener('click', () => {
       makeCaptcha();
       captchaInput.value = '';
