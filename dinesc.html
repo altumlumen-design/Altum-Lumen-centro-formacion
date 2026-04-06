@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DINESC | Directorio Nacional de Expertos en Seguridad Ciudadana</title>
+  <meta name="description" content="DINESC - Directorio Nacional de Expertos en Seguridad Ciudadana. Plataforma de visibilidad, articulación y posicionamiento profesional." />
+  <style>
+    :root {
+      --bg-1: #06101c;
+      --bg-2: #0b1830;
+      --bg-3: #0f223f;
+      --panel: rgba(255,255,255,.075);
+      --panel-strong: rgba(255,255,255,.11);
+      --line: rgba(255,255,255,.12);
+      --text: #edf4ff;
+      --muted: #b8c8e4;
+      --gold: #d8b46a;
+      --gold-soft: #f0deae;
+      --blue: #4a82ff;
+      --blue-soft: #93b6ff;
+      --cyan: #77d2ff;
+      --danger: #cf4457;
+      --success: #4bc07b;
+      --shadow: 0 18px 50px rgba(0,0,0,.34);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --container: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(74,130,255,.22), transparent 25%),
+        radial-gradient(circle at 88% 10%, rgba(216,180,106,.15), transparent 20%),
+        radial-gradient(circle at 50% 100%, rgba(119,210,255,.09), transparent 35%),
+        linear-gradient(180deg, #050d18 0%, #091626 38%, #081323 100%);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(var(--container), calc(100% - 28px));
+      margin-inline: auto;
+    }
+
+    .noise::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 4px 4px;
+      opacity: .12;
+      mix-blend-mode: soft-light;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(5, 11, 20, .72);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 76px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.16);
+      background:
+        linear-gradient(145deg, rgba(216,180,106,.22), rgba(74,130,255,.24)),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: inset 0 0 28px rgba(255,255,255,.04), 0 10px 28px rgba(0,0,0,.22);
+      position: relative;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .mark::before,
+    .mark::after {
+      content: "";
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+    }
+
+    .mark::before {
+      width: 30px;
+      height: 30px;
+      border: 2px solid rgba(216,180,106,.9);
+      box-shadow: 0 0 0 8px rgba(216,180,106,.08);
+    }
+
+    .mark::after {
+      width: 9px;
+      height: 9px;
+      background: var(--gold);
+    }
+
+    .brand-copy { min-width: 0; }
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: .18em;
+      font-weight: 800;
+    }
+    .brand-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: .84rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: .95rem;
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: .25s ease;
+    }
+
+    .nav a:hover { background: rgba(255,255,255,.06); color: var(--text); }
+
+    .btn,
+    button {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, #c99639 100%);
+      color: #0b1220;
+      box-shadow: 0 10px 24px rgba(216,180,106,.26);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.11);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 74px 0 38px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-copy {
+      padding: 34px 34px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::before {
+      content: "";
+      position: absolute;
+      inset: auto -120px -120px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,130,255,.18), transparent 62%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.09);
+      color: var(--gold-soft);
+      font-weight: 700;
+      font-size: .9rem;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+      box-shadow: 0 0 0 5px rgba(216,180,106,.09);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.7rem);
+      line-height: .95;
+      margin: 0 0 14px;
+      letter-spacing: -.03em;
+    }
+
+    .hero h1 span {
+      display: block;
+      font-size: clamp(1rem, 2.2vw, 1.24rem);
+      line-height: 1.5;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      font-weight: 700;
+      margin-top: 16px;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.07rem;
+      max-width: 60ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .mini-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .metric {
+      border-radius: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.09);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.5rem;
+      letter-spacing: -.03em;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .9rem;
+      margin-top: 4px;
+    }
+
+    .hero-panel {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 1.16rem;
+    }
+
+    .status-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(75,192,123,.13);
+      color: #b8f0ca;
+      border: 1px solid rgba(75,192,123,.22);
+      font-size: .86rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .search-box {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .search-input {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(5,10,18,.55);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .magnifier {
+      width: 17px;
+      height: 17px;
+      border: 2px solid var(--blue-soft);
+      border-radius: 50%;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .magnifier::after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 2px;
+      background: var(--blue-soft);
+      border-radius: 999px;
+      right: -6px;
+      bottom: -2px;
+      transform: rotate(45deg);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: .84rem;
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .profile {
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(74,130,255,.34), rgba(216,180,106,.3));
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    .avatar::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.88);
+      top: 12px;
+      left: 20px;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      width: 54px;
+      height: 34px;
+      border-radius: 20px 20px 10px 10px;
+      background: rgba(255,255,255,.75);
+      left: 8px;
+      bottom: 6px;
+    }
+
+    .profile-info h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .profile-info p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.06);
+    }
+
+    .verified {
+      color: #cde9ff;
+      background: rgba(74,130,255,.16);
+      border-color: rgba(74,130,255,.2);
+    }
+
+    .featured {
+      color: #f7e2b8;
+      background: rgba(216,180,106,.16);
+      border-color: rgba(216,180,106,.22);
+    }
+
+    .score {
+      text-align: right;
+    }
+
+    .score strong {
+      display: block;
+      font-size: 1.5rem;
+    }
+
+    .score span {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    section { padding: 34px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .kicker {
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      font-size: .82rem;
+      letter-spacing: .22em;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.75rem, 4vw, 2.7rem);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: auto -70px -90px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,130,255,.18), transparent 62%);
+      pointer-events: none;
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--gold-soft);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+    }
+
+    .list-panel {
+      padding: 24px;
+    }
+
+    .line-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .line-item:last-child { border-bottom: none; }
+
+    .line-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(216,180,106,.14);
+      color: var(--gold-soft);
+      font-weight: 800;
+      border: 1px solid rgba(216,180,106,.18);
+      flex: 0 0 auto;
+    }
+
+    .line-item h3 {
+      margin: 0 0 5px;
+      font-size: 1.05rem;
+    }
+
+    .line-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .feature-panel {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto auto -70px -70px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216,180,106,.16), transparent 62%);
+    }
+
+    .mock-window {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(6,11,18,.55);
+      border: 1px solid rgba(255,255,255,.08);
+      position: relative;
+      z-index: 1;
+    }
+
+    .window-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.34);
+    }
+
+    .dot.red { background: #ff7262; }
+    .dot.yellow { background: #ffcc59; }
+    .dot.green { background: #5dd785; }
+
+    .result-card {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 12px;
+    }
+
+    .result-card:last-child { margin-bottom: 0; }
+
+    .result-card strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .result-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .inline-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .inline-tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: .78rem;
+      color: var(--gold-soft);
+    }
+
+    .banner {
+      padding: 34px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(216,180,106,.2), transparent 32%),
+        radial-gradient(circle at 90% 100%, rgba(74,130,255,.18), transparent 28%),
+        linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .banner-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .banner h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+
+    .banner p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .banner-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .footer {
+      padding: 28px 0 42px;
+      color: var(--muted);
+    }
+
+    .footer-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: .94rem;
+      flex-wrap: wrap;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 4px;
+    }
+
+    .pillar-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .pillar-title h3 {
+      margin: 0;
+      font-size: 1.08rem;
+    }
+
+    .mini-chip {
+      font-size: .74rem;
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: var(--gold-soft);
+      border: 1px solid rgba(216,180,106,.2);
+      background: rgba(216,180,106,.1);
+      white-space: nowrap;
+    }
+
+    .pillar p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .ribbon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--gold-soft);
+      font-size: .84rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .ribbon::before {
+      content: "★";
+      color: var(--gold);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .split,
+      .banner-grid,
+      .cards,
+      .pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .banner-actions { justify-content: flex-start; }
+      .nav { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      .hero { padding-top: 46px; }
+      .hero-copy,
+      .hero-panel,
+      .card,
+      .list-panel,
+      .feature-panel,
+      .banner { padding: 20px; }
+      .mini-metrics { grid-template-columns: 1fr; }
+      .profile { grid-template-columns: 58px 1fr; }
+      .score { grid-column: 1 / -1; text-align: left; }
+      .section-head { align-items: start; flex-direction: column; }
+      .topbar-inner { min-height: 70px; }
+      .brand-copy span { white-space: normal; }
+    }
+  </style>
+</head>
+<body class="noise">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="brand-copy">
+          <strong>DINESC</strong>
+          <span>Directorio Nacional de Expertos en Seguridad Ciudadana</span>
+        </div>
+      </div>
+      <nav class="nav" aria-label="principal">
+        <a href="#vision">Visión</a>
+        <a href="#lineas">Líneas</a>
+        <a href="#valor">Valor</a>
+        <a href="#perfiles">Perfiles</a>
+        <a href="#registro" class="btn btn-secondary">Solicitar incorporación</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy glass">
+          <div class="eyebrow">Plataforma nacional de visibilidad y posicionamiento</div>
+          <h1>
+            DINESC
+            <span>Directorio Nacional de Expertos en Seguridad Ciudadana</span>
+          </h1>
+          <p class="lead">
+            Un espacio concebido para destacar trayectoria, especialización y liderazgo. DINESC proyecta a sus integrantes como parte de una comunidad nacional de referencia en seguridad ciudadana, con presencia, reputación y visibilidad institucional.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#registro">Quiero formar parte</a>
+            <a class="btn btn-secondary" href="#perfiles">Explorar perfiles</a>
+          </div>
+          <div class="mini-metrics">
+            <div class="metric">
+              <strong>03</strong>
+              <span>Líneas de desempeño visibles</span>
+            </div>
+            <div class="metric">
+              <strong>01</strong>
+              <span>Perfil principal por integrante</span>
+            </div>
+            <div class="metric">
+              <strong>100%</strong>
+              <span>Enfoque en prestigio y proyección</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-panel glass" aria-label="vista de directorio">
+          <div>
+            <div class="panel-title">
+              <h2>Búsqueda destacada</h2>
+              <div class="status-chip">Perfiles visibles</div>
+            </div>
+            <div class="search-box">
+              <div class="search-input">
+                <div class="magnifier" aria-hidden="true"></div>
+                Buscar por especialidad, región o trayectoria
+              </div>
+              <div class="chips">
+                <div class="chip">Seguridad ciudadana</div>
+                <div class="chip">Defensa nacional</div>
+                <div class="chip">Criminología</div>
+                <div class="chip">Lima</div>
+                <div class="chip">Consultoría</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile">
+            <div class="avatar" aria-hidden="true"></div>
+            <div class="profile-info">
+              <h3>Perfil destacado DINESC</h3>
+              <p>Trayectoria profesional visible, línea principal definida y posicionamiento dentro del ecosistema nacional de seguridad.</p>
+              <div class="badges">
+                <span class="badge verified">Perfil verificado</span>
+                <span class="badge featured">Miembro destacado</span>
+              </div>
+            </div>
+            <div class="score">
+              <strong>Top</strong>
+              <span>Proyección nacional</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Visión del proyecto</span>
+            <h2>No es solo un directorio. Es una vitrina nacional de trayectoria y reconocimiento.</h2>
+          </div>
+          <p>
+            DINESC está pensado para que cada integrante sienta que pertenece a una plataforma seria, selecta y relevante. La visibilidad profesional es el valor principal; las oportunidades que puedan generarse son una consecuencia natural de ese posicionamiento.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">01</div>
+            <h3>Presencia institucional</h3>
+            <p>El perfil transmite seriedad, alcance nacional y pertenencia a una comunidad especializada dentro del ámbito de la seguridad ciudadana.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">02</div>
+            <h3>Prestigio personal</h3>
+            <p>La plataforma pone en valor experiencia, formación y línea de desempeño, reforzando la marca profesional de cada integrante.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">03</div>
+            <h3>Conexión con el ecosistema</h3>
+            <p>DINESC facilita que instituciones, gestores, equipos y aliados identifiquen perfiles con claridad y orientación temática.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="lineas">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Líneas principales</span>
+            <h2>Tres líneas para ordenar la identidad profesional sin volverla rígida.</h2>
+          </div>
+          <p>
+            Cada integrante selecciona la línea que mejor represente su trayectoria principal. La finalidad es dar orden, claridad y una lectura rápida del perfil dentro del directorio.
+          </p>
+        </div>
+
+        <div class="pillars">
+          <article class="card pillar">
+            <div class="pillar-title">
+              <h3>Defensa Nacional</h3>
+              <span class="mini-chip">Línea estratégica</span>
+            </div>
+            <p>Para perfiles vinculados a defensa, seguridad integral, gestión estratégica, análisis institucional y conducción de políticas relacionadas con la seguridad del Estado.</p>
+          </article>
+
+          <article class="card pillar">
+            <div class="pillar-title">
+              <h3>Orden Público y Seguridad Ciudadana</h3>
+              <span class="mini-chip">Línea operativa</span>
+            </div>
+            <p>Para perfiles enfocados en prevención, gestión territorial, operaciones, serenazgo, patrullaje, control del espacio público y conducción de la seguridad local.</p>
+          </article>
+
+          <article class="card pillar">
+            <div class="pillar-title">
+              <h3>Criminología y Prevención</h3>
+              <span class="mini-chip">Línea analítica</span>
+            </div>
+            <p>Para perfiles centrados en el estudio del delito, la violencia, la prevención, la política criminal y el análisis de factores que impactan la convivencia y la seguridad.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="valor">
+      <div class="container split">
+        <div class="glass list-panel">
+          <span class="kicker">Lo que transmite DINESC</span>
+          <h2 style="margin:0 0 6px; font-size:2rem; line-height:1.08; letter-spacing:-.03em;">Pertenecer debe sentirse importante.</h2>
+          <p style="margin:0 0 12px; color:var(--muted);">Por eso la narrativa central no gira alrededor de una bolsa laboral, sino alrededor del reconocimiento y la proyección profesional.</p>
+
+          <div class="line-item">
+            <div class="line-num">1</div>
+            <div>
+              <h3>Perfil visible y elegante</h3>
+              <p>Una ficha profesional sobria, clara y visualmente potente, pensada para proyectar jerarquía, orden y especialización.</p>
+            </div>
+          </div>
+
+          <div class="line-item">
+            <div class="line-num">2</div>
+            <div>
+              <h3>Pertenencia a una comunidad nacional</h3>
+              <p>La persona no se inscribe en un simple listado, sino que ingresa a una red que comunica relevancia y alcance nacional.</p>
+            </div>
+          </div>
+
+          <div class="line-item">
+            <div class="line-num">3</div>
+            <div>
+              <h3>Posicionamiento antes que oferta directa</h3>
+              <p>Las oportunidades, alianzas o convocatorias pueden llegar después; primero se consolida la visibilidad profesional.</p>
+            </div>
+          </div>
+
+          <div class="line-item">
+            <div class="line-num">4</div>
+            <div>
+              <h3>Búsqueda ordenada y útil</h3>
+              <p>Las instituciones pueden ubicar perfiles por línea, región y trayectoria, con una lectura rápida y confiable.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass feature-panel">
+          <div class="ribbon">Experiencia digital institucional</div>
+          <div class="mock-window">
+            <div class="window-top">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="result-card">
+              <strong>Especialista visible</strong>
+              <p>Perfil con línea principal, resumen ejecutivo, región, experiencia y distintivos institucionales.</p>
+              <div class="inline-tags">
+                <span class="inline-tag">Perfil verificado</span>
+                <span class="inline-tag">Línea principal</span>
+                <span class="inline-tag">Presencia nacional</span>
+              </div>
+            </div>
+            <div class="result-card">
+              <strong>Consulta rápida por especialidad</strong>
+              <p>Exploración ordenada para que la plataforma se perciba seria, limpia y útil desde el primer vistazo.</p>
+              <div class="inline-tags">
+                <span class="inline-tag">Defensa nacional</span>
+                <span class="inline-tag">Orden público</span>
+                <span class="inline-tag">Criminología</span>
+              </div>
+            </div>
+            <div class="result-card">
+              <strong>Prestigio como propuesta central</strong>
+              <p>El lenguaje, el diseño y la estructura transmiten pertenencia a una red de referencia en seguridad ciudadana.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="perfiles">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Perfiles públicos</span>
+            <h2>Una vitrina pensada para destacar trayectoria, no para exponer de más.</h2>
+          </div>
+          <p>
+            Los perfiles pueden mostrar nombre, línea principal, región, formación relevante, experiencia resumida y medios de contacto autorizados, manteniendo el cuidado y la reserva de los datos sensibles.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">A</div>
+            <h3>Identidad profesional clara</h3>
+            <p>Nombre, línea de desempeño, región, síntesis de experiencia y formación destacada en una sola vista de alto impacto.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">B</div>
+            <h3>Contacto bajo control</h3>
+            <p>Solo se muestran medios autorizados por el integrante, priorizando un enfoque responsable y profesional.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">C</div>
+            <h3>Lectura rápida para instituciones</h3>
+            <p>El diseño facilita identificar perfiles compatibles sin saturar la ficha con información innecesaria.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="registro">
+      <div class="container">
+        <div class="banner">
+          <div class="banner-grid">
+            <div>
+              <span class="kicker">Convocatoria de incorporación</span>
+              <h2>Haz que tu trayectoria sea parte de una plataforma con presencia nacional.</h2>
+              <p>
+                DINESC busca reunir perfiles con experiencia, formación y vocación de liderazgo dentro del ámbito de la seguridad ciudadana. La invitación no es solo a registrarse, sino a proyectarse como parte de un referente nacional.
+              </p>
+            </div>
+            <div class="banner-actions">
+              <a class="btn btn-primary" href="#">Solicitar evaluación de perfil</a>
+              <a class="btn btn-secondary" href="#">Ver estructura del perfil</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-box">
+      <div>
+        <strong style="color:var(--text); letter-spacing:.16em;">DINESC</strong><br>
+        Directorio Nacional de Expertos en Seguridad Ciudadana
+      </div>
+      <div>
+        Propuesta visual conceptual para landing institucional
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
