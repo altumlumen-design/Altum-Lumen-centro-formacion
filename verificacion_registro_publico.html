@@ -14,6 +14,7 @@
       --white:#ffffff;
       --success:#24a148;
       --shadow:0 18px 48px rgba(18,39,85,.16);
+      --muted:#496588;
     }
     *{box-sizing:border-box}
     body{
@@ -33,7 +34,7 @@
       padding:22px 10px;
     }
     .modal{
-      width:min(940px, 100%);
+      width:min(950px, 100%);
       background:var(--white);
       border-radius:22px;
       box-shadow:var(--shadow);
@@ -97,7 +98,7 @@
     .tab-panel{display:none}
     .tab-panel.active{display:block}
     .search-grid{
-      width:min(520px,100%);
+      width:min(560px,100%);
       margin:18px auto 10px;
     }
     .field{margin-bottom:16px}
@@ -122,9 +123,36 @@
       margin-top:6px;
       font-weight:700;
     }
+    .small-field{
+      width:min(360px, 100%);
+      margin:10px auto 0;
+    }
+    .small-input{
+      width:100%;
+      height:46px;
+      border-radius:999px;
+      border:2px solid #bfd4f8;
+      background:#f8fbff;
+      color:#1c4f9f;
+      text-align:center;
+      font-size:14px;
+      font-weight:700;
+      outline:none;
+      padding:0 16px;
+    }
+    .small-input::placeholder{color:#87a5d4}
+    .search-rule{
+      width:min(560px,100%);
+      margin:8px auto 0;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.55;
+    }
     .captcha-wrap{
       width:min(270px,100%);
-      margin:10px auto 0;
+      margin:14px auto 0;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -261,13 +289,13 @@
     }
     .btn.secondary{background:#92acd9;color:#f1f6ff}
     .results-panel{
-      width:min(770px,100%);
+      width:min(790px,100%);
       margin:20px auto 0;
       background:#d6eef8;
       border-radius:6px;
       padding:22px 20px 12px;
       display:none;
-      max-height:500px;
+      max-height:520px;
       overflow:auto;
     }
     .results-panel.visible{display:block}
@@ -308,7 +336,7 @@
     .value.light{color:#20bdf0}
     .status-line{
       margin:18px auto 0;
-      width:min(770px,100%);
+      width:min(790px,100%);
       text-align:center;
       font-size:13px;
       font-weight:700;
@@ -317,7 +345,7 @@
     }
     .status-line.visible{display:block}
     .contact-note{
-      width:min(770px,100%);
+      width:min(790px,100%);
       margin:16px auto 0;
       padding:14px 16px;
       border-radius:10px;
@@ -392,12 +420,20 @@
         <div class="search-grid">
           <div class="field">
             <input id="dniInput" class="pill-input" type="text" placeholder="Número de Documento de Identidad" />
-            <div class="helper">Ingrese el número de su Documento de Identidad</div>
+            <div class="helper">Ingrese solo DNI o solo nombre completo</div>
           </div>
 
           <div class="field">
             <input id="nameInput" class="pill-input" type="text" placeholder="Apellidos y Nombres" />
-            <div class="helper">Ingrese sus Apellidos y Nombres completos</div>
+            <div class="helper">La búsqueda por nombre no distingue mayúsculas, minúsculas ni tildes</div>
+          </div>
+
+          <div class="small-field">
+            <input id="codeInput" class="small-input" type="text" placeholder="O buscar solo por código de emisión" />
+          </div>
+
+          <div class="search-rule">
+            Debe ingresar solo un criterio de búsqueda: <strong>DNI</strong> o <strong>nombre completo</strong> o <strong>código de emisión</strong>.
           </div>
 
           <div class="captcha-wrap">
@@ -450,12 +486,11 @@
         <div class="guide-box">
           <h2>¿Cómo usar el aplicativo?</h2>
           <ol>
-            <li>Ingrese el número de documento o el nombre completo del participante.</li>
+            <li>Ingrese solo un criterio: DNI, nombre completo o código de emisión.</li>
             <li>Escriba el código de validación visual mostrado en pantalla.</li>
             <li>Presione <strong>Buscar</strong>.</li>
-            <li>El sistema mostrará únicamente los campos académicos públicos configurados en el archivo de datos.</li>
+            <li>Si existen varios documentos para el mismo criterio, el sistema mostrará todos.</li>
             <li>Use <strong>Imprimir</strong> si desea generar una copia de la consulta.</li>
-            <li>Si no encuentra el registro, use el correo de atención mostrado al final.</li>
           </ol>
           <p><strong>Archivo que consulta esta página:</strong> <code>data/registros_publicos.json</code></p>
         </div>
@@ -472,6 +507,7 @@
     const panels = document.querySelectorAll('.tab-panel');
     const dniInput = document.getElementById('dniInput');
     const nameInput = document.getElementById('nameInput');
+    const codeInput = document.getElementById('codeInput');
     const captchaInput = document.getElementById('captchaInput');
     const captchaCode = document.getElementById('captchaCode');
     const resultsPanel = document.getElementById('resultsPanel');
@@ -489,19 +525,32 @@
     });
 
     function normalize(value){
-      return (value ?? '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+      return (value ?? '')
+        .toString()
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g,'')
+        .toLowerCase()
+        .replace(/\s+/g,' ')
+        .trim();
     }
+
     function digits(value){
       return (value ?? '').toString().replace(/\D/g,'');
     }
+
     function htmlSafe(value){
-      return (value ?? '').toString().replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+      return (value ?? '').toString()
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;');
     }
+
     function makeCaptcha(){
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       currentCaptcha = Array.from({length:5}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
       captchaCode.textContent = currentCaptcha;
     }
+
     function setStatus(message, isError=false){
       statusLine.textContent = message;
       statusLine.classList.add('visible');
@@ -521,31 +570,28 @@
         });
     }
 
-    function recordMatches(record){
-      const qDni = digits(dniInput.value);
-      const qName = normalize(nameInput.value);
-
-      const rDni = digits(record.numero_documento);
-      const rMask = digits(record.documento_mask);
-      const rName = normalize(record.nombre_completo);
-      const rCode = normalize(record.codigo_emision);
-      const rProgram = normalize(record.denominacion_programa);
-      const rType = normalize(record.tipo_documento);
-
-      const dniMatch = !qDni || rDni.includes(qDni) || rMask.includes(qDni);
-      const nameMatch = !qName || rName.includes(qName) || rCode.includes(qName) || rProgram.includes(qName) || rType.includes(qName);
-
-      if(qDni && !nameInput.value.trim()) return dniMatch;
-      if(qName && !dniInput.value.trim()) return nameMatch;
-      return dniMatch && nameMatch;
+    function validateCriteria(){
+      const filled = [dniInput.value.trim(), nameInput.value.trim(), codeInput.value.trim()].filter(Boolean);
+      if(filled.length === 0){
+        return {ok:false, msg:'Ingrese un criterio de búsqueda.'};
+      }
+      if(filled.length > 1){
+        return {ok:false, msg:'Use solo un criterio: DNI o nombre completo o código de emisión.'};
+      }
+      return {ok:true};
     }
 
     function renderRecord(record){
+      const docFull = [record.tipo_doc_identidad, record.numero_documento].filter(Boolean).join(' ');
       return `
         <div class="record">
           <div class="row">
             <div class="label">Participante:</div>
-            <div class="value">${htmlSafe(record.nombre_completo)}<br>${htmlSafe(record.documento_mask || (record.tipo_doc_identidad + ' ' + record.numero_documento))}</div>
+            <div class="value">${htmlSafe(record.nombre_completo || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">DNI o documento:</div>
+            <div class="value left">${htmlSafe(docFull || '')}</div>
           </div>
           <div class="row">
             <div class="label">Tipo de documento:</div>
@@ -584,17 +630,16 @@
     }
 
     function search(){
-      const qDni = dniInput.value.trim();
-      const qName = nameInput.value.trim();
-      const qCaptcha = captchaInput.value.trim().toUpperCase();
-
-      if(!qDni && !qName){
-        setStatus('Ingrese al menos un criterio de búsqueda.', true);
+      const criteriaCheck = validateCriteria();
+      if(!criteriaCheck.ok){
+        setStatus(criteriaCheck.msg, true);
         resultsPanel.classList.remove('visible');
         contactNote.classList.remove('visible');
         resultsContainer.innerHTML = '';
         return;
       }
+
+      const qCaptcha = captchaInput.value.trim().toUpperCase();
       if(!qCaptcha){
         setStatus('Ingrese el código de validación visual.', true);
         return;
@@ -609,7 +654,18 @@
         return;
       }
 
-      const matches = dataset.filter(recordMatches);
+      const qDni = digits(dniInput.value);
+      const qName = normalize(nameInput.value);
+      const qCode = normalize(codeInput.value);
+
+      let matches = [];
+      if(qDni){
+        matches = dataset.filter(r => digits(r.numero_documento).includes(qDni));
+      } else if(qName){
+        matches = dataset.filter(r => normalize(r.nombre_completo) === qName || normalize(r.nombre_completo).includes(qName));
+      } else if(qCode){
+        matches = dataset.filter(r => normalize(r.codigo_emision) === qCode);
+      }
 
       if(!matches.length){
         setStatus('No se encontraron registros con los datos ingresados.', true);
@@ -639,6 +695,7 @@
     function clearSearch(){
       dniInput.value = '';
       nameInput.value = '';
+      codeInput.value = '';
       captchaInput.value = '';
       resultsContainer.innerHTML = '';
       resultsPanel.classList.remove('visible');
@@ -655,9 +712,10 @@
       captchaInput.value = '';
       setStatus('Se generó un nuevo código de validación visual.');
     });
-    dniInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
-    nameInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
-    captchaInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+
+    [dniInput, nameInput, codeInput, captchaInput].forEach(el => {
+      el.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+    });
 
     loadData();
     makeCaptcha();
