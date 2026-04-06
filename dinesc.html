@@ -1,1152 +1,627 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DINESC | Directorio Nacional de Expertos en Seguridad Ciudadana</title>
-  <meta name="description" content="DINESC - Directorio Nacional de Expertos en Seguridad Ciudadana. Plataforma de visibilidad, articulación y posicionamiento profesional." />
+  <meta name="description" content="DINESC - Directorio Nacional de Expertos en Seguridad Ciudadana. Plataforma nacional de visibilidad y posicionamiento profesional." />
   <style>
-    :root {
-      --bg-1: #06101c;
-      --bg-2: #0b1830;
-      --bg-3: #0f223f;
-      --panel: rgba(255,255,255,.075);
-      --panel-strong: rgba(255,255,255,.11);
-      --line: rgba(255,255,255,.12);
-      --text: #edf4ff;
-      --muted: #b8c8e4;
-      --gold: #d8b46a;
-      --gold-soft: #f0deae;
-      --blue: #4a82ff;
-      --blue-soft: #93b6ff;
-      --cyan: #77d2ff;
-      --danger: #cf4457;
-      --success: #4bc07b;
-      --shadow: 0 18px 50px rgba(0,0,0,.34);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --container: 1180px;
+    :root{
+      --navy:#0b1930;
+      --navy-2:#112544;
+      --gold:#cfa85b;
+      --gold-2:#e8d3a0;
+      --sky:#0f6cbd;
+      --teal:#0e8694;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --muted:#6c7688;
+      --line:#dfe6f0;
+      --text:#0f1728;
+      --shadow:0 14px 34px rgba(15, 23, 40, .08);
+      --radius:22px;
+      --radius-sm:16px;
+      --container:min(1280px, calc(100% - 32px));
     }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(circle at 10% 15%, rgba(74,130,255,.22), transparent 25%),
-        radial-gradient(circle at 88% 10%, rgba(216,180,106,.15), transparent 20%),
-        radial-gradient(circle at 50% 100%, rgba(119,210,255,.09), transparent 35%),
-        linear-gradient(180deg, #050d18 0%, #091626 38%, #081323 100%);
-      line-height: 1.5;
+        radial-gradient(circle at top right, rgba(207,168,91,.13), transparent 20%),
+        linear-gradient(180deg,#f8fafc 0%, #f3f6fb 100%);
     }
-
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-
-    .container {
-      width: min(var(--container), calc(100% - 28px));
-      margin-inline: auto;
+    a{text-decoration:none;color:inherit}
+    .container{width:var(--container);margin:auto}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(16px);
+      background:rgba(255,255,255,.84);
+      border-bottom:1px solid rgba(11,25,48,.08);
     }
-
-    .noise::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image: radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
-      background-size: 4px 4px;
-      opacity: .12;
-      mix-blend-mode: soft-light;
+    .topbar .inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:52px;height:52px;border-radius:16px;
+      background:linear-gradient(145deg, var(--navy), var(--sky));
+      display:grid;place-items:center;color:white;font-size:24px;
+      box-shadow:0 12px 24px rgba(15,108,189,.22);
     }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(5, 11, 20, .72);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+    .brand h1{margin:0;font-size:1.3rem;letter-spacing:.02em}
+    .brand p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+    .navlinks{display:flex;gap:10px;flex-wrap:wrap}
+    .navlinks a{
+      padding:12px 16px;border-radius:999px;font-weight:700;font-size:.95rem;
+      color:#334155;
     }
+    .navlinks a:hover,.navlinks a.active{background:#eaf1fb;color:var(--sky)}
 
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      min-height: 76px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .mark {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.16);
+    .hero{padding:42px 0 22px}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+    .hero-panel{
       background:
-        linear-gradient(145deg, rgba(216,180,106,.22), rgba(74,130,255,.24)),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: inset 0 0 28px rgba(255,255,255,.04), 0 10px 28px rgba(0,0,0,.22);
-      position: relative;
-      overflow: hidden;
-      flex: 0 0 auto;
-    }
-
-    .mark::before,
-    .mark::after {
-      content: "";
-      position: absolute;
-      inset: 50% auto auto 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 999px;
-    }
-
-    .mark::before {
-      width: 30px;
-      height: 30px;
-      border: 2px solid rgba(216,180,106,.9);
-      box-shadow: 0 0 0 8px rgba(216,180,106,.08);
-    }
-
-    .mark::after {
-      width: 9px;
-      height: 9px;
-      background: var(--gold);
-    }
-
-    .brand-copy { min-width: 0; }
-    .brand-copy strong {
-      display: block;
-      font-size: 1rem;
-      letter-spacing: .18em;
-      font-weight: 800;
-    }
-    .brand-copy span {
-      display: block;
-      color: var(--muted);
-      font-size: .84rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav a {
-      color: var(--muted);
-      font-size: .95rem;
-      padding: 10px 14px;
-      border-radius: 999px;
-      transition: .25s ease;
-    }
-
-    .nav a:hover { background: rgba(255,255,255,.06); color: var(--text); }
-
-    .btn,
-    button {
-      appearance: none;
-      border: none;
-      cursor: pointer;
-      font: inherit;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 50px;
-      padding: 0 20px;
-      border-radius: 999px;
-      font-weight: 700;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-
-    .btn:hover { transform: translateY(-2px); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold) 0%, #c99639 100%);
-      color: #0b1220;
-      box-shadow: 0 10px 24px rgba(216,180,106,.26);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.11);
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 74px 0 38px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .glass {
-      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
-      border: 1px solid rgba(255,255,255,.11);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .hero-copy {
-      padding: 34px 34px 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-copy::before {
-      content: "";
-      position: absolute;
-      inset: auto -120px -120px auto;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(74,130,255,.18), transparent 62%);
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.09);
-      color: var(--gold-soft);
-      font-weight: 700;
-      font-size: .9rem;
-      margin-bottom: 20px;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, var(--gold-soft), var(--gold));
-      box-shadow: 0 0 0 5px rgba(216,180,106,.09);
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.7rem);
-      line-height: .95;
-      margin: 0 0 14px;
-      letter-spacing: -.03em;
-    }
-
-    .hero h1 span {
-      display: block;
-      font-size: clamp(1rem, 2.2vw, 1.24rem);
-      line-height: 1.5;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--gold-soft);
-      font-weight: 700;
-      margin-top: 16px;
-    }
-
-    .lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.07rem;
-      max-width: 60ch;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 28px;
-    }
-
-    .mini-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .metric {
-      border-radius: 20px;
-      padding: 16px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.09);
-    }
-
-    .metric strong {
-      display: block;
-      font-size: 1.5rem;
-      letter-spacing: -.03em;
-    }
-
-    .metric span {
-      display: block;
-      color: var(--muted);
-      font-size: .9rem;
-      margin-top: 4px;
-    }
-
-    .hero-panel {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      justify-content: space-between;
-    }
-
-    .panel-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 4px;
-    }
-
-    .panel-title h2 {
-      margin: 0;
-      font-size: 1.16rem;
-    }
-
-    .status-chip {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(75,192,123,.13);
-      color: #b8f0ca;
-      border: 1px solid rgba(75,192,123,.22);
-      font-size: .86rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .search-box {
-      padding: 16px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .search-input {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(5,10,18,.55);
-      border: 1px solid rgba(255,255,255,.08);
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .magnifier {
-      width: 17px;
-      height: 17px;
-      border: 2px solid var(--blue-soft);
-      border-radius: 50%;
-      position: relative;
-      flex: 0 0 auto;
-    }
-
-    .magnifier::after {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 2px;
-      background: var(--blue-soft);
-      border-radius: 999px;
-      right: -6px;
-      bottom: -2px;
-      transform: rotate(45deg);
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .chip {
-      padding: 9px 12px;
-      border-radius: 999px;
-      font-size: .84rem;
-      color: var(--text);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .profile {
-      display: grid;
-      grid-template-columns: 70px 1fr auto;
-      gap: 14px;
-      align-items: center;
-      padding: 16px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(74,130,255,.34), rgba(216,180,106,.3));
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.14);
-    }
-
-    .avatar::before {
-      content: "";
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.88);
-      top: 12px;
-      left: 20px;
-    }
-
-    .avatar::after {
-      content: "";
-      position: absolute;
-      width: 54px;
-      height: 34px;
-      border-radius: 20px 20px 10px 10px;
-      background: rgba(255,255,255,.75);
-      left: 8px;
-      bottom: 6px;
-    }
-
-    .profile-info h3 {
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    .profile-info p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: .92rem;
-    }
-
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 10px;
-    }
-
-    .badge {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: .78rem;
-      font-weight: 700;
-      border: 1px solid rgba(255,255,255,.11);
-      background: rgba(255,255,255,.06);
-    }
-
-    .verified {
-      color: #cde9ff;
-      background: rgba(74,130,255,.16);
-      border-color: rgba(74,130,255,.2);
-    }
-
-    .featured {
-      color: #f7e2b8;
-      background: rgba(216,180,106,.16);
-      border-color: rgba(216,180,106,.22);
-    }
-
-    .score {
-      text-align: right;
-    }
-
-    .score strong {
-      display: block;
-      font-size: 1.5rem;
-    }
-
-    .score span {
-      color: var(--muted);
-      font-size: .82rem;
-    }
-
-    section { padding: 34px 0; }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .kicker {
-      color: var(--gold-soft);
-      text-transform: uppercase;
-      font-size: .82rem;
-      letter-spacing: .22em;
-      font-weight: 800;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(1.75rem, 4vw, 2.7rem);
-      line-height: 1.05;
-      letter-spacing: -.03em;
-    }
-
-    .section-head p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      max-width: 62ch;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      padding: 24px;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      border: 1px solid rgba(255,255,255,.1);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: auto -70px -90px auto;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(74,130,255,.18), transparent 62%);
-      pointer-events: none;
-    }
-
-    .card-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.1);
-      margin-bottom: 16px;
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--gold-soft);
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 1.15rem;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .96rem;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 18px;
-    }
-
-    .list-panel {
-      padding: 24px;
-    }
-
-    .line-item {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 14px;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-
-    .line-item:last-child { border-bottom: none; }
-
-    .line-num {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: rgba(216,180,106,.14);
-      color: var(--gold-soft);
-      font-weight: 800;
-      border: 1px solid rgba(216,180,106,.18);
-      flex: 0 0 auto;
-    }
-
-    .line-item h3 {
-      margin: 0 0 5px;
-      font-size: 1.05rem;
-    }
-
-    .line-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .95rem;
-    }
-
-    .feature-panel {
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-panel::before {
-      content: "";
-      position: absolute;
-      inset: auto auto -70px -70px;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(216,180,106,.16), transparent 62%);
-    }
-
-    .mock-window {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(6,11,18,.55);
-      border: 1px solid rgba(255,255,255,.08);
-      position: relative;
-      z-index: 1;
-    }
-
-    .window-top {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.34);
-    }
-
-    .dot.red { background: #ff7262; }
-    .dot.yellow { background: #ffcc59; }
-    .dot.green { background: #5dd785; }
-
-    .result-card {
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      margin-bottom: 12px;
-    }
-
-    .result-card:last-child { margin-bottom: 0; }
-
-    .result-card strong {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-
-    .result-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    .inline-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .inline-tag {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
-      font-size: .78rem;
-      color: var(--gold-soft);
-    }
-
-    .banner {
-      padding: 34px;
-      border-radius: 30px;
-      background:
-        radial-gradient(circle at 20% 0%, rgba(216,180,106,.2), transparent 32%),
-        radial-gradient(circle at 90% 100%, rgba(74,130,255,.18), transparent 28%),
-        linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.06));
-      border: 1px solid rgba(255,255,255,.11);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .banner-grid {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .banner h2 {
-      margin: 0;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      line-height: 1.05;
-      letter-spacing: -.03em;
-    }
-
-    .banner p {
-      margin: 14px 0 0;
-      color: var(--muted);
-      max-width: 60ch;
-    }
-
-    .banner-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: flex-end;
-    }
-
-    .footer {
-      padding: 28px 0 42px;
-      color: var(--muted);
-    }
-
-    .footer-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      font-size: .94rem;
-      flex-wrap: wrap;
-    }
-
-    .pillars {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 4px;
-    }
-
-    .pillar-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .pillar-title h3 {
-      margin: 0;
-      font-size: 1.08rem;
-    }
-
-    .mini-chip {
-      font-size: .74rem;
-      padding: 6px 9px;
-      border-radius: 999px;
-      color: var(--gold-soft);
-      border: 1px solid rgba(216,180,106,.2);
-      background: rgba(216,180,106,.1);
-      white-space: nowrap;
-    }
-
-    .pillar p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .95rem;
-    }
-
-    .ribbon {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-      color: var(--gold-soft);
-      font-size: .84rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .ribbon::before {
-      content: "★";
-      color: var(--gold);
-      font-size: .9rem;
-    }
-
-    @media (max-width: 980px) {
-      .hero-grid,
-      .split,
-      .banner-grid,
-      .cards,
-      .pillars {
-        grid-template-columns: 1fr;
-      }
-
-      .banner-actions { justify-content: flex-start; }
-      .nav { display: none; }
-    }
-
-    @media (max-width: 720px) {
-      .hero { padding-top: 46px; }
-      .hero-copy,
-      .hero-panel,
-      .card,
-      .list-panel,
-      .feature-panel,
-      .banner { padding: 20px; }
-      .mini-metrics { grid-template-columns: 1fr; }
-      .profile { grid-template-columns: 58px 1fr; }
-      .score { grid-column: 1 / -1; text-align: left; }
-      .section-head { align-items: start; flex-direction: column; }
-      .topbar-inner { min-height: 70px; }
-      .brand-copy span { white-space: normal; }
+        radial-gradient(circle at 85% 18%, rgba(207,168,91,.16), transparent 20%),
+        linear-gradient(140deg, #091325 0%, #0f1e39 48%, #0f274c 100%);
+      color:white;border-radius:32px;padding:42px;box-shadow:0 20px 44px rgba(11,25,48,.18);position:relative;overflow:hidden;
+    }
+    .hero-panel::after{
+      content:"";position:absolute;inset:auto -60px -80px auto;width:240px;height:240px;border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.14), transparent 62%);
+    }
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);font-size:.9rem;color:#d9e6ff}
+    .hero h2{font-size:clamp(2rem, 4vw, 3.55rem);line-height:.98;letter-spacing:-.03em;margin:16px 0 14px}
+    .hero h2 span{color:var(--gold-2)}
+    .hero p{max-width:680px;color:#d7e3f6;font-size:1.04rem;margin:0}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+    .btn{
+      appearance:none;border:none;cursor:pointer;padding:15px 20px;border-radius:16px;font-weight:800;font-size:.98rem;
+      display:inline-flex;align-items:center;gap:10px;
+    }
+    .btn-primary{background:linear-gradient(135deg, var(--gold), #e2c57e);color:#1d1403;box-shadow:0 12px 26px rgba(207,168,91,.26)}
+    .btn-secondary{background:rgba(255,255,255,.08);color:white;border:1px solid rgba(255,255,255,.16)}
+    .hero-right{display:grid;gap:16px}
+    .card{background:var(--card);border:1px solid rgba(11,25,48,.07);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .summary-card{padding:22px}
+    .summary-card h3{margin:0 0 6px;font-size:1rem}
+    .summary-card p{margin:0;color:var(--muted);font-size:.96rem}
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .stat{padding:22px;border-radius:22px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(11,25,48,.06)}
+    .stat .num{font-size:1.9rem;font-weight:900;color:var(--navy)}
+    .stat .lab{font-size:.93rem;color:var(--muted);margin-top:6px}
+
+    .section{padding:18px 0 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:10px 0 18px}
+    .section-head h3{margin:0;font-size:1.55rem}
+    .section-head p{margin:6px 0 0;color:var(--muted);max-width:760px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{padding:10px 14px;border-radius:999px;background:white;border:1px solid var(--line);font-weight:700;color:#4b5563}
+
+    .toolbar{padding:18px;border-radius:26px;background:white;border:1px solid rgba(11,25,48,.06);box-shadow:var(--shadow)}
+    .toolbar-grid{display:grid;grid-template-columns:180px 220px 1fr 150px;gap:14px;align-items:center}
+    .field, .search{
+      width:100%;border:1px solid var(--line);border-radius:14px;background:#fbfcfe;color:var(--text);padding:14px 14px;font-size:.96rem;outline:none;
+    }
+    .search-wrap{position:relative}
+    .search-wrap span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#64748b}
+    .search{padding-left:42px}
+    .toolbar-note{margin-top:12px;color:var(--muted);font-size:.92rem}
+
+    .content-grid{display:grid;grid-template-columns:1.7fr .9fr;gap:20px;margin-top:18px}
+    .table-card{overflow:hidden}
+    .table-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 22px;border-bottom:1px solid var(--line)}
+    .table-head h4{margin:0;font-size:1.08rem}
+    .table-meta{color:var(--muted);font-size:.93rem}
+    table{width:100%;border-collapse:collapse}
+    thead th{font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;color:#64748b;background:#f8fafc;padding:15px 18px;text-align:left;border-bottom:1px solid var(--line)}
+    tbody td{padding:16px 18px;border-bottom:1px solid #edf2f7;font-size:.95rem;vertical-align:middle}
+    tbody tr:hover{background:#fafcff}
+    .pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;font-size:.82rem;font-weight:800}
+    .pill.blue{background:#e9f2ff;color:#0f6cbd}
+    .pill.gold{background:#fcf6e8;color:#946e1c}
+    .pill.green{background:#e8f7ef;color:#0e8c5f}
+    .actions{display:flex;gap:8px}
+    .icon-btn{border:none;background:#eef4ff;color:var(--sky);width:38px;height:38px;border-radius:12px;font-weight:900;cursor:pointer}
+    .pager{display:flex;justify-content:space-between;align-items:center;padding:18px 22px}
+    .pager .pages{display:flex;gap:8px;flex-wrap:wrap}
+    .page-btn{width:38px;height:38px;border:1px solid var(--line);background:white;border-radius:12px;cursor:pointer;font-weight:800}
+    .page-btn.active{background:var(--sky);color:white;border-color:var(--sky)}
+
+    .side-stack{display:grid;gap:16px}
+    .highlight{padding:22px}
+    .highlight .title{font-size:1rem;font-weight:800;margin:0 0 10px}
+    .profile-card{padding:18px;border-radius:20px;background:linear-gradient(180deg,#f9fbff,#fff);border:1px solid var(--line)}
+    .profile-top{display:flex;gap:14px;align-items:center}
+    .avatar{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg, var(--navy), var(--sky));display:grid;place-items:center;color:white;font-weight:900}
+    .profile-card h5{margin:0;font-size:1rem}
+    .profile-card p{margin:5px 0 0;color:var(--muted);font-size:.92rem}
+    .kv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .kv div{padding:12px;border-radius:14px;background:#f8fafc;border:1px solid #edf2f7}
+    .kv strong{display:block;font-size:.8rem;color:#64748b;margin-bottom:4px}
+    .features{display:grid;gap:12px;margin-top:14px}
+    .feature{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #edf2f7}
+    .feature-bullet{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:#eef4ff;color:var(--sky);font-weight:900;flex:0 0 auto}
+    .feature p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+
+    .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
+    .benefit{padding:22px;background:white;border:1px solid rgba(11,25,48,.06);border-radius:24px;box-shadow:var(--shadow)}
+    .benefit .ico{font-size:1.6rem}
+    .benefit h4{margin:12px 0 8px;font-size:1.08rem}
+    .benefit p{margin:0;color:var(--muted);font-size:.95rem}
+
+    .cta{padding:26px;margin:28px 0 40px;background:linear-gradient(135deg, #0b1930, #15335f);color:white;border-radius:28px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:0 18px 38px rgba(11,25,48,.2)}
+    .cta h3{margin:0 0 8px;font-size:1.55rem}
+    .cta p{margin:0;color:#d3e1f6;max-width:760px}
+    .cta .btn-secondary{background:rgba(255,255,255,.1)}
+
+    .modal{position:fixed;inset:0;background:rgba(11,25,48,.52);display:none;align-items:center;justify-content:center;padding:18px;z-index:60}
+    .modal.show{display:flex}
+    .modal-card{width:min(760px,100%);background:white;border-radius:26px;box-shadow:0 26px 60px rgba(11,25,48,.24);overflow:hidden}
+    .modal-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+    .close-btn{border:none;background:#f2f5fa;border-radius:12px;width:38px;height:38px;cursor:pointer;font-size:1.1rem}
+    .modal-body{padding:22px 24px 26px}
+    .profile-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    .detail-list{display:grid;gap:10px}
+    .detail-item{padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #edf2f7}
+    .detail-item strong{display:block;font-size:.78rem;color:#64748b;text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px}
+
+    footer{padding:0 0 30px;color:#64748b;font-size:.93rem}
+
+    @media (max-width: 1080px){
+      .hero-grid,.content-grid,.profile-grid{grid-template-columns:1fr}
+      .toolbar-grid{grid-template-columns:1fr 1fr}
+      .benefits{grid-template-columns:repeat(2,1fr)}
+      .cta{flex-direction:column;align-items:flex-start}
+    }
+    @media (max-width: 720px){
+      .navlinks{display:none}
+      .hero-panel{padding:28px}
+      .toolbar-grid{grid-template-columns:1fr}
+      .stats,.benefits,.kv{grid-template-columns:1fr}
+      .section-head{flex-direction:column;align-items:flex-start}
+      table,thead,tbody,tr,th,td{display:block}
+      thead{display:none}
+      tbody td{padding:10px 18px}
+      tbody tr{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+      tbody td::before{content:attr(data-label);display:block;font-size:.74rem;text-transform:uppercase;color:#64748b;font-weight:800;margin-bottom:5px}
+      .pager{flex-direction:column;gap:14px}
     }
   </style>
 </head>
-<body class="noise">
+<body>
   <header class="topbar">
-    <div class="container topbar-inner">
+    <div class="container inner">
       <div class="brand">
-        <div class="mark" aria-hidden="true"></div>
-        <div class="brand-copy">
-          <strong>DINESC</strong>
-          <span>Directorio Nacional de Expertos en Seguridad Ciudadana</span>
+        <div class="brand-mark">🛡️</div>
+        <div>
+          <h1>DINESC</h1>
+          <p>Directorio Nacional de Expertos en Seguridad Ciudadana</p>
         </div>
       </div>
-      <nav class="nav" aria-label="principal">
-        <a href="#vision">Visión</a>
-        <a href="#lineas">Líneas</a>
-        <a href="#valor">Valor</a>
-        <a href="#perfiles">Perfiles</a>
-        <a href="#registro" class="btn btn-secondary">Solicitar incorporación</a>
+      <nav class="navlinks">
+        <a class="active" href="#inicio">Inicio</a>
+        <a href="#directorio">Directorio</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#incorporacion">Incorporación</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="inicio">
       <div class="container hero-grid">
-        <div class="hero-copy glass">
-          <div class="eyebrow">Plataforma nacional de visibilidad y posicionamiento</div>
-          <h1>
-            DINESC
-            <span>Directorio Nacional de Expertos en Seguridad Ciudadana</span>
-          </h1>
-          <p class="lead">
-            Un espacio concebido para destacar trayectoria, especialización y liderazgo. DINESC proyecta a sus integrantes como parte de una comunidad nacional de referencia en seguridad ciudadana, con presencia, reputación y visibilidad institucional.
+        <div class="hero-panel">
+          <span class="eyebrow">Plataforma nacional · visibilidad profesional · posicionamiento</span>
+          <h2>Haz que tu perfil profesional <span>forme parte</span> de algo grande.</h2>
+          <p>
+            DINESC reúne perfiles de expertos, especialistas y profesionales vinculados a la seguridad ciudadana en un entorno serio, moderno y de alcance nacional. La idea no es solo aparecer: es proyectar prestigio, trayectoria y confianza.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#registro">Quiero formar parte</a>
-            <a class="btn btn-secondary" href="#perfiles">Explorar perfiles</a>
-          </div>
-          <div class="mini-metrics">
-            <div class="metric">
-              <strong>03</strong>
-              <span>Líneas de desempeño visibles</span>
-            </div>
-            <div class="metric">
-              <strong>01</strong>
-              <span>Perfil principal por integrante</span>
-            </div>
-            <div class="metric">
-              <strong>100%</strong>
-              <span>Enfoque en prestigio y proyección</span>
-            </div>
+            <a class="btn btn-primary" href="#directorio">Explorar directorio</a>
+            <a class="btn btn-secondary" href="#incorporacion">Solicitar incorporación</a>
           </div>
         </div>
-
-        <aside class="hero-panel glass" aria-label="vista de directorio">
-          <div>
-            <div class="panel-title">
-              <h2>Búsqueda destacada</h2>
-              <div class="status-chip">Perfiles visibles</div>
-            </div>
-            <div class="search-box">
-              <div class="search-input">
-                <div class="magnifier" aria-hidden="true"></div>
-                Buscar por especialidad, región o trayectoria
-              </div>
-              <div class="chips">
-                <div class="chip">Seguridad ciudadana</div>
-                <div class="chip">Defensa nacional</div>
-                <div class="chip">Criminología</div>
-                <div class="chip">Lima</div>
-                <div class="chip">Consultoría</div>
-              </div>
-            </div>
+        <div class="hero-right">
+          <div class="card summary-card">
+            <h3>Cómo debe sentirse DINESC</h3>
+            <p>No como un simple padrón. Debe verse como una plataforma nacional selecta, ordenada y aspiracional, donde pertenecer ya transmite valor.</p>
           </div>
-
-          <div class="profile">
-            <div class="avatar" aria-hidden="true"></div>
-            <div class="profile-info">
-              <h3>Perfil destacado DINESC</h3>
-              <p>Trayectoria profesional visible, línea principal definida y posicionamiento dentro del ecosistema nacional de seguridad.</p>
-              <div class="badges">
-                <span class="badge verified">Perfil verificado</span>
-                <span class="badge featured">Miembro destacado</span>
-              </div>
-            </div>
-            <div class="score">
-              <strong>Top</strong>
-              <span>Proyección nacional</span>
-            </div>
+          <div class="stats">
+            <div class="card stat"><div class="num">1,280+</div><div class="lab">Perfiles visibles a nivel nacional</div></div>
+            <div class="card stat"><div class="num">26</div><div class="lab">Regiones con presencia profesional</div></div>
+            <div class="card stat"><div class="num">3</div><div class="lab">Líneas de especialidad principal</div></div>
+            <div class="card stat"><div class="num">94%</div><div class="lab">Perfiles con experiencia pública o territorial</div></div>
           </div>
-        </aside>
+        </div>
       </div>
     </section>
 
-    <section id="vision">
+    <section class="section" id="directorio">
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="kicker">Visión del proyecto</span>
-            <h2>No es solo un directorio. Es una vitrina nacional de trayectoria y reconocimiento.</h2>
+            <h3>Directorio nacional</h3>
+            <p>Así sí se ve potente: una sola hoja, con filtros, buscador, métricas, visual de prestigio y un listado bien presentado. Más abajo se puede abrir el detalle de cada perfil sin salir de la misma pantalla.</p>
           </div>
-          <p>
-            DINESC está pensado para que cada integrante sienta que pertenece a una plataforma seria, selecta y relevante. La visibilidad profesional es el valor principal; las oportunidades que puedan generarse son una consecuencia natural de ese posicionamiento.
-          </p>
+          <div class="chips">
+            <span class="chip">Defensa Nacional</span>
+            <span class="chip">Orden Público</span>
+            <span class="chip">Criminología</span>
+          </div>
         </div>
 
-        <div class="cards">
-          <article class="card">
-            <div class="card-icon">01</div>
-            <h3>Presencia institucional</h3>
-            <p>El perfil transmite seriedad, alcance nacional y pertenencia a una comunidad especializada dentro del ámbito de la seguridad ciudadana.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">02</div>
-            <h3>Prestigio personal</h3>
-            <p>La plataforma pone en valor experiencia, formación y línea de desempeño, reforzando la marca profesional de cada integrante.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">03</div>
-            <h3>Conexión con el ecosistema</h3>
-            <p>DINESC facilita que instituciones, gestores, equipos y aliados identifiquen perfiles con claridad y orientación temática.</p>
-          </article>
+        <div class="toolbar card">
+          <div class="toolbar-grid">
+            <select class="field" id="specFilter">
+              <option value="all">Todas las especialidades</option>
+              <option value="Defensa Nacional">Defensa Nacional</option>
+              <option value="Orden Público">Orden Público</option>
+              <option value="Criminología">Criminología</option>
+            </select>
+            <select class="field" id="regionFilter">
+              <option value="all">Todas las regiones</option>
+              <option value="Lima">Lima</option>
+              <option value="Callao">Callao</option>
+              <option value="Arequipa">Arequipa</option>
+              <option value="Cusco">Cusco</option>
+              <option value="Piura">Piura</option>
+              <option value="La Libertad">La Libertad</option>
+            </select>
+            <div class="search-wrap">
+              <span>⌕</span>
+              <input class="search" id="searchInput" type="search" placeholder="Buscar por nombre, profesión, región o institución..." />
+            </div>
+            <button class="btn btn-primary" type="button" id="clearFilters">Limpiar filtros</button>
+          </div>
+          <div class="toolbar-note">Propuesta visual recomendada: mantener todo en una sola hoja, con detalle emergente al hacer clic en “ver perfil”. Se ve más moderno y transmite mejor control y jerarquía.</div>
+        </div>
+
+        <div class="content-grid">
+          <div class="card table-card">
+            <div class="table-head">
+              <div>
+                <h4>Perfiles destacados y consultables</h4>
+                <div class="table-meta"><span id="countLabel">8 perfiles visibles</span> · vista tipo directorio nacional</div>
+              </div>
+              <span class="pill gold">Verificación documental interna</span>
+            </div>
+            <div style="overflow:auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Profesión</th>
+                    <th>Especialidad</th>
+                    <th>Región</th>
+                    <th>Experiencia</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="directoryBody"></tbody>
+              </table>
+            </div>
+            <div class="pager">
+              <div class="table-meta">Página demostrativa del módulo</div>
+              <div class="pages">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="side-stack">
+            <div class="card highlight">
+              <p class="title">Qué más conviene colocar aquí</p>
+              <div class="features">
+                <div class="feature">
+                  <div class="feature-bullet">★</div>
+                  <div><strong>Insignias de posicionamiento</strong><p>Verificado, destacado, docente, consultor, exfuncionario, especialista territorial.</p></div>
+                </div>
+                <div class="feature">
+                  <div class="feature-bullet">✓</div>
+                  <div><strong>Vista pública limpia</strong><p>Sin DNI ni datos sensibles expuestos. Solo lo necesario para proyectar profesionalismo.</p></div>
+                </div>
+                <div class="feature">
+                  <div class="feature-bullet">↗</div>
+                  <div><strong>Detalle sin salir de la hoja</strong><p>Al hacer clic, se abre una ficha elegante del perfil dentro del mismo módulo.</p></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card highlight">
+              <p class="title">Perfil ejemplo</p>
+              <div class="profile-card" id="sampleCard"></div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <section id="lineas">
+    <section class="section" id="beneficios">
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="kicker">Líneas principales</span>
-            <h2>Tres líneas para ordenar la identidad profesional sin volverla rígida.</h2>
+            <h3>Lo que transmite esta plataforma</h3>
+            <p>Los beneficios pueden existir, pero el mensaje principal debe ser pertenencia, visibilidad y reputación. Lo demás se siente como valor agregado.</p>
           </div>
-          <p>
-            Cada integrante selecciona la línea que mejor represente su trayectoria principal. La finalidad es dar orden, claridad y una lectura rápida del perfil dentro del directorio.
-          </p>
         </div>
-
-        <div class="pillars">
-          <article class="card pillar">
-            <div class="pillar-title">
-              <h3>Defensa Nacional</h3>
-              <span class="mini-chip">Línea estratégica</span>
-            </div>
-            <p>Para perfiles vinculados a defensa, seguridad integral, gestión estratégica, análisis institucional y conducción de políticas relacionadas con la seguridad del Estado.</p>
-          </article>
-
-          <article class="card pillar">
-            <div class="pillar-title">
-              <h3>Orden Público y Seguridad Ciudadana</h3>
-              <span class="mini-chip">Línea operativa</span>
-            </div>
-            <p>Para perfiles enfocados en prevención, gestión territorial, operaciones, serenazgo, patrullaje, control del espacio público y conducción de la seguridad local.</p>
-          </article>
-
-          <article class="card pillar">
-            <div class="pillar-title">
-              <h3>Criminología y Prevención</h3>
-              <span class="mini-chip">Línea analítica</span>
-            </div>
-            <p>Para perfiles centrados en el estudio del delito, la violencia, la prevención, la política criminal y el análisis de factores que impactan la convivencia y la seguridad.</p>
-          </article>
+        <div class="benefits">
+          <div class="benefit"><div class="ico">🏛️</div><h4>Presencia nacional</h4><p>Da sensación de alcance institucional y proyección más allá del círculo local o municipal.</p></div>
+          <div class="benefit"><div class="ico">👤</div><h4>Prestigio profesional</h4><p>Formar parte del directorio se percibe como señal de experiencia, seriedad y trayectoria.</p></div>
+          <div class="benefit"><div class="ico">🔎</div><h4>Búsqueda ordenada</h4><p>Permite que instituciones o interesados identifiquen perfiles con rapidez y confianza.</p></div>
+          <div class="benefit"><div class="ico">📈</div><h4>Posicionamiento personal</h4><p>El perfil se convierte en carta de presentación pública y diferenciada dentro del sector.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="valor">
-      <div class="container split">
-        <div class="glass list-panel">
-          <span class="kicker">Lo que transmite DINESC</span>
-          <h2 style="margin:0 0 6px; font-size:2rem; line-height:1.08; letter-spacing:-.03em;">Pertenecer debe sentirse importante.</h2>
-          <p style="margin:0 0 12px; color:var(--muted);">Por eso la narrativa central no gira alrededor de una bolsa laboral, sino alrededor del reconocimiento y la proyección profesional.</p>
-
-          <div class="line-item">
-            <div class="line-num">1</div>
-            <div>
-              <h3>Perfil visible y elegante</h3>
-              <p>Una ficha profesional sobria, clara y visualmente potente, pensada para proyectar jerarquía, orden y especialización.</p>
-            </div>
-          </div>
-
-          <div class="line-item">
-            <div class="line-num">2</div>
-            <div>
-              <h3>Pertenencia a una comunidad nacional</h3>
-              <p>La persona no se inscribe en un simple listado, sino que ingresa a una red que comunica relevancia y alcance nacional.</p>
-            </div>
-          </div>
-
-          <div class="line-item">
-            <div class="line-num">3</div>
-            <div>
-              <h3>Posicionamiento antes que oferta directa</h3>
-              <p>Las oportunidades, alianzas o convocatorias pueden llegar después; primero se consolida la visibilidad profesional.</p>
-            </div>
-          </div>
-
-          <div class="line-item">
-            <div class="line-num">4</div>
-            <div>
-              <h3>Búsqueda ordenada y útil</h3>
-              <p>Las instituciones pueden ubicar perfiles por línea, región y trayectoria, con una lectura rápida y confiable.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="glass feature-panel">
-          <div class="ribbon">Experiencia digital institucional</div>
-          <div class="mock-window">
-            <div class="window-top">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <div class="result-card">
-              <strong>Especialista visible</strong>
-              <p>Perfil con línea principal, resumen ejecutivo, región, experiencia y distintivos institucionales.</p>
-              <div class="inline-tags">
-                <span class="inline-tag">Perfil verificado</span>
-                <span class="inline-tag">Línea principal</span>
-                <span class="inline-tag">Presencia nacional</span>
-              </div>
-            </div>
-            <div class="result-card">
-              <strong>Consulta rápida por especialidad</strong>
-              <p>Exploración ordenada para que la plataforma se perciba seria, limpia y útil desde el primer vistazo.</p>
-              <div class="inline-tags">
-                <span class="inline-tag">Defensa nacional</span>
-                <span class="inline-tag">Orden público</span>
-                <span class="inline-tag">Criminología</span>
-              </div>
-            </div>
-            <div class="result-card">
-              <strong>Prestigio como propuesta central</strong>
-              <p>El lenguaje, el diseño y la estructura transmiten pertenencia a una red de referencia en seguridad ciudadana.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="perfiles">
+    <section class="section" id="incorporacion">
       <div class="container">
-        <div class="section-head">
+        <div class="cta">
           <div>
-            <span class="kicker">Perfiles públicos</span>
-            <h2>Una vitrina pensada para destacar trayectoria, no para exponer de más.</h2>
+            <h3>Solicitud de incorporación a DINESC</h3>
+            <p>En una siguiente versión se puede añadir el formulario real de postulación o validación documental. Por ahora te lo dejo como una landing/directorio elegante, lista para impresionar visualmente y luego escalar a sistema.</p>
           </div>
-          <p>
-            Los perfiles pueden mostrar nombre, línea principal, región, formación relevante, experiencia resumida y medios de contacto autorizados, manteniendo el cuidado y la reserva de los datos sensibles.
-          </p>
-        </div>
-
-        <div class="cards">
-          <article class="card">
-            <div class="card-icon">A</div>
-            <h3>Identidad profesional clara</h3>
-            <p>Nombre, línea de desempeño, región, síntesis de experiencia y formación destacada en una sola vista de alto impacto.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">B</div>
-            <h3>Contacto bajo control</h3>
-            <p>Solo se muestran medios autorizados por el integrante, priorizando un enfoque responsable y profesional.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">C</div>
-            <h3>Lectura rápida para instituciones</h3>
-            <p>El diseño facilita identificar perfiles compatibles sin saturar la ficha con información innecesaria.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="registro">
-      <div class="container">
-        <div class="banner">
-          <div class="banner-grid">
-            <div>
-              <span class="kicker">Convocatoria de incorporación</span>
-              <h2>Haz que tu trayectoria sea parte de una plataforma con presencia nacional.</h2>
-              <p>
-                DINESC busca reunir perfiles con experiencia, formación y vocación de liderazgo dentro del ámbito de la seguridad ciudadana. La invitación no es solo a registrarse, sino a proyectarse como parte de un referente nacional.
-              </p>
-            </div>
-            <div class="banner-actions">
-              <a class="btn btn-primary" href="#">Solicitar evaluación de perfil</a>
-              <a class="btn btn-secondary" href="#">Ver estructura del perfil</a>
-            </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="btn btn-primary" type="button">Solicitar evaluación</button>
+            <button class="btn btn-secondary" type="button">Descargar brochure</button>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footer-box">
-      <div>
-        <strong style="color:var(--text); letter-spacing:.16em;">DINESC</strong><br>
-        Directorio Nacional de Expertos en Seguridad Ciudadana
+  <div class="modal" id="profileModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <strong>Ficha pública del perfil</strong>
+        <button class="close-btn" id="closeModal">✕</button>
       </div>
-      <div>
-        Propuesta visual conceptual para landing institucional
-      </div>
+      <div class="modal-body" id="modalContent"></div>
     </div>
+  </div>
+
+  <footer>
+    <div class="container">DINESC · Directorio Nacional de Expertos en Seguridad Ciudadana · propuesta visual de una sola hoja.</div>
   </footer>
+
+  <script>
+    const experts = [
+      {
+        nombre: 'Óscar Felipe Moreno Tupia',
+        profesion: 'Abogado · Cmdte. PNP (r)',
+        especialidad: 'Orden Público',
+        region: 'Lima',
+        experiencia: '18 años',
+        estado: 'Verificado',
+        insignia: 'Consultor estratégico',
+        institucion: 'Gestión municipal y seguridad territorial',
+        resumen: 'Especialista con trayectoria en gerencia de seguridad ciudadana, conducción operativa y articulación territorial.',
+        fortalezas: ['Seguridad ciudadana', 'Gestión operativa', 'Coordinación institucional'],
+        disponibilidad: 'Consultoría · ponencias · dirección estratégica'
+      },
+      {
+        nombre: 'María Fernanda Salazar Rojas',
+        profesion: 'Socióloga',
+        especialidad: 'Criminología',
+        region: 'Cusco',
+        experiencia: '11 años',
+        estado: 'Perfil destacado',
+        insignia: 'Investigación social',
+        institucion: 'Observatorios y prevención de violencia',
+        resumen: 'Profesional enfocada en análisis del delito, prevención social y estudios de violencia urbana.',
+        fortalezas: ['Criminología aplicada', 'Prevención', 'Investigación'],
+        disponibilidad: 'Investigación · capacitación · asistencia técnica'
+      },
+      {
+        nombre: 'Ricardo Paredes Villacorta',
+        profesion: 'Coronel EP (r)',
+        especialidad: 'Defensa Nacional',
+        region: 'Arequipa',
+        experiencia: '22 años',
+        estado: 'Verificado',
+        insignia: 'Alta experiencia',
+        institucion: 'Planeamiento y seguridad estratégica',
+        resumen: 'Especialista en doctrina, gestión de crisis y enfoque estratégico para entornos institucionales y públicos.',
+        fortalezas: ['Defensa', 'Gestión de crisis', 'Planeamiento'],
+        disponibilidad: 'Asesoría · formación · evaluación'
+      },
+      {
+        nombre: 'José Antonio Valdivia León',
+        profesion: 'Administrador público',
+        especialidad: 'Orden Público',
+        region: 'Piura',
+        experiencia: '9 años',
+        estado: 'Verificado',
+        insignia: 'Gestión municipal',
+        institucion: 'Seguridad ciudadana municipal',
+        resumen: 'Experiencia en diseño de estrategias locales, monitoreo y fortalecimiento de servicios de serenazgo.',
+        fortalezas: ['Gestión municipal', 'Indicadores', 'Supervisión'],
+        disponibilidad: 'Consultoría · jefatura · asistencia técnica'
+      },
+      {
+        nombre: 'Rosa Elena Tello Vizcarra',
+        profesion: 'Psicóloga',
+        especialidad: 'Criminología',
+        region: 'La Libertad',
+        experiencia: '13 años',
+        estado: 'Perfil destacado',
+        insignia: 'Prevención de violencia',
+        institucion: 'Programas de intervención y prevención',
+        resumen: 'Profesional con trabajo en prevención conductual, violencia familiar y estrategias de intervención temprana.',
+        fortalezas: ['Prevención', 'Conducta', 'Programas territoriales'],
+        disponibilidad: 'Programas · talleres · acompañamiento técnico'
+      },
+      {
+        nombre: 'Luis Enrique Gamarra Soto',
+        profesion: 'Oficial FAP (r)',
+        especialidad: 'Defensa Nacional',
+        region: 'Callao',
+        experiencia: '17 años',
+        estado: 'Verificado',
+        insignia: 'Seguridad institucional',
+        institucion: 'Defensa, riesgos y continuidad operativa',
+        resumen: 'Trayectoria en seguridad integral, análisis estratégico y gestión de riesgos en escenarios críticos.',
+        fortalezas: ['Seguridad integral', 'Continuidad operativa', 'Evaluación de riesgos'],
+        disponibilidad: 'Asesoría · evaluación · entrenamiento'
+      },
+      {
+        nombre: 'Andrea Lucía Montoya Silva',
+        profesion: 'Abogada',
+        especialidad: 'Criminología',
+        region: 'Lima',
+        experiencia: '8 años',
+        estado: 'Nuevo perfil',
+        insignia: 'Política criminal',
+        institucion: 'Asesoría jurídica y análisis del delito',
+        resumen: 'Enfoque en política criminal, prevención y articulación jurídica en temas de violencia y seguridad.',
+        fortalezas: ['Análisis normativo', 'Prevención', 'Enfoque jurídico'],
+        disponibilidad: 'Consultoría · docencia · contenido especializado'
+      },
+      {
+        nombre: 'Carlos Alberto Ponce Quispe',
+        profesion: 'Lic. en Administración',
+        especialidad: 'Orden Público',
+        region: 'Lima',
+        experiencia: '15 años',
+        estado: 'Verificado',
+        insignia: 'Operaciones territoriales',
+        institucion: 'Operaciones, supervisión y control urbano',
+        resumen: 'Especialista en ejecución operativa, seguimiento territorial y organización de servicios vinculados a la seguridad local.',
+        fortalezas: ['Operaciones', 'Supervisión', 'Territorio'],
+        disponibilidad: 'Gerencia · supervisión · asistencia técnica'
+      }
+    ];
+
+    const body = document.getElementById('directoryBody');
+    const countLabel = document.getElementById('countLabel');
+    const sampleCard = document.getElementById('sampleCard');
+    const modal = document.getElementById('profileModal');
+    const modalContent = document.getElementById('modalContent');
+    const specFilter = document.getElementById('specFilter');
+    const regionFilter = document.getElementById('regionFilter');
+    const searchInput = document.getElementById('searchInput');
+    const clearFilters = document.getElementById('clearFilters');
+
+    function pillClass(status){
+      if(status.toLowerCase().includes('destacado')) return 'gold';
+      if(status.toLowerCase().includes('nuevo')) return 'green';
+      return 'blue';
+    }
+
+    function renderTable(list){
+      body.innerHTML = '';
+      list.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-label="Nombre"><strong>${item.nombre}</strong><br><span style="color:#64748b;font-size:.88rem;">${item.institucion}</span></td>
+          <td data-label="Profesión">${item.profesion}</td>
+          <td data-label="Especialidad"><span class="pill blue">${item.especialidad}</span></td>
+          <td data-label="Región">${item.region}</td>
+          <td data-label="Experiencia">${item.experiencia}</td>
+          <td data-label="Estado"><span class="pill ${pillClass(item.estado)}">${item.estado}</span></td>
+          <td data-label="Acción"><div class="actions"><button class="icon-btn" title="Ver perfil" data-index="${experts.indexOf(item)}">👁</button></div></td>
+        `;
+        body.appendChild(tr);
+      });
+      countLabel.textContent = `${list.length} perfiles visibles`;
+      body.querySelectorAll('.icon-btn').forEach(btn => btn.addEventListener('click', e => openProfile(+e.currentTarget.dataset.index)));
+    }
+
+    function renderSample(item){
+      sampleCard.innerHTML = `
+        <div class="profile-top">
+          <div class="avatar">${item.nombre.split(' ').map(w => w[0]).slice(0,2).join('')}</div>
+          <div>
+            <h5>${item.nombre}</h5>
+            <p>${item.profesion}</p>
+          </div>
+        </div>
+        <div class="kv">
+          <div><strong>Especialidad</strong>${item.especialidad}</div>
+          <div><strong>Región</strong>${item.region}</div>
+          <div><strong>Experiencia</strong>${item.experiencia}</div>
+          <div><strong>Insignia</strong>${item.insignia}</div>
+        </div>
+      `;
+    }
+
+    function openProfile(index){
+      const item = experts[index];
+      modalContent.innerHTML = `
+        <div class="profile-grid">
+          <div>
+            <div class="profile-top" style="margin-bottom:16px;">
+              <div class="avatar" style="width:72px;height:72px;border-radius:22px;font-size:1.15rem;">${item.nombre.split(' ').map(w => w[0]).slice(0,2).join('')}</div>
+              <div>
+                <h3 style="margin:0 0 6px;font-size:1.35rem;">${item.nombre}</h3>
+                <div style="color:#64748b;">${item.profesion}</div>
+                <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                  <span class="pill blue">${item.especialidad}</span>
+                  <span class="pill ${pillClass(item.estado)}">${item.estado}</span>
+                  <span class="pill gold">${item.insignia}</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-list">
+              <div class="detail-item"><strong>Resumen profesional</strong>${item.resumen}</div>
+              <div class="detail-item"><strong>Disponibilidad</strong>${item.disponibilidad}</div>
+              <div class="detail-item"><strong>Fortalezas principales</strong>${item.fortalezas.join(' · ')}</div>
+            </div>
+          </div>
+          <div class="detail-list">
+            <div class="detail-item"><strong>Institución o ámbito</strong>${item.institucion}</div>
+            <div class="detail-item"><strong>Región</strong>${item.region}</div>
+            <div class="detail-item"><strong>Experiencia</strong>${item.experiencia}</div>
+            <div class="detail-item"><strong>Nota</strong>La versión pública puede mostrar solo información estratégica del perfil. Los datos sensibles deben quedar reservados para administración interna.</div>
+          </div>
+        </div>
+      `;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    }
+
+    function applyFilters(){
+      const spec = specFilter.value;
+      const region = regionFilter.value;
+      const q = searchInput.value.trim().toLowerCase();
+      const list = experts.filter(item => {
+        const okSpec = spec === 'all' || item.especialidad === spec;
+        const okRegion = region === 'all' || item.region === region;
+        const haystack = `${item.nombre} ${item.profesion} ${item.region} ${item.institucion} ${item.especialidad}`.toLowerCase();
+        const okSearch = !q || haystack.includes(q);
+        return okSpec && okRegion && okSearch;
+      });
+      renderTable(list);
+      renderSample(list[0] || experts[0]);
+    }
+
+    specFilter.addEventListener('change', applyFilters);
+    regionFilter.addEventListener('change', applyFilters);
+    searchInput.addEventListener('input', applyFilters);
+    clearFilters.addEventListener('click', () => {
+      specFilter.value = 'all';
+      regionFilter.value = 'all';
+      searchInput.value = '';
+      applyFilters();
+    });
+
+    document.getElementById('closeModal').addEventListener('click', () => {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    });
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal){
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+      }
+    });
+
+    renderTable(experts);
+    renderSample(experts[0]);
+  </script>
 </body>
 </html>
