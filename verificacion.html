@@ -85,7 +85,7 @@
     .title-wrap{text-align:center;margin-bottom:16px}
     .title-wrap h1{
       margin:0;
-      font-size:18px;
+      font-size:17px;
       line-height:1.35;
       color:#111;
       font-weight:800;
@@ -94,7 +94,7 @@
     .title-wrap h1 span{
       display:block;
       color:var(--blue);
-      font-size:17px;
+      font-size:16px;
       margin-top:2px;
     }
     .tab-panel{display:none}
@@ -133,7 +133,7 @@
       border:2px solid #bfd4f8;
       background:#f8fbff;
       color:#1c4f9f;
-      font-size:14px;
+      font-size:12.5px;
     }
     .small-input::placeholder{color:#87a5d4}
     .search-rule{
@@ -169,7 +169,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      font-size:14px;
+      font-size:12.5px;
       color:#222;
     }
     .check{
@@ -280,7 +280,7 @@
       margin:18px auto 0;
       width:min(790px,100%);
       text-align:center;
-      font-size:13px;
+      font-size:12.5px;
       font-weight:700;
       color:#20406c;
       display:none;
@@ -299,7 +299,7 @@
     .results-panel.visible{display:block}
     .results-title{
       color:var(--blue);
-      font-size:16px;
+      font-size:15px;
       font-weight:800;
       margin:0 0 14px 0;
     }
@@ -318,13 +318,13 @@
     .record-label{
       color:var(--blue);
       font-weight:800;
-      font-size:14px;
+      font-size:12.5px;
       text-transform:uppercase;
     }
     .record-value{
       color:#003f9c;
       font-weight:800;
-      font-size:14px;
+      font-size:12.5px;
       text-align:right;
       line-height:1.4;
     }
@@ -333,7 +333,7 @@
       padding:12px 14px 14px;
       color:#10457f;
       font-weight:700;
-      font-size:13px;
+      font-size:12.5px;
       line-height:1.8;
     }
     .meta-line{
@@ -344,7 +344,7 @@
     .meta-line strong{
       color:var(--blue);
       min-width:170px;
-      font-size:13px;
+      font-size:12.5px;
     }
     .meta-row{
       display:flex;
@@ -362,7 +362,7 @@
       border-radius:10px;
       background:#eef6ff;
       border:1px solid #cdddf7;
-      font-size:13px;
+      font-size:12.5px;
       line-height:1.6;
       color:#21416d;
       display:none;
@@ -384,6 +384,45 @@
       color:#21416d;
       line-height:1.6;
     }
+    
+    .brand-strip{
+      width:min(790px,100%);
+      margin:0 auto 10px;
+      text-align:center;
+      padding:10px 14px 6px;
+      border-bottom:1px solid #d6e2f7;
+    }
+    .brand-top{
+      color:#173f8f;
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:.8px;
+    }
+    .brand-sub{
+      color:#5c6f8f;
+      font-size:12px;
+      font-weight:700;
+      margin-top:3px;
+    }
+    .title-note{
+      margin:8px 0 0;
+      font-size:12px;
+      color:#5e6e89;
+      font-weight:700;
+      line-height:1.5;
+    }
+    .system-footer{
+      width:min(790px,100%);
+      margin:18px auto 0;
+      text-align:center;
+      color:#627491;
+      font-size:11.5px;
+      font-weight:700;
+      line-height:1.6;
+      border-top:1px solid #d6e2f7;
+      padding-top:10px;
+    }
+
     .guide-box h2{
       margin:0 0 10px;
       color:var(--blue);
@@ -417,7 +456,7 @@
         display:block;
         margin-bottom:12mm;
         border:1px solid #d9e2f1;
-        padding:10mm 8mm 6mm;
+        padding:8mm 8mm 5mm;
       }
       .print-head{
         display:flex;
@@ -425,19 +464,26 @@
         align-items:flex-start;
         gap:16px;
       }
+      .print-kicker{
+        font-size:9.5pt;
+        font-weight:900;
+        color:#163f8f;
+        letter-spacing:.8px;
+        margin-bottom:4px;
+      }
       .print-title h1{
-        margin:0 0 6px;
-        font-size:16pt;
+        margin:0 0 5px;
+        font-size:14pt;
         color:#163f8f;
       }
       .print-title p{
         margin:0 0 4px;
-        font-size:10.5pt;
+        font-size:9.5pt;
         color:#314f7b;
       }
       .print-qr img{
-        width:110px;
-        height:110px;
+        width:96px;
+        height:96px;
         object-fit:contain;
       }
       .record{break-inside:avoid}
@@ -470,11 +516,16 @@
       <div class="divider"></div>
 
       <section id="app" class="tab-panel active">
+        <div class="brand-strip">
+          <div class="brand-top">ALTUM LUMEN S.A.C.</div>
+          <div class="brand-sub">Dirección Académica · Oficina de Imagen Institucional e Informática</div>
+        </div>
         <div class="title-wrap">
           <h1>
             REGISTRO PÚBLICO DE
             <span>CERTIFICADOS, CONSTANCIAS Y PARTICIPACIONES</span>
           </h1>
+          <p class="title-note">Sistema de consulta web desarrollado para validación documentaria y emisión de reportes verificables.</p>
         </div>
 
         <div class="search-grid">
@@ -529,8 +580,9 @@
           <div class="print-report" id="printReport">
             <div class="print-head">
               <div class="print-title">
+                <div class="print-kicker">ALTUM LUMEN S.A.C.</div>
                 <h1>Reporte del Registro Público de Certificados, Constancias y Participaciones</h1>
-                <p>Dirección Académica de Altum Lumen S.A.C.</p>
+                <p>Dirección Académica · Oficina de Imagen Institucional e Informática</p>
                 <p><strong>Fecha de impresión:</strong> <span id="printDate">-</span></p>
                 <p><strong>Consulta verificable:</strong> https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/verificacion.html</p>
               </div>
@@ -547,6 +599,10 @@
         <div id="contactNote" class="contact-note">
           De no encontrarse su registro en esta consulta pública o de requerir una revisión adicional, deberá canalizar su solicitud a través del correo
           <a href="mailto:tramiteyatencion.altumlumen@gmail.com?subject=Consulta%20sobre%20registro%20p%C3%BAblico&body=Buenas%20tardes%2C%0A%0ASolicito%20la%20revisi%C3%B3n%20de%20mi%20registro%20en%20el%20Registro%20P%C3%BAblico%20de%20Certificados%2C%20Constancias%20y%20Participaciones.%0A%0ADatos%20del%20solicitante%3A%0A-%20Nombres%20y%20apellidos%3A%0A-%20Documento%20de%20identidad%3A%0A-%20Tipo%20de%20documento%20acad%C3%A9mico%3A%0A-%20Denominaci%C3%B3n%20del%20programa%3A%0A-%20Fecha%20aproximada%20de%20emisi%C3%B3n%3A%0A-%20C%C3%B3digo%20de%20emisi%C3%B3n%20si%20lo%20tiene%3A%0A%0ADetalle%20de%20la%20solicitud%3A%0A">tramiteyatencion.altumlumen@gmail.com</a>.
+        </div>
+              <div class="system-footer">
+          <div>Sistema desarrollado por la Oficina de Imagen Institucional e Informática.</div>
+          <div>© Altum Lumen S.A.C. · Todos los derechos reservados.</div>
         </div>
       </section>
 
