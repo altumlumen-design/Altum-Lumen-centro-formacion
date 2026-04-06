@@ -1,292 +1,574 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>ALTUM LUMEN | Verificación de certificados</title>
-  <meta name="description" content="Verifica certificados, constancias y participaciones emitidas por Altum Lumen."/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ALTUM LUMEN | Verificación pública</title>
   <style>
     :root{
-      --blue:#103d72;
-      --blue2:#1c5fa0;
-      --red:#b11624;
-      --line:#d9e3ee;
-      --bg:#f4f7fb;
-      --card:#ffffff;
-      --ok:#137333;
-      --warn:#b26a00;
-      --bad:#b42318;
-      --muted:#5b6876;
-      --shadow:0 14px 40px rgba(16,61,114,.10);
-      --radius:22px;
+      --blue:#0f59c6;
+      --blue-2:#1a66d6;
+      --light-blue:#cfe2ff;
+      --panel:#e6f4ff;
+      --border:#0d58c7;
+      --text:#15325b;
+      --muted:#4d6488;
+      --bg:#f4f6fb;
+      --white:#ffffff;
+      --success:#24a148;
+      --shadow:0 18px 48px rgba(18,39,85,.16);
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef4fa, #f8fbfd 25%, #f4f7fb 100%);color:#13304d}
-    .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    .top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
-    .brand{display:flex;gap:14px;align-items:center}
-    .seal{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:var(--shadow)}
-    .title h1{margin:0;font-size:clamp(1.4rem,2vw,2rem);line-height:1.1}
-    .title p{margin:6px 0 0;color:var(--muted)}
-    .actions{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border:none;cursor:pointer;padding:12px 16px;border-radius:999px;font-weight:700}
-    .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;box-shadow:var(--shadow)}
-    .btn-light{background:#fff;color:var(--blue);border:1px solid var(--line)}
-    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .pad{padding:24px}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#eaf2fb;color:var(--blue);font-weight:800;font-size:.9rem}
-    h2{margin:14px 0 10px;font-size:clamp(1.6rem,2.3vw,2.35rem);line-height:1.08}
-    .lead{margin:0;color:var(--muted);font-size:1.02rem}
-    .searchbox{margin-top:22px;display:grid;grid-template-columns:1fr auto;gap:12px}
-    .searchbox input{width:100%;padding:16px 18px;border-radius:18px;border:1px solid var(--line);font-size:1rem;outline:none;background:#fff}
-    .searchbox input:focus{border-color:#84add8;box-shadow:0 0 0 4px rgba(20,95,158,.12)}
-    .help{margin-top:12px;color:var(--muted);font-size:.94rem}
-    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .chip{padding:10px 12px;border-radius:999px;background:#f6f9fc;border:1px solid var(--line);font-size:.92rem;color:#35506c}
-    .stat{display:grid;gap:12px}
-    .mini{padding:16px 18px;border-radius:18px;background:#f7fbff;border:1px solid #dfeaf5}
-    .mini b{display:block;font-size:1rem;margin-bottom:6px;color:var(--blue)}
-    .results{margin-top:24px;display:grid;gap:16px}
-    .result-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
-    .result-head{padding:16px 20px;background:linear-gradient(135deg,#eff6fd,#fbfdff);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
-    .status{padding:8px 12px;border-radius:999px;font-weight:800;font-size:.87rem}
-    .status.valid{background:#e7f6ec;color:var(--ok)}
-    .status.anulado{background:#fff2e5;color:var(--warn)}
-    .status.reemplazado{background:#ffe8e8;color:var(--bad)}
-    .grid{padding:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
-    .field{padding:14px 15px;border-radius:16px;background:#fbfdff;border:1px solid #e5edf6}
-    .label{display:block;font-size:.8rem;font-weight:800;color:#58708a;text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}
-    .value{font-weight:700;color:#19324b;word-break:break-word}
-    .empty{padding:22px;border:1px dashed #c3d5e8;background:#fbfdff;border-radius:18px;color:#50657b}
-    .footnote{margin-top:18px;color:#60758b;font-size:.9rem}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
-    .toolbar input[type=file]{display:none}
-    .upload-label{cursor:pointer}
-    .small{font-size:.88rem;color:#5f7387}
-    @media (max-width: 860px){
-      .hero{grid-template-columns:1fr}
-      .searchbox{grid-template-columns:1fr}
-      .grid{grid-template-columns:1fr}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:
+        linear-gradient(rgba(24,42,85,.38),rgba(24,42,85,.38)),
+        radial-gradient(circle at top left,#244989 0,#173973 35%,#102754 100%);
+      min-height:100vh;
+      color:var(--text);
+    }
+    .overlay{
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:22px 10px;
+    }
+    .modal{
+      width:min(940px, 100%);
+      background:var(--white);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      position:relative;
+      padding:28px 28px 40px;
+      overflow:hidden;
+    }
+    .close-btn{
+      position:absolute;
+      top:16px;
+      right:18px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      border:2px solid #073f94;
+      background:var(--blue);
+      color:#fff;
+      font-size:32px;
+      line-height:1;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+    }
+    .tabs{
+      width:min(280px, 100%);
+      margin:4px auto 18px;
+      display:flex;
+      border-radius:28px;
+      overflow:hidden;
+      background:#cfe0fb;
+    }
+    .tab{
+      flex:1;
+      padding:11px 8px;
+      border:none;
+      background:transparent;
+      color:#164eaa;
+      font-size:20px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .tab.active{
+      background:var(--blue);
+      color:#fff;
+    }
+    .divider{
+      height:1px;
+      background:#1d1d1d;
+      margin:14px 0 22px;
+    }
+    .title-wrap{
+      text-align:center;
+      margin-bottom:16px;
+    }
+    .title-wrap h1{
+      margin:0;
+      font-size:18px;
+      line-height:1.35;
+      color:#111;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .title-wrap h1 span{
+      display:block;
+      color:var(--blue);
+      font-size:17px;
+      margin-top:2px;
+    }
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .search-grid{
+      width:min(520px,100%);
+      margin:18px auto 10px;
+    }
+    .field{margin-bottom:16px}
+    .pill-input{
+      width:100%;
+      height:60px;
+      border-radius:999px;
+      border:2px solid #2f7ee6;
+      background:#d7edf8;
+      color:#2fa3ea;
+      text-align:center;
+      font-size:15px;
+      font-weight:700;
+      outline:none;
+      padding:0 18px;
+    }
+    .pill-input::placeholder{color:#2fa3ea; opacity:1}
+    .helper{
+      text-align:center;
+      font-size:12px;
+      color:#334b71;
+      margin-top:6px;
+      font-weight:700;
+    }
+    .public-badge{
+      width:min(270px,100%);
+      margin:10px auto 0;
+      border:1px solid #d8d8d8;
+      background:#fff;
+      border-radius:2px;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      color:#222;
+    }
+    .check{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--success);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-size:18px;
+      font-weight:700;
+      flex:0 0 28px;
+    }
+    .actions{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin:28px 0 0;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:none;
+      border-radius:999px;
+      background:var(--blue);
+      color:#fff;
+      font-size:15px;
+      font-weight:700;
+      padding:12px 20px;
+      min-width:92px;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(11,82,180,.18);
+    }
+    .btn.secondary{
+      background:#92acd9;
+      color:#f1f6ff;
+    }
+    .btn svg{vertical-align:-2px}
+    .results-panel{
+      width:min(770px,100%);
+      margin:20px auto 0;
+      background:#d6eef8;
+      border-radius:6px;
+      padding:22px 20px 12px;
+      display:none;
+      max-height:500px;
+      overflow:auto;
+    }
+    .results-panel.visible{display:block}
+    .results-title{
+      color:var(--blue);
+      font-size:16px;
+      font-weight:800;
+      margin:0 0 14px 6px;
+    }
+    .notice{
+      width:min(770px,100%);
+      margin:14px auto 0;
+      font-size:12px;
+      color:#29456d;
+      text-align:center;
+      font-weight:700;
+      display:none;
+    }
+    .notice.visible{display:block}
+    .record{
+      background:#fff;
+      border:2px solid var(--border);
+      margin-bottom:0;
+    }
+    .row{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      border-bottom:2px solid var(--border);
+      min-height:54px;
+    }
+    .row:last-child{border-bottom:none}
+    .label{
+      color:var(--blue);
+      font-weight:800;
+      font-size:14px;
+      padding:14px 14px 10px;
+      text-transform:uppercase;
+    }
+    .value{
+      color:#003f9c;
+      font-weight:800;
+      font-size:14px;
+      padding:14px 14px 10px;
+      text-align:right;
+      line-height:1.45;
+    }
+    .value.light{
+      color:#20bdf0;
+    }
+    .value.left{text-align:left;color:#10457f}
+    .meta{
+      text-align:left;
+      color:#10457f;
+      font-weight:700;
+      line-height:1.8;
+      font-size:13px;
+    }
+    .institution{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      flex-wrap:wrap;
+      text-align:left;
+    }
+    .institution em{
+      font-style:italic;
+      font-weight:800;
+      color:#10457f;
+    }
+    .status-line{
+      margin:18px auto 0;
+      width:min(770px,100%);
+      text-align:center;
+      font-size:13px;
+      font-weight:700;
+      color:#20406c;
+      display:none;
+    }
+    .status-line.visible{display:block}
+    .guide-box{
+      width:min(760px,100%);
+      margin:10px auto 0;
+      background:#eef6ff;
+      border:2px solid #c8defc;
+      border-radius:16px;
+      padding:22px 22px 18px;
+      color:#21416d;
+      line-height:1.6;
+    }
+    .guide-box h2{
+      margin:0 0 10px;
+      color:var(--blue);
+      font-size:20px;
+    }
+    .guide-box ol{
+      margin:8px 0 0 18px;
+      padding:0;
+    }
+    .guide-box li{margin-bottom:8px}
+    @media (max-width: 720px){
+      .modal{padding:22px 14px 28px;border-radius:18px}
+      .close-btn{top:12px;right:12px;width:42px;height:42px}
+      .tab{font-size:18px}
+      .row{grid-template-columns:1fr}
+      .label{padding-bottom:4px}
+      .value{text-align:left;padding-top:4px}
+      .title-wrap h1{font-size:16px}
+      .title-wrap h1 span{font-size:15px}
+    }
+    @media print{
+      body{background:#fff}
+      .overlay{padding:0}
+      .modal{box-shadow:none;border-radius:0;width:100%;padding:0}
+      .close-btn,.tabs,.divider,.search-grid,.actions,.guide-box,.public-badge,.notice,.status-line{display:none !important}
+      .results-panel{display:block !important;max-height:none;overflow:visible;margin:0;width:100%;background:#fff;padding:0}
+      .record{break-inside:avoid;margin-bottom:12px}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <div class="seal">AL</div>
-        <div class="title">
-          <h1>Verificación de certificados</h1>
-          <p>Centro de Formación y Capacitación Profesional Altum Lumen</p>
+  <div class="overlay">
+    <div class="modal">
+      <a class="close-btn" href="index.html" aria-label="Cerrar">×</a>
+
+      <div class="tabs" role="tablist" aria-label="Secciones">
+        <button class="tab active" data-tab="app" type="button">Aplicativo</button>
+        <button class="tab" data-tab="guide" type="button">Guía</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <section id="app" class="tab-panel active">
+        <div class="title-wrap">
+          <h1>
+            REGISTRO PÚBLICO DE
+            <span>CERTIFICADOS, CONSTANCIAS Y PARTICIPACIONES</span>
+          </h1>
         </div>
-      </div>
-      <div class="actions">
-        <a class="btn btn-light" href="index.html">Volver al portal</a>
-      </div>
+
+        <div class="search-grid">
+          <div class="field">
+            <input id="dniInput" class="pill-input" type="text" placeholder="Número de Documento de Identidad" />
+            <div class="helper">Ingrese el número de su Documento de Identidad</div>
+          </div>
+
+          <div class="field">
+            <input id="nameInput" class="pill-input" type="text" placeholder="Apellidos y Nombres" />
+            <div class="helper">Ingrese sus Apellidos y Nombres completos</div>
+          </div>
+
+          <div class="public-badge">
+            <span class="check">✓</span>
+            <span>Consulta pública habilitada</span>
+          </div>
+
+          <div class="actions">
+            <button id="searchBtn" class="btn" type="button">Buscar</button>
+            <button id="printBtn" class="btn secondary" type="button">Imprimir</button>
+            <button id="clearBtn" class="btn" type="button">Limpiar</button>
+          </div>
+        </div>
+
+        <div id="statusLine" class="status-line"></div>
+
+        <div id="resultsNotice" class="notice">
+          (**) Si existe alguna observación en tu nombre o documento, revisa la información de tu constancia o certificado.
+        </div>
+
+        <div id="resultsPanel" class="results-panel" aria-live="polite">
+          <h3 class="results-title">Resultado</h3>
+          <div id="resultsContainer"></div>
+        </div>
+      </section>
+
+      <section id="guide" class="tab-panel">
+        <div class="title-wrap">
+          <h1>
+            GUÍA DE
+            <span>CONSULTA PÚBLICA</span>
+          </h1>
+        </div>
+        <div class="guide-box">
+          <h2>¿Cómo usar el aplicativo?</h2>
+          <ol>
+            <li>Ingrese el número de documento o el nombre completo del participante.</li>
+            <li>Presione <strong>Buscar</strong>.</li>
+            <li>El sistema mostrará los registros válidos, anulados o reemplazados que coincidan con la búsqueda.</li>
+            <li>Use <strong>Imprimir</strong> si desea generar una copia de la consulta.</li>
+            <li>Para una nueva búsqueda, pulse <strong>Limpiar</strong>.</li>
+          </ol>
+          <p><strong>Nota:</strong> este aplicativo consulta el archivo de datos configurado dentro del proyecto. Para actualizar registros, reemplace su archivo <code>data/certificados.json</code> o ajuste la ruta en el script.</p>
+        </div>
+      </section>
     </div>
-
-    <section class="hero">
-      <div class="card pad">
-        <span class="eyebrow">🛡️ Consulta web privada institucional</span>
-        <h2>Consulta la validez de cursos, certificados y constancias</h2>
-        <p class="lead">Busca por código, nombre, DNI parcial o correo. La plataforma muestra solo los datos mínimos necesarios para validar el documento.</p>
-
-        <div class="searchbox">
-          <input id="searchInput" type="text" placeholder="Ejemplo: ALT-2026-001 o Jeanfranco Vargas" autocomplete="off"/>
-          <button class="btn btn-primary" id="searchBtn" type="button">Consultar</button>
-        </div>
-        <div class="help">Sugerencia: use primero el código de verificación para encontrar un resultado exacto.</div>
-
-        <div class="toolbar">
-          <label class="btn btn-light upload-label" for="fileInput">Cargar CSV o JSON</label>
-          <input id="fileInput" type="file" accept=".json,.csv"/>
-          <button class="btn btn-light" id="copyLinkBtn" type="button">Copiar enlace de consulta</button>
-          <span class="small" id="datasetInfo">Base actual: datos de ejemplo</span>
-        </div>
-
-        <div class="chips">
-          <span class="chip">Código único</span>
-          <span class="chip">Documento válido / anulado / reemplazado</span>
-          <span class="chip">Base compatible con Excel exportado</span>
-        </div>
-      </div>
-
-      <div class="card pad stat">
-        <div class="mini">
-          <b>Cómo actualizar</b>
-          Reemplace el archivo <code>data/certificados.json</code> o cargue un CSV exportado desde su Excel.
-        </div>
-        <div class="mini">
-          <b>Datos recomendados</b>
-          Código, tipo de documento, nombre, DNI parcial, programa, fecha, horas, estado e institución.
-        </div>
-        <div class="mini">
-          <b>Privacidad</b>
-          No publique DNI completo, pagos, notas u observaciones internas.
-        </div>
-      </div>
-    </section>
-
-    <section class="results" id="results"></section>
-    <p class="footnote">Esta plataforma es una validación institucional privada de Altum Lumen. No reemplaza registros oficiales de SUNEDU ni de otras entidades públicas.</p>
   </div>
 
-<script>
-const SAMPLE_URL = 'data/certificados.json';
-let dataset = [];
+  <script>
+    const DATA_URL = 'data/certificados.json';
+    let dataset = [];
 
-function normalize(v=''){
-  return String(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-}
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.tab-panel');
+    const dniInput = document.getElementById('dniInput');
+    const nameInput = document.getElementById('nameInput');
+    const resultsPanel = document.getElementById('resultsPanel');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const resultsNotice = document.getElementById('resultsNotice');
+    const statusLine = document.getElementById('statusLine');
 
-function escapeHtml(value=''){
-  return String(value)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-}
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
 
-function parseCsv(text){
-  const lines = text.replace(/\r/g,'').split('\n').filter(Boolean);
-  if(!lines.length) return [];
-  const headers = splitCsvLine(lines[0]).map(h=>h.trim());
-  return lines.slice(1).map(line => {
-    const cols = splitCsvLine(line);
-    const obj = {};
-    headers.forEach((h,i)=>obj[h]=cols[i] ?? '');
-    return obj;
-  });
-}
-
-function splitCsvLine(line){
-  const out=[]; let cur=''; let q=false;
-  for(let i=0;i<line.length;i++){
-    const c=line[i];
-    if(c==='"'){
-      if(q && line[i+1]==='"'){cur+='"'; i++;}
-      else {q=!q;}
-    } else if(c===',' && !q){out.push(cur); cur='';}
-    else {cur+=c;}
-  }
-  out.push(cur);
-  return out;
-}
-
-function getStatusClass(status=''){
-  const s = normalize(status);
-  if(s.includes('anul')) return 'anulado';
-  if(s.includes('reempl')) return 'reemplazado';
-  return 'valid';
-}
-
-function render(results, query=''){
-  const root = document.getElementById('results');
-  if(!query){
-    root.innerHTML = '<div class="empty">Ingrese un código, nombre o dato de búsqueda para consultar la base.</div>';
-    return;
-  }
-  if(!results.length){
-    root.innerHTML = '<div class="empty">No se encontró ningún registro con los datos ingresados. Verifique el código o intente con otra variante del nombre.</div>';
-    return;
-  }
-  root.innerHTML = results.map(item => {
-    const status = item.estado || 'Válido';
-    const statusClass = getStatusClass(status);
-    const rows = [
-      ['Participante', item.nombre_completo || item.participante || '—'],
-      ['Documento', item.tipo_documento || item.documento || '—'],
-      ['Programa', item.programa || item.curso || item.actividad || '—'],
-      ['Código', item.codigo || item.id || '—'],
-      ['DNI parcial', item.dni_mask || item.dni || '—'],
-      ['Fecha de emisión', item.fecha_emision || item.fecha || '—'],
-      ['Horas', item.horas || item.creditos || '—'],
-      ['Institución', item.institucion || 'Altum Lumen'],
-      ['Correo', item.correo || '—'],
-      ['Observación', item.observacion || item.observaciones || '—']
-    ];
-    return `
-      <article class="result-card">
-        <div class="result-head">
-          <div>
-            <strong>${escapeHtml(item.codigo || item.id || 'Registro')}</strong><br>
-            <span style="color:#5d7186">${escapeHtml(item.tipo_documento || item.documento || 'Documento')}</span>
-          </div>
-          <span class="status ${statusClass}">${escapeHtml(status)}</span>
-        </div>
-        <div class="grid">
-          ${rows.map(([label,val]) => `<div class="field"><span class="label">${escapeHtml(label)}</span><div class="value">${escapeHtml(val || '—')}</div></div>`).join('')}
-        </div>
-      </article>`;
-  }).join('');
-}
-
-function search(){
-  const q = document.getElementById('searchInput').value.trim();
-  const nq = normalize(q);
-  if(!nq){ render([], ''); return; }
-  const results = dataset.filter(item => {
-    const fields = [item.codigo,item.id,item.nombre_completo,item.participante,item.dni_mask,item.dni,item.programa,item.curso,item.actividad,item.correo,item.tipo_documento,item.documento];
-    return fields.some(v => normalize(v).includes(nq));
-  });
-  render(results, q);
-  const url = new URL(window.location.href);
-  url.searchParams.set('q', q);
-  history.replaceState({}, '', url);
-}
-
-async function loadDefault(){
-  try{
-    const res = await fetch(SAMPLE_URL, {cache:'no-store'});
-    const data = await res.json();
-    dataset = Array.isArray(data) ? data : (data.items || []);
-    document.getElementById('datasetInfo').textContent = `Base actual: ${dataset.length} registros cargados`;
-  }catch(e){
-    dataset = [];
-    document.getElementById('datasetInfo').textContent = 'Base actual: sin datos por defecto';
-  }
-  const q = new URLSearchParams(location.search).get('q') || '';
-  document.getElementById('searchInput').value = q;
-  render([], '');
-  if(q) search();
-}
-
-function handleUpload(ev){
-  const file = ev.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try{
-      const text = String(reader.result || '');
-      if(file.name.toLowerCase().endsWith('.json')){
-        const data = JSON.parse(text);
-        dataset = Array.isArray(data) ? data : (data.items || []);
-      } else {
-        dataset = parseCsv(text);
-      }
-      document.getElementById('datasetInfo').textContent = `Base actual: ${dataset.length} registros cargados desde ${file.name}`;
-      search();
-    }catch(err){
-      alert('No se pudo leer el archivo cargado. Revise el formato.');
+    function normalize(value){
+      return (value ?? '')
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .toLowerCase()
+        .trim();
     }
-  };
-  reader.readAsText(file, 'utf-8');
-}
 
-function copyLink(){
-  const q = document.getElementById('searchInput').value.trim();
-  const url = new URL(window.location.href);
-  if(q) url.searchParams.set('q', q); else url.searchParams.delete('q');
-  navigator.clipboard.writeText(url.toString()).then(()=>alert('Enlace copiado.'));
-}
+    function digits(value){
+      return (value ?? '').toString().replace(/\D/g,'');
+    }
 
-document.getElementById('searchBtn').addEventListener('click', search);
-document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
-document.getElementById('fileInput').addEventListener('change', handleUpload);
-document.getElementById('copyLinkBtn').addEventListener('click', copyLink);
-loadDefault();
-</script>
+    function htmlSafe(value){
+      return (value ?? '').toString()
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;');
+    }
+
+    function readField(record, keys, fallback=''){
+      for(const key of keys){
+        if(record[key] !== undefined && record[key] !== null && record[key] !== '') return record[key];
+      }
+      return fallback;
+    }
+
+    function loadData(){
+      fetch(DATA_URL, {cache:'no-store'})
+        .then(r => r.json())
+        .then(data => {
+          dataset = Array.isArray(data) ? data : (Array.isArray(data.registros) ? data.registros : []);
+          setStatus('Base pública cargada correctamente.');
+        })
+        .catch(() => {
+          dataset = [];
+          setStatus('No se pudo cargar la base de datos. Revise la ruta del archivo.', true);
+        });
+    }
+
+    function setStatus(message, isError=false){
+      statusLine.textContent = message;
+      statusLine.classList.add('visible');
+      statusLine.style.color = isError ? '#b42318' : '#20406c';
+    }
+
+    function matchRecord(record){
+      const qDni = digits(dniInput.value);
+      const qName = normalize(nameInput.value);
+
+      const rDni = digits(readField(record,['dni','dni_completo','documento','numero_documento']));
+      const rMask = digits(readField(record,['dni_mask','dni_parcial','documento_mask']));
+      const rCode = normalize(readField(record,['codigo','codigo_verificacion','folio']));
+      const rName = normalize(readField(record,['nombre_completo','apellidos_nombres','participante','graduado','nombres']));
+      const qGeneral = normalize(`${dniInput.value} ${nameInput.value}`);
+
+      const dniMatch = !qDni || rDni.includes(qDni) || rMask.includes(qDni) || rCode.includes(qDni);
+      const nameMatch = !qName || rName.includes(qName);
+
+      if(qDni && !nameInput.value.trim()) return dniMatch;
+      if(qName && !dniInput.value.trim()) return nameMatch || rCode.includes(qName) || normalize(readField(record,['programa','curso','grado_titulo','documento'])).includes(qName);
+      return dniMatch && nameMatch || normalize(rName + ' ' + rCode).includes(qGeneral);
+    }
+
+    function renderRecord(record){
+      const participante = readField(record,['nombre_completo','apellidos_nombres','participante','graduado','nombres'],'SIN DATO');
+      const dni = readField(record,['dni_mask','dni_parcial','documento_mask','dni','documento'],'');
+      const grado = readField(record,['grado_titulo','programa','curso','documento','tipo_documento'],'SIN DATO');
+      const fechaDiploma = readField(record,['fecha_emision','fecha_diploma','fecha'],'');
+      const fechaMatricula = readField(record,['fecha_matricula'],'');
+      const fechaEgreso = readField(record,['fecha_egreso'],'');
+      const horas = readField(record,['horas','horas_academicas','creditos'],'');
+      const codigo = readField(record,['codigo','codigo_verificacion','folio'],'');
+      const estado = readField(record,['estado'],'VÁLIDO');
+      const institucion = readField(record,['institucion','emisor'],'ALTUM LUMEN');
+      const pais = readField(record,['pais'],'PERÚ');
+
+      const metaParts = [];
+      if(fechaDiploma) metaParts.push(`<div>Fecha de emisión: ${htmlSafe(fechaDiploma)}</div>`);
+      if(fechaMatricula) metaParts.push(`<div>Fecha matrícula: ${htmlSafe(fechaMatricula)}</div>`);
+      if(fechaEgreso) metaParts.push(`<div>Fecha egreso: ${htmlSafe(fechaEgreso)}</div>`);
+      if(horas) metaParts.push(`<div>Horas académicas: ${htmlSafe(horas)}</div>`);
+      if(codigo) metaParts.push(`<div>Código de verificación: ${htmlSafe(codigo)}</div>`);
+      metaParts.push(`<div>Estado: ${htmlSafe(estado)}</div>`);
+
+      return `
+        <div class="record">
+          <div class="row">
+            <div class="label">Participante:</div>
+            <div class="value">${htmlSafe(participante)}${dni ? `<br>${htmlSafe(dni)}` : ''}</div>
+          </div>
+          <div class="row">
+            <div class="label">Documento o programa:</div>
+            <div class="value light">${htmlSafe(grado)}</div>
+          </div>
+          <div class="row">
+            <div class="label"></div>
+            <div class="value left meta">${metaParts.join('')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Institución:</div>
+            <div class="value left institution"><span>${htmlSafe(institucion)}</span><em>${htmlSafe(pais)}</em></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function search(){
+      const qDni = dniInput.value.trim();
+      const qName = nameInput.value.trim();
+
+      if(!qDni && !qName){
+        setStatus('Ingrese al menos un criterio de búsqueda.', true);
+        resultsPanel.classList.remove('visible');
+        resultsNotice.classList.remove('visible');
+        resultsContainer.innerHTML = '';
+        return;
+      }
+
+      const matches = dataset.filter(matchRecord);
+
+      if(!matches.length){
+        setStatus('No se encontraron registros con los datos ingresados.', true);
+        resultsPanel.classList.add('visible');
+        resultsNotice.classList.remove('visible');
+        resultsContainer.innerHTML = `
+          <div class="record">
+            <div class="row">
+              <div class="label">Resultado:</div>
+              <div class="value left">No se encontró ningún registro con los datos ingresados.</div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      setStatus(`Se encontraron ${matches.length} registro(s).`);
+      resultsPanel.classList.add('visible');
+      resultsNotice.classList.add('visible');
+      resultsContainer.innerHTML = matches.map(renderRecord).join('');
+    }
+
+    function clearSearch(){
+      dniInput.value = '';
+      nameInput.value = '';
+      resultsContainer.innerHTML = '';
+      resultsPanel.classList.remove('visible');
+      resultsNotice.classList.remove('visible');
+      setStatus('Campos limpios. Puede realizar una nueva búsqueda.');
+    }
+
+    document.getElementById('searchBtn').addEventListener('click', search);
+    document.getElementById('clearBtn').addEventListener('click', clearSearch);
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    dniInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+    nameInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+
+    loadData();
+  </script>
 </body>
 </html>
