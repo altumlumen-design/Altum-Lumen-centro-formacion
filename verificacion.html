@@ -566,14 +566,15 @@
             <li>Si existen varios documentos para el mismo criterio, el sistema mostrará todos.</li>
             <li>Use <strong>Imprimir</strong> para generar una salida en formato A4 con fecha de impresión y código QR de verificación.</li>
           </ol>
-          <p><strong>Archivo que consulta esta página:</strong> <code>registros_publicos.json</code></p>
+          <p><strong>Archivo que consulta esta página:</strong> <code>registros_publicos.js</code></p>
         </div>
       </section>
     </div>
   </div>
 
+  <script src="registros_publicos.js"></script>
   <script>
-    const DATA_URL = 'registros_publicos.json';
+    const EMBEDDED_SOURCE_NAME = 'registros_publicos.js';
     let dataset = [];
     let currentCaptcha = '';
 
@@ -633,16 +634,12 @@
     }
 
     function loadData(){
-      fetch(DATA_URL, {cache:'no-store'})
-        .then(r => r.json())
-        .then(data => {
-          dataset = Array.isArray(data) ? data : [];
-          setStatus('Base pública cargada correctamente.');
-        })
-        .catch(() => {
-          dataset = [];
-          setStatus('No se pudo cargar la base de datos. Verifique que registros_publicos.json esté subido junto al HTML.', true);
-        });
+      dataset = Array.isArray(window.REGISTROS_PUBLICOS) ? window.REGISTROS_PUBLICOS : [];
+      if(dataset.length){
+        setStatus('Base pública cargada correctamente.');
+      } else {
+        setStatus('No se pudo cargar la base de datos. Verifique que registros_publicos.js esté subido junto al HTML.', true);
+      }
     }
 
     function validateCriteria(){
