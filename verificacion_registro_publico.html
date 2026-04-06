@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ALTUM LUMEN | Registro público</title>
+  <style>
+    :root{
+      --blue:#0f59c6;
+      --blue-2:#1a66d6;
+      --panel:#d8eef9;
+      --border:#0d58c7;
+      --text:#15325b;
+      --white:#ffffff;
+      --success:#24a148;
+      --shadow:0 18px 48px rgba(18,39,85,.16);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:
+        linear-gradient(rgba(24,42,85,.38),rgba(24,42,85,.38)),
+        radial-gradient(circle at top left,#244989 0,#173973 35%,#102754 100%);
+      min-height:100vh;
+      color:var(--text);
+    }
+    .overlay{
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:22px 10px;
+    }
+    .modal{
+      width:min(940px, 100%);
+      background:var(--white);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      position:relative;
+      padding:28px 28px 40px;
+      overflow:hidden;
+    }
+    .close-btn{
+      position:absolute;
+      top:16px;
+      right:18px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      border:2px solid #073f94;
+      background:var(--blue);
+      color:#fff;
+      font-size:32px;
+      line-height:1;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+    }
+    .tabs{
+      width:min(280px, 100%);
+      margin:4px auto 18px;
+      display:flex;
+      border-radius:28px;
+      overflow:hidden;
+      background:#cfe0fb;
+    }
+    .tab{
+      flex:1;
+      padding:11px 8px;
+      border:none;
+      background:transparent;
+      color:#164eaa;
+      font-size:20px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .tab.active{background:var(--blue);color:#fff}
+    .divider{height:1px;background:#1d1d1d;margin:14px 0 22px}
+    .title-wrap{text-align:center;margin-bottom:16px}
+    .title-wrap h1{
+      margin:0;
+      font-size:18px;
+      line-height:1.35;
+      color:#111;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .title-wrap h1 span{
+      display:block;
+      color:var(--blue);
+      font-size:17px;
+      margin-top:2px;
+    }
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .search-grid{
+      width:min(520px,100%);
+      margin:18px auto 10px;
+    }
+    .field{margin-bottom:16px}
+    .pill-input{
+      width:100%;
+      height:60px;
+      border-radius:999px;
+      border:2px solid #2f7ee6;
+      background:#d7edf8;
+      color:#2fa3ea;
+      text-align:center;
+      font-size:15px;
+      font-weight:700;
+      outline:none;
+      padding:0 18px;
+    }
+    .pill-input::placeholder{color:#2fa3ea; opacity:1}
+    .helper{
+      text-align:center;
+      font-size:12px;
+      color:#334b71;
+      margin-top:6px;
+      font-weight:700;
+    }
+    .captcha-wrap{
+      width:min(270px,100%);
+      margin:10px auto 0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+    }
+    .captcha-box{
+      width:270px;
+      max-width:100%;
+      border:1px solid #d8d8d8;
+      background:#fff;
+      border-radius:2px;
+      padding:10px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .captcha-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      color:#222;
+    }
+    .check{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--success);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-size:18px;
+      font-weight:700;
+      flex:0 0 28px;
+    }
+    .captcha-brand{
+      text-align:right;
+      font-size:10px;
+      color:#777;
+      line-height:1.3;
+      font-weight:700;
+    }
+    .captcha-brand strong{
+      display:block;
+      color:#d97a15;
+      font-size:11px;
+      letter-spacing:.4px;
+    }
+    .captcha-visual{
+      width:270px;
+      max-width:100%;
+      padding:12px 16px;
+      border-radius:10px;
+      border:2px solid #cfd9ef;
+      background:linear-gradient(135deg,#f7fbff 0%,#edf4ff 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:70px;
+      position:relative;
+      overflow:hidden;
+    }
+    .captcha-visual::before,
+    .captcha-visual::after{
+      content:"";
+      position:absolute;
+      width:140%;
+      height:2px;
+      background:rgba(15,89,198,.18);
+      transform:rotate(-8deg);
+      top:24px;
+      left:-20%;
+    }
+    .captcha-visual::after{
+      transform:rotate(9deg);
+      top:auto;
+      bottom:22px;
+      background:rgba(15,89,198,.14);
+    }
+    .captcha-code{
+      position:relative;
+      z-index:1;
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:8px;
+      color:#123d89;
+      text-shadow:1px 1px 0 #fff, -1px -1px 0 #d3e4ff;
+      user-select:none;
+    }
+    .captcha-btn{
+      border:none;
+      background:#d7e7ff;
+      color:#0f59c6;
+      font-weight:700;
+      border-radius:999px;
+      padding:8px 14px;
+      cursor:pointer;
+      font-size:12px;
+    }
+    .captcha-input{
+      width:270px;
+      max-width:100%;
+      height:46px;
+      border-radius:999px;
+      border:2px solid #2f7ee6;
+      background:#ffffff;
+      color:#18416f;
+      text-align:center;
+      font-size:15px;
+      font-weight:800;
+      outline:none;
+      padding:0 16px;
+      text-transform:uppercase;
+    }
+    .actions{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin:28px 0 0;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:none;
+      border-radius:999px;
+      background:var(--blue);
+      color:#fff;
+      font-size:15px;
+      font-weight:700;
+      padding:12px 20px;
+      min-width:92px;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(11,82,180,.18);
+    }
+    .btn.secondary{background:#92acd9;color:#f1f6ff}
+    .results-panel{
+      width:min(770px,100%);
+      margin:20px auto 0;
+      background:#d6eef8;
+      border-radius:6px;
+      padding:22px 20px 12px;
+      display:none;
+      max-height:500px;
+      overflow:auto;
+    }
+    .results-panel.visible{display:block}
+    .results-title{
+      color:var(--blue);
+      font-size:16px;
+      font-weight:800;
+      margin:0 0 14px 6px;
+    }
+    .record{
+      background:#fff;
+      border:2px solid var(--border);
+      margin-bottom:0;
+    }
+    .row{
+      display:grid;
+      grid-template-columns:240px 1fr;
+      border-bottom:2px solid var(--border);
+      min-height:54px;
+    }
+    .row:last-child{border-bottom:none}
+    .label{
+      color:var(--blue);
+      font-weight:800;
+      font-size:14px;
+      padding:14px 14px 10px;
+      text-transform:uppercase;
+    }
+    .value{
+      color:#003f9c;
+      font-weight:800;
+      font-size:14px;
+      padding:14px 14px 10px;
+      text-align:right;
+      line-height:1.45;
+    }
+    .value.left{text-align:left;color:#10457f}
+    .value.light{color:#20bdf0}
+    .status-line{
+      margin:18px auto 0;
+      width:min(770px,100%);
+      text-align:center;
+      font-size:13px;
+      font-weight:700;
+      color:#20406c;
+      display:none;
+    }
+    .status-line.visible{display:block}
+    .contact-note{
+      width:min(770px,100%);
+      margin:16px auto 0;
+      padding:14px 16px;
+      border-radius:10px;
+      background:#eef6ff;
+      border:1px solid #cdddf7;
+      font-size:13px;
+      line-height:1.6;
+      color:#21416d;
+      display:none;
+    }
+    .contact-note.visible{display:block}
+    .contact-note a{
+      color:#0f59c6;
+      font-weight:800;
+      text-decoration:none;
+      word-break:break-word;
+    }
+    .guide-box{
+      width:min(760px,100%);
+      margin:10px auto 0;
+      background:#eef6ff;
+      border:2px solid #c8defc;
+      border-radius:16px;
+      padding:22px 22px 18px;
+      color:#21416d;
+      line-height:1.6;
+    }
+    .guide-box h2{
+      margin:0 0 10px;
+      color:var(--blue);
+      font-size:20px;
+    }
+    .guide-box ol{
+      margin:8px 0 0 18px;
+      padding:0;
+    }
+    .guide-box li{margin-bottom:8px}
+    code{background:#e8f0ff;padding:2px 6px;border-radius:6px}
+    @media (max-width: 720px){
+      .modal{padding:22px 14px 28px;border-radius:18px}
+      .close-btn{top:12px;right:12px;width:42px;height:42px}
+      .tab{font-size:18px}
+      .row{grid-template-columns:1fr}
+      .label{padding-bottom:4px}
+      .value{text-align:left;padding-top:4px}
+      .title-wrap h1{font-size:16px}
+      .title-wrap h1 span{font-size:15px}
+      .captcha-code{font-size:24px;letter-spacing:6px}
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="modal">
+      <a class="close-btn" href="index.html" aria-label="Cerrar">×</a>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="app" type="button">Aplicativo</button>
+        <button class="tab" data-tab="guide" type="button">Guía</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <section id="app" class="tab-panel active">
+        <div class="title-wrap">
+          <h1>
+            REGISTRO PÚBLICO DE
+            <span>CERTIFICADOS, CONSTANCIAS Y PARTICIPACIONES</span>
+          </h1>
+        </div>
+
+        <div class="search-grid">
+          <div class="field">
+            <input id="dniInput" class="pill-input" type="text" placeholder="Número de Documento de Identidad" />
+            <div class="helper">Ingrese el número de su Documento de Identidad</div>
+          </div>
+
+          <div class="field">
+            <input id="nameInput" class="pill-input" type="text" placeholder="Apellidos y Nombres" />
+            <div class="helper">Ingrese sus Apellidos y Nombres completos</div>
+          </div>
+
+          <div class="captcha-wrap">
+            <div class="captcha-box">
+              <div class="captcha-left">
+                <span class="check">✓</span>
+                <span>Validación visual</span>
+              </div>
+              <div class="captcha-brand">
+                <strong>ALTUM</strong>
+                Seguridad · Consulta
+              </div>
+            </div>
+
+            <div class="captcha-visual">
+              <div id="captchaCode" class="captcha-code">A1B2C</div>
+            </div>
+
+            <button id="refreshCaptcha" class="captcha-btn" type="button">Generar nuevo código</button>
+            <input id="captchaInput" class="captcha-input" type="text" maxlength="5" placeholder="Escriba el código mostrado" />
+          </div>
+
+          <div class="actions">
+            <button id="searchBtn" class="btn" type="button">Buscar</button>
+            <button id="printBtn" class="btn secondary" type="button">Imprimir</button>
+            <button id="clearBtn" class="btn" type="button">Limpiar</button>
+          </div>
+        </div>
+
+        <div id="statusLine" class="status-line"></div>
+
+        <div id="resultsPanel" class="results-panel" aria-live="polite">
+          <h3 class="results-title">Resultado</h3>
+          <div id="resultsContainer"></div>
+        </div>
+
+        <div id="contactNote" class="contact-note">
+          De no encontrarse su registro en esta consulta pública o de requerir una revisión adicional, deberá canalizar su solicitud a través del correo
+          <a href="mailto:tramiteyatencion.altumlumen@gmail.com?subject=Consulta%20sobre%20registro%20p%C3%BAblico&body=Buenas%20tardes%2C%0A%0ASolicito%20la%20revisi%C3%B3n%20de%20mi%20registro%20en%20el%20Registro%20P%C3%BAblico%20de%20Certificados%2C%20Constancias%20y%20Participaciones.%0A%0ADatos%20del%20solicitante%3A%0A-%20Nombres%20y%20apellidos%3A%0A-%20Documento%20de%20identidad%3A%0A-%20Tipo%20de%20documento%20acad%C3%A9mico%3A%0A-%20Denominaci%C3%B3n%20del%20programa%3A%0A-%20Fecha%20aproximada%20de%20emisi%C3%B3n%3A%0A-%20C%C3%B3digo%20de%20emisi%C3%B3n%20si%20lo%20tiene%3A%0A%0ADetalle%20de%20la%20solicitud%3A%0A">tramiteyatencion.altumlumen@gmail.com</a>.
+        </div>
+      </section>
+
+      <section id="guide" class="tab-panel">
+        <div class="title-wrap">
+          <h1>
+            GUÍA DE
+            <span>CONSULTA PÚBLICA</span>
+          </h1>
+        </div>
+        <div class="guide-box">
+          <h2>¿Cómo usar el aplicativo?</h2>
+          <ol>
+            <li>Ingrese el número de documento o el nombre completo del participante.</li>
+            <li>Escriba el código de validación visual mostrado en pantalla.</li>
+            <li>Presione <strong>Buscar</strong>.</li>
+            <li>El sistema mostrará únicamente los campos académicos públicos configurados en el archivo de datos.</li>
+            <li>Use <strong>Imprimir</strong> si desea generar una copia de la consulta.</li>
+            <li>Si no encuentra el registro, use el correo de atención mostrado al final.</li>
+          </ol>
+          <p><strong>Archivo que consulta esta página:</strong> <code>data/registros_publicos.json</code></p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const DATA_URL = 'data/registros_publicos.json';
+    let dataset = [];
+    let currentCaptcha = '';
+
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.tab-panel');
+    const dniInput = document.getElementById('dniInput');
+    const nameInput = document.getElementById('nameInput');
+    const captchaInput = document.getElementById('captchaInput');
+    const captchaCode = document.getElementById('captchaCode');
+    const resultsPanel = document.getElementById('resultsPanel');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const statusLine = document.getElementById('statusLine');
+    const contactNote = document.getElementById('contactNote');
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    function normalize(value){
+      return (value ?? '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+    }
+    function digits(value){
+      return (value ?? '').toString().replace(/\D/g,'');
+    }
+    function htmlSafe(value){
+      return (value ?? '').toString().replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
+    function makeCaptcha(){
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      currentCaptcha = Array.from({length:5}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+      captchaCode.textContent = currentCaptcha;
+    }
+    function setStatus(message, isError=false){
+      statusLine.textContent = message;
+      statusLine.classList.add('visible');
+      statusLine.style.color = isError ? '#b42318' : '#20406c';
+    }
+
+    function loadData(){
+      fetch(DATA_URL, {cache:'no-store'})
+        .then(r => r.json())
+        .then(data => {
+          dataset = Array.isArray(data) ? data : [];
+          setStatus('Base pública cargada correctamente.');
+        })
+        .catch(() => {
+          dataset = [];
+          setStatus('No se pudo cargar la base de datos. Revise la ruta del archivo.', true);
+        });
+    }
+
+    function recordMatches(record){
+      const qDni = digits(dniInput.value);
+      const qName = normalize(nameInput.value);
+
+      const rDni = digits(record.numero_documento);
+      const rMask = digits(record.documento_mask);
+      const rName = normalize(record.nombre_completo);
+      const rCode = normalize(record.codigo_emision);
+      const rProgram = normalize(record.denominacion_programa);
+      const rType = normalize(record.tipo_documento);
+
+      const dniMatch = !qDni || rDni.includes(qDni) || rMask.includes(qDni);
+      const nameMatch = !qName || rName.includes(qName) || rCode.includes(qName) || rProgram.includes(qName) || rType.includes(qName);
+
+      if(qDni && !nameInput.value.trim()) return dniMatch;
+      if(qName && !dniInput.value.trim()) return nameMatch;
+      return dniMatch && nameMatch;
+    }
+
+    function renderRecord(record){
+      return `
+        <div class="record">
+          <div class="row">
+            <div class="label">Participante:</div>
+            <div class="value">${htmlSafe(record.nombre_completo)}<br>${htmlSafe(record.documento_mask || (record.tipo_doc_identidad + ' ' + record.numero_documento))}</div>
+          </div>
+          <div class="row">
+            <div class="label">Tipo de documento:</div>
+            <div class="value light">${htmlSafe(record.tipo_documento || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Condición obtenida:</div>
+            <div class="value left">${htmlSafe(record.condicion_obtenida || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Denominación del programa:</div>
+            <div class="value left">${htmlSafe(record.denominacion_programa || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Tipo de programa:</div>
+            <div class="value left">${htmlSafe(record.tipo_programa || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Fecha de emisión:</div>
+            <div class="value left">${htmlSafe(record.fecha_emision || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Horas académicas:</div>
+            <div class="value left">${htmlSafe(record.horas_academicas || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Código de emisión:</div>
+            <div class="value left">${htmlSafe(record.codigo_emision || '')}</div>
+          </div>
+          <div class="row">
+            <div class="label">Estado:</div>
+            <div class="value left">${htmlSafe(record.estado || 'VÁLIDO')}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function search(){
+      const qDni = dniInput.value.trim();
+      const qName = nameInput.value.trim();
+      const qCaptcha = captchaInput.value.trim().toUpperCase();
+
+      if(!qDni && !qName){
+        setStatus('Ingrese al menos un criterio de búsqueda.', true);
+        resultsPanel.classList.remove('visible');
+        contactNote.classList.remove('visible');
+        resultsContainer.innerHTML = '';
+        return;
+      }
+      if(!qCaptcha){
+        setStatus('Ingrese el código de validación visual.', true);
+        return;
+      }
+      if(qCaptcha !== currentCaptcha){
+        setStatus('El código de validación no coincide. Genere uno nuevo o intente nuevamente.', true);
+        resultsPanel.classList.remove('visible');
+        contactNote.classList.remove('visible');
+        resultsContainer.innerHTML = '';
+        makeCaptcha();
+        captchaInput.value = '';
+        return;
+      }
+
+      const matches = dataset.filter(recordMatches);
+
+      if(!matches.length){
+        setStatus('No se encontraron registros con los datos ingresados.', true);
+        resultsPanel.classList.add('visible');
+        contactNote.classList.add('visible');
+        resultsContainer.innerHTML = `
+          <div class="record">
+            <div class="row">
+              <div class="label">Resultado:</div>
+              <div class="value left">No se encontró ningún registro con los datos ingresados.</div>
+            </div>
+          </div>
+        `;
+        makeCaptcha();
+        captchaInput.value = '';
+        return;
+      }
+
+      setStatus(`Se encontraron ${matches.length} registro(s).`);
+      resultsPanel.classList.add('visible');
+      contactNote.classList.remove('visible');
+      resultsContainer.innerHTML = matches.map(renderRecord).join('');
+      makeCaptcha();
+      captchaInput.value = '';
+    }
+
+    function clearSearch(){
+      dniInput.value = '';
+      nameInput.value = '';
+      captchaInput.value = '';
+      resultsContainer.innerHTML = '';
+      resultsPanel.classList.remove('visible');
+      contactNote.classList.remove('visible');
+      setStatus('Campos limpios. Puede realizar una nueva búsqueda.');
+      makeCaptcha();
+    }
+
+    document.getElementById('searchBtn').addEventListener('click', search);
+    document.getElementById('clearBtn').addEventListener('click', clearSearch);
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    document.getElementById('refreshCaptcha').addEventListener('click', () => {
+      makeCaptcha();
+      captchaInput.value = '';
+      setStatus('Se generó un nuevo código de validación visual.');
+    });
+    dniInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+    nameInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+    captchaInput.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+
+    loadData();
+    makeCaptcha();
+  </script>
+</body>
+</html>
