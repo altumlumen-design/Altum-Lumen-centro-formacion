@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ALTUM LUMEN | Verificación de certificados</title>
+  <meta name="description" content="Verifica certificados, constancias y participaciones emitidas por Altum Lumen."/>
+  <style>
+    :root{
+      --blue:#103d72;
+      --blue2:#1c5fa0;
+      --red:#b11624;
+      --line:#d9e3ee;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --ok:#137333;
+      --warn:#b26a00;
+      --bad:#b42318;
+      --muted:#5b6876;
+      --shadow:0 14px 40px rgba(16,61,114,.10);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef4fa, #f8fbfd 25%, #f4f7fb 100%);color:#13304d}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+    .brand{display:flex;gap:14px;align-items:center}
+    .seal{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:var(--shadow)}
+    .title h1{margin:0;font-size:clamp(1.4rem,2vw,2rem);line-height:1.1}
+    .title p{margin:6px 0 0;color:var(--muted)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border:none;cursor:pointer;padding:12px 16px;border-radius:999px;font-weight:700}
+    .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;box-shadow:var(--shadow)}
+    .btn-light{background:#fff;color:var(--blue);border:1px solid var(--line)}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .pad{padding:24px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#eaf2fb;color:var(--blue);font-weight:800;font-size:.9rem}
+    h2{margin:14px 0 10px;font-size:clamp(1.6rem,2.3vw,2.35rem);line-height:1.08}
+    .lead{margin:0;color:var(--muted);font-size:1.02rem}
+    .searchbox{margin-top:22px;display:grid;grid-template-columns:1fr auto;gap:12px}
+    .searchbox input{width:100%;padding:16px 18px;border-radius:18px;border:1px solid var(--line);font-size:1rem;outline:none;background:#fff}
+    .searchbox input:focus{border-color:#84add8;box-shadow:0 0 0 4px rgba(20,95,158,.12)}
+    .help{margin-top:12px;color:var(--muted);font-size:.94rem}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .chip{padding:10px 12px;border-radius:999px;background:#f6f9fc;border:1px solid var(--line);font-size:.92rem;color:#35506c}
+    .stat{display:grid;gap:12px}
+    .mini{padding:16px 18px;border-radius:18px;background:#f7fbff;border:1px solid #dfeaf5}
+    .mini b{display:block;font-size:1rem;margin-bottom:6px;color:var(--blue)}
+    .results{margin-top:24px;display:grid;gap:16px}
+    .result-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+    .result-head{padding:16px 20px;background:linear-gradient(135deg,#eff6fd,#fbfdff);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+    .status{padding:8px 12px;border-radius:999px;font-weight:800;font-size:.87rem}
+    .status.valid{background:#e7f6ec;color:var(--ok)}
+    .status.anulado{background:#fff2e5;color:var(--warn)}
+    .status.reemplazado{background:#ffe8e8;color:var(--bad)}
+    .grid{padding:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+    .field{padding:14px 15px;border-radius:16px;background:#fbfdff;border:1px solid #e5edf6}
+    .label{display:block;font-size:.8rem;font-weight:800;color:#58708a;text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}
+    .value{font-weight:700;color:#19324b;word-break:break-word}
+    .empty{padding:22px;border:1px dashed #c3d5e8;background:#fbfdff;border-radius:18px;color:#50657b}
+    .footnote{margin-top:18px;color:#60758b;font-size:.9rem}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+    .toolbar input[type=file]{display:none}
+    .upload-label{cursor:pointer}
+    .small{font-size:.88rem;color:#5f7387}
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr}
+      .searchbox{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="seal">AL</div>
+        <div class="title">
+          <h1>Verificación de certificados</h1>
+          <p>Centro de Formación y Capacitación Profesional Altum Lumen</p>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn btn-light" href="index.html">Volver al portal</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="card pad">
+        <span class="eyebrow">🛡️ Consulta web privada institucional</span>
+        <h2>Consulta la validez de cursos, certificados y constancias</h2>
+        <p class="lead">Busca por código, nombre, DNI parcial o correo. La plataforma muestra solo los datos mínimos necesarios para validar el documento.</p>
+
+        <div class="searchbox">
+          <input id="searchInput" type="text" placeholder="Ejemplo: ALT-2026-001 o Jeanfranco Vargas" autocomplete="off"/>
+          <button class="btn btn-primary" id="searchBtn" type="button">Consultar</button>
+        </div>
+        <div class="help">Sugerencia: use primero el código de verificación para encontrar un resultado exacto.</div>
+
+        <div class="toolbar">
+          <label class="btn btn-light upload-label" for="fileInput">Cargar CSV o JSON</label>
+          <input id="fileInput" type="file" accept=".json,.csv"/>
+          <button class="btn btn-light" id="copyLinkBtn" type="button">Copiar enlace de consulta</button>
+          <span class="small" id="datasetInfo">Base actual: datos de ejemplo</span>
+        </div>
+
+        <div class="chips">
+          <span class="chip">Código único</span>
+          <span class="chip">Documento válido / anulado / reemplazado</span>
+          <span class="chip">Base compatible con Excel exportado</span>
+        </div>
+      </div>
+
+      <div class="card pad stat">
+        <div class="mini">
+          <b>Cómo actualizar</b>
+          Reemplace el archivo <code>data/certificados.json</code> o cargue un CSV exportado desde su Excel.
+        </div>
+        <div class="mini">
+          <b>Datos recomendados</b>
+          Código, tipo de documento, nombre, DNI parcial, programa, fecha, horas, estado e institución.
+        </div>
+        <div class="mini">
+          <b>Privacidad</b>
+          No publique DNI completo, pagos, notas u observaciones internas.
+        </div>
+      </div>
+    </section>
+
+    <section class="results" id="results"></section>
+    <p class="footnote">Esta plataforma es una validación institucional privada de Altum Lumen. No reemplaza registros oficiales de SUNEDU ni de otras entidades públicas.</p>
+  </div>
+
+<script>
+const SAMPLE_URL = 'data/certificados.json';
+let dataset = [];
+
+function normalize(v=''){
+  return String(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+}
+
+function escapeHtml(value=''){
+  return String(value)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+
+function parseCsv(text){
+  const lines = text.replace(/\r/g,'').split('\n').filter(Boolean);
+  if(!lines.length) return [];
+  const headers = splitCsvLine(lines[0]).map(h=>h.trim());
+  return lines.slice(1).map(line => {
+    const cols = splitCsvLine(line);
+    const obj = {};
+    headers.forEach((h,i)=>obj[h]=cols[i] ?? '');
+    return obj;
+  });
+}
+
+function splitCsvLine(line){
+  const out=[]; let cur=''; let q=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(c==='"'){
+      if(q && line[i+1]==='"'){cur+='"'; i++;}
+      else {q=!q;}
+    } else if(c===',' && !q){out.push(cur); cur='';}
+    else {cur+=c;}
+  }
+  out.push(cur);
+  return out;
+}
+
+function getStatusClass(status=''){
+  const s = normalize(status);
+  if(s.includes('anul')) return 'anulado';
+  if(s.includes('reempl')) return 'reemplazado';
+  return 'valid';
+}
+
+function render(results, query=''){
+  const root = document.getElementById('results');
+  if(!query){
+    root.innerHTML = '<div class="empty">Ingrese un código, nombre o dato de búsqueda para consultar la base.</div>';
+    return;
+  }
+  if(!results.length){
+    root.innerHTML = '<div class="empty">No se encontró ningún registro con los datos ingresados. Verifique el código o intente con otra variante del nombre.</div>';
+    return;
+  }
+  root.innerHTML = results.map(item => {
+    const status = item.estado || 'Válido';
+    const statusClass = getStatusClass(status);
+    const rows = [
+      ['Participante', item.nombre_completo || item.participante || '—'],
+      ['Documento', item.tipo_documento || item.documento || '—'],
+      ['Programa', item.programa || item.curso || item.actividad || '—'],
+      ['Código', item.codigo || item.id || '—'],
+      ['DNI parcial', item.dni_mask || item.dni || '—'],
+      ['Fecha de emisión', item.fecha_emision || item.fecha || '—'],
+      ['Horas', item.horas || item.creditos || '—'],
+      ['Institución', item.institucion || 'Altum Lumen'],
+      ['Correo', item.correo || '—'],
+      ['Observación', item.observacion || item.observaciones || '—']
+    ];
+    return `
+      <article class="result-card">
+        <div class="result-head">
+          <div>
+            <strong>${escapeHtml(item.codigo || item.id || 'Registro')}</strong><br>
+            <span style="color:#5d7186">${escapeHtml(item.tipo_documento || item.documento || 'Documento')}</span>
+          </div>
+          <span class="status ${statusClass}">${escapeHtml(status)}</span>
+        </div>
+        <div class="grid">
+          ${rows.map(([label,val]) => `<div class="field"><span class="label">${escapeHtml(label)}</span><div class="value">${escapeHtml(val || '—')}</div></div>`).join('')}
+        </div>
+      </article>`;
+  }).join('');
+}
+
+function search(){
+  const q = document.getElementById('searchInput').value.trim();
+  const nq = normalize(q);
+  if(!nq){ render([], ''); return; }
+  const results = dataset.filter(item => {
+    const fields = [item.codigo,item.id,item.nombre_completo,item.participante,item.dni_mask,item.dni,item.programa,item.curso,item.actividad,item.correo,item.tipo_documento,item.documento];
+    return fields.some(v => normalize(v).includes(nq));
+  });
+  render(results, q);
+  const url = new URL(window.location.href);
+  url.searchParams.set('q', q);
+  history.replaceState({}, '', url);
+}
+
+async function loadDefault(){
+  try{
+    const res = await fetch(SAMPLE_URL, {cache:'no-store'});
+    const data = await res.json();
+    dataset = Array.isArray(data) ? data : (data.items || []);
+    document.getElementById('datasetInfo').textContent = `Base actual: ${dataset.length} registros cargados`;
+  }catch(e){
+    dataset = [];
+    document.getElementById('datasetInfo').textContent = 'Base actual: sin datos por defecto';
+  }
+  const q = new URLSearchParams(location.search).get('q') || '';
+  document.getElementById('searchInput').value = q;
+  render([], '');
+  if(q) search();
+}
+
+function handleUpload(ev){
+  const file = ev.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const text = String(reader.result || '');
+      if(file.name.toLowerCase().endsWith('.json')){
+        const data = JSON.parse(text);
+        dataset = Array.isArray(data) ? data : (data.items || []);
+      } else {
+        dataset = parseCsv(text);
+      }
+      document.getElementById('datasetInfo').textContent = `Base actual: ${dataset.length} registros cargados desde ${file.name}`;
+      search();
+    }catch(err){
+      alert('No se pudo leer el archivo cargado. Revise el formato.');
+    }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+function copyLink(){
+  const q = document.getElementById('searchInput').value.trim();
+  const url = new URL(window.location.href);
+  if(q) url.searchParams.set('q', q); else url.searchParams.delete('q');
+  navigator.clipboard.writeText(url.toString()).then(()=>alert('Enlace copiado.'));
+}
+
+document.getElementById('searchBtn').addEventListener('click', search);
+document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
+document.getElementById('fileInput').addEventListener('change', handleUpload);
+document.getElementById('copyLinkBtn').addEventListener('click', copyLink);
+loadDefault();
+</script>
+</body>
+</html>
