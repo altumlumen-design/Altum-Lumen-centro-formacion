@@ -1,192 +1,152 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DINESC | Directorio Nacional de Expertos en Seguridad Ciudadana</title>
-  <meta name="description" content="DINESC - Directorio Nacional de Expertos en Seguridad Ciudadana. Plataforma nacional de visibilidad y posicionamiento profesional." />
+  <meta name="description" content="DINESC - Directorio Nacional de Expertos en Seguridad Ciudadana" />
   <style>
     :root{
-      --navy:#0b1930;
-      --navy-2:#112544;
-      --gold:#cfa85b;
-      --gold-2:#e8d3a0;
-      --sky:#0f6cbd;
-      --teal:#0e8694;
-      --bg:#f4f7fb;
-      --card:#ffffff;
-      --muted:#6c7688;
-      --line:#dfe6f0;
-      --text:#0f1728;
-      --shadow:0 14px 34px rgba(15, 23, 40, .08);
-      --radius:22px;
-      --radius-sm:16px;
-      --container:min(1280px, calc(100% - 32px));
+      --blue:#123a66;
+      --blue-2:#1a4f89;
+      --line:#d9e2ec;
+      --bg:#f5f7fa;
+      --text:#1f2937;
+      --muted:#667085;
+      --white:#ffffff;
+      --head:#eef3f8;
+      --shadow:0 8px 24px rgba(16, 24, 40, .08);
+      --radius:16px;
+      --container:min(1220px, calc(100% - 32px));
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(207,168,91,.13), transparent 20%),
-        linear-gradient(180deg,#f8fafc 0%, #f3f6fb 100%);
+      background:var(--bg);
     }
-    a{text-decoration:none;color:inherit}
     .container{width:var(--container);margin:auto}
     .topbar{
-      position:sticky;top:0;z-index:50;
-      backdrop-filter: blur(16px);
-      background:rgba(255,255,255,.84);
-      border-bottom:1px solid rgba(11,25,48,.08);
+      background:var(--white);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 2px 10px rgba(16,24,40,.04);
     }
-    .topbar .inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+    .topbar .inner{
+      min-height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
     .brand{display:flex;align-items:center;gap:14px}
     .brand-mark{
-      width:52px;height:52px;border-radius:16px;
-      background:linear-gradient(145deg, var(--navy), var(--sky));
-      display:grid;place-items:center;color:white;font-size:24px;
-      box-shadow:0 12px 24px rgba(15,108,189,.22);
+      width:50px;height:50px;border-radius:14px;
+      background:linear-gradient(135deg,var(--blue),var(--blue-2));
+      color:#fff;display:grid;place-items:center;
+      font-size:24px;font-weight:700;
     }
-    .brand h1{margin:0;font-size:1.3rem;letter-spacing:.02em}
-    .brand p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
-    .navlinks{display:flex;gap:10px;flex-wrap:wrap}
-    .navlinks a{
-      padding:12px 16px;border-radius:999px;font-weight:700;font-size:.95rem;
-      color:#334155;
+    .brand h1{margin:0;font-size:1.45rem;color:var(--blue)}
+    .brand p{margin:4px 0 0;font-size:.95rem;color:var(--muted)}
+    .main{padding:26px 0 36px}
+    .panel{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
     }
-    .navlinks a:hover,.navlinks a.active{background:#eaf1fb;color:var(--sky)}
-
-    .hero{padding:42px 0 22px}
-    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
-    .hero-panel{
-      background:
-        radial-gradient(circle at 85% 18%, rgba(207,168,91,.16), transparent 20%),
-        linear-gradient(140deg, #091325 0%, #0f1e39 48%, #0f274c 100%);
-      color:white;border-radius:32px;padding:42px;box-shadow:0 20px 44px rgba(11,25,48,.18);position:relative;overflow:hidden;
+    .panel-head{
+      padding:24px 24px 16px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg,#ffffff 0%, #fbfcfe 100%);
     }
-    .hero-panel::after{
-      content:"";position:absolute;inset:auto -60px -80px auto;width:240px;height:240px;border-radius:50%;
-      background:radial-gradient(circle, rgba(255,255,255,.14), transparent 62%);
+    .panel-head h2{
+      margin:0;
+      font-size:1.55rem;
+      color:var(--blue);
     }
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);font-size:.9rem;color:#d9e6ff}
-    .hero h2{font-size:clamp(2rem, 4vw, 3.55rem);line-height:.98;letter-spacing:-.03em;margin:16px 0 14px}
-    .hero h2 span{color:var(--gold-2)}
-    .hero p{max-width:680px;color:#d7e3f6;font-size:1.04rem;margin:0}
-    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+    .panel-head p{
+      margin:8px 0 0;
+      color:var(--muted);
+      line-height:1.45;
+      max-width:900px;
+      font-size:.96rem;
+    }
+    .toolbar{
+      padding:18px 24px;
+      display:grid;
+      grid-template-columns:220px 220px 1fr 140px;
+      gap:12px;
+      align-items:center;
+      border-bottom:1px solid var(--line);
+      background:#fbfcfe;
+    }
+    .field,
+    .search,
     .btn{
-      appearance:none;border:none;cursor:pointer;padding:15px 20px;border-radius:16px;font-weight:800;font-size:.98rem;
-      display:inline-flex;align-items:center;gap:10px;
+      width:100%;
+      min-height:46px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      font-size:.95rem;
     }
-    .btn-primary{background:linear-gradient(135deg, var(--gold), #e2c57e);color:#1d1403;box-shadow:0 12px 26px rgba(207,168,91,.26)}
-    .btn-secondary{background:rgba(255,255,255,.08);color:white;border:1px solid rgba(255,255,255,.16)}
-    .hero-right{display:grid;gap:16px}
-    .card{background:var(--card);border:1px solid rgba(11,25,48,.07);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .summary-card{padding:22px}
-    .summary-card h3{margin:0 0 6px;font-size:1rem}
-    .summary-card p{margin:0;color:var(--muted);font-size:.96rem}
-    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    .stat{padding:22px;border-radius:22px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(11,25,48,.06)}
-    .stat .num{font-size:1.9rem;font-weight:900;color:var(--navy)}
-    .stat .lab{font-size:.93rem;color:var(--muted);margin-top:6px}
-
-    .section{padding:18px 0 0}
-    .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:10px 0 18px}
-    .section-head h3{margin:0;font-size:1.55rem}
-    .section-head p{margin:6px 0 0;color:var(--muted);max-width:760px}
-    .chips{display:flex;flex-wrap:wrap;gap:10px}
-    .chip{padding:10px 14px;border-radius:999px;background:white;border:1px solid var(--line);font-weight:700;color:#4b5563}
-
-    .toolbar{padding:18px;border-radius:26px;background:white;border:1px solid rgba(11,25,48,.06);box-shadow:var(--shadow)}
-    .toolbar-grid{display:grid;grid-template-columns:180px 220px 1fr 150px;gap:14px;align-items:center}
-    .field, .search{
-      width:100%;border:1px solid var(--line);border-radius:14px;background:#fbfcfe;color:var(--text);padding:14px 14px;font-size:.96rem;outline:none;
+    .field,.search{
+      background:#fff;
+      color:var(--text);
+      padding:0 14px;
+      outline:none;
     }
-    .search-wrap{position:relative}
-    .search-wrap span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#64748b}
-    .search{padding-left:42px}
-    .toolbar-note{margin-top:12px;color:var(--muted);font-size:.92rem}
-
-    .content-grid{display:grid;grid-template-columns:1.7fr .9fr;gap:20px;margin-top:18px}
-    .table-card{overflow:hidden}
-    .table-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 22px;border-bottom:1px solid var(--line)}
-    .table-head h4{margin:0;font-size:1.08rem}
-    .table-meta{color:var(--muted);font-size:.93rem}
-    table{width:100%;border-collapse:collapse}
-    thead th{font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;color:#64748b;background:#f8fafc;padding:15px 18px;text-align:left;border-bottom:1px solid var(--line)}
-    tbody td{padding:16px 18px;border-bottom:1px solid #edf2f7;font-size:.95rem;vertical-align:middle}
-    tbody tr:hover{background:#fafcff}
-    .pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;font-size:.82rem;font-weight:800}
-    .pill.blue{background:#e9f2ff;color:#0f6cbd}
-    .pill.gold{background:#fcf6e8;color:#946e1c}
-    .pill.green{background:#e8f7ef;color:#0e8c5f}
-    .actions{display:flex;gap:8px}
-    .icon-btn{border:none;background:#eef4ff;color:var(--sky);width:38px;height:38px;border-radius:12px;font-weight:900;cursor:pointer}
-    .pager{display:flex;justify-content:space-between;align-items:center;padding:18px 22px}
-    .pager .pages{display:flex;gap:8px;flex-wrap:wrap}
-    .page-btn{width:38px;height:38px;border:1px solid var(--line);background:white;border-radius:12px;cursor:pointer;font-weight:800}
-    .page-btn.active{background:var(--sky);color:white;border-color:var(--sky)}
-
-    .side-stack{display:grid;gap:16px}
-    .highlight{padding:22px}
-    .highlight .title{font-size:1rem;font-weight:800;margin:0 0 10px}
-    .profile-card{padding:18px;border-radius:20px;background:linear-gradient(180deg,#f9fbff,#fff);border:1px solid var(--line)}
-    .profile-top{display:flex;gap:14px;align-items:center}
-    .avatar{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg, var(--navy), var(--sky));display:grid;place-items:center;color:white;font-weight:900}
-    .profile-card h5{margin:0;font-size:1rem}
-    .profile-card p{margin:5px 0 0;color:var(--muted);font-size:.92rem}
-    .kv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-    .kv div{padding:12px;border-radius:14px;background:#f8fafc;border:1px solid #edf2f7}
-    .kv strong{display:block;font-size:.8rem;color:#64748b;margin-bottom:4px}
-    .features{display:grid;gap:12px;margin-top:14px}
-    .feature{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #edf2f7}
-    .feature-bullet{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:#eef4ff;color:var(--sky);font-weight:900;flex:0 0 auto}
-    .feature p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
-
-    .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
-    .benefit{padding:22px;background:white;border:1px solid rgba(11,25,48,.06);border-radius:24px;box-shadow:var(--shadow)}
-    .benefit .ico{font-size:1.6rem}
-    .benefit h4{margin:12px 0 8px;font-size:1.08rem}
-    .benefit p{margin:0;color:var(--muted);font-size:.95rem}
-
-    .cta{padding:26px;margin:28px 0 40px;background:linear-gradient(135deg, #0b1930, #15335f);color:white;border-radius:28px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:0 18px 38px rgba(11,25,48,.2)}
-    .cta h3{margin:0 0 8px;font-size:1.55rem}
-    .cta p{margin:0;color:#d3e1f6;max-width:760px}
-    .cta .btn-secondary{background:rgba(255,255,255,.1)}
-
-    .modal{position:fixed;inset:0;background:rgba(11,25,48,.52);display:none;align-items:center;justify-content:center;padding:18px;z-index:60}
-    .modal.show{display:flex}
-    .modal-card{width:min(760px,100%);background:white;border-radius:26px;box-shadow:0 26px 60px rgba(11,25,48,.24);overflow:hidden}
-    .modal-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-    .close-btn{border:none;background:#f2f5fa;border-radius:12px;width:38px;height:38px;cursor:pointer;font-size:1.1rem}
-    .modal-body{padding:22px 24px 26px}
-    .profile-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-    .detail-list{display:grid;gap:10px}
-    .detail-item{padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #edf2f7}
-    .detail-item strong{display:block;font-size:.78rem;color:#64748b;text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px}
-
-    footer{padding:0 0 30px;color:#64748b;font-size:.93rem}
-
-    @media (max-width: 1080px){
-      .hero-grid,.content-grid,.profile-grid{grid-template-columns:1fr}
-      .toolbar-grid{grid-template-columns:1fr 1fr}
-      .benefits{grid-template-columns:repeat(2,1fr)}
-      .cta{flex-direction:column;align-items:flex-start}
+    .btn{
+      background:var(--blue);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
     }
-    @media (max-width: 720px){
-      .navlinks{display:none}
-      .hero-panel{padding:28px}
-      .toolbar-grid{grid-template-columns:1fr}
-      .stats,.benefits,.kv{grid-template-columns:1fr}
-      .section-head{flex-direction:column;align-items:flex-start}
-      table,thead,tbody,tr,th,td{display:block}
-      thead{display:none}
-      tbody td{padding:10px 18px}
-      tbody tr{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
-      tbody td::before{content:attr(data-label);display:block;font-size:.74rem;text-transform:uppercase;color:#64748b;font-weight:800;margin-bottom:5px}
-      .pager{flex-direction:column;gap:14px}
+    .table-wrap{overflow:auto}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:860px;
+    }
+    thead th{
+      background:var(--head);
+      color:#344054;
+      text-align:left;
+      font-size:.83rem;
+      text-transform:uppercase;
+      letter-spacing:.02em;
+      padding:15px 16px;
+      border-bottom:1px solid var(--line);
+      white-space:nowrap;
+    }
+    tbody td{
+      padding:15px 16px;
+      border-bottom:1px solid #edf2f7;
+      font-size:.95rem;
+      vertical-align:top;
+    }
+    tbody tr:hover{background:#f9fbfd}
+    .muted{color:var(--muted)}
+    .footer-note{
+      padding:14px 24px 20px;
+      font-size:.88rem;
+      color:var(--muted);
+      background:#fff;
+    }
+    .empty{
+      padding:28px 24px;
+      text-align:center;
+      color:var(--muted);
+      display:none;
+    }
+    @media (max-width: 980px){
+      .toolbar{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 640px){
+      .topbar .inner{align-items:flex-start;padding:14px 0}
+      .toolbar{grid-template-columns:1fr}
+      .panel-head h2{font-size:1.28rem}
     }
   </style>
 </head>
@@ -194,434 +154,135 @@
   <header class="topbar">
     <div class="container inner">
       <div class="brand">
-        <div class="brand-mark">🛡️</div>
+        <div class="brand-mark">🛡</div>
         <div>
           <h1>DINESC</h1>
           <p>Directorio Nacional de Expertos en Seguridad Ciudadana</p>
         </div>
       </div>
-      <nav class="navlinks">
-        <a class="active" href="#inicio">Inicio</a>
-        <a href="#directorio">Directorio</a>
-        <a href="#beneficios">Beneficios</a>
-        <a href="#incorporacion">Incorporación</a>
-      </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero" id="inicio">
-      <div class="container hero-grid">
-        <div class="hero-panel">
-          <span class="eyebrow">Plataforma nacional · visibilidad profesional · posicionamiento</span>
-          <h2>Haz que tu perfil profesional <span>forme parte</span> de algo grande.</h2>
+  <main class="main">
+    <div class="container">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Directorio institucional</h2>
           <p>
-            DINESC reúne perfiles de expertos, especialistas y profesionales vinculados a la seguridad ciudadana en un entorno serio, moderno y de alcance nacional. La idea no es solo aparecer: es proyectar prestigio, trayectoria y confianza.
+            Relación referencial de profesionales vinculados a la seguridad ciudadana. La información visible se presenta de forma resumida y ordenada, priorizando datos básicos de identificación profesional y contacto.
           </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#directorio">Explorar directorio</a>
-            <a class="btn btn-secondary" href="#incorporacion">Solicitar incorporación</a>
-          </div>
-        </div>
-        <div class="hero-right">
-          <div class="card summary-card">
-            <h3>Cómo debe sentirse DINESC</h3>
-            <p>No como un simple padrón. Debe verse como una plataforma nacional selecta, ordenada y aspiracional, donde pertenecer ya transmite valor.</p>
-          </div>
-          <div class="stats">
-            <div class="card stat"><div class="num">1,280+</div><div class="lab">Perfiles visibles a nivel nacional</div></div>
-            <div class="card stat"><div class="num">26</div><div class="lab">Regiones con presencia profesional</div></div>
-            <div class="card stat"><div class="num">3</div><div class="lab">Líneas de especialidad principal</div></div>
-            <div class="card stat"><div class="num">94%</div><div class="lab">Perfiles con experiencia pública o territorial</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="directorio">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h3>Directorio nacional</h3>
-            <p>Así sí se ve potente: una sola hoja, con filtros, buscador, métricas, visual de prestigio y un listado bien presentado. Más abajo se puede abrir el detalle de cada perfil sin salir de la misma pantalla.</p>
-          </div>
-          <div class="chips">
-            <span class="chip">Defensa Nacional</span>
-            <span class="chip">Orden Público</span>
-            <span class="chip">Criminología</span>
-          </div>
         </div>
 
-        <div class="toolbar card">
-          <div class="toolbar-grid">
-            <select class="field" id="specFilter">
-              <option value="all">Todas las especialidades</option>
-              <option value="Defensa Nacional">Defensa Nacional</option>
-              <option value="Orden Público">Orden Público</option>
-              <option value="Criminología">Criminología</option>
-            </select>
-            <select class="field" id="regionFilter">
-              <option value="all">Todas las regiones</option>
-              <option value="Lima">Lima</option>
-              <option value="Callao">Callao</option>
-              <option value="Arequipa">Arequipa</option>
-              <option value="Cusco">Cusco</option>
-              <option value="Piura">Piura</option>
-              <option value="La Libertad">La Libertad</option>
-            </select>
-            <div class="search-wrap">
-              <span>⌕</span>
-              <input class="search" id="searchInput" type="search" placeholder="Buscar por nombre, profesión, región o institución..." />
-            </div>
-            <button class="btn btn-primary" type="button" id="clearFilters">Limpiar filtros</button>
-          </div>
-          <div class="toolbar-note">Propuesta visual recomendada: mantener todo en una sola hoja, con detalle emergente al hacer clic en “ver perfil”. Se ve más moderno y transmite mejor control y jerarquía.</div>
+        <div class="toolbar">
+          <select class="field" id="regionFilter">
+            <option value="">Todas las regiones</option>
+          </select>
+
+          <select class="field" id="professionFilter">
+            <option value="">Todas las profesiones</option>
+          </select>
+
+          <input class="search" id="searchInput" type="text" placeholder="Buscar por nombres, apellidos, profesión o región" />
+
+          <button class="btn" id="clearBtn" type="button">Limpiar</button>
         </div>
 
-        <div class="content-grid">
-          <div class="card table-card">
-            <div class="table-head">
-              <div>
-                <h4>Perfiles destacados y consultables</h4>
-                <div class="table-meta"><span id="countLabel">8 perfiles visibles</span> · vista tipo directorio nacional</div>
-              </div>
-              <span class="pill gold">Verificación documental interna</span>
-            </div>
-            <div style="overflow:auto;">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Profesión</th>
-                    <th>Especialidad</th>
-                    <th>Región</th>
-                    <th>Experiencia</th>
-                    <th>Estado</th>
-                    <th>Acción</th>
-                  </tr>
-                </thead>
-                <tbody id="directoryBody"></tbody>
-              </table>
-            </div>
-            <div class="pager">
-              <div class="table-meta">Página demostrativa del módulo</div>
-              <div class="pages">
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-              </div>
-            </div>
-          </div>
-
-          <aside class="side-stack">
-            <div class="card highlight">
-              <p class="title">Qué más conviene colocar aquí</p>
-              <div class="features">
-                <div class="feature">
-                  <div class="feature-bullet">★</div>
-                  <div><strong>Insignias de posicionamiento</strong><p>Verificado, destacado, docente, consultor, exfuncionario, especialista territorial.</p></div>
-                </div>
-                <div class="feature">
-                  <div class="feature-bullet">✓</div>
-                  <div><strong>Vista pública limpia</strong><p>Sin DNI ni datos sensibles expuestos. Solo lo necesario para proyectar profesionalismo.</p></div>
-                </div>
-                <div class="feature">
-                  <div class="feature-bullet">↗</div>
-                  <div><strong>Detalle sin salir de la hoja</strong><p>Al hacer clic, se abre una ficha elegante del perfil dentro del mismo módulo.</p></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card highlight">
-              <p class="title">Perfil ejemplo</p>
-              <div class="profile-card" id="sampleCard"></div>
-            </div>
-          </aside>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Apellidos y nombres</th>
+                <th>Profesión</th>
+                <th>Región</th>
+                <th>Correo electrónico</th>
+                <th>Teléfono</th>
+              </tr>
+            </thead>
+            <tbody id="directoryBody"></tbody>
+          </table>
         </div>
-      </div>
-    </section>
 
-    <section class="section" id="beneficios">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h3>Lo que transmite esta plataforma</h3>
-            <p>Los beneficios pueden existir, pero el mensaje principal debe ser pertenencia, visibilidad y reputación. Lo demás se siente como valor agregado.</p>
-          </div>
-        </div>
-        <div class="benefits">
-          <div class="benefit"><div class="ico">🏛️</div><h4>Presencia nacional</h4><p>Da sensación de alcance institucional y proyección más allá del círculo local o municipal.</p></div>
-          <div class="benefit"><div class="ico">👤</div><h4>Prestigio profesional</h4><p>Formar parte del directorio se percibe como señal de experiencia, seriedad y trayectoria.</p></div>
-          <div class="benefit"><div class="ico">🔎</div><h4>Búsqueda ordenada</h4><p>Permite que instituciones o interesados identifiquen perfiles con rapidez y confianza.</p></div>
-          <div class="benefit"><div class="ico">📈</div><h4>Posicionamiento personal</h4><p>El perfil se convierte en carta de presentación pública y diferenciada dentro del sector.</p></div>
-        </div>
-      </div>
-    </section>
+        <div class="empty" id="emptyState">No se encontraron registros con los filtros aplicados.</div>
 
-    <section class="section" id="incorporacion">
-      <div class="container">
-        <div class="cta">
-          <div>
-            <h3>Solicitud de incorporación a DINESC</h3>
-            <p>En una siguiente versión se puede añadir el formulario real de postulación o validación documental. Por ahora te lo dejo como una landing/directorio elegante, lista para impresionar visualmente y luego escalar a sistema.</p>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <button class="btn btn-primary" type="button">Solicitar evaluación</button>
-            <button class="btn btn-secondary" type="button">Descargar brochure</button>
-          </div>
+        <div class="footer-note">
+          DINESC muestra únicamente información básica del perfil. No se publican datos innecesarios o sensibles como DNI, experiencia detallada, estado interno o acciones de gestión.
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
-  <div class="modal" id="profileModal" aria-hidden="true">
-    <div class="modal-card">
-      <div class="modal-head">
-        <strong>Ficha pública del perfil</strong>
-        <button class="close-btn" id="closeModal">✕</button>
-      </div>
-      <div class="modal-body" id="modalContent"></div>
-    </div>
-  </div>
-
-  <footer>
-    <div class="container">DINESC · Directorio Nacional de Expertos en Seguridad Ciudadana · propuesta visual de una sola hoja.</div>
-  </footer>
-
   <script>
-    const experts = [
-      {
-        nombre: 'Óscar Felipe Moreno Tupia',
-        profesion: 'Abogado · Cmdte. PNP (r)',
-        especialidad: 'Orden Público',
-        region: 'Lima',
-        experiencia: '18 años',
-        estado: 'Verificado',
-        insignia: 'Consultor estratégico',
-        institucion: 'Gestión municipal y seguridad territorial',
-        resumen: 'Especialista con trayectoria en gerencia de seguridad ciudadana, conducción operativa y articulación territorial.',
-        fortalezas: ['Seguridad ciudadana', 'Gestión operativa', 'Coordinación institucional'],
-        disponibilidad: 'Consultoría · ponencias · dirección estratégica'
-      },
-      {
-        nombre: 'María Fernanda Salazar Rojas',
-        profesion: 'Socióloga',
-        especialidad: 'Criminología',
-        region: 'Cusco',
-        experiencia: '11 años',
-        estado: 'Perfil destacado',
-        insignia: 'Investigación social',
-        institucion: 'Observatorios y prevención de violencia',
-        resumen: 'Profesional enfocada en análisis del delito, prevención social y estudios de violencia urbana.',
-        fortalezas: ['Criminología aplicada', 'Prevención', 'Investigación'],
-        disponibilidad: 'Investigación · capacitación · asistencia técnica'
-      },
-      {
-        nombre: 'Ricardo Paredes Villacorta',
-        profesion: 'Coronel EP (r)',
-        especialidad: 'Defensa Nacional',
-        region: 'Arequipa',
-        experiencia: '22 años',
-        estado: 'Verificado',
-        insignia: 'Alta experiencia',
-        institucion: 'Planeamiento y seguridad estratégica',
-        resumen: 'Especialista en doctrina, gestión de crisis y enfoque estratégico para entornos institucionales y públicos.',
-        fortalezas: ['Defensa', 'Gestión de crisis', 'Planeamiento'],
-        disponibilidad: 'Asesoría · formación · evaluación'
-      },
-      {
-        nombre: 'José Antonio Valdivia León',
-        profesion: 'Administrador público',
-        especialidad: 'Orden Público',
-        region: 'Piura',
-        experiencia: '9 años',
-        estado: 'Verificado',
-        insignia: 'Gestión municipal',
-        institucion: 'Seguridad ciudadana municipal',
-        resumen: 'Experiencia en diseño de estrategias locales, monitoreo y fortalecimiento de servicios de serenazgo.',
-        fortalezas: ['Gestión municipal', 'Indicadores', 'Supervisión'],
-        disponibilidad: 'Consultoría · jefatura · asistencia técnica'
-      },
-      {
-        nombre: 'Rosa Elena Tello Vizcarra',
-        profesion: 'Psicóloga',
-        especialidad: 'Criminología',
-        region: 'La Libertad',
-        experiencia: '13 años',
-        estado: 'Perfil destacado',
-        insignia: 'Prevención de violencia',
-        institucion: 'Programas de intervención y prevención',
-        resumen: 'Profesional con trabajo en prevención conductual, violencia familiar y estrategias de intervención temprana.',
-        fortalezas: ['Prevención', 'Conducta', 'Programas territoriales'],
-        disponibilidad: 'Programas · talleres · acompañamiento técnico'
-      },
-      {
-        nombre: 'Luis Enrique Gamarra Soto',
-        profesion: 'Oficial FAP (r)',
-        especialidad: 'Defensa Nacional',
-        region: 'Callao',
-        experiencia: '17 años',
-        estado: 'Verificado',
-        insignia: 'Seguridad institucional',
-        institucion: 'Defensa, riesgos y continuidad operativa',
-        resumen: 'Trayectoria en seguridad integral, análisis estratégico y gestión de riesgos en escenarios críticos.',
-        fortalezas: ['Seguridad integral', 'Continuidad operativa', 'Evaluación de riesgos'],
-        disponibilidad: 'Asesoría · evaluación · entrenamiento'
-      },
-      {
-        nombre: 'Andrea Lucía Montoya Silva',
-        profesion: 'Abogada',
-        especialidad: 'Criminología',
-        region: 'Lima',
-        experiencia: '8 años',
-        estado: 'Nuevo perfil',
-        insignia: 'Política criminal',
-        institucion: 'Asesoría jurídica y análisis del delito',
-        resumen: 'Enfoque en política criminal, prevención y articulación jurídica en temas de violencia y seguridad.',
-        fortalezas: ['Análisis normativo', 'Prevención', 'Enfoque jurídico'],
-        disponibilidad: 'Consultoría · docencia · contenido especializado'
-      },
-      {
-        nombre: 'Carlos Alberto Ponce Quispe',
-        profesion: 'Lic. en Administración',
-        especialidad: 'Orden Público',
-        region: 'Lima',
-        experiencia: '15 años',
-        estado: 'Verificado',
-        insignia: 'Operaciones territoriales',
-        institucion: 'Operaciones, supervisión y control urbano',
-        resumen: 'Especialista en ejecución operativa, seguimiento territorial y organización de servicios vinculados a la seguridad local.',
-        fortalezas: ['Operaciones', 'Supervisión', 'Territorio'],
-        disponibilidad: 'Gerencia · supervisión · asistencia técnica'
-      }
+    const records = [
+      { nombre: 'Óscar Felipe Moreno Tupia', profesion: 'Abogado', region: 'Lima', correo: 'direccionacademica.altumlumen@gmail.com', telefono: '928 928 767' },
+      { nombre: 'Jeanfranco Martin Vargas Luque', profesion: 'Abogado', region: 'Lima', correo: 'jvargasl.consultor@gmail.com', telefono: '938 796 261' },
+      { nombre: 'María Fernanda Salazar Campos', profesion: 'Psicóloga', region: 'Arequipa', correo: 'mfsalazar@example.com', telefono: '987 421 365' },
+      { nombre: 'Luis Alberto Gamarra Huamán', profesion: 'Sociólogo', region: 'Cusco', correo: 'lagamarra@example.com', telefono: '964 318 220' },
+      { nombre: 'Carlos Enrique Rojas Paredes', profesion: 'Ingeniero Industrial', region: 'La Libertad', correo: 'crojas@example.com', telefono: '985 604 119' },
+      { nombre: 'Rosa Milagros Cueva León', profesion: 'Criminóloga', region: 'Piura', correo: 'rmcueva@example.com', telefono: '952 880 471' },
+      { nombre: 'Jorge Luis Medina Alarcón', profesion: 'Administrador', region: 'Junín', correo: 'jlmedina@example.com', telefono: '973 114 528' },
+      { nombre: 'Patricia Elena Vera Mendoza', profesion: 'Abogada', region: 'Lambayeque', correo: 'pevera@example.com', telefono: '989 305 642' }
     ];
 
     const body = document.getElementById('directoryBody');
-    const countLabel = document.getElementById('countLabel');
-    const sampleCard = document.getElementById('sampleCard');
-    const modal = document.getElementById('profileModal');
-    const modalContent = document.getElementById('modalContent');
-    const specFilter = document.getElementById('specFilter');
+    const emptyState = document.getElementById('emptyState');
     const regionFilter = document.getElementById('regionFilter');
+    const professionFilter = document.getElementById('professionFilter');
     const searchInput = document.getElementById('searchInput');
-    const clearFilters = document.getElementById('clearFilters');
+    const clearBtn = document.getElementById('clearBtn');
 
-    function pillClass(status){
-      if(status.toLowerCase().includes('destacado')) return 'gold';
-      if(status.toLowerCase().includes('nuevo')) return 'green';
-      return 'blue';
+    function uniqueValues(key){
+      return [...new Set(records.map(r => r[key]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
     }
 
-    function renderTable(list){
-      body.innerHTML = '';
-      list.forEach((item, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td data-label="Nombre"><strong>${item.nombre}</strong><br><span style="color:#64748b;font-size:.88rem;">${item.institucion}</span></td>
-          <td data-label="Profesión">${item.profesion}</td>
-          <td data-label="Especialidad"><span class="pill blue">${item.especialidad}</span></td>
-          <td data-label="Región">${item.region}</td>
-          <td data-label="Experiencia">${item.experiencia}</td>
-          <td data-label="Estado"><span class="pill ${pillClass(item.estado)}">${item.estado}</span></td>
-          <td data-label="Acción"><div class="actions"><button class="icon-btn" title="Ver perfil" data-index="${experts.indexOf(item)}">👁</button></div></td>
-        `;
-        body.appendChild(tr);
+    function fillSelect(select, values){
+      values.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        select.appendChild(opt);
       });
-      countLabel.textContent = `${list.length} perfiles visibles`;
-      body.querySelectorAll('.icon-btn').forEach(btn => btn.addEventListener('click', e => openProfile(+e.currentTarget.dataset.index)));
     }
 
-    function renderSample(item){
-      sampleCard.innerHTML = `
-        <div class="profile-top">
-          <div class="avatar">${item.nombre.split(' ').map(w => w[0]).slice(0,2).join('')}</div>
-          <div>
-            <h5>${item.nombre}</h5>
-            <p>${item.profesion}</p>
-          </div>
-        </div>
-        <div class="kv">
-          <div><strong>Especialidad</strong>${item.especialidad}</div>
-          <div><strong>Región</strong>${item.region}</div>
-          <div><strong>Experiencia</strong>${item.experiencia}</div>
-          <div><strong>Insignia</strong>${item.insignia}</div>
-        </div>
-      `;
-    }
-
-    function openProfile(index){
-      const item = experts[index];
-      modalContent.innerHTML = `
-        <div class="profile-grid">
-          <div>
-            <div class="profile-top" style="margin-bottom:16px;">
-              <div class="avatar" style="width:72px;height:72px;border-radius:22px;font-size:1.15rem;">${item.nombre.split(' ').map(w => w[0]).slice(0,2).join('')}</div>
-              <div>
-                <h3 style="margin:0 0 6px;font-size:1.35rem;">${item.nombre}</h3>
-                <div style="color:#64748b;">${item.profesion}</div>
-                <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                  <span class="pill blue">${item.especialidad}</span>
-                  <span class="pill ${pillClass(item.estado)}">${item.estado}</span>
-                  <span class="pill gold">${item.insignia}</span>
-                </div>
-              </div>
-            </div>
-            <div class="detail-list">
-              <div class="detail-item"><strong>Resumen profesional</strong>${item.resumen}</div>
-              <div class="detail-item"><strong>Disponibilidad</strong>${item.disponibilidad}</div>
-              <div class="detail-item"><strong>Fortalezas principales</strong>${item.fortalezas.join(' · ')}</div>
-            </div>
-          </div>
-          <div class="detail-list">
-            <div class="detail-item"><strong>Institución o ámbito</strong>${item.institucion}</div>
-            <div class="detail-item"><strong>Región</strong>${item.region}</div>
-            <div class="detail-item"><strong>Experiencia</strong>${item.experiencia}</div>
-            <div class="detail-item"><strong>Nota</strong>La versión pública puede mostrar solo información estratégica del perfil. Los datos sensibles deben quedar reservados para administración interna.</div>
-          </div>
-        </div>
-      `;
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden','false');
-    }
-
-    function applyFilters(){
-      const spec = specFilter.value;
-      const region = regionFilter.value;
+    function render(){
       const q = searchInput.value.trim().toLowerCase();
-      const list = experts.filter(item => {
-        const okSpec = spec === 'all' || item.especialidad === spec;
-        const okRegion = region === 'all' || item.region === region;
-        const haystack = `${item.nombre} ${item.profesion} ${item.region} ${item.institucion} ${item.especialidad}`.toLowerCase();
-        const okSearch = !q || haystack.includes(q);
-        return okSpec && okRegion && okSearch;
+      const region = regionFilter.value;
+      const profession = professionFilter.value;
+
+      const filtered = records.filter(r => {
+        const matchesRegion = !region || r.region === region;
+        const matchesProfession = !profession || r.profesion === profession;
+        const text = `${r.nombre} ${r.profesion} ${r.region} ${r.correo} ${r.telefono}`.toLowerCase();
+        const matchesText = !q || text.includes(q);
+        return matchesRegion && matchesProfession && matchesText;
       });
-      renderTable(list);
-      renderSample(list[0] || experts[0]);
+
+      body.innerHTML = filtered.map(r => `
+        <tr>
+          <td>${r.nombre}</td>
+          <td>${r.profesion}</td>
+          <td>${r.region}</td>
+          <td>${r.correo}</td>
+          <td>${r.telefono}</td>
+        </tr>
+      `).join('');
+
+      emptyState.style.display = filtered.length ? 'none' : 'block';
     }
 
-    specFilter.addEventListener('change', applyFilters);
-    regionFilter.addEventListener('change', applyFilters);
-    searchInput.addEventListener('input', applyFilters);
-    clearFilters.addEventListener('click', () => {
-      specFilter.value = 'all';
-      regionFilter.value = 'all';
+    fillSelect(regionFilter, uniqueValues('region'));
+    fillSelect(professionFilter, uniqueValues('profesion'));
+
+    regionFilter.addEventListener('change', render);
+    professionFilter.addEventListener('change', render);
+    searchInput.addEventListener('input', render);
+    clearBtn.addEventListener('click', () => {
+      regionFilter.value = '';
+      professionFilter.value = '';
       searchInput.value = '';
-      applyFilters();
+      render();
     });
 
-    document.getElementById('closeModal').addEventListener('click', () => {
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden','true');
-    });
-    modal.addEventListener('click', (e) => {
-      if(e.target === modal){
-        modal.classList.remove('show');
-        modal.setAttribute('aria-hidden','true');
-      }
-    });
-
-    renderTable(experts);
-    renderSample(experts[0]);
+    render();
   </script>
 </body>
 </html>
