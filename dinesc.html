@@ -32,7 +32,7 @@
     html { scroll-behavior:smooth; }
     body {
       margin:0;
-      font-family:"Segoe UI", Arial, Helvetica, sans-serif;
+      font-family:'Segoe UI','Aptos','Helvetica Neue',Arial,sans-serif;
       color:var(--text);
       background:
         radial-gradient(circle at top right, rgba(181,18,27,.06), transparent 24%),
@@ -131,19 +131,19 @@
     }
     .hero h2 {
       margin:0;
-      max-width:880px;
-      font-size:clamp(2.3rem, 4vw, 3.65rem);
-      line-height:1.06;
+      max-width:860px;
+      font-size:clamp(1.8rem, 3vw, 2.55rem);
+      line-height:1.12;
       color:var(--navy-deep);
       font-weight:800;
-      letter-spacing:-.03em;
+      letter-spacing:-.028em;
     }
     .hero p.lead {
       margin:18px 0 0;
       max-width:920px;
       color:var(--navy-soft);
-      line-height:1.72;
-      font-size:1.08rem;
+      line-height:1.78;
+      font-size:1.02rem;
     }
     .hero-meta {
       background:linear-gradient(180deg, rgba(16,43,74,.90) 0%, rgba(47,68,92,.88) 100%);
@@ -280,18 +280,16 @@
     .mail-link { color:var(--navy); font-weight:700; }
     .mail-link:hover { color:var(--red); }
     .badge-date {
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:linear-gradient(180deg, #f8ecdb 0%, #edd09a 100%);
-      color:#7b5b18;
-      border:1px solid #d9ba76;
-      font-size:.84rem;
-      font-weight:800;
+      display:inline;
+      padding:0;
+      border-radius:0;
+      background:none;
+      color:var(--text);
+      border:none;
+      font-size:.95rem;
+      font-weight:400;
       white-space:nowrap;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+      box-shadow:none;
     }
     .empty {
       padding:30px 24px;
@@ -354,30 +352,72 @@
     .qr-wrap {
       margin-top:16px;
       display:grid;
-      grid-template-columns:104px 1fr;
-      gap:14px;
+      grid-template-columns:184px 1fr;
+      gap:16px;
       align-items:center;
     }
     .qr-wrap img {
-      width:104px;
-      height:104px;
-      border-radius:14px;
+      width:184px;
+      height:184px;
+      border-radius:16px;
       background:#fff;
       padding:8px;
-      border:1px solid rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.22);
+      image-rendering:crisp-edges;
+      image-rendering:pixelated;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
     }
-    .qr-caption { font-size:.93rem; line-height:1.6; color:#d9e5f2; }
-    .contact-mail {
-      margin-top:12px;
-      display:block;
-      color:#fff;
-      font-weight:800;
-      word-break:break-word;
-    }
+    .qr-caption { font-size:.94rem; line-height:1.68; color:#d9e5f2; }
     .section-divider {
       height:1px;
       background:linear-gradient(90deg, rgba(213,221,230,0) 0%, rgba(213,221,230,1) 18%, rgba(213,221,230,1) 82%, rgba(213,221,230,0) 100%);
       margin:20px 0;
+    }
+
+    .site-footer {
+      margin-top:8px;
+      background:linear-gradient(180deg, #102640 0%, #0b1c2f 100%);
+      color:#dbe6f1;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .footer-inner {
+      min-height:92px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:22px 0;
+      flex-wrap:wrap;
+    }
+    .footer-copy {
+      font-size:.95rem;
+      line-height:1.6;
+    }
+    .footer-links {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .footer-btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:44px;
+      padding:0 16px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-weight:700;
+      transition:.2s ease;
+    }
+    .footer-btn:hover {
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.14);
+    }
+    .footer-btn.secondary {
+      background:rgba(181,18,27,.16);
+      border-color:rgba(181,18,27,.34);
     }
 
     @media (max-width:1140px) {
@@ -392,11 +432,35 @@
       .brand h1 { font-size:1.68rem; }
       .brand p { font-size:.96rem; }
       .hero-inner { padding:42px 0 36px; }
-      .hero h2 { font-size:2.2rem; }
+      .hero h2 {
+      margin:0;
+      max-width:860px;
+      font-size:clamp(1.8rem, 3vw, 2.55rem);
+      line-height:1.12;
+      color:var(--navy-deep);
+      font-weight:800;
+      letter-spacing:-.028em;
+    }
       .toolbar { grid-template-columns:1fr; }
       .panel-head, .side-card { padding:20px; }
-      .qr-wrap { grid-template-columns:1fr; }
-      .qr-wrap img { width:120px; height:120px; }
+      .qr-wrap {
+      margin-top:16px;
+      display:grid;
+      grid-template-columns:184px 1fr;
+      gap:16px;
+      align-items:center;
+    }
+      .qr-wrap img {
+      width:184px;
+      height:184px;
+      border-radius:16px;
+      background:#fff;
+      padding:8px;
+      border:1px solid rgba(255,255,255,.22);
+      image-rendering:crisp-edges;
+      image-rendering:pixelated;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
     }
   </style>
 </head>
@@ -418,8 +482,10 @@
   <section class="hero">
     <div class="container hero-inner">
       <div>
-        <h2>El Directorio Nacional de Expertos en Seguridad Ciudadana reúne perfiles profesionales sujetos a incorporación y evaluación institucional.</h2>
-        <p class="lead">DINESC es una plataforma institucional de identificación, incorporación y visibilización de expertos vinculados a la seguridad ciudadana. La publicación de perfiles responde a criterios de formación y experiencia en el rubro, debidamente acreditadas, a fin de consolidar un espacio serio de articulación académica, técnica y profesional.</p>
+        <h2>Directorio Nacional de Expertos en Seguridad Ciudadana</h2>
+        <p class="lead">
+            DINESC reúne perfiles evaluados de expertos vinculados a la seguridad ciudadana y constituye una plataforma institucional de identificación, incorporación y visibilización profesional. Su finalidad es fortalecer la articulación académica, técnica y profesional en el rubro, así como facilitar la captación de talento especializado para iniciativas, convocatorias y espacios de colaboración. La incorporación al directorio se encuentra sujeta a evaluación institucional, considerando la formación y la experiencia acreditadas mediante documentación sustentatoria.
+          </p>
       </div>
 
       <aside class="hero-meta">
@@ -447,7 +513,7 @@
       <section class="panel">
         <div class="panel-head">
           <h3>Directorio institucional</h3>
-          <p>El presente directorio organiza la información profesional esencial de sus integrantes y facilita la consulta de perfiles por profesión, región y fecha de incorporación.</p>
+          <p>El presente directorio organiza la información profesional esencial de sus integrantes y facilita la consulta de perfiles por profesión, región, fecha de incorporación y correo electrónico institucional publicado.</p>
         </div>
 
         <div class="toolbar">
@@ -517,18 +583,25 @@
         <section class="side-card qr-card">
           <div class="mini-title" style="color:#f3c8cc;">Solicitud de incorporación</div>
           <h4 style="color:#fff;">Escanee el QR para iniciar su solicitud</h4>
-          <p style="color:#d9e5f2;">El código abre un correo prellenado dirigido al buzón institucional para la remisión del currículum vitae documentado.</p>
+          <p style="color:#d9e5f2;">El código abre un correo prellenado para remitir el currículum vitae documentado y solicitar la evaluación institucional correspondiente.</p>
           <div class="qr-wrap">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAugAAALoCAIAAAClOJfHAAAe7klEQVR4nO3cwY3lSnIFUJVQDsgPeSJ75Yn8kAlPi1lJmPyaGEQg4r4+Z9l4lSSTSfYFgbw/n8/nXwAAEvzr9gkAAPyjBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQIzf6h/827//x8R5tPvv//rPv/vvr/Ov/v5bz+elep7VcV6q41ePu3Vfuq6r6trzO31/q6afi/R1eO18XrbWw8v0czf9/8W06jz74gIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADHKPS4vKb0UW+dZNb3/vmvetsaZPm51nVzrw6i61pfz8hpnuk/oZauvpWp6nK2ep5dr57nVm/WS8v/1iy8uAEAMwQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQo63H5WV6X/41Kfvsr/WIvFzrh5juV5g23dfS9fvqOFvPy0tXD1D6envZep+8TPdCVe9jes/K9Pn74gIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADHGe1yume5jSOknmO6NqPYZdLnWezE9/9N9Kl19JC/T92tr/Xedz1av0vR7YPq6tp6j6X6Xa++3Lb64AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBAjD+ux6Wqq/fiWr/Ly3R/wHQfRtfvq7rG75rPlD6Ma8/Ltd6UrfG3nutrvVnT56Ov5Z/jiwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQY73FJ33de3We/1Z/xstWL0HXcrX6Il62ehmt9FV3jT/eLbJleb9PzkN4jcq2HJr3H6xpfXACAGIILABBDcAEAYgguAEAMwQUAiCG4AAAxBBcAIEZbj0vKPvWX6b6NlN+/pJx/dR2an7+21edxbX5S5jNlfqbfVy/Xzn9rftL/v/bFBQCIIbgAADEEFwAghuACAMQQXACAGIILABBDcAEAYpR7XKb7G66Z7g+o/n66T2L6fLr6Ubpc6yN5SembeenqjbjWh1GV/v7sWg9d46fMp/XWyxcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIUe5xmd6PPt0nseVaX0jKfHatt+nrmn4uuq73Nc7Wepi+rq7z3+qtqUrpQdFr8jdb67PL9PP74osLABBDcAEAYgguAEAMwQUAiCG4AAAxBBcAIIbgAgDEKPe4dOnad36tv2S6R2Fr3/9WP8T0/b3W/7E1/vT6r7rWH7O1rq71jrx0XW9679RWn1mX6fvVxRcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIUe5xSekdmR6nanreusb/1j6Ga70y07b6il665merx+J13Ok+mJeu85xeD9P3a6tfJ6UHa/q52/r/1BcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCI8fP5fEp/sNUDUdW1fz2lX+Rab0qXa+tkev1Pr9ut3otrrs1n9bhdUp6vrd93udb7cm0eqsf1xQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGL8Vv+gq9chpQfiW/fTd7k2P1t9Cdd6Eaqq55nS79I1/1t9Sy9bfTApz/XL1vOb0o9ybZwXX1wAgBiCCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACBGucelqyej67jVffnX+gD0fPxzpvtCrvXTVG31fLxMn096z8q3unbfr/XZbI1fdW3efHEBAGIILgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAY5R6Xrt6Urp6PrX3/Xdc13ReS0hNTdW2eU2z1+nSZ7sm4ZqtPaMv0/wvTfUvX3ifT//9O93W9+OICAMQQXACAGIILABBDcAEAYgguAEAMwQUAiCG4AAAxfj6fT+kPvnXf/7V+iK3rSpm3lH6a9P6Ga30P070R6c9dSu/I9P8j13qYttbPtXXSNY4vLgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEKPc49Jlel/4Nem9DtXjvlzrR9nqsXi5Nj9V13pZqsd92Tqfb+3nSO+b+dbjdpk+f19cAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAgxm/1D6b3Z0/3iFSP29Uz0TVv134/3TvSNc/V43bZmp9rPShd43c9p9VxUvozrvU5Tb/3rvUGXetfudav0zU/vrgAADEEFwAghuACAMQQXACAGIILABBDcAEAYgguAECMco9L1VaPxfQ+8qqtnpuXrvPZ6o241ifUZbp3p6qrB6XruCl9Hlv3JeU99jLdr3NtnXSZ7ruafh6rfHEBAGIILgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAYP5/Pp/QHW/0B1/patva1b81z1XS/QpfpXpBvdW2dTI+z9d6r+tPez9PjVFmHf63r/H1xAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGL/VP7jWz7G1j/9af0yXrZ6ba+vqJaWXost0z0TKvP1p/UzT9/dla/2n9L68XHtOp++jLy4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGIILABCj3ONStdWnUh2/uh99up9gq6ckfX9/13xWz2frPm6tq611UpXSe/TS1Yd0rXck/b3XNc50v06Xa/fLFxcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBADMEFAIhR7nGZ3u/+cm0f+ctWj0JK/8q13ovqOC9dvRpd83Otv2T699d6X6bv+9bzeK0vJGWeq7b6kK71qL344gIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADF+Pp/PyoGn94t3Hfdla//6tZ6Jaz06L13nv7UO0/tvpuft2vz8ab0jVenv4er4L9fuy8u19emLCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACCG4AIAxCj3uHTtU9/aF56+j/9ab8pWP8fW76uujT/dZ3NtnGnX7uNL+nu7a5yt/phpKf1bXfPmiwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQo97hUXds3v9Xjcq1XYKvnY8u3znOXa30wVdfeM12u9fGkvIerx+2Svp5T/v/yxQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGK09bhs7fvfMt1/kN6b8rLV31CV0qdSHafLdH/D9HP0rfO89b7dmofp/qFr67M6TlVKn5MvLgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEKPc47K1372qax/5dJ/H9D74a/v7X671BFzrcUm39Rx1udZr8rL1HF07btW39t9UpZy/Ly4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGIILABCjrccl3XTPR0pPwFa/QkrPStXW/FSlrOeqa/PWZet5SX+fpPSQvVx77+lxAQD4fwguAEAMwQUAiCG4AAAxBBcAIIbgAgDEEFwAgBgxPS7XeiO6+gym+wO2ehSq479c61241qNQtXV/u+7jlm9db9d6mLbeDy8p9336uNfG98UFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBi/Fb/4No+++l9513jdB23er1bfQZVWz0fXetna51c60e51vdzzdb76nXca70dW++3l+n/j9L/f9x67nxxAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGOUel6rpffZb/QdbPRkv13osunpQpq9run9lq8fi5do6v/YeeLl2nls9Q9P9T1vPxbTpPpWX9L6WF19cAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAgxs/n81k58LV94V19Fdf6XapS+g9SXFsP1fs73bdRPe7L1rr91vvY5VoP07U+nqr09+FLdT59cQEAYgguAEAMwQUAiCG4AAAxBBcAIIbgAgDEEFwAgBi/2yfwf3X1Q1T3u2/1tUxf79b8vEz3H1zrt9gaf3qc6fV57bmu/n66byO9L2e6B2j6uNPzltJj9DK9/n1xAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGOUel+l99lXTfQZb13Wt52Or/6DrfKq21kPXca/1i1R/X+13qdrqEama7v+4ZqvvpOv5epnu99rqIauO38UXFwAghuACAMQQXACAGIILABBDcAEAYgguAEAMwQUAiPHz+XxKf9C1X7w6/rVelmt9CVt9D1v9FtO6+mm2+h6qtvp4qqb7hLbu77X7uNVzs/X/S1XKOpl+rreuyxcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCI8Vv9g+r+75R+i+p5pvciXOuN6LLV6zA9/tb6eZnugeh6n2zd32vvty3X1v+1XqKXrvt77Xq7rssXFwAghuACAMQQXACAGIILABBDcAEAYgguAEAMwQUAiFHucZnuUZjuq7h2/tOm+1q2pPTidP2+a/6nz/9av0uXrV6WrXG6nqNr78Oq6b6ca/8vbP0/W+WLCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACCG4AIAxPj5fD6jB+jqIaiOv9XbUR2ny3SPSEqfwbX73jV+Su/FtK35SelDSp+fqpTnYvr9XD1ul633ti8uAEAMwQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQ47f6B1v7yPVe/E369Xatn9c4Wz00L9Xr3ep1uNYnce090zXOVk/VVp/H9Ptquo+q67qm+7Sqx+2y1WfmiwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMT4+Xw+oweY7pmojlO1tf++ams//bX+jJfpvoeXa+tnq8eiej7X+ide0nuDUtZD1/lcG+daH1LV1jr3xQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGL8Vv/gWm/BdB9G9bqm5+Ha+F09BFt9Cdf6HrpM96NMn39V9Xq3nvfp92fXPHT51v6qrf8Hq8ed/v9x6z3siwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQo97hUbfVzdJnuG7jW/1G11d9Tda3f5dq63Zqf6vlUbfW7VG31YbxcW7dd57PVc7N1ninv5ypfXACAGIILABBDcAEAYgguAEAMwQUAiCG4AAAxBBcAIMbP5/NpGWirD2NrnC5b/QTVcV62eheqpvt4UnpTuo67ta6mbfWmdLn2vHeNc+35qkp5HlN6m3xxAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGL9dA3XtC+/ap/5yrR+iy1Y/ylYPQZfp87nW89Gla9625vna+2TrebzWm/WS3l8yfdyt/ze33m++uAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQIy2HpeXrf3rXbb291/r/5juWbnWG1E13WP0Mj0PWz1M0z0x0++Za+vzZbovZKuf6eXa+Uyvh2v9Ll3H9cUFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBilHtcuvZhb/VMTPdJTF/Xy/T1dvVYdP2+675Mn2d1nK31w99s9VKkHLdL1/jTPTQvW89X1zq59j6v8sUFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBi/Hw+n9IfdPVtTI9/rRdk6zyndd3fa+OkSH++qrZ6R16u9WpcO27VtfeYeftrW8+dLy4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGIILABCj3ONSda0nY2vf/HT/yvR++vTr3ep9udYzNG2rr+La+n/Zui/Ttvqrqq69f6rjX+tR6zpulS8uAEAMwQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQ47f6Bym9LF3nOb1vPqVvI6W3YGt9XusRme7VeJnum9lah9Xfv457rYej635t9Qx9a49RSm/W9HvpxRcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIUe5xSemr6Pp9St/AdH/Jtf6Jadd6gKbP51pPw/TzMj3PXcedXj9bz910r0/6vKWsz62+HF9cAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAgRrnHpWsfedd+/aqtPpWu/fHT87/V8/FyrVdgqzdCL85fj/Oan611fu352urb2OpHmb6PW7Z6jK69f3xxAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGOUel5fp3pE/bX//teutjl/9/VbPx1ZPxtb1bo0zravfJeW4Xf0o0+tk+r2a8hy9bPVUbT2nXefviwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMT4+Xw+pT+Y3l8+fdyU80/ZZ7/VN3Nt3l62ehe25jP9Pqa8B671M21Jed5T+myuvQdefHEBAGIILgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAY53pcUvblp5jujaget0tK/8dWb0pVyrxtSTnPLinr+Vvn/5rp9aDHBQD4WoILABBDcAEAYgguAEAMwQUAiCG4AAAxBBcAIMZv9Q+29utP91Vs9ZpsXde0a/0i0+dTPc+U9XBtnb9c61u6dh+7TPd5TD/vKc9dSp/TVr+RLy4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGIILABCj3OPSpWuf91bPSvp+/er433q9070OXT0WW30JW/e9anpdXXtfXRu/6/fT75+tXqLqOF3P+7f2KvniAgDEEFwAgBiCCwAQQ3ABAGIILgBADMEFAIghuAAAMcZ7XFJ6Pqb7ALps9Qp0jbM1by/Xzudlugelqut8tvppXqZ7dFL6VF6mz3+rdyRlfqqu/T/1Uj1PX1wAgBiCCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACBGucflWr9CynFT9tNP9yh09WRM9wNVbd3frXmYvt6tvpDqOF2/77LVi3NtXW29x15SemhSjuuLCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACCG4AIAxPj5fD7b5/C/TO+/3zrudB/JtV6Tl2t9LV3nszWfVVvrrTr+y/T8b11X1fRz9DLdXzLd87TVv3JtPVTH6dK1Pn1xAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQQXACAGL9bB97af7/VE9M1/rW+lq3rmh6ny1aPRVVKj07V1ry9XOsBqt73P613quv8t95LXettul+nyhcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCI8fP5fEYPMN3H0KWrj2HadC/CtZ6Jqq15uNZHknI+09L7abrmbauHY3o9pJzntGt9QtPryhcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCI8bt14OkehS7T/RnT++mn+wlS5merpyG9F+dlaz6nn4uq6vWm9IK8XOvFqY6/9f9OSu9Ryvr0xQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGK09bhs9ZRs9aBs/X7atfvY5Vv7VKb7IVLW87X+iennqKs/ZnqdbPU2XetN2ZrnLlv/L7z44gIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADHaely69pFv7Wuf7lGYPs+tvo2uffzp97Hr91uu9TR02eq96NJ1ntO9Vls9TF2m3xvV4177/6Vq+n754gIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADF+Pp9P6Q+2+j+29vFPn2fKOC9d8zN936ev69o4W/0r1/o2qq71c1TH7+K999fjXHvfdo3fZXrefHEBAGIILgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAYv9U/mO5pqNrqfZnuyZge53X+1/o/tnoIrq2r6fG3+iSq41zr1XjZmp8U0/dl67137bhVXfdl+r3tiwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQo97hM9z1Uj9s1flc/xFbPxLU+gK7xu+Zzqydjq49nujfl5dr6qY4z/b7q8q3rvGr6/XltPWz1FU3/v1PliwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMQo97hU92137eee7vOo2tpPv9Xb0XV/r/VJXOsHqpp+vrpMj/+y1S+yZavfpWudTz8v0+fZddyu9/DWczfNFxcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBADMEFAIjx8/l8Sn9wrReha596eh9JVfr5v1y7rq3zme4TetnqW5ruL9m67+nz9jJ9X6b7YF5S1tVLyn33xQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGK09bhs9Qqk2OrVqNrqIehaV+m9Pteu62W6T6LqT3vPpKyHa8/1y/Tznr4+r91fX1wAgBiCCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACDGWo/LVg/EtZ6M6f3x08etSlkPXa71H3S51kvR1auxdZ5d9/daD8q199vLtfN5SVkn0/PjiwsAEENwAQBiCC4AQAzBBQCIIbgAADEEFwAghuACAMT4nT7A1r7wl+keha19/1t9Hlu2ehSq9zdl3U73skyf57U+nq7xu8bZWidb92Va13rY6t/a6n3pul++uAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQIyfz+fTMlB1n/f076dd642Y7pl4me6t+dbz3+o32upv2Bpn6/cv6eNMr9tr/UPX+rGureeX6XnzxQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGKUe1yu7e9P6QPocq1XoOpaD8G1PoNr8zPt2nPd5dr74dpzdK0/Ztq1+/JyrSfpxRcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCI8ds10PT++On9/ddMX9d0T0bX+W/1PaTY6kHZ6nXY6heputYDVP391jqpujbPW+ttq/dl63p9cQEAYgguAEAMwQUAiCG4AAAxBBcAIIbgAgDEEFwAgBg/n8+n9Adb+/W3XOsz+NN6JqrHTeml2HpetvqBXvS1/HOuXe/0eyC912rLVi/X9P31xQUAiCG4AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGK09bi8bPUHXNtPX9XV0/Ct89AlpVfmZau3pjrOy1YfT/V8quNf6xmaHqcqvW+p63yqUt7n0+vHFxcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBADMEFAIjx2zXQ9H736V6T9N6Ua/0E030eXbbu+7X+jK5xttZD9b3xcq0n49o6ubY+t94b6T06W89F1/X64gIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIIbgAADF+Pp9P6Q+2+kKq42/1Rrxs7dd/2epHebl2v16u9Uxsrdvq+VTHT7mulHHS+2yqUtZDdfyXa8/p9Di+uAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQIy2Hpdr+8JfuvoPun5fNd0D8bLVT/ByrWdi+rq2emterq3nLtfO5yX9PdDlWp/WtT6YLtfm2RcXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCIUe5xSXdtf3yXlB6Rrf6Pa/Mz7dr8d41zreepOk5V+vm/XOtTqUp5/3SNXzU9P764AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBAjN/qH6T0oFT3hU/3FlRd6wuZ3t8/fdzq+F3nmd7vkv4cvWz1EqXM81aPTspz1HXclPfby9bz7osLABBDcAEAYgguAEAMwQUAiCG4AAAxBBcAIIbgAgDEKPe4vGzt567ug9/qP9jS1X+wdX+nj/ut66Ha37DVa1K11bvTJaV/pTr+y9a62hon5fyrrvUz+eICAMQQXACAGIILABBDcAEAYgguAEAMwQUAiCG4AAAx2npcXrp6HbZ6CF6m+zC6zmd63//0fHaNv9Wncq3X4eVar8n0/frW/p6t98/Ltff/tfftS3WclL6oLr64AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBAjPEel2u6ekq+tV/kZasP5to4L1t9JC9d57PV01A1fV1dv6/a6lWqunae089vtceranp9dqmO33U+vrgAADEEFwAghuACAMQQXACAGIILABBDcAEAYgguAECMP67H5WVr33+6ruu61teyNU6X6fV8rS+nOv5W785Wr8Z0H9XLtT6S6Z6VruN2/X7r/TY9P764AAAxBBcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBAjPEel5T+kq3+g+n97tXjpu/vr57P9Pqc7rHY6gV56XoupufnT1v/1fGn1+3WvE0/X1t9OV1SztMXFwAghuACAMQQXACAGIILABBDcAEAYgguAEAMwQUAiNHW45Ky/zu9R2H6uNXfp/cWvEz3hUyfT9f4L9f6mabn5+VaT0zX9U5f18u1ddh1vSn9N9O67pcvLgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEOPn8/lsnwMAwD/EFxcAIIbgAgDEEFwAgBiCCwAQQ3ABAGIILgBADMEFAIghuAAAMQQXACCG4AIAxBBcAIAYggsAEENwAQBiCC4AQAzBBQCI8T9YqXp3eA/DGQAAAABJRU5ErkJggg==" alt="QR para solicitud de incorporación a DINESC" />
-            <div class="qr-caption">
-              Adjunte su CV documentado y complete la información básica requerida para la evaluación correspondiente.
-              <span class="contact-mail">direccionacademica.altumlumen@gmail.com</span>
-            </div>
+            <img src="data:image/png;base64,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" alt="QR para solicitud de incorporación a DINESC" />
+            <div class="qr-caption">Escanee el código para abrir un correo prellenado de solicitud de incorporación a DINESC y adjunte su CV documentado para evaluación institucional.</div>
           </div>
         </section>
       </aside>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© Altum Lumen S.A.C. Todos los derechos reservados.</div>
+      <div class="footer-links">
+        <a class="footer-btn" href="https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/" target="_blank" rel="noopener">Centro de Formación</a>
+        <a class="footer-btn secondary" href="https://altumlumen-design.github.io/Altum-Lumen-S.A.C./" target="_blank" rel="noopener">Altum Lumen S.A.C.</a>
+      </div>
+    </div>
+  </footer>
 
   <script>
     const records = [
@@ -580,7 +653,7 @@
           <td class="col-name"><strong>${r.nombre}</strong></td>
           <td>${r.profesion}</td>
           <td>${r.region}</td>
-          <td><span class="badge-date">${r.incorporacion}</span></td>
+          <td>${r.incorporacion}</td>
           <td><a class="mail-link" href="mailto:${r.correo}">${r.correo}</a></td>
         </tr>
       `).join('');
