@@ -663,8 +663,10 @@
           row.push(value);
           value = '';
         } else if ((char === '
-' || char === '') && !inQuotes) {
-          if (char === '' && next === '
+' || char === '
+') && !inQuotes) {
+          if (char === '
+' && next === '
 ') i++;
           row.push(value);
           if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
@@ -685,7 +687,7 @@
 
     function toObjects(rows) {
       if (!rows.length) return [];
-      const headers = rows[0].map(h => h.trim());
+      const headers = rows[0].map((h, index) => (index === 0 ? h.replace(/^\uFEFF/, '') : h).trim());
       return rows.slice(1).map(cols => {
         const obj = {};
         headers.forEach((header, index) => {
@@ -742,29 +744,55 @@
       emptyState.style.display = filtered.length ? 'none' : 'block';
     }
 
+
+    function populateFromParsedRows(parsedRows) {
+      records = toObjects(parsedRows).map(item => ({
+        nombre: item.nombres_apellidos || '',
+        profesion: item.profesion || '',
+        region: item.region || '',
+        incorporacion: item.fecha_incorporacion || '',
+        correo: item.correo || ''
+      }));
+
+      fillSelect(regionFilter, uniqueValues('region'), 'Todas las regiones');
+      fillSelect(professionFilter, uniqueValues('profesion'), 'Todas las profesiones');
+      render();
+    }
+
+    function loadCsvFromFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsedRows = parseCSV(String(reader.result || ''));
+          populateFromParsedRows(parsedRows);
+          emptyState.style.display = 'none';
+        } catch (error) {
+          body.innerHTML = '';
+          emptyState.textContent = 'No se pudo leer el archivo CSV seleccionado.';
+          emptyState.style.display = 'block';
+        }
+      };
+      reader.readAsText(file, 'utf-8');
+    }
+
     async function loadDirectory() {
       try {
         const response = await fetch(CSV_PATH, { cache: 'no-store' });
         if (!response.ok) throw new Error('No se pudo leer el archivo CSV.');
         const csvText = await response.text();
         const parsedRows = parseCSV(csvText);
-        records = toObjects(parsedRows).map(item => ({
-          nombre: item.nombres_apellidos || '',
-          profesion: item.profesion || '',
-          region: item.region || '',
-          incorporacion: item.fecha_incorporacion || '',
-          correo: item.correo || ''
-        }));
-
-        fillSelect(regionFilter, uniqueValues('region'), 'Todas las regiones');
-        fillSelect(professionFilter, uniqueValues('profesion'), 'Todas las profesiones');
-        render();
+        populateFromParsedRows(parsedRows);
       } catch (error) {
         records = [];
         fillSelect(regionFilter, [], 'Todas las regiones');
         fillSelect(professionFilter, [], 'Todas las profesiones');
         body.innerHTML = '';
-        emptyState.textContent = 'No se pudo cargar el archivo dinesc-directorio.csv. Verifica que esté en la misma carpeta que este HTML.';
+        if (location.protocol === 'file:') {
+          emptyState.innerHTML = 'Chrome suele bloquear la lectura automática del CSV cuando abres el HTML directamente desde tu computadora. Puedes cargarlo manualmente aquí o subir ambos archivos a GitHub en la misma carpeta.<br><br><button id="loadLocalCsvBtn" class="btn" type="button" style="max-width:260px">Cargar CSV local</button>';
+        } else {
+          emptyState.textContent = 'No se pudo cargar el archivo dinesc-directorio.csv. Verifica que esté en la misma carpeta que este HTML.';
+        }
         emptyState.style.display = 'block';
       }
     }
@@ -779,7 +807,18 @@
       render();
     });
 
+    document.addEventListener('click', (event) => {
+      if (event.target && event.target.id === 'loadLocalCsvBtn') {
+        document.getElementById('localCsvInput').click();
+      }
+    });
+
+    document.getElementById('localCsvInput').addEventListener('change', (event) => {
+      loadCsvFromFile(event.target.files[0]);
+    });
+
     loadDirectory();
   </script>
+  <input id="localCsvInput" type="file" accept=".csv,text/csv" style="display:none" />
 </body>
 </html>
