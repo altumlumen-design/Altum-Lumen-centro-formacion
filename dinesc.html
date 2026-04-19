@@ -632,7 +632,7 @@
 </div>
 </footer>
 <script>
-  const CSV_PATH = new URL('./dinesc-directorio.csv', window.location.href).href;
+  const CSV_PATH = 'dinesc-directorio.csv';
   const body = document.getElementById('directoryBody');
   const emptyState = document.getElementById('emptyState');
   const regionFilter = document.getElementById('regionFilter');
@@ -643,12 +643,16 @@
   let records = [];
 
   function resetSelect(select, firstLabel) {
-    select.innerHTML = `<option value="">${firstLabel}</option>`;
+    select.innerHTML = '';
+    const opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = firstLabel;
+    select.appendChild(opt);
   }
 
   function fillSelect(select, values, firstLabel) {
     resetSelect(select, firstLabel);
-    values.forEach(v => {
+    values.forEach((v) => {
       const opt = document.createElement('option');
       opt.value = v;
       opt.textContent = v;
@@ -657,11 +661,12 @@
   }
 
   function uniqueValues(key) {
-    return [...new Set(records.map(r => r[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+    return [...new Set(records.map((r) => r[key]).filter(Boolean))]
+      .sort((a, b) => a.localeCompare(b, 'es'));
   }
 
   function parseCSV(text) {
-    const cleanText = text.replace(/^﻿/, '');
+    const cleanText = String(text || '').replace(/^\uFEFF/, '');
     const rows = [];
     let row = [];
     let value = '';
@@ -674,19 +679,17 @@
       if (char === '"') {
         if (inQuotes && next === '"') {
           value += '"';
-          i++;
+          i += 1;
         } else {
           inQuotes = !inQuotes;
         }
       } else if (char === ',' && !inQuotes) {
         row.push(value);
         value = '';
-      } else if ((char === '
-' || char === '') && !inQuotes) {
-        if (char === '' && next === '
-') i++;
+      } else if ((char === '\n' || char === '\r') && !inQuotes) {
+        if (char === '\r' && next === '\n') i += 1;
         row.push(value);
-        if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
+        if (row.some((cell) => String(cell).trim() !== '')) rows.push(row);
         row = [];
         value = '';
       } else {
@@ -696,21 +699,24 @@
 
     if (value.length || row.length) {
       row.push(value);
-      if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
+      if (row.some((cell) => String(cell).trim() !== '')) rows.push(row);
     }
+
     return rows;
   }
 
   function toObjects(rows) {
     if (!rows.length) return [];
-    const headers = rows[0].map(h => h.trim().replace(/^﻿/, ''));
-    return rows.slice(1).map(cols => {
-      const obj = {};
-      headers.forEach((header, index) => {
-        obj[header] = (cols[index] || '').trim();
-      });
-      return obj;
-    }).filter(item => Object.values(item).some(Boolean));
+    const headers = rows[0].map((h) => h.trim().replace(/^\uFEFF/, ''));
+    return rows.slice(1)
+      .map((cols) => {
+        const obj = {};
+        headers.forEach((header, index) => {
+          obj[header] = (cols[index] || '').trim();
+        });
+        return obj;
+      })
+      .filter((item) => Object.values(item).some(Boolean));
   }
 
   function render() {
@@ -718,7 +724,7 @@
     const region = regionFilter.value;
     const profession = professionFilter.value;
 
-    const filtered = records.filter(r => {
+    const filtered = records.filter((r) => {
       const matchesRegion = !region || r.region === region;
       const matchesProfession = !profession || r.profesion === profession;
       const text = `${r.nombre} ${r.profesion} ${r.region} ${r.incorporacion} ${r.correo}`.toLowerCase();
@@ -726,29 +732,35 @@
       return matchesRegion && matchesProfession && matchesText;
     });
 
-    body.innerHTML = filtered.map(r => `
-      <tr>
-        <td class="col-name"><strong>${r.nombre || ''}</strong></td>
-        <td>${r.profesion || ''}</td>
-        <td>${r.region || ''}</td>
-        <td>${r.incorporacion || ''}</td>
-        <td>${r.correo ? `<a class="mail-link" href="mailto:${r.correo}">${r.correo}</a>` : ''}</td>
-      </tr>
-    `).join('');
+    body.innerHTML = filtered
+      .map((r) => `
+        <tr>
+          <td class="col-name"><strong>${r.nombre || ''}</strong></td>
+          <td>${r.profesion || ''}</td>
+          <td>${r.region || ''}</td>
+          <td>${r.incorporacion || ''}</td>
+          <td>${r.correo ? `<a class="mail-link" href="mailto:${r.correo}">${r.correo}</a>` : ''}</td>
+        </tr>
+      `)
+      .join('');
 
-    emptyState.textContent = filtered.length
-      ? 'No se encontraron registros con los filtros aplicados.'
-      : (records.length ? 'No se encontraron registros con los filtros aplicados.' : 'No se encontraron registros en el archivo del directorio.');
+    if (!records.length) {
+      emptyState.textContent = 'No se encontraron registros en el archivo del directorio.';
+      emptyState.style.display = 'block';
+      return;
+    }
+
+    emptyState.textContent = 'No se encontraron registros con los filtros aplicados.';
     emptyState.style.display = filtered.length ? 'none' : 'block';
   }
 
   async function loadDirectory() {
     try {
-      const response = await fetch(CSV_PATH + '?v=' + Date.now(), { cache: 'no-store' });
+      const response = await fetch(`${CSV_PATH}?v=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const csvText = await response.text();
       const parsedRows = parseCSV(csvText);
-      const items = toObjects(parsedRows).map(item => ({
+      const items = toObjects(parsedRows).map((item) => ({
         nombre: item.nombres_apellidos || '',
         profesion: item.profesion || '',
         region: item.region || '',
@@ -766,7 +778,7 @@
       fillSelect(regionFilter, [], 'Todas las regiones');
       fillSelect(professionFilter, [], 'Todas las profesiones');
       body.innerHTML = '';
-      emptyState.textContent = 'No se pudo cargar dinesc-directorio.csv. Verifica que el HTML y el CSV estén en la misma carpeta de GitHub.';
+      emptyState.textContent = 'No se pudo cargar dinesc-directorio.csv. Verifica que el HTML y el CSV estén en la misma carpeta del repositorio de GitHub.';
       emptyState.style.display = 'block';
     }
   }
@@ -783,5 +795,6 @@
 
   loadDirectory();
 </script>
+
 </body>
 </html>
