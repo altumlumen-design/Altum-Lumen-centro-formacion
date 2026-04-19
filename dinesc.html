@@ -632,121 +632,123 @@
 </div>
 </footer>
 <script>
-    const CSV_PATH = 'dinesc-directorio.csv';
-    let records = [];
+  const CSV_PATH = new URL('./dinesc-directorio.csv', window.location.href).href;
+  const body = document.getElementById('directoryBody');
+  const emptyState = document.getElementById('emptyState');
+  const regionFilter = document.getElementById('regionFilter');
+  const professionFilter = document.getElementById('professionFilter');
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('clearBtn');
 
-    const body = document.getElementById('directoryBody');
-    const emptyState = document.getElementById('emptyState');
-    const regionFilter = document.getElementById('regionFilter');
-    const professionFilter = document.getElementById('professionFilter');
-    const searchInput = document.getElementById('searchInput');
-    const clearBtn = document.getElementById('clearBtn');
+  let records = [];
 
-    function parseCSV(text) {
-      const rows = [];
-      let row = [];
-      let value = '';
-      let inQuotes = false;
+  function resetSelect(select, firstLabel) {
+    select.innerHTML = `<option value="">${firstLabel}</option>`;
+  }
 
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const next = text[i + 1];
+  function fillSelect(select, values, firstLabel) {
+    resetSelect(select, firstLabel);
+    values.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v;
+      select.appendChild(opt);
+    });
+  }
 
-        if (char === '"') {
-          if (inQuotes && next === '"') {
-            value += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
-        } else if (char === ',' && !inQuotes) {
-          row.push(value);
-          value = '';
-        } else if ((char === '
-' || char === '
-') && !inQuotes) {
-          if (char === '
-' && next === '
-') i++;
-          row.push(value);
-          if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
-          row = [];
-          value = '';
+  function uniqueValues(key) {
+    return [...new Set(records.map(r => r[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+  }
+
+  function parseCSV(text) {
+    const cleanText = text.replace(/^﻿/, '');
+    const rows = [];
+    let row = [];
+    let value = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < cleanText.length; i++) {
+      const char = cleanText[i];
+      const next = cleanText[i + 1];
+
+      if (char === '"') {
+        if (inQuotes && next === '"') {
+          value += '"';
+          i++;
         } else {
-          value += char;
+          inQuotes = !inQuotes;
         }
-      }
-
-      if (value.length || row.length) {
+      } else if (char === ',' && !inQuotes) {
+        row.push(value);
+        value = '';
+      } else if ((char === '
+' || char === '') && !inQuotes) {
+        if (char === '' && next === '
+') i++;
         row.push(value);
         if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
+        row = [];
+        value = '';
+      } else {
+        value += char;
       }
-
-      return rows;
     }
 
-    function toObjects(rows) {
-      if (!rows.length) return [];
-      const headers = rows[0].map((h, index) => (index === 0 ? h.replace(/^\uFEFF/, '') : h).trim());
-      return rows.slice(1).map(cols => {
-        const obj = {};
-        headers.forEach((header, index) => {
-          obj[header] = (cols[index] || '').trim();
-        });
-        return obj;
-      }).filter(item => Object.values(item).some(Boolean));
+    if (value.length || row.length) {
+      row.push(value);
+      if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
     }
+    return rows;
+  }
 
-    function resetSelect(select, firstLabel) {
-      select.innerHTML = `<option value="">${firstLabel}</option>`;
-    }
-
-    function uniqueValues(key) {
-      return [...new Set(records.map(r => r[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
-    }
-
-    function fillSelect(select, values, firstLabel) {
-      resetSelect(select, firstLabel);
-      values.forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = v;
-        select.appendChild(opt);
+  function toObjects(rows) {
+    if (!rows.length) return [];
+    const headers = rows[0].map(h => h.trim().replace(/^﻿/, ''));
+    return rows.slice(1).map(cols => {
+      const obj = {};
+      headers.forEach((header, index) => {
+        obj[header] = (cols[index] || '').trim();
       });
-    }
+      return obj;
+    }).filter(item => Object.values(item).some(Boolean));
+  }
 
-    function render() {
-      const q = searchInput.value.trim().toLowerCase();
-      const region = regionFilter.value;
-      const profession = professionFilter.value;
+  function render() {
+    const q = searchInput.value.trim().toLowerCase();
+    const region = regionFilter.value;
+    const profession = professionFilter.value;
 
-      const filtered = records.filter(r => {
-        const matchesRegion = !region || r.region === region;
-        const matchesProfession = !profession || r.profesion === profession;
-        const text = `${r.nombre} ${r.profesion} ${r.region} ${r.incorporacion} ${r.correo}`.toLowerCase();
-        const matchesText = !q || text.includes(q);
-        return matchesRegion && matchesProfession && matchesText;
-      });
+    const filtered = records.filter(r => {
+      const matchesRegion = !region || r.region === region;
+      const matchesProfession = !profession || r.profesion === profession;
+      const text = `${r.nombre} ${r.profesion} ${r.region} ${r.incorporacion} ${r.correo}`.toLowerCase();
+      const matchesText = !q || text.includes(q);
+      return matchesRegion && matchesProfession && matchesText;
+    });
 
-      body.innerHTML = filtered.map(r => `
-        <tr>
-          <td class="col-name"><strong>${r.nombre || ''}</strong></td>
-          <td>${r.profesion || ''}</td>
-          <td>${r.region || ''}</td>
-          <td>${r.incorporacion || ''}</td>
-          <td>${r.correo ? `<a class="mail-link" href="mailto:${r.correo}">${r.correo}</a>` : ''}</td>
-        </tr>
-      `).join('');
+    body.innerHTML = filtered.map(r => `
+      <tr>
+        <td class="col-name"><strong>${r.nombre || ''}</strong></td>
+        <td>${r.profesion || ''}</td>
+        <td>${r.region || ''}</td>
+        <td>${r.incorporacion || ''}</td>
+        <td>${r.correo ? `<a class="mail-link" href="mailto:${r.correo}">${r.correo}</a>` : ''}</td>
+      </tr>
+    `).join('');
 
-      emptyState.textContent = filtered.length
-        ? 'No se encontraron registros con los filtros aplicados.'
-        : (records.length ? 'No se encontraron registros con los filtros aplicados.' : 'Aún no hay registros disponibles en el archivo del directorio.');
-      emptyState.style.display = filtered.length ? 'none' : 'block';
-    }
+    emptyState.textContent = filtered.length
+      ? 'No se encontraron registros con los filtros aplicados.'
+      : (records.length ? 'No se encontraron registros con los filtros aplicados.' : 'No se encontraron registros en el archivo del directorio.');
+    emptyState.style.display = filtered.length ? 'none' : 'block';
+  }
 
-
-    function populateFromParsedRows(parsedRows) {
-      records = toObjects(parsedRows).map(item => ({
+  async function loadDirectory() {
+    try {
+      const response = await fetch(CSV_PATH + '?v=' + Date.now(), { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const csvText = await response.text();
+      const parsedRows = parseCSV(csvText);
+      const items = toObjects(parsedRows).map(item => ({
         nombre: item.nombres_apellidos || '',
         profesion: item.profesion || '',
         region: item.region || '',
@@ -754,71 +756,32 @@
         correo: item.correo || ''
       }));
 
+      records = items;
       fillSelect(regionFilter, uniqueValues('region'), 'Todas las regiones');
       fillSelect(professionFilter, uniqueValues('profesion'), 'Todas las profesiones');
       render();
+    } catch (error) {
+      console.error('Error al cargar el CSV de DINESC:', error);
+      records = [];
+      fillSelect(regionFilter, [], 'Todas las regiones');
+      fillSelect(professionFilter, [], 'Todas las profesiones');
+      body.innerHTML = '';
+      emptyState.textContent = 'No se pudo cargar dinesc-directorio.csv. Verifica que el HTML y el CSV estén en la misma carpeta de GitHub.';
+      emptyState.style.display = 'block';
     }
+  }
 
-    function loadCsvFromFile(file) {
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const parsedRows = parseCSV(String(reader.result || ''));
-          populateFromParsedRows(parsedRows);
-          emptyState.style.display = 'none';
-        } catch (error) {
-          body.innerHTML = '';
-          emptyState.textContent = 'No se pudo leer el archivo CSV seleccionado.';
-          emptyState.style.display = 'block';
-        }
-      };
-      reader.readAsText(file, 'utf-8');
-    }
+  regionFilter.addEventListener('change', render);
+  professionFilter.addEventListener('change', render);
+  searchInput.addEventListener('input', render);
+  clearBtn.addEventListener('click', () => {
+    regionFilter.value = '';
+    professionFilter.value = '';
+    searchInput.value = '';
+    render();
+  });
 
-    async function loadDirectory() {
-      try {
-        const response = await fetch(CSV_PATH, { cache: 'no-store' });
-        if (!response.ok) throw new Error('No se pudo leer el archivo CSV.');
-        const csvText = await response.text();
-        const parsedRows = parseCSV(csvText);
-        populateFromParsedRows(parsedRows);
-      } catch (error) {
-        records = [];
-        fillSelect(regionFilter, [], 'Todas las regiones');
-        fillSelect(professionFilter, [], 'Todas las profesiones');
-        body.innerHTML = '';
-        if (location.protocol === 'file:') {
-          emptyState.innerHTML = 'Chrome suele bloquear la lectura automática del CSV cuando abres el HTML directamente desde tu computadora. Puedes cargarlo manualmente aquí o subir ambos archivos a GitHub en la misma carpeta.<br><br><button id="loadLocalCsvBtn" class="btn" type="button" style="max-width:260px">Cargar CSV local</button>';
-        } else {
-          emptyState.textContent = 'No se pudo cargar el archivo dinesc-directorio.csv. Verifica que esté en la misma carpeta que este HTML.';
-        }
-        emptyState.style.display = 'block';
-      }
-    }
-
-    regionFilter.addEventListener('change', render);
-    professionFilter.addEventListener('change', render);
-    searchInput.addEventListener('input', render);
-    clearBtn.addEventListener('click', () => {
-      regionFilter.value = '';
-      professionFilter.value = '';
-      searchInput.value = '';
-      render();
-    });
-
-    document.addEventListener('click', (event) => {
-      if (event.target && event.target.id === 'loadLocalCsvBtn') {
-        document.getElementById('localCsvInput').click();
-      }
-    });
-
-    document.getElementById('localCsvInput').addEventListener('change', (event) => {
-      loadCsvFromFile(event.target.files[0]);
-    });
-
-    loadDirectory();
-  </script>
-  <input id="localCsvInput" type="file" accept=".csv,text/csv" style="display:none" />
+  loadDirectory();
+</script>
 </body>
 </html>
