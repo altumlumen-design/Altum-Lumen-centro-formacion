@@ -432,14 +432,6 @@
       .brand-mark { width:62px; height:74px; flex-basis:62px; }
       .brand h1 { font-size:1.68rem; }
       .brand p { font-size:.96rem; }
-      .top-slogan {
-        max-width:none;
-        width:100%;
-        text-align:left;
-        margin-left:0;
-        margin-top:8px;
-        font-size:1rem;
-      }
       .hero-inner { padding:42px 0 36px; }
       .hero h2 {
       margin:0;
@@ -524,7 +516,6 @@
 <p>Directorio Nacional de Expertos en Seguridad Ciudadana</p>
 </div>
 </div>
-<div class="top-slogan">Impulsando una seguridad ciudadana<br/>con visión, compromiso y acción.</div>
 </div>
 </header>
 <section class="hero">
@@ -641,16 +632,8 @@
 </div>
 </footer>
 <script>
-    const records = [
-      { nombre: 'Óscar Felipe Moreno Tupia', profesion: 'Abogado', region: 'Lima', incorporacion: '15/03/2026', correo: 'direccionacademica.altumlumen@gmail.com' },
-      { nombre: 'Jeanfranco Martin Vargas Luque', profesion: 'Abogado', region: 'Lima', incorporacion: '18/03/2026', correo: 'jvargasl.consultor@gmail.com' },
-      { nombre: 'María Fernanda Salazar Campos', profesion: 'Psicóloga', region: 'Arequipa', incorporacion: '22/03/2026', correo: 'mfsalazar@example.com' },
-      { nombre: 'Luis Alberto Gamarra Huamán', profesion: 'Sociólogo', region: 'Cusco', incorporacion: '26/03/2026', correo: 'lagamarra@example.com' },
-      { nombre: 'Carlos Enrique Rojas Paredes', profesion: 'Ingeniero Industrial', region: 'La Libertad', incorporacion: '31/03/2026', correo: 'crojas@example.com' },
-      { nombre: 'Rosa Milagros Cueva León', profesion: 'Criminóloga', region: 'Piura', incorporacion: '03/04/2026', correo: 'rmcueva@example.com' },
-      { nombre: 'Jorge Luis Medina Alarcón', profesion: 'Administrador', region: 'Junín', incorporacion: '08/04/2026', correo: 'jlmedina@example.com' },
-      { nombre: 'Patricia Elena Vera Mendoza', profesion: 'Abogada', region: 'Lambayeque', incorporacion: '11/04/2026', correo: 'pevera@example.com' }
-    ];
+    const CSV_PATH = 'dinesc-directorio.csv';
+    let records = [];
 
     const body = document.getElementById('directoryBody');
     const emptyState = document.getElementById('emptyState');
@@ -659,11 +642,69 @@
     const searchInput = document.getElementById('searchInput');
     const clearBtn = document.getElementById('clearBtn');
 
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let value = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            value += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ',' && !inQuotes) {
+          row.push(value);
+          value = '';
+        } else if ((char === '
+' || char === '') && !inQuotes) {
+          if (char === '' && next === '
+') i++;
+          row.push(value);
+          if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
+          row = [];
+          value = '';
+        } else {
+          value += char;
+        }
+      }
+
+      if (value.length || row.length) {
+        row.push(value);
+        if (row.some(cell => String(cell).trim() !== '')) rows.push(row);
+      }
+
+      return rows;
+    }
+
+    function toObjects(rows) {
+      if (!rows.length) return [];
+      const headers = rows[0].map(h => h.trim());
+      return rows.slice(1).map(cols => {
+        const obj = {};
+        headers.forEach((header, index) => {
+          obj[header] = (cols[index] || '').trim();
+        });
+        return obj;
+      }).filter(item => Object.values(item).some(Boolean));
+    }
+
+    function resetSelect(select, firstLabel) {
+      select.innerHTML = `<option value="">${firstLabel}</option>`;
+    }
+
     function uniqueValues(key) {
       return [...new Set(records.map(r => r[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
     }
 
-    function fillSelect(select, values) {
+    function fillSelect(select, values, firstLabel) {
+      resetSelect(select, firstLabel);
       values.forEach(v => {
         const opt = document.createElement('option');
         opt.value = v;
@@ -687,19 +728,46 @@
 
       body.innerHTML = filtered.map(r => `
         <tr>
-          <td class="col-name"><strong>${r.nombre}</strong></td>
-          <td>${r.profesion}</td>
-          <td>${r.region}</td>
-          <td>${r.incorporacion}</td>
-          <td><a class="mail-link" href="mailto:${r.correo}">${r.correo}</a></td>
+          <td class="col-name"><strong>${r.nombre || ''}</strong></td>
+          <td>${r.profesion || ''}</td>
+          <td>${r.region || ''}</td>
+          <td>${r.incorporacion || ''}</td>
+          <td>${r.correo ? `<a class="mail-link" href="mailto:${r.correo}">${r.correo}</a>` : ''}</td>
         </tr>
       `).join('');
 
+      emptyState.textContent = filtered.length
+        ? 'No se encontraron registros con los filtros aplicados.'
+        : (records.length ? 'No se encontraron registros con los filtros aplicados.' : 'Aún no hay registros disponibles en el archivo del directorio.');
       emptyState.style.display = filtered.length ? 'none' : 'block';
     }
 
-    fillSelect(regionFilter, uniqueValues('region'));
-    fillSelect(professionFilter, uniqueValues('profesion'));
+    async function loadDirectory() {
+      try {
+        const response = await fetch(CSV_PATH, { cache: 'no-store' });
+        if (!response.ok) throw new Error('No se pudo leer el archivo CSV.');
+        const csvText = await response.text();
+        const parsedRows = parseCSV(csvText);
+        records = toObjects(parsedRows).map(item => ({
+          nombre: item.nombres_apellidos || '',
+          profesion: item.profesion || '',
+          region: item.region || '',
+          incorporacion: item.fecha_incorporacion || '',
+          correo: item.correo || ''
+        }));
+
+        fillSelect(regionFilter, uniqueValues('region'), 'Todas las regiones');
+        fillSelect(professionFilter, uniqueValues('profesion'), 'Todas las profesiones');
+        render();
+      } catch (error) {
+        records = [];
+        fillSelect(regionFilter, [], 'Todas las regiones');
+        fillSelect(professionFilter, [], 'Todas las profesiones');
+        body.innerHTML = '';
+        emptyState.textContent = 'No se pudo cargar el archivo dinesc-directorio.csv. Verifica que esté en la misma carpeta que este HTML.';
+        emptyState.style.display = 'block';
+      }
+    }
 
     regionFilter.addEventListener('change', render);
     professionFilter.addEventListener('change', render);
@@ -711,7 +779,7 @@
       render();
     });
 
-    render();
+    loadDirectory();
   </script>
 </body>
 </html>
