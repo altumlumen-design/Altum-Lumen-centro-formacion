@@ -464,6 +464,13 @@
     .print-logo{
       display:none;
     }
+    .print-logo img{
+      width:140px;
+      max-width:100%;
+      height:auto;
+      display:block;
+      margin:0 auto;
+    }
 
     .print-report{display:none}
     @page {
@@ -491,9 +498,14 @@
         display:block;
         margin-bottom:12mm;
         border:1px solid #d9e2f1;
-        padding:8mm 8mm 5mm;
+        padding:6mm 8mm 5mm;
       }
       
+      .print-logo{
+        display:block !important;
+        text-align:center;
+        margin:0 0 5mm;
+      }
       .print-head{
         display:block;
         text-align:center;
