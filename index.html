@@ -590,6 +590,77 @@
       .socialbar{ justify-content:flex-start; }
     }
 
+
+    .navlink.dir-special{
+      background: linear-gradient(90deg, rgba(177,13,27,.10), rgba(46,111,158,.10));
+      border-color: rgba(177,13,27,.18);
+      color: var(--navy);
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(14,42,59,.08);
+    }
+    .navlink.dir-special:hover{
+      background: linear-gradient(90deg, rgba(177,13,27,.14), rgba(46,111,158,.14));
+      border-color: rgba(177,13,27,.28);
+      color: var(--ink);
+    }
+    .dir-grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .dir-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#fff;
+      box-shadow:var(--shadow2);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:210px;
+    }
+    .dir-code{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(14,42,59,.06);
+      border:1px solid rgba(14,42,59,.14);
+      color:var(--navy);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.3px;
+    }
+    .dir-code i{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--red);
+      display:inline-block;
+    }
+    .dir-card h4{
+      margin:0;
+      font-size:14px;
+      line-height:1.35;
+      font-weight:900;
+    }
+    .dir-card p{
+      margin:0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12px;
+      line-height:1.6;
+    }
+    .dir-card .btn{
+      margin-top:auto;
+      justify-content:center;
+      width:100%;
+      box-shadow:none;
+    }
+
 </style>
 </head>
 
@@ -611,7 +682,7 @@
         <a class="navlink" href="#areas">Áreas</a>
         <a class="navlink" href="#autoridades">Autoridades</a>
         <a class="navlink" href="verificacion.html" target="_blank" rel="noopener">Verificación</a>
-        <a class="navlink" href="dinesc.html" target="_blank" rel="noopener">DINESC</a>
+        <a class="navlink dir-special" href="directorio-expertos.html" target="_blank" rel="noopener">Directorio de Expertos</a>
         <a class="navlink" href="#contacto">Contacto</a>
       </nav>
 
@@ -882,53 +953,99 @@
       </div>
     </section>
 
-    <section id="dinesc">
+    
+    <section id="directorio-expertos">
       <div class="container">
         <div class="section-head">
           <div>
-            <h3>Plataforma Especial · DINESC</h3>
-            <p>Acceso directo al Directorio Nacional de Expertos en Seguridad Ciudadana.</p>
+            <h3>Plataforma Especial · Directorio de Expertos</h3>
+            <p>Acceso institucional a los directorios nacionales especializados adscritos a la Dirección Académica.</p>
           </div>
         </div>
 
         <div class="hero-grid" style="margin-top:14px;">
           <div class="hero-card">
             <div class="hero-pad">
-              <div class="kicker"><span class="kdot"></span>PLATAFORMA NACIONAL DESTACADA</div>
-              <h2>DINESC</h2>
-              <p><strong>Directorio Nacional de Expertos en Seguridad Ciudadana</strong>. Un espacio diseñado para transmitir prestigio, pertenencia y visibilidad profesional a nivel nacional.</p>
-              <div class="slogan">Una plataforma pensada para que cada integrante sienta que forma parte de una red seria, visible y con proyección nacional.</div>
+              <div class="kicker"><span class="kdot"></span>PLATAFORMA ACADÉMICA ESPECIALIZADA</div>
+              <h2>Directorio de Expertos</h2>
+              <p><strong>La Dirección Académica del Centro de Formación y Capacitación Profesional de Altum Lumen S.A.C.</strong>, en mérito a fortalecer la capacitación, la articulación académica y la disponibilidad de especialistas, promueve una red de directorios nacionales de expertos por áreas temáticas.</p>
+              <div class="slogan">Una plataforma institucional orientada a identificar, proyectar y vincular expertos para fines académicos, técnicos, formativos y de articulación profesional.</div>
               <div class="hero-actions">
-                <a class="btn red" href="dinesc.html" target="_blank" rel="noopener">🛡️ Abrir módulo DINESC</a>
-                <a class="btn" href="dinesc.html" target="_blank" rel="noopener">↗ Se abre en otra pestaña</a>
+                <a class="btn red" href="directorio-expertos.html" target="_blank" rel="noopener">📚 Abrir Directorio de Expertos</a>
+                <a class="btn" href="directorio-expertos.html" target="_blank" rel="noopener">↗ Se abre en otra pestaña</a>
               </div>
-              <div class="mini">Este módulo se integró como acceso independiente dentro de tu página principal para mantener clara la navegación y dar mayor protagonismo a DINESC.</div>
+              <div class="mini">Desde este acceso se podrá ingresar a DINESC y a los demás directorios nacionales especializados.</div>
             </div>
           </div>
 
           <aside class="hero-side">
             <div class="side-title">
-              <b>¿Qué transmite este módulo?</b>
+              <b>¿Qué proyecta este módulo?</b>
               <span class="badge"><i></i>Nuevo</span>
             </div>
             <div class="side-list">
               <div class="side-item">
-                <b>Prestigio institucional</b>
-                <span>Presenta a DINESC como una plataforma nacional seria y visualmente sólida.</span>
+                <b>Orden institucional</b>
+                <span>Organiza los directorios nacionales por materias especializadas bajo una sola entrada institucional.</span>
               </div>
               <div class="side-item">
-                <b>Pertenencia y visibilidad</b>
-                <span>La idea es que quien lo vea sienta que formar parte del directorio eleva su perfil profesional.</span>
+                <b>Prestigio y articulación</b>
+                <span>Presenta una red seria de expertos para actividades académicas, técnicas y de fortalecimiento institucional.</span>
               </div>
               <div class="side-item">
-                <b>Acceso independiente</b>
-                <span>El botón abre una nueva pestaña y lleva directamente a la landing exclusiva de DINESC.</span>
+                <b>Navegación independiente</b>
+                <span>El botón abre una nueva pestaña y permite ingresar a cada directorio especializado desde una página exclusiva.</span>
               </div>
             </div>
           </aside>
         </div>
+
+        <div class="dir-grid">
+          <article class="dir-card">
+            <span class="dir-code"><i></i>DINESC</span>
+            <h4>Directorio Nacional de Expertos en Seguridad Ciudadana</h4>
+            <p>Acceso al directorio especializado en seguridad ciudadana, prevención del delito, serenazgo y gestión territorial de la seguridad.</p>
+            <a class="btn primary" href="dinesc.html" target="_blank" rel="noopener">Abrir DINESC</a>
+          </article>
+
+          <article class="dir-card">
+            <span class="dir-code"><i></i>DINEGRD</span>
+            <h4>Directorio Nacional de Expertos en Gestión del Riesgo de Desastres</h4>
+            <p>Espacio especializado para perfiles vinculados a prevención, preparación, respuesta, rehabilitación y resiliencia territorial.</p>
+            <a class="btn" href="dinegrd.html" target="_blank" rel="noopener">Abrir directorio</a>
+          </article>
+
+          <article class="dir-card">
+            <span class="dir-code"><i></i>DINEGEP</span>
+            <h4>Directorio Nacional de Expertos en Gobernabilidad y Gestión Pública</h4>
+            <p>Directorio orientado a especialistas en modernización, organización estatal, gestión pública y fortalecimiento institucional.</p>
+            <a class="btn" href="dinegep.html" target="_blank" rel="noopener">Abrir directorio</a>
+          </article>
+
+          <article class="dir-card">
+            <span class="dir-code"><i></i>DINESAP</span>
+            <h4>Directorio Nacional de Expertos en Salud Pública</h4>
+            <p>Reúne perfiles vinculados a políticas sanitarias, gestión de servicios, promoción de la salud y fortalecimiento del sistema público.</p>
+            <a class="btn" href="dinesap.html" target="_blank" rel="noopener">Abrir directorio</a>
+          </article>
+
+          <article class="dir-card">
+            <span class="dir-code"><i></i>DINEIP</span>
+            <h4>Directorio Nacional de Expertos en Inversión Pública y Gestión de Proyectos</h4>
+            <p>Dirigido a especialistas en formulación, evaluación, ejecución, seguimiento y cierre de inversiones y proyectos públicos.</p>
+            <a class="btn" href="dineip.html" target="_blank" rel="noopener">Abrir directorio</a>
+          </article>
+
+          <article class="dir-card">
+            <span class="dir-code"><i></i>DINEDS</span>
+            <h4>Directorio Nacional de Expertos en Desarrollo Económico y Social</h4>
+            <p>Espacio para expertos en planeamiento estratégico, presupuesto público, programación multianual y seguimiento institucional.</p>
+            <a class="btn" href="dineds.html" target="_blank" rel="noopener">Abrir directorio</a>
+          </article>
+        </div>
       </div>
     </section>
+
 
     <section id="areas">
       <div class="container">
@@ -1100,7 +1217,7 @@
           <a class="navlink" href="#inicio">Inicio</a>
           <a class="navlink" href="#oferta">Oferta</a>
           <a class="navlink" href="verificacion.html" target="_blank" rel="noopener">Verificación</a>
-          <a class="navlink" href="dinesc.html" target="_blank" rel="noopener">DINESC</a>
+          <a class="navlink dir-special" href="directorio-expertos.html" target="_blank" rel="noopener">Directorio de Expertos</a>
         </div>
 
         <div class="socialbar" aria-label="Redes sociales">

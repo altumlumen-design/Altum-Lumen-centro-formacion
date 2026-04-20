@@ -1,0 +1,191 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ALTUM LUMEN | Directorio de Expertos</title>
+  <meta name="theme-color" content="#0E2A3B"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy:#0E2A3B;
+      --red:#B10D1B;
+      --blue:#2E6F9E;
+      --sky:#4AA7DA;
+      --bg:#ffffff;
+      --bg2:#F6F9FC;
+      --ink:#0B1324;
+      --muted:#53647A;
+      --line:rgba(14,42,59,.12);
+      --radius:22px;
+      --shadow:0 18px 60px rgba(14,42,59,.10);
+      --shadow2:0 12px 28px rgba(14,42,59,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background: radial-gradient(900px 520px at 85% 0%, rgba(74,167,218,.18), transparent 60%),
+                  radial-gradient(900px 520px at 10% 10%, rgba(177,13,27,.10), transparent 62%),
+                  var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1120px,92vw);margin:0 auto}
+    .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-badge{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--navy),#173d60);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:var(--shadow2)}
+    .brand h1{margin:0;font-size:14px;font-weight:900;letter-spacing:.2px}
+    .brand small{display:block;margin-top:2px;color:var(--muted);font-weight:700;font-size:11px}
+    .head-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:900;font-size:12px;box-shadow:var(--shadow2)}
+    .btn.primary{border:none;background:linear-gradient(90deg,var(--navy),#173d60);color:#fff}
+    .btn.red{border:none;background:linear-gradient(90deg,var(--red),#D4142A);color:#fff}
+    .hero{padding:34px 0 16px}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:stretch}
+    .hero-card,.aside-card,.grid-card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}
+    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(246,249,252,.94));position:relative;overflow:hidden}
+    .hero-card:after{content:"";position:absolute;inset:-180px -220px auto auto;width:560px;height:560px;background:radial-gradient(circle at 30% 30%, rgba(74,167,218,.24), transparent 60%),radial-gradient(circle at 70% 70%, rgba(177,13,27,.12), transparent 60%);transform:rotate(14deg);pointer-events:none}
+    .pad{padding:24px;position:relative;z-index:1}
+    .kicker{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;border:1px solid rgba(46,111,158,.18);background:rgba(46,111,158,.06);color:var(--navy);font-weight:900;font-size:11px}
+    .kicker i{width:9px;height:9px;border-radius:999px;background:var(--red);display:inline-block}
+    h2{margin:14px 0 8px;font-size:34px;line-height:1.12;letter-spacing:-.4px}
+    .lead{margin:0;color:var(--muted);font-weight:700;line-height:1.72}
+    .slogan{margin-top:14px;padding:13px 14px;border-radius:16px;border:1px solid rgba(177,13,27,.18);background:rgba(177,13,27,.06);font-weight:900;color:var(--navy)}
+    .mini{margin-top:10px;color:var(--muted);font-size:12px;font-weight:700;line-height:1.6}
+    .aside-card{padding:18px}
+    .aside-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .aside-title b{font-size:13px}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;border:1px solid rgba(14,42,59,.14);background:rgba(14,42,59,.04);font-size:11px;font-weight:900;color:var(--navy)}
+    .badge i{width:9px;height:9px;border-radius:999px;background:var(--sky);display:inline-block}
+    .list{margin-top:12px;display:grid;gap:10px}
+    .list .item{border:1px solid var(--line);border-radius:18px;padding:12px;background:var(--bg2)}
+    .list .item b{display:block;font-size:12px}
+    .list .item span{display:block;margin-top:4px;color:var(--muted);font-weight:700;font-size:12px;line-height:1.55}
+    .grid{padding:10px 0 30px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid-card{padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow2)}
+    .grid-card .code{display:inline-flex;align-items:center;gap:8px;width:fit-content;padding:7px 10px;border-radius:999px;background:rgba(14,42,59,.06);border:1px solid rgba(14,42,59,.14);color:var(--navy);font-size:11px;font-weight:900}
+    .grid-card .code i{width:8px;height:8px;border-radius:999px;background:var(--red);display:inline-block}
+    .grid-card h3{margin:0;font-size:14px;line-height:1.35}
+    .grid-card p{margin:0;color:var(--muted);font-weight:700;font-size:12px;line-height:1.65}
+    .grid-card .btn{margin-top:auto;justify-content:center;box-shadow:none}
+    footer{padding:24px 0 36px;color:var(--muted);font-weight:700;font-size:12px}
+    .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+    @media (max-width: 980px){
+      .hero-grid,.grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 720px){
+      .topbar-inner,.foot{flex-direction:column;align-items:flex-start}
+      .hero-grid,.grid{grid-template-columns:1fr}
+      h2{font-size:28px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">AL</div>
+        <div>
+          <h1>DIRECCIÓN ACADÉMICA</h1>
+          <small>Centro de Formación y Capacitación Profesional · Altum Lumen S.A.C.</small>
+        </div>
+      </div>
+      <div class="head-actions">
+        <a class="btn" href="index_directorio_expertos.html">← Volver al portal</a>
+        <a class="btn primary" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Consulta%20sobre%20directorios%20de%20expertos">✉️ Contacto</a>
+      </div>
+    </div>
+  </header>
+  
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <article class="hero-card">
+        <div class="pad">
+          <div class="kicker"><i></i>PLATAFORMA INSTITUCIONAL</div>
+          <h2>Directorio de Expertos</h2>
+          <p class="lead"><strong>La Dirección Académica del Centro de Formación y Capacitación Profesional de Altum Lumen S.A.C.</strong>, en mérito a fortalecer la capacitación, la articulación académica y la disponibilidad de especialistas, impulsa una red de directorios nacionales especializados por áreas temáticas.</p>
+          <div class="slogan">Acceso organizado a directorios nacionales para fines académicos, técnicos, formativos, de articulación profesional y de fortalecimiento institucional.</div>
+          <div class="mini">Desde esta página se podrá ingresar a cada directorio especializado en una pestaña independiente.</div>
+        </div>
+      </article>
+      <aside class="aside-card">
+        <div class="aside-title">
+          <b>Finalidad institucional</b>
+          <span class="badge"><i></i>Acceso central</span>
+        </div>
+        <div class="list">
+          <div class="item">
+            <b>Identificación especializada</b>
+            <span>Permite organizar a los expertos por materias de alta relevancia para fines académicos y técnicos.</span>
+          </div>
+          <div class="item">
+            <b>Proyección y visibilidad</b>
+            <span>Presenta una red institucional seria, ordenada y con proyección nacional.</span>
+          </div>
+          <div class="item">
+            <b>Articulación</b>
+            <span>Facilita futuras convocatorias, actividades académicas, cooperación y vinculación profesional.</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid">
+      <article class="grid-card">
+        <span class="code"><i></i>DINESC</span>
+        <h3>Directorio Nacional de Expertos en Seguridad Ciudadana</h3>
+        <p>Seguridad ciudadana, prevención del delito, serenazgo, patrullaje, videovigilancia y gestión territorial de la seguridad.</p>
+        <a class="btn red" href="dinesc.html" target="_blank" rel="noopener">Abrir DINESC</a>
+      </article>
+      <article class="grid-card">
+        <span class="code"><i></i>DINEGRD</span>
+        <h3>Directorio Nacional de Expertos en Gestión del Riesgo de Desastres</h3>
+        <p>Prevención, preparación, respuesta, rehabilitación, reconstrucción y resiliencia territorial frente a peligros y desastres.</p>
+        <a class="btn" href="dinegrd.html" target="_blank" rel="noopener">Abrir directorio</a>
+      </article>
+      <article class="grid-card">
+        <span class="code"><i></i>DINEGEP</span>
+        <h3>Directorio Nacional de Expertos en Gobernabilidad y Gestión Pública</h3>
+        <p>Gobernabilidad, modernización del Estado, organización pública, gestión institucional y fortalecimiento de capacidades.</p>
+        <a class="btn" href="dinegep.html" target="_blank" rel="noopener">Abrir directorio</a>
+      </article>
+      <article class="grid-card">
+        <span class="code"><i></i>DINESAP</span>
+        <h3>Directorio Nacional de Expertos en Salud Pública</h3>
+        <p>Políticas sanitarias, salud colectiva, promoción de la salud, gestión de servicios y fortalecimiento del sistema público.</p>
+        <a class="btn" href="dinesap.html" target="_blank" rel="noopener">Abrir directorio</a>
+      </article>
+      <article class="grid-card">
+        <span class="code"><i></i>DINEIP</span>
+        <h3>Directorio Nacional de Expertos en Inversión Pública y Gestión de Proyectos</h3>
+        <p>Inversión pública, formulación y evaluación, ejecución, seguimiento y gestión integral de proyectos públicos.</p>
+        <a class="btn" href="dineip.html" target="_blank" rel="noopener">Abrir directorio</a>
+      </article>
+      <article class="grid-card">
+        <span class="code"><i></i>DINEDS</span>
+        <h3>Directorio Nacional de Expertos en Desarrollo Económico y Social</h3>
+        <p>Planeamiento estratégico, presupuesto público, programación multianual, seguimiento y control del desempeño institucional.</p>
+        <a class="btn" href="dineds.html" target="_blank" rel="noopener">Abrir directorio</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+  <footer>
+    <div class="container foot">
+      <div>© ALTUM LUMEN S.A.C. · Dirección Académica · Centro de Formación y Capacitación Profesional</div>
+      <div>Plataforma institucional de directorios de expertos</div>
+    </div>
+  </footer>
+</body>
+</html>
