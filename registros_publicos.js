@@ -112,34 +112,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Álvarez Chino, Carlos Manuel",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "00494741",
-    "documento_mask": "DNI 0049****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260064741",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Álvarez Chino, Carlos Manuel",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "00494741",
-    "documento_mask": "DNI 0049****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "27/02/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSCCT20260084741",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Alvarez Rojas, Armando Jose Antonio",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "44550043",
@@ -312,20 +284,6 @@ window.REGISTROS_PUBLICOS = [
     "tipo_doc_identidad": "DNI",
     "numero_documento": "41022148",
     "documento_mask": "DNI 4102****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "17/09/2025",
-    "horas_academicas": "04",
-    "codigo_emision": "CM1-0008-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Barrozo Gonzales, Mario Ronnal",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "41022148",
-    "documento_mask": "DNI 4102****",
     "tipo_documento": "Diploma",
     "condicion_obtenida": "Especialista",
     "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
@@ -333,6 +291,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "14/01/2026",
     "horas_academicas": "240",
     "codigo_emision": "DEDGSC20260082148",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Barrozo Gonzales, Mario Ronnal",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "41022148",
+    "documento_mask": "DNI 4102****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "17/09/2025",
+    "horas_academicas": "04",
+    "codigo_emision": "CM1-0008-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -798,20 +770,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Chávez Flor, William Justo",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "41514501",
-    "documento_mask": "DNI 4151****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260284501",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Chavez Olmedo, Eldy Pascuala",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "09712345",
@@ -823,34 +781,6 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "17/09/2025",
     "horas_academicas": "04",
     "codigo_emision": "CM1-0014-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Chávez Olmedo, Eldy Pascuala",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "09712345",
-    "documento_mask": "DNI 0971****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260292345",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Chávez Olmedo, Eldy Pascuala",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "09712345",
-    "documento_mask": "DNI 0971****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "27/02/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSCCT20260152345",
     "estado": "VÁLIDO"
   },
   {
@@ -907,6 +837,48 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20260335492",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Chávez Flor, William Justo",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "41514501",
+    "documento_mask": "DNI 4151****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260284501",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Chávez Olmedo, Eldy Pascuala",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "09712345",
+    "documento_mask": "DNI 0971****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260292345",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Chávez Olmedo, Eldy Pascuala",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "09712345",
+    "documento_mask": "DNI 0971****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "27/02/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSCCT20260152345",
     "estado": "VÁLIDO"
   },
   {
@@ -1162,6 +1134,20 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
+    "nombre_completo": "Durand Aguilar, Santos Humberto",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "46105629",
+    "documento_mask": "DNI 4610****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260415629",
+    "estado": "VÁLIDO"
+  },
+  {
     "nombre_completo": "Díaz Rodríguez, Luis Enrique",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "07758150",
@@ -1187,20 +1173,6 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20260404238",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Durand Aguilar, Santos Humberto",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "46105629",
-    "documento_mask": "DNI 4610****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260415629",
     "estado": "VÁLIDO"
   },
   {
@@ -1260,20 +1232,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Fabián Gordillo, Héctor Manuel",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "75336613",
-    "documento_mask": "DNI 7533****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20261536613",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Fabián Gordillo, Hector Manuel",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "75336613",
@@ -1285,6 +1243,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "27/02/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSCCT20260236613",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Fabián Gordillo, Héctor Manuel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "75336613",
+    "documento_mask": "DNI 7533****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20261536613",
     "estado": "VÁLIDO"
   },
   {
@@ -1442,17 +1414,17 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Gonzáles Flores, Alcides Uriel",
+    "nombre_completo": "Gonzales Hijar, Isabel",
     "tipo_doc_identidad": "DNI",
-    "numero_documento": "32385731",
-    "documento_mask": "DNI 3238****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260505731",
+    "numero_documento": "09350757",
+    "documento_mask": "DNI 0935****",
+    "tipo_documento": "Diploma",
+    "condicion_obtenida": "Especialista",
+    "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
+    "tipo_programa": "Diplomado Especializado",
+    "fecha_emision": "14/01/2026",
+    "horas_academicas": "240",
+    "codigo_emision": "DEDGSC20260010757",
     "estado": "VÁLIDO"
   },
   {
@@ -1484,20 +1456,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Gonzales Hijar, Isabel",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "09350757",
-    "documento_mask": "DNI 0935****",
-    "tipo_documento": "Diploma",
-    "condicion_obtenida": "Especialista",
-    "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
-    "tipo_programa": "Diplomado Especializado",
-    "fecha_emision": "14/01/2026",
-    "horas_academicas": "240",
-    "codigo_emision": "DEDGSC20260010757",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Gonzales Ríos, Julio Francisco",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "73231803",
@@ -1509,6 +1467,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20260511803",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Gonzáles Flores, Alcides Uriel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "32385731",
+    "documento_mask": "DNI 3238****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260505731",
     "estado": "VÁLIDO"
   },
   {
@@ -1568,20 +1540,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Guillén Gallegos, Ricardo Benito",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "23820411",
-    "documento_mask": "DNI 2382****",
-    "tipo_documento": "Diploma",
-    "condicion_obtenida": "Especialista",
-    "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
-    "tipo_programa": "Diplomado Especializado",
-    "fecha_emision": "14/01/2026",
-    "horas_academicas": "240",
-    "codigo_emision": "DEDGSC20260140411",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Guillen Gallegos, Ricardo Benito",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "23820411",
@@ -1593,6 +1551,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "27/02/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSCCT20260460411",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Guillén Gallegos, Ricardo Benito",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "23820411",
+    "documento_mask": "DNI 2382****",
+    "tipo_documento": "Diploma",
+    "condicion_obtenida": "Especialista",
+    "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
+    "tipo_programa": "Diplomado Especializado",
+    "fecha_emision": "14/01/2026",
+    "horas_academicas": "240",
+    "codigo_emision": "DEDGSC20260140411",
     "estado": "VÁLIDO"
   },
   {
@@ -1806,20 +1778,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Julcamanyan Galván, Teodoro",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "40670951",
-    "documento_mask": "DNI 4067****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260610951",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Julcamanyan Galvan, Teodoro",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "40670951",
@@ -1831,6 +1789,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "27/02/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSCCT20260530951",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Julcamanyan Galván, Teodoro",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "40670951",
+    "documento_mask": "DNI 4067****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260610951",
     "estado": "VÁLIDO"
   },
   {
@@ -1950,20 +1922,6 @@ window.REGISTROS_PUBLICOS = [
     "tipo_doc_identidad": "DNI",
     "numero_documento": "10236458",
     "documento_mask": "DNI 1023****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "17/09/2025",
-    "horas_academicas": "04",
-    "codigo_emision": "CM1-0015-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Lopez Gordillo, Carmen Adriana",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "10236458",
-    "documento_mask": "DNI 1023****",
     "tipo_documento": "Diploma",
     "condicion_obtenida": "Especialista",
     "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
@@ -1971,6 +1929,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "14/01/2026",
     "horas_academicas": "240",
     "codigo_emision": "DEDGSC20260036458",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Lopez Gordillo, Carmen Adriana",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "10236458",
+    "documento_mask": "DNI 1023****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "17/09/2025",
+    "horas_academicas": "04",
+    "codigo_emision": "CM1-0015-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -2002,20 +1974,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "López Lamonja, José Miguel",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "8888408",
-    "documento_mask": "DNI 8888****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260658408",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Lopez Lobaton, Jose Ernesto Benjamin",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "70861045",
@@ -2041,20 +1999,6 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "17/09/2025",
     "horas_academicas": "04",
     "codigo_emision": "CM1-0009-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "López Solís, Gregory Armando",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "24699052",
-    "documento_mask": "DNI 2469****",
-    "tipo_documento": "Diploma",
-    "condicion_obtenida": "Especialista",
-    "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
-    "tipo_programa": "Diplomado Especializado",
-    "fecha_emision": "14/01/2026",
-    "horas_academicas": "240",
-    "codigo_emision": "DEDGSC20260049052",
     "estado": "VÁLIDO"
   },
   {
@@ -2114,6 +2058,34 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
+    "nombre_completo": "López Lamonja, José Miguel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "8888408",
+    "documento_mask": "DNI 8888****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260658408",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "López Solís, Gregory Armando",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "24699052",
+    "documento_mask": "DNI 2469****",
+    "tipo_documento": "Diploma",
+    "condicion_obtenida": "Especialista",
+    "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
+    "tipo_programa": "Diplomado Especializado",
+    "fecha_emision": "14/01/2026",
+    "horas_academicas": "240",
+    "codigo_emision": "DEDGSC20260049052",
+    "estado": "VÁLIDO"
+  },
+  {
     "nombre_completo": "Machaca Lupaca, Rubén",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "70186160",
@@ -2139,20 +2111,6 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20260680334",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Málaga Fernández, Leonard Enrique",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "43741243",
-    "documento_mask": "DNI 4374****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260691243",
     "estado": "VÁLIDO"
   },
   {
@@ -2237,6 +2195,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20260733574",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Marrufo Serapio, Samuel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "43049718",
+    "documento_mask": "DNI 4304****",
+    "tipo_documento": "Diploma",
+    "condicion_obtenida": "Especialista",
+    "denominacion_programa": "Orden Interno y Seguridad Ciudadana",
+    "tipo_programa": "Diplomado Especializado",
+    "fecha_emision": "04/05/2026",
+    "horas_academicas": "240",
+    "codigo_emision": "DEOISC20260019718",
     "estado": "VÁLIDO"
   },
   {
@@ -2330,11 +2302,11 @@ window.REGISTROS_PUBLICOS = [
     "documento_mask": "DNI 0887****",
     "tipo_documento": "Certificado",
     "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Modernización de la Gestión Pública: Casuística y Buenas Prácticas",
-    "tipo_programa": "Webinar Especializado",
-    "fecha_emision": "20/08/2025",
+    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "17/09/2025",
     "horas_academicas": "04",
-    "codigo_emision": "WE-0002-2025-DA-UFCP",
+    "codigo_emision": "CM1-0034-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -2344,11 +2316,11 @@ window.REGISTROS_PUBLICOS = [
     "documento_mask": "DNI 0887****",
     "tipo_documento": "Certificado",
     "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "17/09/2025",
+    "denominacion_programa": "Modernización de la Gestión Pública: Casuística y Buenas Prácticas",
+    "tipo_programa": "Webinar Especializado",
+    "fecha_emision": "20/08/2025",
     "horas_academicas": "04",
-    "codigo_emision": "CM1-0034-2025-DA-UFCP",
+    "codigo_emision": "WE-0002-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -2468,20 +2440,6 @@ window.REGISTROS_PUBLICOS = [
     "tipo_doc_identidad": "DNI",
     "numero_documento": "43970622",
     "documento_mask": "DNI 4397****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Modernización de la Gestión Pública: Casuística y Buenas Prácticas",
-    "tipo_programa": "Webinar Especializado",
-    "fecha_emision": "20/08/2025",
-    "horas_academicas": "04",
-    "codigo_emision": "WE-0001-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Moreno Tupia, Osear Felipe",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "43970622",
-    "documento_mask": "DNI 4397****",
     "tipo_documento": "Certificado de Ponente",
     "condicion_obtenida": "Ponente",
     "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
@@ -2489,6 +2447,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "17/09/2025",
     "horas_academicas": "04",
     "codigo_emision": "CM1-0018-2025-DA-UFCP",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Moreno Tupia, Osear Felipe",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "43970622",
+    "documento_mask": "DNI 4397****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Modernización de la Gestión Pública: Casuística y Buenas Prácticas",
+    "tipo_programa": "Webinar Especializado",
+    "fecha_emision": "20/08/2025",
+    "horas_academicas": "04",
+    "codigo_emision": "WE-0001-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -2587,6 +2559,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20261597864",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Málaga Fernández, Leonard Enrique",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "43741243",
+    "documento_mask": "DNI 4374****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260691243",
     "estado": "VÁLIDO"
   },
   {
@@ -2748,20 +2734,6 @@ window.REGISTROS_PUBLICOS = [
     "tipo_doc_identidad": "DNI",
     "numero_documento": "17405123",
     "documento_mask": "DNI 1740****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "17/09/2025",
-    "horas_academicas": "04",
-    "codigo_emision": "CM1-0001-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Orellano Olazabal, Cesar Augusto",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "17405123",
-    "documento_mask": "DNI 1740****",
     "tipo_documento": "Diploma",
     "condicion_obtenida": "Especialista",
     "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
@@ -2769,6 +2741,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "14/01/2026",
     "horas_academicas": "240",
     "codigo_emision": "DEDGSC20260135123",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Orellano Olazabal, Cesar Augusto",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "17405123",
+    "documento_mask": "DNI 1740****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "17/09/2025",
+    "horas_academicas": "04",
+    "codigo_emision": "CM1-0001-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -2902,20 +2888,6 @@ window.REGISTROS_PUBLICOS = [
     "tipo_doc_identidad": "DNI",
     "numero_documento": "45005719",
     "documento_mask": "DNI 4500****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "17/09/2025",
-    "horas_academicas": "04",
-    "codigo_emision": "CM1-0011-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Perales Perales, Miguel Angel",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "45005719",
-    "documento_mask": "DNI 4500****",
     "tipo_documento": "Diploma",
     "condicion_obtenida": "Especialista",
     "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
@@ -2923,6 +2895,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "14/01/2026",
     "horas_academicas": "240",
     "codigo_emision": "DEDGSC20260205719",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Perales Perales, Miguel Angel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "45005719",
+    "documento_mask": "DNI 4500****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Policía y Sereno: Actores Estratégicos en la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "17/09/2025",
+    "horas_academicas": "04",
+    "codigo_emision": "CM1-0011-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -2965,48 +2951,6 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20260894626",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Pérez Zevallo, Eliseo",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "74425604",
-    "documento_mask": "DNI 7442****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "27/02/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSCCT20260455604",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Pérez Zevallos, Eliseo",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "74425604",
-    "documento_mask": "DNI 7442****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20260905604",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Pérez Zevallos, Eliseo",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "74425604",
-    "documento_mask": "DNI 7442****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "27/02/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSCCT20260165604",
     "estado": "VÁLIDO"
   },
   {
@@ -3161,6 +3105,48 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "27/02/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSCCT20260344769",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Pérez Zevallo, Eliseo",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "74425604",
+    "documento_mask": "DNI 7442****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "27/02/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSCCT20260455604",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Pérez Zevallos, Eliseo",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "74425604",
+    "documento_mask": "DNI 7442****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260905604",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Pérez Zevallos, Eliseo",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "74425604",
+    "documento_mask": "DNI 7442****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "27/02/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSCCT20260165604",
     "estado": "VÁLIDO"
   },
   {
@@ -3584,20 +3570,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Sánchez Coaguila, Johan Raul",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "22510413",
-    "documento_mask": "DNI 2251****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20261160413",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Sanchez Ycahuate, Manuel Artemio",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "05281127",
@@ -3609,48 +3581,6 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "13/10/2025",
     "horas_academicas": "24",
     "codigo_emision": "CE1-0003-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Sánchez Ycahuate, Manuel Artemio",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "05281127",
-    "documento_mask": "DNI 0528****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20261171127",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Sánchez Zagal, Gilberto",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "41719232",
-    "documento_mask": "DNI 4171****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20261189232",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Sánchez Zagal, Gilberto",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "41719232",
-    "documento_mask": "DNI 4171****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "27/02/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSCCT20260209232",
     "estado": "VÁLIDO"
   },
   {
@@ -3875,6 +3805,62 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20261620079",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Sánchez Coaguila, Johan Raul",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "22510413",
+    "documento_mask": "DNI 2251****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20261160413",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Sánchez Ycahuate, Manuel Artemio",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "05281127",
+    "documento_mask": "DNI 0528****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20261171127",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Sánchez Zagal, Gilberto",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "41719232",
+    "documento_mask": "DNI 4171****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20261189232",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Sánchez Zagal, Gilberto",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "41719232",
+    "documento_mask": "DNI 4171****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "27/02/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSCCT20260209232",
     "estado": "VÁLIDO"
   },
   {
@@ -4106,20 +4092,6 @@ window.REGISTROS_PUBLICOS = [
     "tipo_doc_identidad": "DNI",
     "numero_documento": "25718881",
     "documento_mask": "DNI 2571****",
-    "tipo_documento": "Certificado de Ponente",
-    "condicion_obtenida": "Ponente",
-    "denominacion_programa": "Modernización de la Gestión Pública: Casuística y Buenas Prácticas",
-    "tipo_programa": "Webinar Especializado",
-    "fecha_emision": "20/08/2025",
-    "horas_academicas": "04",
-    "codigo_emision": "WE-0006-2025-DA-UFCP",
-    "estado": "VÁLIDO"
-  },
-  {
-    "nombre_completo": "Vargas Castañeda, Martin Ricardo",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "25718881",
-    "documento_mask": "DNI 2571****",
     "tipo_documento": "Constancia",
     "condicion_obtenida": "Ponente",
     "denominacion_programa": "Dirección y Gestión de la Seguridad Ciudadana",
@@ -4127,6 +4099,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "14/01/2026",
     "horas_academicas": "no aplica",
     "codigo_emision": "DEDGSC20260248881",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Vargas Castañeda, Martin Ricardo",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "25718881",
+    "documento_mask": "DNI 2571****",
+    "tipo_documento": "Certificado de Ponente",
+    "condicion_obtenida": "Ponente",
+    "denominacion_programa": "Modernización de la Gestión Pública: Casuística y Buenas Prácticas",
+    "tipo_programa": "Webinar Especializado",
+    "fecha_emision": "20/08/2025",
+    "horas_academicas": "04",
+    "codigo_emision": "WE-0006-2025-DA-UFCP",
     "estado": "VÁLIDO"
   },
   {
@@ -4270,20 +4256,6 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
-    "nombre_completo": "Vílchez Silva, Jesús Manuel",
-    "tipo_doc_identidad": "DNI",
-    "numero_documento": "42170389",
-    "documento_mask": "DNI 4217****",
-    "tipo_documento": "Certificado",
-    "condicion_obtenida": "Aprobado",
-    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
-    "tipo_programa": "Conferencia Magistral",
-    "fecha_emision": "23/01/2026",
-    "horas_academicas": "04",
-    "codigo_emision": "CMSPNP20261430389",
-    "estado": "VÁLIDO"
-  },
-  {
     "nombre_completo": "Villafuerte Sosa, Kenedy",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "42255736",
@@ -4351,6 +4323,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "27/02/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSCCT20260028844",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Vílchez Silva, Jesús Manuel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "42170389",
+    "documento_mask": "DNI 4217****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20261430389",
     "estado": "VÁLIDO"
   },
   {
@@ -4505,6 +4491,34 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "27/02/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSCCT20260217315",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Álvarez Chino, Carlos Manuel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "00494741",
+    "documento_mask": "DNI 0049****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "23/01/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSPNP20260064741",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Álvarez Chino, Carlos Manuel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "00494741",
+    "documento_mask": "DNI 0049****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
+    "tipo_programa": "Conferencia Magistral",
+    "fecha_emision": "27/02/2026",
+    "horas_academicas": "04",
+    "codigo_emision": "CMSCCT20260084741",
     "estado": "VÁLIDO"
   }
 ];
