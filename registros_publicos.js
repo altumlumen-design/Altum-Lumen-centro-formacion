@@ -112,6 +112,20 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
+    "nombre_completo": "Alvarez Gonzales, Ricardo Willan",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "26679951",
+    "documento_mask": "DNI 2667****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260069951",
+    "estado": "VÁLIDO"
+  },
+  {
     "nombre_completo": "Alvarez Rojas, Armando Jose Antonio",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "44550043",
@@ -826,6 +840,34 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
+    "nombre_completo": "Churacutipa Mamani, Lucila",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "41322771",
+    "documento_mask": "DNI 4132****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260052771",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Churacutipa Mamani, Marco Antonio",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "45827502",
+    "documento_mask": "DNI 4582****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260107502",
+    "estado": "VÁLIDO"
+  },
+  {
     "nombre_completo": "Churqui Salluca, Carol Dina",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "74535492",
@@ -935,6 +977,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "17/09/2025",
     "horas_academicas": "04",
     "codigo_emision": "CM1-0027-2025-DA-UFCP",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Cordova Sanchez, Francisco",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "02644651",
+    "documento_mask": "DNI 0264****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260124651",
     "estado": "VÁLIDO"
   },
   {
@@ -2366,6 +2422,20 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO"
   },
   {
+    "nombre_completo": "Miranda Córdova, Raquel Luzmila",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "60982045",
+    "documento_mask": "DNI 6098****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260042045",
+    "estado": "VÁLIDO"
+  },
+  {
     "nombre_completo": "Molina Vasquez, Luz Marina",
     "tipo_doc_identidad": "DNI",
     "numero_documento": "46668975",
@@ -2839,6 +2909,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "24/10/2025",
     "horas_academicas": "04",
     "codigo_emision": "CM3-0002-2025-DA-UFCP",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Pacheco Huarotto, Ramiro Alvaro",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "21531073",
+    "documento_mask": "DNI 2153****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260071073",
     "estado": "VÁLIDO"
   },
   {
@@ -4253,6 +4337,20 @@ window.REGISTROS_PUBLICOS = [
     "fecha_emision": "23/01/2026",
     "horas_academicas": "04",
     "codigo_emision": "CMSPNP20261426192",
+    "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Villacorta Medina, Angel Arturo",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "07331708",
+    "documento_mask": "DNI 0733****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260141708",
     "estado": "VÁLIDO"
   },
   {
