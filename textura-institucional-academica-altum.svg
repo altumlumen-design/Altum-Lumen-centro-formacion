@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fbfe"/>
+      <stop offset="55%" stop-color="#f2f7fb"/>
+      <stop offset="100%" stop-color="#edf3f8"/>
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2f52"/>
+      <stop offset="100%" stop-color="#2c6c9d"/>
+    </linearGradient>
+    <linearGradient id="accentRed" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b91224"/>
+      <stop offset="100%" stop-color="#d73546"/>
+    </linearGradient>
+    <filter id="blurSoft"><feGaussianBlur stdDeviation="12"/></filter>
+    <pattern id="grid" width="120" height="120" patternUnits="userSpaceOnUse">
+      <path d="M120 0H0V120" fill="none" stroke="#0f2f52" stroke-width="1" opacity="0.035"/>
+      <circle cx="0" cy="0" r="2.4" fill="#2c6c9d" opacity="0.06"/>
+    </pattern>
+    <pattern id="texture" width="420" height="320" patternUnits="userSpaceOnUse">
+      <g opacity="0.10">
+        <!-- libro -->
+        <g transform="translate(38 34)">
+          <path d="M0 18C38 0 82 2 122 26v70C80 74 38 72 0 84z" fill="none" stroke="#0f2f52" stroke-width="4"/>
+          <path d="M122 26C162 2 206 0 244 18v66c-38-12-80-10-122 12z" fill="none" stroke="#0f2f52" stroke-width="4"/>
+          <path d="M122 26v70" fill="none" stroke="#0f2f52" stroke-width="3"/>
+        </g>
+        <!-- diploma -->
+        <g transform="translate(275 48)">
+          <rect x="0" y="0" rx="14" ry="14" width="92" height="66" fill="none" stroke="#b91224" stroke-width="4"/>
+          <path d="M18 20h54M18 34h44" fill="none" stroke="#b91224" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="72" cy="50" r="10" fill="none" stroke="#b91224" stroke-width="4"/>
+          <path d="M67 58l-6 16 11-8 11 8-6-16" fill="none" stroke="#b91224" stroke-width="4" stroke-linejoin="round"/>
+        </g>
+        <!-- red / verificación -->
+        <g transform="translate(44 182)">
+          <circle cx="30" cy="38" r="12" fill="none" stroke="#2c6c9d" stroke-width="4"/>
+          <circle cx="114" cy="18" r="11" fill="none" stroke="#2c6c9d" stroke-width="4"/>
+          <circle cx="154" cy="82" r="12" fill="none" stroke="#2c6c9d" stroke-width="4"/>
+          <circle cx="84" cy="108" r="16" fill="none" stroke="#2c6c9d" stroke-width="4"/>
+          <path d="M30 38L114 18 154 82 84 108 30 38 84 108 114 18" fill="none" stroke="#2c6c9d" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M74 106l10 10 22-26" fill="none" stroke="#b91224" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <!-- columna / institucional -->
+        <g transform="translate(248 176)">
+          <path d="M18 16h88M28 36h68M34 36v82M62 36v82M90 36v82M18 118h88" fill="none" stroke="#0f2f52" stroke-width="4" stroke-linecap="round"/>
+        </g>
+      </g>
+      <g opacity="0.06">
+        <path d="M210 0C286 42 330 92 358 148" fill="none" stroke="#b91224" stroke-width="2"/>
+        <path d="M0 294C62 244 138 228 238 240" fill="none" stroke="#2c6c9d" stroke-width="2"/>
+        <circle cx="394" cy="252" r="18" fill="none" stroke="#0f2f52" stroke-width="2"/>
+      </g>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <rect width="1600" height="1000" fill="url(#texture)"/>
+
+  <!-- bandas y volúmenes -->
+  <path d="M0 190C250 96 498 118 760 226s506 112 840 22V0H0Z" fill="#ffffff" opacity="0.72"/>
+  <path d="M0 852C258 738 468 742 692 646c258-112 498-248 908-214v568H0Z" fill="#ffffff" opacity="0.68"/>
+  <path d="M-50 774C258 648 460 706 676 620c244-96 466-220 974-194" fill="none" stroke="#2c6c9d" stroke-width="2" opacity="0.12"/>
+  <path d="M-40 812C242 700 460 736 666 662c256-92 472-180 964-160" fill="none" stroke="#b91224" stroke-width="2" opacity="0.08"/>
+
+  <!-- grandes marcas de agua -->
+  <g opacity="0.10" transform="translate(1060 178)">
+    <circle cx="0" cy="0" r="178" fill="none" stroke="#0f2f52" stroke-width="12"/>
+    <circle cx="0" cy="0" r="132" fill="none" stroke="#2c6c9d" stroke-width="6"/>
+    <path d="M-66 4l38 40 88-100" fill="none" stroke="#b91224" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g opacity="0.10" transform="translate(250 610)">
+    <path d="M0 28C84 -10 172 -8 254 34v152C172 144 86 142 0 170Z" fill="none" stroke="#0f2f52" stroke-width="10"/>
+    <path d="M254 34C336 -8 426 -10 508 28v142c-82-28-168-26-254 16Z" fill="none" stroke="#0f2f52" stroke-width="10"/>
+    <path d="M254 34v152" fill="none" stroke="#0f2f52" stroke-width="7"/>
+    <path d="M54 80c48-14 100-14 150 0" fill="none" stroke="#2c6c9d" stroke-width="7" opacity="0.7"/>
+    <path d="M300 80c48-14 100-14 150 0" fill="none" stroke="#b91224" stroke-width="7" opacity="0.55"/>
+  </g>
+
+  <g opacity="0.08" transform="translate(114 128)">
+    <path d="M24 0h118M38 24h88M46 24v112M83 24v112M120 24v112M24 136h118" fill="none" stroke="#0f2f52" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <circle cx="1415" cy="112" r="150" fill="#2c6c9d" opacity="0.05" filter="url(#blurSoft)"/>
+  <circle cx="180" cy="930" r="190" fill="#b91224" opacity="0.04" filter="url(#blurSoft)"/>
+</svg>
