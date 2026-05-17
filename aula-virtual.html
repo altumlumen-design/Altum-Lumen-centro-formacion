@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ALTUM LUMEN | Aula Virtual</title>
+  <meta name="description" content="Aula Virtual del Centro de Formación y Capacitación Profesional de Altum Lumen S.A.C."/>
+  <meta name="theme-color" content="#0E2238"/>
+  <style>
+    :root{
+      --navy:#0E2238;--navy2:#17324F;--navy3:#081525;--red:#B10D1B;--red2:#D4142A;
+      --paper:#F4F6F9;--white:#fff;--ink:#142033;--muted:#65748A;--line:rgba(14,42,59,.14);
+      --shadow:0 22px 56px rgba(14,42,59,.15);--soft:0 12px 28px rgba(14,42,59,.08);
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#F8FAFC 0%,#EDF2F7 100%)} a{text-decoration:none;color:inherit} .container{width:min(1180px,92vw);margin:0 auto}
+    .topbar{background:linear-gradient(110deg,var(--navy3),var(--navy),#1D4569);color:#fff;border-bottom:4px solid var(--red);box-shadow:0 10px 30px rgba(0,0,0,.14)} .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 0} .brand{display:flex;gap:15px;align-items:center} .mark{width:58px;height:58px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.06);font-weight:900;letter-spacing:1.5px} .brand small{display:block;color:rgba(255,255,255,.72);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:800} .brand b{display:block;font-size:22px;line-height:1.1;margin-top:4px} .top-actions{display:flex;gap:10px;flex-wrap:wrap} .top-actions a{padding:12px 14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);font-size:12px;font-weight:900} .top-actions a.primary{background:var(--red);border-color:var(--red)}
+    .hero{padding:34px 0 22px} .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px} .hero-main{position:relative;overflow:hidden;border-radius:30px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:34px} .hero-main:after{content:"";position:absolute;right:-90px;top:-120px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(177,13,27,.13),transparent 62%)} .kicker{display:inline-flex;padding:9px 12px;border-left:4px solid var(--red);background:rgba(177,13,27,.07);color:var(--navy);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:900} h1{position:relative;margin:18px 0 12px;color:var(--navy);font-size:44px;line-height:1.04;letter-spacing:-.6px} .hero-main p{position:relative;max-width:850px;margin:0;color:var(--muted);font-size:15px;line-height:1.8} .hero-side{display:grid;gap:14px} .mini-card{border-radius:24px;background:#fff;border:1px solid var(--line);box-shadow:var(--soft);padding:20px} .mini-card h2{margin:0 0 10px;color:var(--navy);font-size:18px} .mini-card p{margin:0;color:var(--muted);line-height:1.7;font-size:13px} .mini-card b{color:var(--navy)}
+    .tools{display:grid;grid-template-columns:1fr 220px 220px;gap:12px;margin:10px 0 18px} .tools input,.tools select{height:48px;border:1px solid var(--line);border-radius:16px;padding:0 14px;background:#fff;color:var(--ink);font-weight:800;outline:none} .tools input:focus,.tools select:focus{border-color:rgba(177,13,27,.45);box-shadow:0 0 0 4px rgba(177,13,27,.08)} .section-title{display:flex;justify-content:space-between;align-items:end;gap:14px;margin-top:18px} .section-title h2{margin:0;color:var(--navy);font-size:28px} .section-title p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.7}
+    .courses{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-bottom:40px} .course{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:var(--soft);overflow:hidden;display:flex;flex-direction:column;min-height:315px;position:relative} .course:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,var(--navy),var(--red))} .course-body{padding:20px 20px 16px;display:flex;flex-direction:column;gap:12px;flex:1} .type{display:flex;justify-content:space-between;gap:10px;align-items:center} .tag{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(14,42,59,.06);color:var(--navy);font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.8px} .status{font-size:11px;font-weight:900;color:var(--red);text-transform:uppercase;letter-spacing:.8px} .course h3{margin:0;color:var(--navy);font-size:19px;line-height:1.28} .course p{margin:0;color:var(--muted);font-size:13px;line-height:1.65} .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto} .meta div{border:1px solid var(--line);background:#f8fafc;border-radius:14px;padding:10px} .meta b{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.7px} .meta span{display:block;color:var(--ink);font-size:12px;font-weight:900;margin-top:4px} .course-actions{display:flex;gap:10px;padding:0 20px 20px} .course-actions button,.course-actions a{flex:1;min-height:44px;border-radius:14px;border:1px solid var(--line);font-weight:900;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center} .course-actions button{background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;border:none;box-shadow:0 12px 24px rgba(177,13,27,.18)} .course-actions a{background:#fff;color:var(--navy)}
+    .empty{display:none;background:#fff;border:1px dashed rgba(14,42,59,.24);border-radius:24px;padding:24px;text-align:center;color:var(--muted);font-weight:800}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(8,21,37,.66);z-index:50;padding:20px} .modal.active{display:flex} .modal-box{width:min(520px,94vw);background:#fff;border-radius:28px;box-shadow:0 40px 90px rgba(0,0,0,.28);overflow:hidden} .modal-head{background:linear-gradient(110deg,var(--navy3),var(--navy));color:#fff;padding:20px 22px;border-bottom:4px solid var(--red)} .modal-head h2{margin:0;font-size:22px} .modal-head p{margin:8px 0 0;color:rgba(255,255,255,.74);font-size:13px;line-height:1.6} .modal-body{padding:22px} .modal-body label{display:block;color:var(--navy);font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px} .modal-body input{width:100%;height:52px;border:1px solid var(--line);border-radius:16px;padding:0 14px;font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase;outline:none} .modal-body input:focus{border-color:rgba(177,13,27,.45);box-shadow:0 0 0 4px rgba(177,13,27,.08)} .modal-note{margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.6} .modal-error{display:none;margin-top:12px;color:var(--red);font-size:13px;font-weight:900} .modal-actions{display:flex;gap:10px;margin-top:18px} .modal-actions button,.modal-actions a{flex:1;min-height:46px;border-radius:14px;border:1px solid var(--line);font-weight:900;cursor:pointer;text-align:center;display:inline-flex;align-items:center;justify-content:center} .modal-actions button.primary{background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;border:none} .modal-actions button.secondary{background:#f8fafc;color:var(--navy)}
+    footer{padding:10px 0 34px;color:var(--muted);font-size:12px;font-weight:800;text-align:center}
+    @media(max-width:980px){.hero-grid,.courses{grid-template-columns:1fr 1fr}.tools{grid-template-columns:1fr}} @media(max-width:680px){.topbar-inner{flex-direction:column;align-items:flex-start}.hero-grid,.courses{grid-template-columns:1fr} h1{font-size:34px} .section-title{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="mark">AL</div>
+        <div>
+          <small>Dirección Académica</small>
+          <b>Aula Virtual</b>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a href="index.html">Volver al portal</a>
+        <a class="primary" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20informaci%C3%B3n%20para%20matricularme%20en%20un%20programa%20acad%C3%A9mico." target="_blank" rel="noopener">Solicitar matrícula</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <article class="hero-main">
+          <span class="kicker">Acceso exclusivo para alumnos matriculados</span>
+          <h1>Aula Virtual del Centro de Formación y Capacitación Profesional</h1>
+          <p>Espacio académico de consulta para alumnos matriculados, destinado a visualizar aulas por programa, acceder a sesiones grabadas, materiales, evaluaciones y orientaciones para la certificación correspondiente. Cada curso se habilita mediante un código alfanumérico de acceso entregado por la Dirección Académica.</p>
+        </article>
+        <aside class="hero-side">
+          <div class="mini-card">
+            <h2>Ingreso por código</h2>
+            <p>Cada curso o diplomado cuenta con un código de acceso de hasta <b>8 caracteres alfanuméricos</b>. El código permite abrir el aula correspondiente.</p>
+          </div>
+          <div class="mini-card">
+            <h2>Uso académico</h2>
+            <p>Los accesos son de uso exclusivo para participantes matriculados. Si aún no te encuentras inscrito, puedes solicitar matrícula o información por WhatsApp.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="section-title">
+        <div>
+          <h2>Cursos y programas disponibles</h2>
+          <p>Busca tu curso, ingresa tu código y accede al aula correspondiente.</p>
+        </div>
+      </div>
+      <div class="tools">
+        <input id="search" type="search" placeholder="Buscar por nombre, área o tipo de programa..."/>
+        <select id="filterTipo">
+          <option value="">Todos los tipos</option>
+          <option>Curso especializado</option>
+          <option>Diplomado especializado</option>
+          <option>Conferencia magistral</option>
+        </select>
+        <select id="filterEstado">
+          <option value="">Todos los estados</option>
+          <option>Disponible</option>
+          <option>En organización</option>
+          <option>Por habilitar</option>
+        </select>
+      </div>
+      <div id="empty" class="empty">No se encontraron cursos con esos criterios.</div>
+      <div id="courses" class="courses"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="modalTitle">Acceso al aula</h2>
+        <p>Ingrese el código proporcionado por la Dirección Académica para habilitar el aula seleccionada.</p>
+      </div>
+      <div class="modal-body">
+        <label for="accessCode">Código de acceso</label>
+        <input id="accessCode" maxlength="8" autocomplete="off" placeholder="XXXXXXXX"/>
+        <p class="modal-note">El código es alfanumérico y corresponde únicamente al curso o programa seleccionado.</p>
+        <div id="modalError" class="modal-error">Código incorrecto. Verifique el dato o solicite apoyo a Dirección Académica.</div>
+        <div class="modal-actions">
+          <button class="secondary" id="closeModal" type="button">Cancelar</button>
+          <button class="primary" id="validateCode" type="button">Ingresar al aula</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© Altum Lumen S.A.C. · Dirección Académica · Aula Virtual</footer>
+
+  <script>
+    const CURSOS = [
+  {
+    "id": "ia-derecho-2da",
+    "codigo": "IA2D7K9Q",
+    "titulo": "Curso Especializado en Inteligencia Artificial para el Derecho – Segunda Edición",
+    "tipo": "Curso especializado",
+    "area": "Derecho, innovación y herramientas digitales",
+    "horas": "48 horas académicas",
+    "sesiones": 4,
+    "estado": "Disponible",
+    "archivo": "aulas/ia-derecho-2da-edicion.html",
+    "descripcion": "Aula destinada a participantes matriculados en el curso de aplicación práctica de inteligencia artificial en actividades jurídicas, redacción, análisis y mejora de productividad profesional."
+  },
+  {
+    "id": "diplomado-orden-interno",
+    "codigo": "OI6C9M2P",
+    "titulo": "Diplomado Especializado en Orden Interno y Seguridad Ciudadana",
+    "tipo": "Diplomado especializado",
+    "area": "Seguridad ciudadana y orden interno",
+    "horas": "Por módulo / según programa",
+    "sesiones": 5,
+    "estado": "En organización",
+    "archivo": "aulas/diplomado-orden-interno-seguridad-ciudadana.html",
+    "descripcion": "Aula para organizar sesiones, materiales, evaluaciones y comunicaciones académicas vinculadas al orden interno, prevención, coordinación interinstitucional y seguridad ciudadana."
+  },
+  {
+    "id": "diplomado-direccion-gestion-sc",
+    "codigo": "DG8S4T2A",
+    "titulo": "Diplomado Especializado en Dirección y Gestión de la Seguridad Ciudadana",
+    "tipo": "Diplomado especializado",
+    "area": "Gestión pública y seguridad ciudadana",
+    "horas": "240 horas académicas",
+    "sesiones": 6,
+    "estado": "Disponible",
+    "archivo": "aulas/diplomado-direccion-gestion-seguridad-ciudadana.html",
+    "descripcion": "Aula orientada al fortalecimiento de capacidades para la conducción, planeamiento, gestión territorial e intervención estratégica en seguridad ciudadana."
+  },
+  {
+    "id": "conf-serenazgo-pnp",
+    "codigo": "SP3N8P1R",
+    "titulo": "Serenazgo y Policía Nacional del Perú: Articulación y Operaciones Conjuntas para la Prevención del Delito",
+    "tipo": "Conferencia magistral",
+    "area": "Seguridad ciudadana operativa",
+    "horas": "04 horas académicas",
+    "sesiones": 1,
+    "estado": "Disponible",
+    "archivo": "aulas/conferencia-serenazgo-pnp.html",
+    "descripcion": "Aula de consulta para la conferencia magistral sobre coordinación operativa, prevención del delito y articulación territorial entre serenazgo y Policía Nacional del Perú."
+  },
+  {
+    "id": "conf-control-territorial",
+    "codigo": "SC5T6H9L",
+    "titulo": "Seguridad Ciudadana y Control Territorial: Planeamiento territorial con patrullaje e indicadores de impacto",
+    "tipo": "Conferencia magistral",
+    "area": "Planeamiento territorial y seguridad",
+    "horas": "04 horas académicas",
+    "sesiones": 1,
+    "estado": "Disponible",
+    "archivo": "aulas/conferencia-seguridad-ciudadana-control-territorial.html",
+    "descripcion": "Aula de consulta sobre planeamiento territorial, patrullaje municipal, indicadores de impacto y gestión orientada a resultados en seguridad ciudadana."
+  },
+  {
+    "id": "gestion-publica-municipal",
+    "codigo": "GP4M2Z7R",
+    "titulo": "Curso Especializado en Gestión Pública Municipal",
+    "tipo": "Curso especializado",
+    "area": "Gobierno local y administración pública",
+    "horas": "Por definir",
+    "sesiones": 4,
+    "estado": "Por habilitar",
+    "archivo": "aulas/curso-gestion-publica-municipal.html",
+    "descripcion": "Aula base para contenidos de gestión municipal, procedimientos administrativos, organización institucional y herramientas de gestión pública local."
+  },
+  {
+    "id": "gestion-riesgo-desastres",
+    "codigo": "GR7D5X2N",
+    "titulo": "Curso Especializado en Gestión del Riesgo de Desastres",
+    "tipo": "Curso especializado",
+    "area": "Gestión del riesgo de desastres",
+    "horas": "Por definir",
+    "sesiones": 4,
+    "estado": "Por habilitar",
+    "archivo": "aulas/curso-gestion-riesgo-desastres.html",
+    "descripcion": "Aula base para prevención, reducción del riesgo, preparación, respuesta, articulación territorial y fortalecimiento de capacidades en gestión del riesgo de desastres."
+  },
+  {
+    "id": "inversion-publica-proyectos",
+    "codigo": "IP9B3Q6V",
+    "titulo": "Curso Especializado en Inversión Pública y Gestión de Proyectos",
+    "tipo": "Curso especializado",
+    "area": "Inversión pública y proyectos",
+    "horas": "Por definir",
+    "sesiones": 4,
+    "estado": "Por habilitar",
+    "archivo": "aulas/curso-inversion-publica-gestion-proyectos.html",
+    "descripcion": "Aula base para contenidos de formulación, evaluación, ejecución, seguimiento y gestión de proyectos de inversión pública."
+  }
+];
+
+    const coursesEl = document.getElementById('courses');
+    const searchEl = document.getElementById('search');
+    const filterTipo = document.getElementById('filterTipo');
+    const filterEstado = document.getElementById('filterEstado');
+    const emptyEl = document.getElementById('empty');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const accessCode = document.getElementById('accessCode');
+    const modalError = document.getElementById('modalError');
+    const closeModal = document.getElementById('closeModal');
+    const validateCode = document.getElementById('validateCode');
+    let selectedCourse = null;
+
+    function normalizeText(value){
+      return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
+    function renderCourses(){
+      const query = normalizeText(searchEl.value);
+      const tipo = filterTipo.value;
+      const estado = filterEstado.value;
+
+      const filtered = CURSOS.filter(c => {
+        const text = normalizeText([c.titulo, c.tipo, c.area, c.descripcion, c.estado].join(' '));
+        return (!query || text.includes(query)) && (!tipo || c.tipo === tipo) && (!estado || c.estado === estado);
+      });
+
+      coursesEl.innerHTML = filtered.map(c => `
+        <article class="course">
+          <div class="course-body">
+            <div class="type">
+              <span class="tag">${c.tipo}</span>
+              <span class="status">${c.estado}</span>
+            </div>
+            <h3>${c.titulo}</h3>
+            <p>${c.descripcion}</p>
+            <div class="meta">
+              <div><b>Área</b><span>${c.area}</span></div>
+              <div><b>Duración</b><span>${c.horas}</span></div>
+            </div>
+          </div>
+          <div class="course-actions">
+            <button type="button" data-id="${c.id}">Ingresar</button>
+            <a href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20informaci%C3%B3n%20sobre%20${encodeURIComponent(c.titulo)}" target="_blank" rel="noopener">Consultar</a>
+          </div>
+        </article>
+      `).join('');
+
+      emptyEl.style.display = filtered.length ? 'none' : 'block';
+    }
+
+    function openAccess(id){
+      selectedCourse = CURSOS.find(c => c.id === id);
+      if(!selectedCourse) return;
+      modalTitle.textContent = selectedCourse.titulo;
+      accessCode.value = '';
+      modalError.style.display = 'none';
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      setTimeout(() => accessCode.focus(), 80);
+    }
+
+    function closeAccess(){
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      selectedCourse = null;
+    }
+
+    function validateAccess(){
+      if(!selectedCourse) return;
+      const entered = accessCode.value.trim().toUpperCase();
+      const expected = String(selectedCourse.codigo).trim().toUpperCase();
+      if(entered === expected){
+        window.location.href = selectedCourse.archivo;
+      } else {
+        modalError.style.display = 'block';
+      }
+    }
+
+    coursesEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-id]');
+      if(btn) openAccess(btn.dataset.id);
+    });
+    closeModal.addEventListener('click', closeAccess);
+    validateCode.addEventListener('click', validateAccess);
+    accessCode.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter') validateAccess();
+      if(e.key === 'Escape') closeAccess();
+    });
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeAccess();
+    });
+    [searchEl, filterTipo, filterEstado].forEach(el => el.addEventListener('input', renderCourses));
+    renderCourses();
+  </script>
+</body>
+</html>

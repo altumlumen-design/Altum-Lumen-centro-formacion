@@ -591,6 +591,54 @@
     }
 
 
+
+    .navlink.aula-special{
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      min-height:38px;
+      padding:9px 13px 9px 16px;
+      border-radius:999px;
+      border:1px solid rgba(177,13,27,.18);
+      background:linear-gradient(135deg, #9E0D1B 0%, #B10D1B 58%, #D12231 100%);
+      color:#fff;
+      font-weight:950;
+      letter-spacing:.25px;
+      box-shadow:
+        0 14px 28px rgba(177,13,27,.18),
+        inset 0 1px 0 rgba(255,255,255,.20);
+      transform:translateY(0);
+      transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    }
+    .navlink.aula-special::before{
+      content:none;
+    }
+    .navlink.aula-special::after{
+      content:"Acceso";
+      margin-left:2px;
+      padding:4px 9px;
+      border-radius:999px;
+      background:#0E2A3B;
+      color:#fff;
+      font-size:10px;
+      line-height:1;
+      font-weight:950;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      box-shadow:0 6px 14px rgba(14,42,59,.22);
+    }
+    .navlink.aula-special:hover{
+      color:#fff;
+      filter:saturate(1.04);
+      transform:translateY(-2px);
+      box-shadow:
+        0 18px 34px rgba(177,13,27,.25),
+        inset 0 1px 0 rgba(255,255,255,.24);
+    }
+
     .navlink.dir-special{
       background: linear-gradient(90deg, rgba(177,13,27,.10), rgba(46,111,158,.10));
       border-color: rgba(177,13,27,.18);
@@ -681,6 +729,7 @@
         <a class="navlink" href="#oferta">Oferta</a>
         <a class="navlink" href="#areas">Áreas</a>
         <a class="navlink" href="#autoridades">Autoridades</a>
+        <a class="navlink aula-special" href="aula-virtual.html" target="_blank" rel="noopener">Aula Virtual</a>
         <a class="navlink" href="verificacion.html" target="_blank" rel="noopener">Verificación</a>
         <a class="navlink dir-special" href="directorio-expertos.html" target="_blank" rel="noopener">Directorio de Expertos</a>
         <a class="navlink" href="#contacto">Contacto</a>
