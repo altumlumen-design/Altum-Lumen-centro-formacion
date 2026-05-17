@@ -23,27 +23,52 @@
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
-      background:
-        linear-gradient(rgba(24,42,85,.38),rgba(24,42,85,.38)),
-        radial-gradient(circle at top left,#244989 0,#173973 35%,#102754 100%);
+      background:#f6f8fb;
       min-height:100vh;
       color:var(--text);
+      position:relative;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:url("fondo-academico-posgrado-altum.svg");
+      background-repeat:no-repeat;
+      background-position:center center;
+      background-size:cover;
+      opacity:.50;
+      pointer-events:none;
+      z-index:0;
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.88) 0%, rgba(246,249,252,.78) 48%, rgba(236,244,250,.82) 100%);
+      pointer-events:none;
+      z-index:0;
     }
     .overlay{
       min-height:100vh;
       display:flex;
       justify-content:center;
       align-items:flex-start;
-      padding:22px 10px;
+      padding:26px 10px;
+      position:relative;
+      z-index:1;
     }
     .modal{
       width:min(950px,100%);
-      background:var(--white);
+      background:rgba(255,255,255,.94);
+      border:1px solid rgba(15,89,198,.16);
       border-radius:22px;
-      box-shadow:var(--shadow);
+      box-shadow:0 28px 70px rgba(14,42,59,.14);
       position:relative;
       padding:28px 28px 40px;
       overflow:hidden;
+      backdrop-filter:blur(10px);
     }
     .close-btn{
       position:absolute;
@@ -530,6 +555,21 @@
       .meta-line strong{display:block;min-width:auto}
       .meta-row{display:block}
     }
+  
+    /* Ajuste visual complementario para fondo académico */
+    .modal::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.92));
+      pointer-events:none;
+      z-index:0;
+    }
+    .modal > *{position:relative; z-index:1}
+    .tabs{box-shadow:0 8px 22px rgba(15,89,198,.10)}
+    .tab.active{background:linear-gradient(135deg,var(--blue),#0b4fb3)}
+    .close-btn{box-shadow:0 10px 24px rgba(15,89,198,.22)}
+
   </style>
 </head>
 <body>
