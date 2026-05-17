@@ -940,6 +940,232 @@
       }
     }
 
+
+    /* =========================================================
+       AJUSTE FINAL DE CABECERA — VERSIÓN MÁS INSTITUCIONAL
+       Estructura en dos niveles: identidad + acciones / navegación
+       ========================================================= */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:40;
+      background:rgba(255,255,255,.96);
+      backdrop-filter: blur(18px);
+      border-bottom:1px solid rgba(14,42,59,.12);
+      box-shadow:0 10px 26px rgba(14,42,59,.06);
+    }
+
+    .topbar-inner{
+      display:grid !important;
+      grid-template-columns:minmax(460px,1fr) auto !important;
+      grid-template-areas:
+        "brand actions"
+        "nav nav" !important;
+      align-items:center;
+      gap:14px 28px !important;
+      min-height:auto !important;
+      padding:16px 0 12px !important;
+    }
+
+    .brand{
+      grid-area:brand;
+      min-width:0 !important;
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .brand img{
+      width:70px !important;
+      height:70px !important;
+      border-radius:18px !important;
+      padding:8px !important;
+      background:#fff;
+      border:1px solid rgba(14,42,59,.13) !important;
+      box-shadow:0 10px 22px rgba(14,42,59,.08);
+      flex:0 0 70px;
+    }
+
+    .brand h1{
+      max-width:none !important;
+      margin:0;
+      color:#0E2238;
+      font-size:18px !important;
+      line-height:1.08 !important;
+      letter-spacing:.1px !important;
+      font-weight:950 !important;
+      text-transform:uppercase;
+    }
+
+    .brand small{
+      display:block;
+      max-width:none !important;
+      margin-top:6px !important;
+      color:#5A6B82 !important;
+      font-size:12px !important;
+      line-height:1.35 !important;
+      font-weight:800 !important;
+    }
+
+    .main-nav{
+      grid-area:nav;
+      width:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      padding-top:12px;
+      margin-top:2px;
+      border-top:1px solid rgba(14,42,59,.09);
+    }
+
+    .main-nav .navlink,
+    .navdrop > summary{
+      min-height:38px !important;
+      padding:9px 16px !important;
+      border-radius:999px !important;
+      background:#fff !important;
+      border:1px solid rgba(14,42,59,.12) !important;
+      color:#405066 !important;
+      box-shadow:none !important;
+      font-size:12px !important;
+      font-weight:900 !important;
+      letter-spacing:.1px;
+    }
+
+    .main-nav .navlink:hover,
+    .navdrop > summary:hover,
+    .navdrop[open] > summary{
+      color:#0E2238 !important;
+      border-color:rgba(177,13,27,.25) !important;
+      background:#F8FAFC !important;
+      transform:none !important;
+    }
+
+    .cta-clean{
+      grid-area:actions;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:nowrap;
+    }
+
+    .da-compact{
+      min-height:42px !important;
+      padding:10px 16px 10px 14px !important;
+      border-radius:999px !important;
+      border:1px solid rgba(14,42,59,.10);
+      border-left:5px solid #B10D1B !important;
+      background:#F8FAFC !important;
+      color:#0E2238 !important;
+      font-size:12px !important;
+      font-weight:950 !important;
+      letter-spacing:.35px !important;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    .aula-cta,
+    .whatsapp-cta{
+      min-height:42px !important;
+      padding:12px 20px !important;
+      border-radius:999px !important;
+      font-size:12px !important;
+      font-weight:950 !important;
+      letter-spacing:.1px;
+      box-shadow:0 12px 24px rgba(14,42,59,.10) !important;
+      white-space:nowrap;
+    }
+
+    .aula-cta{
+      background:linear-gradient(135deg,#B10D1B,#D4142A) !important;
+      color:#fff !important;
+      box-shadow:0 14px 28px rgba(177,13,27,.18) !important;
+    }
+
+    .whatsapp-cta{
+      background:linear-gradient(135deg,#0E2238,#17324F) !important;
+      color:#fff !important;
+    }
+
+    .dropmenu{
+      top:calc(100% + 12px) !important;
+      border-radius:20px !important;
+    }
+
+    .hero{
+      padding-top:28px !important;
+    }
+
+    .hero-card,
+    .hero-side,
+    .card,
+    .panel,
+    .logo-box{
+      border-color:rgba(14,42,59,.11) !important;
+    }
+
+    @media (max-width:1100px){
+      .topbar-inner{
+        grid-template-columns:1fr !important;
+        grid-template-areas:
+          "brand"
+          "actions"
+          "nav" !important;
+      }
+      .cta-clean{
+        justify-content:flex-start;
+        flex-wrap:wrap;
+      }
+      .main-nav{
+        justify-content:flex-start;
+      }
+    }
+
+    @media (max-width:680px){
+      .topbar{
+        position:relative;
+      }
+      .topbar-inner{
+        padding:14px 0 !important;
+      }
+      .brand{
+        align-items:flex-start;
+      }
+      .brand img{
+        width:58px !important;
+        height:58px !important;
+        flex-basis:58px;
+      }
+      .brand h1{
+        font-size:14px !important;
+        line-height:1.12 !important;
+      }
+      .brand small{
+        font-size:10.5px !important;
+      }
+      .da-compact{
+        width:100%;
+        justify-content:center;
+      }
+      .aula-cta,
+      .whatsapp-cta{
+        flex:1;
+        justify-content:center;
+      }
+      .main-nav{
+        gap:8px;
+      }
+      .main-nav .navlink,
+      .navdrop > summary{
+        flex:1;
+        min-width:calc(50% - 8px);
+        padding:10px 12px !important;
+      }
+    }
+
 </style>
 </head>
 
@@ -955,7 +1181,7 @@
       </div>
 
       <nav aria-label="Menú principal" class="main-nav">
-        <a class="navlink" href="#oferta">Oferta académica</a>
+        <a class="navlink" href="#oferta">Oferta Académica</a>
         <a class="navlink" href="#convenios">Convenios</a>
 
         <details class="navdrop">
