@@ -120,7 +120,7 @@
     "horas": "48 horas académicas",
     "sesiones": 4,
     "estado": "Disponible",
-    "archivo": "aulas/ia-derecho-2da-edicion.html",
+    "archivo": "ia-derecho-2da-edicion.html",
     "descripcion": "Aula destinada a participantes matriculados en el curso de aplicación práctica de inteligencia artificial en actividades jurídicas, redacción, análisis y mejora de productividad profesional."
   },
   {
@@ -132,7 +132,7 @@
     "horas": "Por módulo / según programa",
     "sesiones": 5,
     "estado": "En organización",
-    "archivo": "aulas/diplomado-orden-interno-seguridad-ciudadana.html",
+    "archivo": "diplomado-orden-interno-seguridad-ciudadana.html",
     "descripcion": "Aula para organizar sesiones, materiales, evaluaciones y comunicaciones académicas vinculadas al orden interno, prevención, coordinación interinstitucional y seguridad ciudadana."
   },
   {
@@ -144,7 +144,7 @@
     "horas": "240 horas académicas",
     "sesiones": 6,
     "estado": "Disponible",
-    "archivo": "aulas/diplomado-direccion-gestion-seguridad-ciudadana.html",
+    "archivo": "diplomado-direccion-gestion-seguridad-ciudadana.html",
     "descripcion": "Aula orientada al fortalecimiento de capacidades para la conducción, planeamiento, gestión territorial e intervención estratégica en seguridad ciudadana."
   },
   {
@@ -156,7 +156,7 @@
     "horas": "04 horas académicas",
     "sesiones": 1,
     "estado": "Disponible",
-    "archivo": "aulas/conferencia-serenazgo-pnp.html",
+    "archivo": "conferencia-serenazgo-pnp.html",
     "descripcion": "Aula de consulta para la conferencia magistral sobre coordinación operativa, prevención del delito y articulación territorial entre serenazgo y Policía Nacional del Perú."
   },
   {
@@ -168,7 +168,7 @@
     "horas": "04 horas académicas",
     "sesiones": 1,
     "estado": "Disponible",
-    "archivo": "aulas/conferencia-seguridad-ciudadana-control-territorial.html",
+    "archivo": "conferencia-seguridad-ciudadana-control-territorial.html",
     "descripcion": "Aula de consulta sobre planeamiento territorial, patrullaje municipal, indicadores de impacto y gestión orientada a resultados en seguridad ciudadana."
   },
   {
@@ -180,7 +180,7 @@
     "horas": "Por definir",
     "sesiones": 4,
     "estado": "Por habilitar",
-    "archivo": "aulas/curso-gestion-publica-municipal.html",
+    "archivo": "curso-gestion-publica-municipal.html",
     "descripcion": "Aula base para contenidos de gestión municipal, procedimientos administrativos, organización institucional y herramientas de gestión pública local."
   },
   {
@@ -192,7 +192,7 @@
     "horas": "Por definir",
     "sesiones": 4,
     "estado": "Por habilitar",
-    "archivo": "aulas/curso-gestion-riesgo-desastres.html",
+    "archivo": "curso-gestion-riesgo-desastres.html",
     "descripcion": "Aula base para prevención, reducción del riesgo, preparación, respuesta, articulación territorial y fortalecimiento de capacidades en gestión del riesgo de desastres."
   },
   {
@@ -204,7 +204,7 @@
     "horas": "Por definir",
     "sesiones": 4,
     "estado": "Por habilitar",
-    "archivo": "aulas/curso-inversion-publica-gestion-proyectos.html",
+    "archivo": "curso-inversion-publica-gestion-proyectos.html",
     "descripcion": "Aula base para contenidos de formulación, evaluación, ejecución, seguimiento y gestión de proyectos de inversión pública."
   }
 ];
@@ -279,11 +279,25 @@
 
     function validateAccess(){
       if(!selectedCourse) return;
-      const entered = accessCode.value.trim().toUpperCase();
+
+      const entered = accessCode.value.trim().toUpperCase().replace(/\s+/g, '');
       const expected = String(selectedCourse.codigo).trim().toUpperCase();
+
       if(entered === expected){
-        window.location.href = selectedCourse.archivo;
+        modalError.style.display = 'block';
+        modalError.style.background = '#EAF7EF';
+        modalError.style.borderColor = '#8AD1A2';
+        modalError.style.color = '#145A2D';
+        modalError.innerHTML = 'Código validado correctamente. Redirigiendo al aula...<br><br><a id="manualAccessLink" href="' + selectedCourse.archivo + '" style="display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;background:#0E2A3B;color:#fff;font-weight:900;text-decoration:none;border-radius:10px;">Abrir aula ahora</a>';
+
+        setTimeout(() => {
+          window.location.assign(selectedCourse.archivo);
+        }, 650);
       } else {
+        modalError.style.background = '#FFF3F4';
+        modalError.style.borderColor = 'rgba(177,13,27,.20)';
+        modalError.style.color = '#B10D1B';
+        modalError.textContent = 'Código incorrecto. Verifique el código entregado por la Dirección Académica.';
         modalError.style.display = 'block';
       }
     }
