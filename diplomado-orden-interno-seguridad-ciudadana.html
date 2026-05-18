@@ -13,6 +13,19 @@
     .grid{display:grid;grid-template-columns:1fr 320px;gap:18px;padding:8px 0 36px} .panel{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:0 14px 32px rgba(14,42,59,.08);padding:22px} .panel h2{margin:0 0 14px;color:var(--navy)} .session{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:12px;background:#fff} .session-num{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:grid;place-items:center;font-weight:900} .session h3{margin:0 0 5px;color:var(--navy)} .session p{margin:0;color:var(--muted);font-size:13px;line-height:1.55} .session-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end} .session-actions a,.side-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);font-weight:900;font-size:12px;background:#f8fafc;color:var(--navy)} .session-actions a:first-child,.side-actions a.primary{background:linear-gradient(90deg,var(--red),#D4142A);color:#fff;border:0}
     .note{font-size:13px;line-height:1.75;color:var(--muted)} .side-actions{display:grid;gap:10px;margin-top:14px} footer{padding:20px 0 34px;color:var(--muted);font-size:12px;font-weight:800;text-align:center}
     @media(max-width:900px){.grid{grid-template-columns:1fr}.meta{grid-template-columns:1fr 1fr}.session{grid-template-columns:1fr}.session-actions{justify-content:flex-start}} @media(max-width:560px){h1{font-size:28px}.meta{grid-template-columns:1fr}.head{flex-direction:column;align-items:flex-start}}
+  
+    .module{border:1px solid var(--line);border-radius:22px;background:#fff;margin-bottom:14px;overflow:hidden;box-shadow:0 10px 24px rgba(14,42,59,.06)}
+    .module summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;background:linear-gradient(90deg,#f8fafc,#fff);color:var(--navy);font-weight:900}
+    .module summary::-webkit-details-marker{display:none}
+    .module summary span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-top:4px}
+    .module summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--red);border-bottom:2px solid var(--red);transform:rotate(45deg);transition:.18s ease}
+    .module[open] summary::after{transform:rotate(225deg)}
+    .module-sessions{padding:14px}
+    .module .session{box-shadow:none;margin-bottom:10px}
+    .module .session:last-child{margin-bottom:0}
+    .module-note{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.7}
+    .pending-box{border:1px dashed rgba(14,42,59,.24);border-radius:18px;background:#f8fafc;padding:16px;color:var(--muted);font-size:13px;line-height:1.7;font-weight:800}
+
   </style>
   <link rel="icon" type="image/jpeg" href="logo-centro-formacion.jpg"/>
   <link rel="apple-touch-icon" href="logo-centro-formacion.jpg"/>
@@ -29,28 +42,34 @@
       <div class="container hero-card">
         <span class="kicker">Diplomado especializado</span>
         <h1>Diplomado Especializado en Orden Interno y Seguridad Ciudadana</h1>
-        <p class="desc">Aula para organizar sesiones, materiales, evaluaciones y comunicaciones académicas vinculadas al orden interno, prevención, coordinación interinstitucional y seguridad ciudadana.</p>
+        <p class="desc">Aula para organizar grabaciones, evaluaciones y comunicaciones académicas vinculadas al orden interno, prevención, coordinación interinstitucional y seguridad ciudadana.</p>
         <div class="meta">
           <div><b>Área</b><span>Seguridad ciudadana y orden interno</span></div>
           <div><b>Duración</b><span>240 horas académicas</span></div>
-          <div><b>Sesiones</b><span>5</span></div>
+          <div><b>Módulos</b><span>5</span></div>
           <div><b>Estado</b><span>En curso</span></div>
         </div>
       </div>
     </section>
     <section class="container grid">
       <div class="panel">
-        <h2>Sesiones y materiales</h2>
-        
+        <h2>Grabaciones por módulo</h2>
+        <p class="module-note">Seleccione cada módulo para desplegar las sesiones grabadas. El material académico será habilitado posteriormente por la Dirección Académica.</p>
+
+        <details class="module" open>
+          <summary>
+            <div>Módulo 1<span>4 sesiones habilitadas</span></div>
+          </summary>
+          <div class="module-sessions">
+
         <article class="session">
           <div class="session-num">S01</div>
           <div>
             <h3>Sesión 1</h3>
-            <p>Espacio reservado para la grabación, material de clase y comunicados académicos de la sesión.</p>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
           </div>
           <div class="session-actions">
-            <a href="#" onclick="alert('Enlace pendiente de habilitación por Dirección Académica.');return false;">Ver grabación</a>
-            <a href="#" onclick="alert('Material pendiente de habilitación por Dirección Académica.');return false;">Material</a>
+            <a href="https://www.facebook.com/reel/2346820365819264" target="_blank" rel="noopener">Ver grabación</a>
           </div>
         </article>
 
@@ -58,11 +77,10 @@
           <div class="session-num">S02</div>
           <div>
             <h3>Sesión 2</h3>
-            <p>Espacio reservado para la grabación, material de clase y comunicados académicos de la sesión.</p>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
           </div>
           <div class="session-actions">
-            <a href="#" onclick="alert('Enlace pendiente de habilitación por Dirección Académica.');return false;">Ver grabación</a>
-            <a href="#" onclick="alert('Material pendiente de habilitación por Dirección Académica.');return false;">Material</a>
+            <a href="https://www.facebook.com/reel/896301496356481" target="_blank" rel="noopener">Ver grabación</a>
           </div>
         </article>
 
@@ -70,11 +88,10 @@
           <div class="session-num">S03</div>
           <div>
             <h3>Sesión 3</h3>
-            <p>Espacio reservado para la grabación, material de clase y comunicados académicos de la sesión.</p>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
           </div>
           <div class="session-actions">
-            <a href="#" onclick="alert('Enlace pendiente de habilitación por Dirección Académica.');return false;">Ver grabación</a>
-            <a href="#" onclick="alert('Material pendiente de habilitación por Dirección Académica.');return false;">Material</a>
+            <a href="https://fb.watch/FsQslDXaVC/" target="_blank" rel="noopener">Ver grabación</a>
           </div>
         </article>
 
@@ -82,11 +99,62 @@
           <div class="session-num">S04</div>
           <div>
             <h3>Sesión 4</h3>
-            <p>Espacio reservado para la grabación, material de clase y comunicados académicos de la sesión.</p>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
           </div>
           <div class="session-actions">
-            <a href="#" onclick="alert('Enlace pendiente de habilitación por Dirección Académica.');return false;">Ver grabación</a>
-            <a href="#" onclick="alert('Material pendiente de habilitación por Dirección Académica.');return false;">Material</a>
+            <a href="https://fb.watch/FsQgAoV8fQ/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+          </div>
+        </details>
+
+        <details class="module">
+          <summary>
+            <div>Módulo 2<span>5 sesiones habilitadas</span></div>
+          </summary>
+          <div class="module-sessions">
+
+        <article class="session">
+          <div class="session-num">S01</div>
+          <div>
+            <h3>Sesión 1</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1Bdv8UP5ti/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S02</div>
+          <div>
+            <h3>Sesión 2</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/175DUQnPeJ/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S03</div>
+          <div>
+            <h3>Sesión 3</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1FUfDYQmmv/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S04</div>
+          <div>
+            <h3>Sesión 4</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1L7xuyCYVh/" target="_blank" rel="noopener">Ver grabación</a>
           </div>
         </article>
 
@@ -94,13 +162,129 @@
           <div class="session-num">S05</div>
           <div>
             <h3>Sesión 5</h3>
-            <p>Espacio reservado para la grabación, material de clase y comunicados académicos de la sesión.</p>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
           </div>
           <div class="session-actions">
-            <a href="#" onclick="alert('Enlace pendiente de habilitación por Dirección Académica.');return false;">Ver grabación</a>
-            <a href="#" onclick="alert('Material pendiente de habilitación por Dirección Académica.');return false;">Material</a>
+            <a href="https://www.facebook.com/share/v/18mwYiz58T/" target="_blank" rel="noopener">Ver grabación</a>
           </div>
         </article>
+          </div>
+        </details>
+
+        <details class="module">
+          <summary>
+            <div>Módulo 3<span>4 sesiones habilitadas</span></div>
+          </summary>
+          <div class="module-sessions">
+
+        <article class="session">
+          <div class="session-num">S01</div>
+          <div>
+            <h3>Sesión 1</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1DqXaxGEut/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S02</div>
+          <div>
+            <h3>Sesión 2</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1Bk9HQZigU/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S03</div>
+          <div>
+            <h3>Sesión 3</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1CgDoqNCmB/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S04</div>
+          <div>
+            <h3>Sesión 4</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1cCjN9yg5e/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+          </div>
+        </details>
+
+        <details class="module">
+          <summary>
+            <div>Módulo 4<span>4 sesiones habilitadas</span></div>
+          </summary>
+          <div class="module-sessions">
+
+        <article class="session">
+          <div class="session-num">S01</div>
+          <div>
+            <h3>Sesión 1</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1DqXaxGEut/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S02</div>
+          <div>
+            <h3>Sesión 2</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1Bk9HQZigU/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S03</div>
+          <div>
+            <h3>Sesión 3</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/17nSdrgghi/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+
+        <article class="session">
+          <div class="session-num">S04</div>
+          <div>
+            <h3>Sesión 4</h3>
+            <p>Grabación habilitada para consulta académica de los participantes del diplomado.</p>
+          </div>
+          <div class="session-actions">
+            <a href="https://www.facebook.com/share/v/1G6oaRYYF3/" target="_blank" rel="noopener">Ver grabación</a>
+          </div>
+        </article>
+          </div>
+        </details>
+
+        <details class="module">
+          <summary>
+            <div>Módulo 5<span>Espacio reservado para próximas grabaciones</span></div>
+          </summary>
+          <div class="module-sessions">
+            <div class="pending-box">
+              Las grabaciones del Módulo 5 serán habilitadas por la Dirección Académica cuando correspondan.
+            </div>
+          </div>
+        </details>
       </div>
       <aside class="panel">
         <h2>Evaluación y certificación</h2>
