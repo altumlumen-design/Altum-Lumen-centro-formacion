@@ -4618,5 +4618,37 @@
     "horas_academicas": "04",
     "codigo_emision": "CMSCCT20260084741",
     "estado": "VÁLIDO"
+  },
+  {
+    "nombre_completo": "Uchuya Ramos, Jackelin Vania",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "44806026",
+    "documento_mask": "DNI 4480****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260116026",
+    "estado": "VÁLIDO",
+    "nota": "18.00",
+    "codigo_registro": "20266026045"
+  },
+  {
+    "nombre_completo": "Flores Carbajal, Esau",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "18091288",
+    "documento_mask": "DNI 1809****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "05/05/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260031288",
+    "estado": "VÁLIDO",
+    "nota": "",
+    "codigo_registro": "20261288037"
   }
 ]
