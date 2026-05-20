@@ -10,7 +10,7 @@
     *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#f8fafc,#eef3f8)} a{text-decoration:none;color:inherit} .container{width:min(1120px,92vw);margin:auto}
     header{background:linear-gradient(120deg,#09182A,var(--navy),#1E4569);color:#fff;border-bottom:4px solid var(--red)} .head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0} .brand{display:flex;gap:14px;align-items:center} .mark{width:54px;height:54px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);font-weight:900;letter-spacing:1px;overflow:hidden;background:#fff}.mark img{width:100%;height:100%;object-fit:cover;display:block} .brand b{display:block;font-size:20px} .brand span{display:block;color:rgba(255,255,255,.75);font-size:12px;margin-top:4px} .head a{padding:11px 14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);font-weight:800;font-size:12px}
     .hero{padding:34px 0 20px} .hero-card{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:center;position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);padding:24px}.hero-thumb{aspect-ratio:1/1;border-radius:22px;overflow:hidden;background:#f1f5f9;border:1px solid var(--line);box-shadow:0 14px 30px rgba(14,42,59,.10)}.hero-thumb img{width:100%;height:100%;object-fit:cover;display:block} .kicker{display:inline-flex;padding:8px 11px;background:rgba(177,13,27,.08);border-left:4px solid var(--red);color:var(--navy);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px} h1{margin:18px 0 10px;font-size:36px;line-height:1.08;color:var(--navy)} .desc{max-width:880px;line-height:1.8;color:var(--muted)} .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px} .meta div{background:#f7f9fc;border:1px solid var(--line);padding:14px;border-radius:18px} .meta b{display:block;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:1px} .meta span{display:block;margin-top:6px;color:var(--ink);font-weight:800}
-    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px;padding:8px 0 36px} .panel{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:0 14px 32px rgba(14,42,59,.08);padding:22px} .panel h2{margin:0 0 14px;color:var(--navy)} .session{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:12px;background:#fff} .session-num{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:grid;place-items:center;font-weight:900} .session h3{margin:0 0 5px;color:var(--navy)} .session p{margin:0;color:var(--muted);font-size:13px;line-height:1.55} .session-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end} .session-actions a,.side-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);font-weight:900;font-size:12px;background:#f8fafc;color:var(--navy)} .session-actions a:first-child,.side-actions a.primary{background:linear-gradient(90deg,var(--red),#D4142A);color:#fff;border:0}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px;padding:8px 0 36px} .panel{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:0 14px 32px rgba(14,42,59,.08);padding:22px} .panel h2{margin:0 0 14px;color:var(--navy)} .session{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:12px;background:#fff} .session-num{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:grid;place-items:center;font-weight:900} .session h3{margin:0 0 5px;color:var(--navy)} .session p{margin:0;color:var(--muted);font-size:13px;line-height:1.55} .session-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end} .session-actions a,.side-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);font-weight:900;font-size:12px;background:#f8fafc;color:var(--navy)} .session-actions a:first-child,.side-actions a.primary{background:linear-gradient(90deg,var(--red),#D4142A);color:#fff;border:0}
     .note{font-size:13px;line-height:1.75;color:var(--muted)} .side-actions{display:grid;gap:10px;margin-top:14px} footer{padding:20px 0 34px;color:var(--muted);font-size:12px;font-weight:800;text-align:center}
     @media(max-width:900px){.hero-card,.grid{grid-template-columns:1fr}.meta{grid-template-columns:1fr 1fr}.session{grid-template-columns:1fr}.session-actions{justify-content:flex-start}} @media(max-width:560px){h1{font-size:28px}.meta{grid-template-columns:1fr}.head{flex-direction:column;align-items:flex-start}}
   
@@ -35,6 +35,12 @@
     .module summary div{line-height:1.25}
     .module summary span{line-height:1.35}
 
+  
+    .eval-rules{border:1px solid rgba(177,13,27,.18);background:linear-gradient(90deg,rgba(177,13,27,.07),rgba(14,42,59,.04));border-radius:18px;padding:14px 16px;margin:0 0 16px;color:var(--ink);font-size:13px;line-height:1.65}
+    .eval-rules b{color:var(--navy)}
+    .material-alert{background:#f8fafc!important;color:var(--navy)!important;border:1px solid var(--line)!important}
+    .material-pending{background:#f8fafc!important;color:var(--muted)!important;border:1px solid var(--line)!important}
+    
   </style>
   <link rel="icon" type="image/jpeg" href="logo-centro-formacion.jpg"/>
   <link rel="apple-touch-icon" href="logo-centro-formacion.jpg"/>
@@ -67,15 +73,17 @@
     </section>
     <section class="container grid">
       <div class="panel">
-        <h2>Grabaciones por módulo</h2>
-        <p class="module-note">Seleccione cada módulo para desplegar las sesiones grabadas y la evaluación correspondiente. El material académico será habilitado posteriormente por la Dirección Académica.</p>
-
+        <h2>Grabaciones, materiales y evaluaciones por módulo</h2>
+        <p class="module-note">Seleccione cada módulo para desplegar las sesiones grabadas, el material académico disponible y la evaluación correspondiente.</p>
+        <div class="eval-rules">
+          <b>Indicaciones de evaluación:</b> nota mínima aprobatoria <b>13</b>; intentos permitidos: <b>3</b>; se considerará el puntaje más alto obtenido para efectos del promedio correspondiente.
+        </div>
         <details class="module" open>
           <summary>
             <div>Módulo 1 · Sistema Nacional de Seguridad Ciudadana (SINASEC)<span>4 sesiones habilitadas</span></div>
           </summary>
           <div class="module-sessions">
-
+            
         <article class="session">
           <div class="session-num">S01</div>
           <div>
@@ -84,9 +92,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/reel/2346820365819264" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S02</div>
           <div>
@@ -95,9 +103,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/reel/896301496356481" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S03</div>
           <div>
@@ -106,9 +114,9 @@
           </div>
           <div class="session-actions">
             <a href="https://fb.watch/FsQslDXaVC/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S04</div>
           <div>
@@ -117,20 +125,21 @@
           </div>
           <div class="session-actions">
             <a href="https://fb.watch/FsQgAoV8fQ/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
+            
             <div class="module-eval">
               <a href="https://forms.gle/GjRb4AnuqwG6jTUdA" target="_blank" rel="noopener">Evaluación del Módulo 1</a>
             </div>
           </div>
         </details>
-
         <details class="module">
           <summary>
             <div>Módulo 2 · Planeamiento Operativo del Orden Interno y Seguridad Ciudadana<span>5 sesiones habilitadas</span></div>
           </summary>
           <div class="module-sessions">
-
+            
         <article class="session">
           <div class="session-num">S01</div>
           <div>
@@ -139,9 +148,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1Bdv8UP5ti/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S02</div>
           <div>
@@ -150,9 +159,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/175DUQnPeJ/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S03</div>
           <div>
@@ -161,9 +170,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1FUfDYQmmv/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S04</div>
           <div>
@@ -172,9 +181,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1L7xuyCYVh/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S05</div>
           <div>
@@ -183,20 +192,21 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/18mwYiz58T/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
+            
             <div class="module-eval">
               <a href="https://forms.gle/XRweJxakNUB8XWtL6" target="_blank" rel="noopener">Evaluación del Módulo 2</a>
             </div>
           </div>
         </details>
-
         <details class="module">
           <summary>
             <div>Módulo 3 · Derecho Administrativo Aplicado a la Seguridad Ciudadana<span>4 sesiones habilitadas</span></div>
           </summary>
           <div class="module-sessions">
-
+            
         <article class="session">
           <div class="session-num">S01</div>
           <div>
@@ -205,9 +215,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1DqXaxGEut/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S02</div>
           <div>
@@ -216,9 +226,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1Bk9HQZigU/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S03</div>
           <div>
@@ -227,9 +237,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1CgDoqNCmB/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S04</div>
           <div>
@@ -238,20 +248,21 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1cCjN9yg5e/" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-alert" href="#" onclick="alert('El material ha sido compartido a través del grupo de WhatsApp.');return false;">Material</a>
           </div>
         </article>
+            
             <div class="module-eval">
               <a href="https://forms.gle/JPnq68LuytsKnxE28" target="_blank" rel="noopener">Evaluación del Módulo 3</a>
             </div>
           </div>
         </details>
-
         <details class="module">
           <summary>
             <div>Módulo 4 · Contrataciones Públicas para la Seguridad Ciudadana<span>5 sesiones habilitadas</span></div>
           </summary>
           <div class="module-sessions">
-
+            
         <article class="session">
           <div class="session-num">S01</div>
           <div>
@@ -260,9 +271,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1DqXaxGEut/" target="_blank" rel="noopener">Ver grabación</a>
+            <a href="https://drive.google.com/file/d/1Vz40syNO6-uzLUOepmfSZrB3WAtG7ueF/view?usp=sharing" target="_blank" rel="noopener">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S02</div>
           <div>
@@ -271,9 +282,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1Bk9HQZigU/" target="_blank" rel="noopener">Ver grabación</a>
+            <a href="https://drive.google.com/file/d/1Vz40syNO6-uzLUOepmfSZrB3WAtG7ueF/view?usp=sharing" target="_blank" rel="noopener">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S03</div>
           <div>
@@ -282,9 +293,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/17nSdrgghi/" target="_blank" rel="noopener">Ver grabación</a>
+            <a href="https://drive.google.com/file/d/1Vz40syNO6-uzLUOepmfSZrB3WAtG7ueF/view?usp=sharing" target="_blank" rel="noopener">Material</a>
           </div>
         </article>
-
         <article class="session">
           <div class="session-num">S04</div>
           <div>
@@ -293,9 +304,9 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/1G6oaRYYF3/" target="_blank" rel="noopener">Ver grabación</a>
+            <a href="https://drive.google.com/file/d/1Vz40syNO6-uzLUOepmfSZrB3WAtG7ueF/view?usp=sharing" target="_blank" rel="noopener">Material</a>
           </div>
         </article>
-            
         <article class="session">
           <div class="session-num">S05</div>
           <div>
@@ -304,20 +315,21 @@
           </div>
           <div class="session-actions">
             <a href="https://www.facebook.com/share/v/17LZ446h8t/" target="_blank" rel="noopener">Ver grabación</a>
+            <a href="https://drive.google.com/file/d/1Vz40syNO6-uzLUOepmfSZrB3WAtG7ueF/view?usp=sharing" target="_blank" rel="noopener">Material</a>
           </div>
         </article>
+            
             <div class="module-eval">
-              <a class="pending" href="#" onclick="alert('Evaluación pendiente de habilitación por Dirección Académica.');return false;">Evaluación del Módulo 4</a>
+              <a href="https://forms.gle/HmxHw7qqd2vpwYvt8" target="_blank" rel="noopener">Evaluación del Módulo 4</a>
             </div>
           </div>
         </details>
-
         <details class="module">
           <summary>
             <div>Módulo 5 · Gestión Presupuestal e Inversiones en Seguridad Ciudadana<span>2 sesiones habilitadas</span></div>
           </summary>
           <div class="module-sessions">
-
+            
         <article class="session">
           <div class="session-num">S01</div>
           <div>
@@ -326,6 +338,7 @@
           </div>
           <div class="session-actions">
             <a href="https://youtu.be/wOpmlCohx1k" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-pending" href="#" onclick="alert('Material pendiente de habilitación por Dirección Académica.');return false;">Material</a>
           </div>
         </article>
         <article class="session">
@@ -336,23 +349,16 @@
           </div>
           <div class="session-actions">
             <a href="https://youtu.be/r_tYC4dYGwU" target="_blank" rel="noopener">Ver grabación</a>
+            <a class="material-pending" href="#" onclick="alert('Material pendiente de habilitación por Dirección Académica.');return false;">Material</a>
           </div>
         </article>
+            
             <div class="module-eval">
               <a class="pending" href="#" onclick="alert('Evaluación pendiente de habilitación por Dirección Académica.');return false;">Evaluación del Módulo 5</a>
             </div>
           </div>
         </details>
       </div>
-      <aside class="panel">
-        <h2>Evaluación y certificación</h2>
-        <p class="note">La evaluación, emisión de certificado, diploma o constancia se gestiona según las condiciones académicas comunicadas por la Dirección Académica. Nota mínima aprobatoria referencial: <b>14</b>, salvo indicación distinta del programa.</p>
-        <div class="side-actions">
-          <a class="primary" href="mailto:direccionacademica.altumlumen@gmail.com?subject=Solicitud%20de%20evaluación%20-%20Diplomado%20Especializado%20en%20Orden%20Interno%20y%20Seguridad%20Ciudadana">Solicitar evaluación</a>
-          <a href="mailto:direccionacademica.altumlumen@gmail.com?subject=Solicitud%20de%20certificación%20-%20Diplomado%20Especializado%20en%20Orden%20Interno%20y%20Seguridad%20Ciudadana">Solicitar certificación</a>
-          <a href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20tengo%20una%20consulta%20sobre%20el%20aula%20virtual." target="_blank" rel="noopener">Soporte por WhatsApp</a>
-        </div>
-      </aside>
     </section>
   </main>
   <footer>© Altum Lumen S.A.C. · Dirección Académica · Aula Virtual</footer>
