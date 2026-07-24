@@ -5416,5 +5416,53 @@ window.REGISTROS_PUBLICOS = [
     "estado": "VÁLIDO",
     "nota": "20.00",
     "codigo_registro": "20262078085"
+  },
+  {
+    "nombre_completo": "Saavedra Cisneros, Percy Alexis",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "03667091",
+    "documento_mask": "DNI 0366****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Proyectos de Inversión Pública con Inteligencia Artificial",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "24/07/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURPIPIA20260017091",
+    "estado": "VÁLIDO",
+    "nota": "20.00",
+    "codigo_registro": "20267091100"
+  },
+  {
+    "nombre_completo": "Vasquez Vera, Pablo Evaristo",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "29288166",
+    "documento_mask": "DNI 2928****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Proyectos de Inversión Pública con Inteligencia Artificial",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "24/07/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURPIPIA20260028166",
+    "estado": "VÁLIDO",
+    "nota": "17.00",
+    "codigo_registro": "20268166101"
+  },
+  {
+    "nombre_completo": "Mamani Sillo, Silvio Vicente",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "40342788",
+    "documento_mask": "DNI 4034****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Proyectos de Inversión Pública con Inteligencia Artificial",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "24/07/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURPIPIA20260032788",
+    "estado": "VÁLIDO",
+    "nota": "17.00",
+    "codigo_registro": "20262788102"
   }
 ];
