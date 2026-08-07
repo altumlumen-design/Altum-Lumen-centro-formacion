@@ -1,0 +1,13 @@
+{
+  "name": "altum-lumen-centro-formacion",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "node test-aula.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0",
+    "vite": "^7.1.0"
+  }
+}
