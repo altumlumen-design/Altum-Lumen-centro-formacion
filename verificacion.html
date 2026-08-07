@@ -1162,9 +1162,7 @@
 
     function loadData(){
       dataset = Array.isArray(window.REGISTROS_PUBLICOS) ? window.REGISTROS_PUBLICOS : [];
-      if(dataset.length){
-        setStatus('Base pública cargada correctamente.');
-      } else {
+      if(!dataset.length){
         setStatus('No se pudo cargar la base de datos. Verifique que registros_publicos.js esté subido junto al HTML.', true);
       }
     }

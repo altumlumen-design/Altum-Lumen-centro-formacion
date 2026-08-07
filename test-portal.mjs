@@ -6,6 +6,7 @@ import { JSDOM } from 'jsdom';
 const projectRoot = dirname(fileURLToPath(import.meta.url));
 const html = readFileSync(resolve(projectRoot, 'index.html'), 'utf8');
 const portalCss = readFileSync(resolve(projectRoot, 'portal-renovado.css'), 'utf8');
+const verificationHtml = readFileSync(resolve(projectRoot, 'verificacion.html'), 'utf8');
 const viteConfig = readFileSync(resolve(projectRoot, 'vite.config.js'), 'utf8');
 const dom = new JSDOM(html, {
   runScripts: 'dangerously',
@@ -32,6 +33,10 @@ for (const fileName of requiredFiles) {
   if (!existsSync(resolve(projectRoot, fileName))) {
     throw new Error(`Falta el recurso local ${fileName}`);
   }
+}
+
+if (/Base p[uú]blica cargada correctamente/i.test(verificationHtml)) {
+  throw new Error('El verificador no debe revelar mensajes internos sobre la carga de la base de datos.');
 }
 
 if (document.querySelectorAll('#offerGrid .offer').length !== 6) {
