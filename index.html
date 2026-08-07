@@ -1166,8 +1166,29 @@
       }
     }
 
+    /* Respaldo de contraste del menú: se mantiene legible incluso si el
+       navegador conserva una versión anterior de la hoja externa. */
+    .topbar .main-nav > .navlink,
+    .topbar .main-nav > .navdrop > summary{
+      color:#fff !important;
+      background:linear-gradient(135deg,#1b5f8f,#103b61) !important;
+      border-color:rgba(255,255,255,.36) !important;
+      text-shadow:0 1px 2px rgba(0,18,38,.34) !important;
+      opacity:1 !important;
+      visibility:visible !important;
+    }
+    .topbar .main-nav > .navlink:hover,
+    .topbar .main-nav > .navlink:focus-visible,
+    .topbar .main-nav > .navdrop > summary:hover,
+    .topbar .main-nav > .navdrop > summary:focus-visible,
+    .topbar .main-nav > .navdrop[open] > summary{
+      color:#fff !important;
+      background:linear-gradient(135deg,#236f9f,#1c5f8e) !important;
+      border-color:rgba(255,255,255,.68) !important;
+    }
+
 </style>
-  <link rel="stylesheet" href="portal-renovado.css">
+  <link rel="stylesheet" href="portal-renovado.css?v=20260807-2">
 </head>
 
 <body>
