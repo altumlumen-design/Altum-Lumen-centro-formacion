@@ -1,23 +1,36 @@
-# Formato de alumnos para el Aula Virtual
+# Padrón de accesos del Aula Virtual
 
-La fuente administrativa recomendada es un archivo CSV UTF-8 con una fila por matrícula:
+El aula utiliza `alumnos-accesos.csv` como padrón público. Cada acceso emplea el DNI de ocho dígitos como usuario y como contraseña.
+
+## Formato
 
 ```csv
-codigo_alumno,dni,nombre,curso_id,estado
-ALU-DEMO-001,00000000,Estudiante de demostración,ia-derecho-2da,activo
+dni,nombre,curso_id,programa,estado
+00000000,Estudiante de demostración,ia-derecho-4ta,Inteligencia Artificial Aplicada al Derecho – Cuarta Edición,activo
 ```
 
-Si un alumno tiene dos cursos, se repite su código en dos filas y cambia `curso_id`. Los identificadores válidos son:
+Debe existir una fila por cada relación alumno–curso. Si una persona pertenece a dos cursos, se repite el mismo DNI en dos filas y se cambia `curso_id`. Al iniciar sesión, el aula agrupa automáticamente todas las filas activas del DNI y muestra únicamente esos cursos.
 
-- `ia-derecho-2da`
+Los identificadores válidos son:
+
+- `ia-derecho-4ta`
+- `formulacion-inversiones-publicas-ia`
+- `gestion-servicio-serenazgo-municipal`
 - `ia-derecho-3ra`
+- `ia-derecho-2da`
 - `ia-derecho-1ra`
 - `pae-gerencia-seguridad-criminologia`
 - `orden-interno-seguridad-ciudadana`
 - `proyectos-inversion-publica-ia`
 
-## Protección de datos
+## Reglas de actualización
 
-El repositorio es público. No se debe confirmar ni subir aquí un CSV con DNI reales. El archivo administrativo deberá importarse en un servicio privado, transformar el DNI en una credencial protegida y eliminar el archivo de importación. El navegador consultará ese servicio mediante el valor `authEndpoint` de `aula-config.js` y recibirá únicamente el nombre y los `curso_id` autorizados.
+- El DNI debe conservarse como texto de exactamente ocho dígitos, incluidos los ceros iniciales.
+- `estado` debe ser `activo` para habilitar el acceso.
+- Los nombres de archivo y las cabeceras del CSV no deben modificarse.
+- El archivo debe guardarse como CSV UTF-8 en la misma carpeta que `aula-virtual.html`.
+- El usuario maestro `77800233` tiene acceso a las nueve aulas del catálogo.
+- Las etiquetas `Abierto` y `Cerrado` son únicamente informativas y no alteran el permiso de ingreso.
+- Un curso con etiqueta `Cerrado` se habilita normalmente cuando existe una fila activa que lo asigna al DNI.
 
-La plantilla incluida contiene solo datos ficticios. Mientras no se configure el servicio privado, el aula acepta únicamente el usuario maestro de demostración.
+`resumen-integracion-alumnos.json` registra los conteos obtenidos del SIRA e `inconsistencias-alumnos.csv` conserva los casos que requieren revisión administrativa.

@@ -39,22 +39,22 @@
       <div class="portal-login-main">
         <div class="portal-login-card">
           <h2 id="loginTitle">Bienvenido</h2>
-          <p>Ingresa tu código de alumno y la contraseña registrada para acceder a tu aula virtual.</p>
+          <p>Ingresa tu DNI como usuario y contraseña para acceder a los cursos asociados a tu matrícula.</p>
 
           <form id="loginForm" novalidate>
             <div class="portal-field">
-              <label for="studentCode">Código de alumno</label>
-              <input id="studentCode" name="studentCode" type="text" inputmode="text" autocomplete="username" maxlength="30" required aria-describedby="loginHelp">
+              <label for="studentDni">DNI</label>
+              <input id="studentDni" name="dni" type="text" inputmode="numeric" autocomplete="username" pattern="[0-9]{8}" minlength="8" maxlength="8" required aria-describedby="loginHelp">
             </div>
             <div class="portal-field">
               <label for="studentPassword">Contraseña</label>
-              <input id="studentPassword" name="studentPassword" type="password" inputmode="numeric" autocomplete="current-password" maxlength="30" required>
+              <input id="studentPassword" name="studentPassword" type="password" inputmode="numeric" autocomplete="current-password" pattern="[0-9]{8}" minlength="8" maxlength="8" required>
             </div>
             <p id="loginError" class="portal-login-error" role="alert" hidden></p>
             <button id="loginSubmit" class="portal-login-submit" type="submit">Ingresar al aula</button>
           </form>
 
-          <p id="loginHelp" class="portal-login-help">Tu contraseña inicial corresponde al dato comunicado por la Dirección Académica. Si tienes problemas de acceso, solicita la verificación de tu matrícula.</p>
+          <p id="loginHelp" class="portal-login-help">Utiliza tu DNI de ocho dígitos en ambos campos. Solo se mostrarán los cursos que figuran habilitados para tu matrícula.</p>
           <noscript><p class="portal-login-error">Debes habilitar JavaScript para ingresar al aula virtual.</p></noscript>
         </div>
       </div>

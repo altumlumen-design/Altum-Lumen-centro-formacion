@@ -1,0 +1,135 @@
+{
+  "generatedAt": "2026-08-07T16:57:09.934Z",
+  "source": "SIRA 2026 (1).xlsm",
+  "sourceAcademicRows": 177,
+  "openEnrollmentRows": 51,
+  "activeAssignmentRows": 51,
+  "uniqueUsers": 49,
+  "usersWithMultipleOpenCourses": 1,
+  "courseCounts": {
+    "ia-derecho-4ta": 14,
+    "formulacion-inversiones-publicas-ia": 26,
+    "gestion-servicio-serenazgo-municipal": 11
+  },
+  "activeSameDniDifferentNames": 0,
+  "activeSameNameDifferentDnis": 0,
+  "openRowsWithoutValidDni": 0,
+  "auxiliaryValidation": {
+    "formulationInvestmentPrimary": 26,
+    "formulationInvestmentAuxiliary": 26,
+    "formulationInvestmentOverlap": 26,
+    "serenazgoPrimary": 11,
+    "serenazgoAuxiliary": 11,
+    "serenazgoOverlap": 11
+  },
+  "closedProgramCounts": [
+    {
+      "program": "CURSO ESPECIALIZADO EN INTELIGENCIA ARTIFICIAL PARA EL DERECHO 2",
+      "count": 42
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN ORDEN INTERNO Y SEGURIDAD CIUDADANA",
+      "count": 36
+    },
+    {
+      "program": "CURSO ESPECIALIZADO EN INTELIGENCIA ARTIFICIAL PARA EL DERECHO 1",
+      "count": 15
+    },
+    {
+      "program": "PAE: PROGRAMA DE ALTA ESPECIALIZACIÓN en GERENCIA DE SEGURIDAD Y CRIMINOLOGIA",
+      "count": 4
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 18",
+      "count": 3
+    },
+    {
+      "program": "CURSO ESPECIALIZADO Proyectos de Inversión Pública con Inteligencia Artificial",
+      "count": 3
+    },
+    {
+      "program": "CURSO ESPECIALIZADO EN PROYECTOS DE INVERSIÓN PÚBLICA CON INTELIGENCIA ARTIFICIAL",
+      "count": 2
+    },
+    {
+      "program": "CURSO ESPECIALIZADO EN INTELIGENCIA ARTIFICIAL PARA EL DERECHO",
+      "count": 2
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 1",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 2",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 3",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 4",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 5",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 6",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 7",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 8",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 9",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 10",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 11",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 12",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 13",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 14",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 15",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 16",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN DIRECCIÓN Y GESTIÓN DE LA SEGURIDAD CIUDADANA 17",
+      "count": 1
+    },
+    {
+      "program": "DIPLOMADO ESPECIALIZADO EN Interculturalidad, Convivencia y Desarrollo Social",
+      "count": 1
+    },
+    {
+      "program": "CURSO ESPECIALIZADO EN INTELIGENCIA ARTIFICIAL APLICADA DERECHO - 3RA EDICION",
+      "count": 1
+    }
+  ]
+}

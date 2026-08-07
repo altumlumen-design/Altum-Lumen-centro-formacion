@@ -47,7 +47,7 @@
               <div><dt>Área</dt><dd>${escapeHtml(course.area)}</dd></div>
               <div><dt>Duración</dt><dd>${escapeHtml(course.duration)}</dd></div>
             </dl>
-            <a class="portal-course-link" href="${escapeHtml(course.file)}">${course.status === 'Cerrado' ? 'Consultar curso' : 'Ingresar al curso'}<span aria-hidden="true">→</span></a>
+            <a class="portal-course-link" href="${escapeHtml(course.file)}">Ingresar al curso<span aria-hidden="true">→</span></a>
           </div>
         </article>`;
     }).join('');
@@ -74,7 +74,7 @@
     document.getElementById('dashboardView').hidden = true;
     document.getElementById('loginView').hidden = false;
     document.body.classList.remove('portal-is-authenticated');
-    window.setTimeout(() => document.getElementById('studentCode').focus(), 60);
+    window.setTimeout(() => document.getElementById('studentDni').focus(), 60);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -94,7 +94,7 @@
       submit.textContent = 'Validando…';
 
       const result = await window.AltumAuth.authenticate(
-        document.getElementById('studentCode').value,
+        document.getElementById('studentDni').value,
         document.getElementById('studentPassword').value
       );
 

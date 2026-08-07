@@ -1,3 +1,3 @@
-codigo_alumno,dni,nombre,curso_id,estado
-ALU-DEMO-001,00000000,Estudiante de demostración,ia-derecho-2da,activo
-ALU-DEMO-001,00000000,Estudiante de demostración,pae-gerencia-seguridad-criminologia,activo
+dni,nombre,curso_id,programa,estado
+00000000,Estudiante de demostración,ia-derecho-4ta,Inteligencia Artificial Aplicada al Derecho – Cuarta Edición,activo
+00000000,Estudiante de demostración,formulacion-inversiones-publicas-ia,Formulación de Inversiones Públicas con Inteligencia Artificial,activo
