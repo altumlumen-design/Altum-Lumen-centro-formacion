@@ -71,9 +71,7 @@
       backdrop-filter:blur(10px);
     }
     .close-btn{
-      position:absolute;
-      top:16px;
-      right:18px;
+      position:static;
       width:44px;
       height:44px;
       border-radius:50%;
@@ -87,6 +85,7 @@
       font-size:32px;
       line-height:1;
       font-weight:700;
+      flex:0 0 auto;
     }
     .tabs{
       width:min(280px,100%);
@@ -146,6 +145,13 @@
       font-size:15px;
     }
     .pill-input::placeholder{color:#2fa3ea;opacity:1}
+    .field.is-disabled,.small-field.is-disabled{opacity:.52}
+    .pill-input:disabled,.small-input:disabled{
+      cursor:not-allowed;
+      background:#edf2f6;
+      border-color:#c8d4df;
+      color:#708295;
+    }
     .helper{
       text-align:center;
       font-size:12px;
@@ -502,42 +508,53 @@
     .print-report{display:none}
     .print-footer{display:none}
     @page {
-      size: A4;
-      margin: 8mm 9mm 16mm 9mm;
+      size:A4 portrait;
+      margin:12mm;
     }
     @media print {
-      html,body{background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;counter-reset: page 1;}
-      .overlay{padding:0;display:block;}
-      .modal{box-shadow:none;border-radius:0;width:100%;padding:0;background:#fff;overflow:visible;}
-      .close-btn,.tabs,.divider,.search-grid,.guide-box,.contact-note,.status-line,.system-footer,.title-wrap{display:none !important;}
-      .tab-panel{display:block !important;}
+      html,body{
+        width:auto !important;
+        min-height:0 !important;
+        margin:0 !important;
+        padding:0 !important;
+        background:#fff !important;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+        counter-reset:page 1;
+      }
+      body::before,body::after,.overlay::before,.overlay::after,.modal::before{display:none !important;content:none !important;}
+      .overlay{width:100%;min-height:0;padding:0 !important;margin:0 !important;display:block !important;}
+      .modal{width:100% !important;max-width:none !important;margin:0 !important;padding:0 !important;box-shadow:none !important;border:0 !important;border-radius:0 !important;background:#fff !important;overflow:visible !important;}
+      .portal-head,.close-btn,.tabs,.divider,.search-grid,.guide-box,.contact-note,.status-line,.system-footer,.title-wrap{display:none !important;}
+      .tab-panel{display:block !important;width:100% !important;margin:0 !important;padding:0 !important;}
       #guide{display:none !important;}
-      .results-panel{display:block !important;max-height:none;overflow:visible;width:100%;margin:0;background:#fff;padding:0;}
+      #app{display:block !important;}
+      .results-panel{display:block !important;width:100% !important;max-width:none !important;max-height:none !important;overflow:visible !important;margin:0 !important;padding:0 !important;border:0 !important;border-radius:0 !important;background:#fff !important;box-shadow:none !important;}
       .results-title{display:none;}
-      .print-report{display:block;margin:0 0 2.4mm;border:1px solid #d9e2f1;padding:2.8mm 4mm 2.2mm;background:#fff;}
-      .print-logo{display:block !important;text-align:center;margin:0 0 1mm;}
-      .print-logo img{width:13mm;height:auto;display:block;margin:0 auto;}
+      .print-report{display:block;width:100%;max-width:178mm;margin:0 auto 4mm;padding:4mm 6mm 3.5mm;border:1px solid #9db9dc;background:#fff;break-after:avoid-page;page-break-after:avoid;}
+      .print-logo,.print-logo img{display:none !important;width:0 !important;height:0 !important;margin:0 !important;}
       .print-head{display:block;}
       .print-title{text-align:center;}
-      .print-kicker{margin:0 0 .6mm;font-size:8.2pt;font-weight:900;color:#2458b7;letter-spacing:.3px;text-transform:uppercase;}
-      .print-title h1{margin:0;font-size:10.2pt;line-height:1.06;color:#2458b7;text-transform:uppercase;}
-      .print-meta{margin:1.6mm 0 1.5mm;display:grid;grid-template-columns:19mm 1fr;gap:2.2mm;align-items:start;}
-      .print-qr{margin:0;text-align:left;}
-      .print-qr img{width:17mm;height:17mm;object-fit:contain;}
-      .print-meta-text{font-size:7.5pt;color:#314f7b;line-height:1.26;text-align:left;}
-      .print-meta-text p{margin:0 0 .35mm;}
-      .print-main-title{margin:0 0 .45mm;font-size:8.4pt;font-weight:900;color:#111;text-transform:uppercase;line-height:1.02;}
+      .print-kicker{margin:0 0 1mm;font-size:8.5pt;font-weight:900;color:#2458b7;letter-spacing:.5px;text-transform:uppercase;}
+      .print-title h1{max-width:150mm;margin:0 auto;font-size:11pt;line-height:1.15;color:#2458b7;text-align:center;text-transform:uppercase;}
+      .print-meta{width:100%;max-width:150mm;margin:3mm auto 2.5mm;display:grid;grid-template-columns:18mm minmax(0,1fr);gap:4mm;align-items:center;}
+      .print-qr{margin:0;text-align:center;}
+      .print-qr img{display:block;width:17mm;height:17mm;margin:0 auto;object-fit:contain;}
+      .print-meta-text{font-size:7.5pt;color:#314f7b;line-height:1.32;text-align:left;overflow-wrap:anywhere;}
+      .print-meta-text p{margin:0 0 .6mm;}
+      .print-main-title{max-width:150mm;margin:0 auto .8mm;font-size:8.7pt;font-weight:900;color:#111;text-align:center;text-transform:uppercase;line-height:1.1;}
       .print-main-title span{display:block;color:#2458b7;}
-      .print-subtitle{margin:0;font-size:6.9pt;line-height:1.16;color:#5b6b84;font-weight:700;}
-      .record{break-inside:avoid-page;page-break-inside:avoid;border:1px solid #8fb0df;margin-bottom:1.6mm;}
-      .record-head{grid-template-columns:43mm 1fr;gap:8px;padding:5px 7px 4px;border-bottom:1px solid #8fb0df;}
-      .record-label,.record-value,.record-body,.meta-line strong,.meta-row{font-size:7.4pt;}
-      .record-value{line-height:1.18;}
-      .record-body{padding:4px 7px 5px;line-height:1.2;color:#21416d;}
+      .print-subtitle{max-width:150mm;margin:0 auto;font-size:7.2pt;line-height:1.25;color:#5b6b84;font-weight:700;text-align:center;}
+      #resultsContainer{display:flex !important;flex-direction:column;align-items:center;width:100%;max-width:178mm;margin:0 auto !important;padding:0 !important;}
+      .record{width:100% !important;max-width:178mm !important;margin:0 auto 2.5mm !important;break-inside:avoid-page;page-break-inside:avoid;border:1px solid #8fb0df;border-radius:0 !important;box-shadow:none !important;background:#fff !important;}
+      .record-head{grid-template-columns:43mm minmax(0,1fr);gap:8px;padding:6px 8px 5px;border-bottom:1px solid #8fb0df;}
+      .record-label,.record-value,.record-body,.meta-line strong,.meta-row{font-size:7.7pt;}
+      .record-value{line-height:1.24;}
+      .record-body{padding:5px 8px 6px;line-height:1.28;color:#21416d;background:#fff !important;}
       .meta-line{gap:2px 8px;}
-      .meta-line strong{min-width:36mm;}
-      .meta-row{padding-top:4px;margin-top:4px;border-top:1px solid #8fb0df;}
-      .print-footer{display:flex !important;position:fixed;left:9mm;right:9mm;bottom:5mm;justify-content:space-between;align-items:flex-end;font-size:6.8pt;color:#50627f;border-top:1px solid #d9e2f1;padding-top:1.2mm;background:#fff;}
+      .meta-line strong{min-width:39mm;}
+      .meta-row{padding-top:5px;margin-top:5px;border-top:1px solid #8fb0df;}
+      .print-footer{display:flex !important;position:fixed;left:50%;bottom:5mm;width:178mm;max-width:calc(100% - 24mm);transform:translateX(-50%);justify-content:space-between;align-items:flex-end;font-size:6.8pt;color:#50627f;border-top:1px solid #d9e2f1;padding-top:1.2mm;background:#fff;}
       .print-footer-left{max-width:75%;line-height:1.18;font-weight:700;}
       .print-footer-right{text-align:right;font-weight:700;white-space:nowrap;}
       .print-footer-right::after{content:"Página " counter(page, decimal) " de " counter(pages, decimal);}
@@ -632,9 +649,10 @@
         align-items:center;
         justify-content:space-between;
         gap:18px;
-        padding:0 58px 22px 0;
+        padding:0 0 22px;
         border-bottom:1px solid rgba(16,72,112,.15);
       }
+      .portal-actions{display:flex;align-items:center;justify-content:flex-end;gap:16px;margin-left:auto;}
       .brand-lockup{
         display:inline-flex;
         align-items:center;
@@ -676,8 +694,7 @@
         box-shadow:0 0 0 5px rgba(44,155,98,.12);
       }
       .close-btn{
-        top:24px;
-        right:24px;
+        position:static;
         width:42px;
         height:42px;
         border:1px solid rgba(255,255,255,.66);
@@ -910,12 +927,13 @@
       .overlay{align-items:flex-start;padding:10px}
       .overlay::before,.overlay::after{display:none}
       .modal{padding:18px 14px 26px;border-radius:24px}
-      .portal-head{padding:0 48px 16px 0}
+      .portal-head{padding:0 0 16px}
       .brand-mark{width:46px;height:46px;border-radius:14px}
       .brand-copy strong{font-size:13px}
       .brand-copy span{font-size:11px}
       .portal-kicker{display:none}
-      .close-btn{top:16px;right:14px;width:38px;height:38px;font-size:25px}
+      .portal-actions{gap:8px}
+      .close-btn{position:static;width:38px;height:38px;font-size:25px}
       .tabs{margin-top:18px;width:100%}
       .tab{min-width:0;font-size:12px}
       .title-wrap{margin:24px auto 20px}
@@ -937,8 +955,6 @@
 <body>
   <div class="overlay">
     <div class="modal">
-      <a class="close-btn" href="index.html" aria-label="Cerrar">×</a>
-
       <header class="portal-head">
         <a class="brand-lockup" href="index.html" aria-label="Volver al portal institucional de Altum Lumen">
           <span class="brand-mark"><img src="assets/logo-altum-lumen.png" alt="" /></span>
@@ -947,7 +963,10 @@
             <span>Dirección Académica</span>
           </span>
         </a>
-        <span class="portal-kicker">Consulta pública y verificable</span>
+        <div class="portal-actions">
+          <span class="portal-kicker">Consulta pública y verificable</span>
+          <a class="close-btn" href="index.html" aria-label="Cerrar la verificación y volver al portal" title="Volver al portal">×</a>
+        </div>
       </header>
 
       <div class="tabs">
@@ -971,7 +990,7 @@
         <div class="search-grid">
           <div class="field">
             <label for="dniInput">Documento de identidad</label>
-            <input id="dniInput" class="pill-input" type="text" inputmode="numeric" autocomplete="off" placeholder="Ejemplo: 12345678" />
+            <input id="dniInput" class="pill-input" type="text" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="Ejemplo: 12345678" />
             <div class="helper">Ingrese únicamente el número del documento.</div>
           </div>
 
@@ -1097,6 +1116,7 @@
     const statusLine = document.getElementById('statusLine');
     const contactNote = document.getElementById('contactNote');
     const printDate = document.getElementById('printDate');
+    const criteriaInputs = [dniInput, nameInput, codeInput];
 
     tabs.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1154,6 +1174,18 @@
       if(filled.length === 0) return {ok:false, msg:'Ingrese un criterio de búsqueda.'};
       if(filled.length > 1) return {ok:false, msg:'Use solo un criterio: DNI o nombre completo o código de emisión.'};
       return {ok:true};
+    }
+
+    function syncCriteriaLock(sourceInput){
+      const activeInput = sourceInput?.value.trim()
+        ? sourceInput
+        : criteriaInputs.find(input => input.value.trim());
+
+      criteriaInputs.forEach(input => {
+        const isLocked = Boolean(activeInput && input !== activeInput);
+        input.disabled = isLocked;
+        input.closest('.field, .small-field')?.classList.toggle('is-disabled', isLocked);
+      });
     }
 
     function renderRecord(record){
@@ -1254,6 +1286,7 @@
       resultsContainer.innerHTML = '';
       resultsPanel.classList.remove('visible');
       contactNote.classList.remove('visible');
+      syncCriteriaLock();
       setStatus('Campos limpios. Puede realizar una nueva búsqueda.');
       makeCaptcha();
     }
@@ -1280,12 +1313,22 @@
       setStatus('Se generó un nuevo código de validación visual.');
     });
 
+    criteriaInputs.forEach(input => {
+      input.addEventListener('input', () => {
+        if(input === dniInput){
+          input.value = input.value.replace(/\D/g,'').slice(0,8);
+        }
+        syncCriteriaLock(input);
+      });
+    });
+
     [dniInput, nameInput, codeInput, captchaInput].forEach(el => {
       el.addEventListener('keydown', e => { if(e.key === 'Enter') search(); });
     });
 
     loadData();
     makeCaptcha();
+    syncCriteriaLock();
   </script>
 </body>
 </html>
