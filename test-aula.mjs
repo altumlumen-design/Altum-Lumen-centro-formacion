@@ -6,6 +6,9 @@ const root = new URL('./', import.meta.url);
 const productionScripts = ['aula-datos.js', 'aula-config.js', 'aula-auth.js'];
 const rosterText = await readFile(new URL('alumnos-accesos.csv', root), 'utf8');
 const summary = JSON.parse(await readFile(new URL('resumen-integracion-alumnos.json', root), 'utf8'));
+const portalStyles = await readFile(new URL('aula-estilos.css', root), 'utf8');
+await readFile(new URL('cielo.jpg', root));
+assert.match(portalStyles, /url\(["']\.\/cielo\.jpg["']\)/, 'El login debe utilizar cielo.jpg como imagen de fondo');
 
 function parseCsv(source) {
   const rows = [];

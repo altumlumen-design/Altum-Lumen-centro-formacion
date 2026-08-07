@@ -79,9 +79,8 @@ a {
   place-items: center;
   padding: 34px;
   background:
-    radial-gradient(circle at 9% 12%, rgba(180, 22, 39, 0.16), transparent 27%),
-    radial-gradient(circle at 88% 86%, rgba(43, 111, 156, 0.16), transparent 28%),
-    linear-gradient(145deg, #e8edf2 0%, #f8fafc 48%, #edf2f6 100%);
+    linear-gradient(145deg, rgba(7, 24, 39, 0.13), rgba(43, 111, 156, 0.08)),
+    url("./cielo.jpg") center / cover no-repeat;
 }
 
 .portal-login-shell {
@@ -105,8 +104,8 @@ a {
   padding: 58px;
   color: #fff;
   background:
-    linear-gradient(145deg, rgba(7, 24, 39, 0.97), rgba(13, 38, 58, 0.94)),
-    linear-gradient(135deg, var(--aula-navy-950), var(--aula-blue));
+    linear-gradient(145deg, rgba(7, 24, 39, 0.92), rgba(13, 38, 58, 0.79)),
+    url("./cielo.jpg") center / cover no-repeat;
 }
 
 .portal-login-aside::before,
