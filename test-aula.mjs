@@ -96,7 +96,7 @@ assert.equal(closedCourses.length, 8, 'Los ocho programas anteriores deben conse
 assert.ok(openCourses.every((course) => course.sessionCount === 4), 'Cada curso abierto debe declarar cuatro sesiones');
 assert.ok(closedCourses.every((course) => authDom.window.AltumAuth.hasCourse(masterLogin.session, course.id)), 'La etiqueta Cerrado no debe bloquear los cursos asignados al maestro');
 
-assert.equal(rosterRows.length, 173, 'El padrón debe contener 173 asignaciones históricas deduplicadas');
+assert.equal(rosterRows.length, 186, 'El padrón debe contener 186 asignaciones históricas deduplicadas');
 assert.ok(rosterRows.every((row) => /^\d{8}$/.test(row[0])), 'Todos los DNI deben conservar ocho dígitos');
 assert.ok(rosterRows.every((row) => catalogCourseIds.has(row[2]) && row[4] === 'activo'), 'Cada matrícula debe corresponder a un aula real del catálogo');
 
@@ -105,7 +105,7 @@ for (const row of rosterRows) {
   if (!assignmentsByDni.has(row[0])) assignmentsByDni.set(row[0], new Set());
   assignmentsByDni.get(row[0]).add(row[2]);
 }
-assert.equal(assignmentsByDni.size, 157, 'El padrón debe contener 157 usuarios únicos con DNI válido');
+assert.equal(assignmentsByDni.size, 170, 'El padrón debe contener 170 usuarios únicos con DNI válido');
 assert.equal([...assignmentsByDni.values()].filter((courseIds) => courseIds.size > 1).length, 13, 'Deben conservarse trece personas con varios cursos');
 
 const [studentDni, studentCourses] = [...assignmentsByDni.entries()].find(([, courseIds]) => courseIds.size > 1);
@@ -130,15 +130,21 @@ while (assignmentsByDni.has(missingDni)) missingDni = String(Number(missingDni) 
 const missingLogin = await authDom.window.AltumAuth.authenticate(missingDni, missingDni);
 assert.equal(missingLogin.ok, false, 'Un DNI no matriculado debe quedar bloqueado');
 
-assert.equal(summary.sourceAcademicRows, 177, 'El resumen debe revisar las 177 filas académicas del SIRA');
-assert.equal(summary.sourceRowsMappedToCatalog, 177, 'Todas las filas académicas deben quedar asociadas a un aula');
-assert.equal(summary.activeAssignmentRows, 173, 'El resumen debe reconciliar las 173 asignaciones deduplicadas');
-assert.equal(summary.uniqueUsers, 157, 'El resumen debe reconciliar los 157 usuarios con DNI válido');
+for (const [dni, expectedCourses] of assignmentsByDni) {
+  const login = await authDom.window.AltumAuth.authenticate(dni, dni);
+  assert.equal(login.ok, true, `El DNI ${dni} debe iniciar sesión con su credencial actualizada`);
+  assert.deepEqual(new Set(login.session.courses), expectedCourses, `El DNI ${dni} debe recibir únicamente sus aulas asignadas`);
+}
+
+assert.equal(summary.sourceAcademicRows, 190, 'El resumen debe revisar las 190 filas académicas del SIRA');
+assert.equal(summary.sourceRowsMappedToCatalog, 190, 'Todas las filas académicas deben quedar asociadas a un aula');
+assert.equal(summary.activeAssignmentRows, 186, 'El resumen debe reconciliar las 186 asignaciones deduplicadas');
+assert.equal(summary.uniqueUsers, 170, 'El resumen debe reconciliar los 170 usuarios con DNI válido');
 assert.equal(summary.rowsWithoutUsableDni, 1, 'Debe quedar registrada una matrícula histórica sin DNI utilizable');
 assert.deepEqual(summary.courseCounts, {
-  'ia-derecho-4ta': 14,
-  'formulacion-inversiones-publicas-ia': 26,
-  'gestion-servicio-serenazgo-municipal': 11,
+  'ia-derecho-4ta': 19,
+  'formulacion-inversiones-publicas-ia': 32,
+  'gestion-servicio-serenazgo-municipal': 13,
   'ia-derecho-3ra': 3,
   'ia-derecho-2da': 42,
   'ia-derecho-1ra': 15,
@@ -200,4 +206,4 @@ for (const course of closedCourses) {
   closedDom.window.close();
 }
 
-console.log('Aula Virtual: 157 usuarios, 173 asignaciones y once aulas accesibles según el historial del SIRA.');
+console.log('Aula Virtual: 170 usuarios, 186 asignaciones y once aulas accesibles según el historial del SIRA.');

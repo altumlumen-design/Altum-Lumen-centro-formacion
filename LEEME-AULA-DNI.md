@@ -1,6 +1,6 @@
 # Entrega del Aula Virtual con acceso por DNI
 
-Esta entrega integra las 177 filas académicas de `SIRA 2026 (1).xlsm` con las once aulas del catálogo. Los programas anteriores conservan la etiqueta visual `Cerrado`, pero esa etiqueta no bloquea el ingreso cuando el curso está asignado al usuario.
+Esta entrega integra las 190 filas académicas de `SIRA 2026 (2).xlsm` con las once aulas del catálogo. Los programas anteriores conservan la etiqueta visual `Cerrado`, pero esa etiqueta no bloquea el ingreso cuando el curso está asignado al usuario.
 
 ## Acceso
 
@@ -15,12 +15,12 @@ Esta entrega integra las 177 filas académicas de `SIRA 2026 (1).xlsm` con las o
 
 | Aula | Matrículas activas | Sesiones |
 |---|---:|---:|
-| Inteligencia Artificial Aplicada al Derecho – Cuarta Edición | 14 | 4 |
-| Formulación de Inversiones Públicas con Inteligencia Artificial | 26 | 4 |
-| Gestión del Servicio de Serenazgo Municipal | 11 | 4 |
-| **Subtotal abierto** | **51** |  |
+| Inteligencia Artificial Aplicada al Derecho – Cuarta Edición | 19 | 4 |
+| Formulación de Inversiones Públicas con Inteligencia Artificial | 32 | 4 |
+| Gestión del Servicio de Serenazgo Municipal | 13 | 4 |
+| **Subtotal abierto** | **64** |  |
 
-Las 26 matrículas de inversiones y las 11 de serenazgo coinciden completamente con las listas auxiliares de `Hoja 2`.
+La hoja `Alumnos` del SIRA actualizado es la fuente académica vigente. Frente al padrón anterior incorpora trece matrículas: cinco en IA aplicada al Derecho, seis en Formulación de Inversiones Públicas y dos en Serenazgo Municipal.
 
 ## Programas cerrados
 
@@ -40,9 +40,9 @@ Estas ocho aulas conservan la etiqueta `Cerrado`. La etiqueta es solo informativ
 
 ## Resultado de la revisión del SIRA
 
-- 177 filas académicas revisadas y asociadas a un aula.
-- 173 relaciones únicas alumno–curso después de eliminar matrículas duplicadas del mismo curso.
-- 157 usuarios únicos con DNI válido.
+- 190 filas académicas revisadas y asociadas a un aula.
+- 186 relaciones únicas alumno–curso después de eliminar matrículas duplicadas del mismo curso.
+- 170 usuarios únicos con DNI válido.
 - 13 personas tienen más de un curso; el máximo encontrado es tres.
 - Eloy Zenón (`80320361`) recibe el PAE de Gerencia de Seguridad y Criminología.
 - Jaime Calderón (`09679293`) recibe Serenazgo Municipal, Orden Interno y el PAE.
