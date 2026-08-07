@@ -1167,6 +1167,7 @@
     }
 
 </style>
+  <link rel="stylesheet" href="portal-renovado.css">
 </head>
 
 <body>
@@ -1180,9 +1181,12 @@
         </div>
       </div>
 
-      <nav aria-label="Menú principal" class="main-nav">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">☰</button>
+
+      <nav aria-label="Menú principal" class="main-nav" id="menu-principal">
         <a class="navlink" href="#oferta">Oferta Académica</a>
         <a class="navlink" href="#convenios">Convenios</a>
+        <a class="navlink" href="#publicaciones">Publicaciones</a>
 
         <details class="navdrop">
           <summary>Plataformas</summary>
@@ -1238,6 +1242,7 @@
       <div class="hero-grid">
         <div class="hero-card">
           <div class="hero-pad">
+            <div class="hero-eyebrow"><span></span> Formación que eleva</div>
             <h2>Especialización que impulsa tu carrera y el desarrollo del país</h2>
             <p>
               Programas Académicos en el marco del Sistema Administrativo de Gestión de Recursos Humanos y la Resolución de Presidencia Ejecutiva N.° 000214-2025-SERVIR-PE.
@@ -1246,6 +1251,12 @@
             <div class="hero-actions">
               <a class="btn red" href="#oferta">Ver oferta académica</a>
               <a class="btn ghost" href="verificacion.html" target="_blank" rel="noopener">Verificación de autenticidad</a>
+            </div>
+
+            <div class="hero-metrics" aria-label="Cifras institucionales">
+              <div class="hero-metric"><strong>+30</strong><span>programas de formación</span></div>
+              <div class="hero-metric"><strong>+1,000</strong><span>profesionales formados</span></div>
+              <div class="hero-metric"><strong>24/7</strong><span>acceso al aula virtual</span></div>
             </div>
 
             <div class="mini">
@@ -1289,6 +1300,64 @@
         </div>
       </div>
     </div>
+
+    <section id="publicaciones">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Actualidad académica</div>
+            <h3>Publicaciones y novedades</h3>
+            <p>Información institucional, contenidos especializados y accesos útiles de ALTUM LUMEN.</p>
+          </div>
+          <a class="btn ghost" href="https://www.facebook.com/profile.php?id=61578270885540" target="_blank" rel="noopener">Ver más publicaciones</a>
+        </div>
+
+        <div class="publications-grid">
+          <article class="publication-card">
+            <a href="https://www.facebook.com/profile.php?id=61578270885540" target="_blank" rel="noopener">
+              <div class="publication-media"><img src="assets/publicaciones/aniversario-altum-lumen.jpg" alt="Primer aniversario de ALTUM LUMEN" loading="lazy"></div>
+              <div class="publication-body"><div><strong>Primer aniversario</strong><span>Formando hoy, transformando el mañana.</span></div><span class="publication-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+
+          <article class="publication-card">
+            <a href="aula-virtual.html" target="_blank" rel="noopener">
+              <div class="publication-media"><img src="assets/publicaciones/aula-virtual-altum-lumen.jpg" alt="Acceso al Aula Virtual de ALTUM LUMEN" loading="lazy"></div>
+              <div class="publication-body"><div><strong>Aula Virtual</strong><span>Grabaciones, materiales y evaluaciones.</span></div><span class="publication-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+
+          <article class="publication-card">
+            <a href="https://www.facebook.com/profile.php?id=61578270885540" target="_blank" rel="noopener">
+              <div class="publication-media"><img src="assets/publicaciones/ia-aplicada-derecho.jpg" alt="Publicación sobre inteligencia artificial aplicada al Derecho" loading="lazy"></div>
+              <div class="publication-body"><div><strong>IA y práctica legal</strong><span>Herramientas para el análisis profesional.</span></div><span class="publication-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+
+          <article class="publication-card">
+            <a href="https://www.facebook.com/profile.php?id=61578270885540" target="_blank" rel="noopener">
+              <div class="publication-media"><img src="assets/publicaciones/nuevo-reglamento-inviertepe.jpg" alt="Publicación sobre el nuevo reglamento de Invierte.pe" loading="lazy"></div>
+              <div class="publication-body"><div><strong>Actualización normativa</strong><span>Nuevo reglamento de Invierte.pe.</span></div><span class="publication-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+
+          <article class="publication-card">
+            <a href="https://www.facebook.com/profile.php?id=61578270885540" target="_blank" rel="noopener">
+              <div class="publication-media"><img src="assets/publicaciones/ley-idoneidad.jpg" alt="Publicación académica sobre la Ley de Idoneidad" loading="lazy"></div>
+              <div class="publication-body"><div><strong>Gestión pública</strong><span>Contenido especializado sobre idoneidad.</span></div><span class="publication-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+
+          <article class="publication-card">
+            <a href="https://whatsapp.com/channel/0029Vb6Fybt9mrGYFqpisp2o" target="_blank" rel="noopener">
+              <div class="publication-media"><img src="assets/publicaciones/canal-whatsapp.jpg" alt="Canal oficial de WhatsApp de ALTUM LUMEN" loading="lazy"></div>
+              <div class="publication-body"><div><strong>Canal oficial</strong><span>Becas, programas y novedades académicas.</span></div><span class="publication-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="convenios">
       <div class="container">
         <div class="section-head">
@@ -1662,6 +1731,7 @@
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a class="navlink" href="#inicio">Inicio</a>
           <a class="navlink" href="#oferta">Oferta</a>
+          <a class="navlink" href="#publicaciones">Publicaciones</a>
           <a class="navlink" href="verificacion.html" target="_blank" rel="noopener">Verificación</a>
           <a class="navlink dir-special" href="directorio-expertos.html" target="_blank" rel="noopener">Directorio de Expertos</a>
         </div>
@@ -1759,6 +1829,16 @@
     `).join("");
   </script>
 
-  <a href="verificacion.html" target="_blank" rel="noopener" aria-label="Abrir plataforma de registros académicos" style="position:fixed; right:18px; bottom:18px; z-index:9999; background:linear-gradient(135deg,#0E2A3B,#2E6F9E); color:#fff; text-decoration:none; padding:14px 18px; border-radius:18px; box-shadow:0 14px 34px rgba(14,42,59,.22); font:800 13px/1.2 Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; display:flex; flex-direction:column; gap:4px; min-width:250px; border:1px solid rgba(255,255,255,.18);"><span style="font-size:11px; letter-spacing:.4px; opacity:.82; text-transform:uppercase;">Centro de Formación</span><span style="font-size:15px; font-weight:900;">Plataforma de Registros Académicos</span></a>
+  <div class="floating-actions" aria-label="Accesos de atención">
+    <a class="whatsapp-float" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20comunicarme%20con%20un%20asesor%20acad%C3%A9mico." target="_blank" rel="noopener" aria-label="Comunicarse con ALTUM LUMEN por WhatsApp">
+      <span class="float-icon" aria-hidden="true">💬</span>
+      <span class="float-copy"><small>Atención directa</small><strong>Comunícate por WhatsApp</strong></span>
+    </a>
+    <a class="records-float" href="verificacion.html" target="_blank" rel="noopener" aria-label="Abrir plataforma de registros académicos">
+      <span class="float-icon" aria-hidden="true">✓</span>
+      <span class="float-copy"><small>Centro de Formación</small><strong>Registros Académicos</strong></span>
+    </a>
+  </div>
+  <script type="module" src="portal-renovado.js"></script>
 </body>
 </html>

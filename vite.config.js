@@ -20,7 +20,21 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        portal: resolve(import.meta.dirname, 'index.html'),
         aula: resolve(import.meta.dirname, 'aula-virtual.html'),
+        verificacion: resolve(import.meta.dirname, 'verificacion.html'),
+        directorioExpertos: resolve(import.meta.dirname, 'directorio-expertos.html'),
+        conferenciaSeguridadTerritorial: resolve(import.meta.dirname, 'conferencia-seguridad-ciudadana-control-territorial.html'),
+        conferenciaSerenazgoPnp: resolve(import.meta.dirname, 'conferencia-serenazgo-pnp.html'),
+        cursoGestionPublica: resolve(import.meta.dirname, 'curso-gestion-publica-municipal.html'),
+        cursoGestionRiesgo: resolve(import.meta.dirname, 'curso-gestion-riesgo-desastres.html'),
+        cursoInversionPublica: resolve(import.meta.dirname, 'curso-inversion-publica-gestion-proyectos.html'),
+        dineds: resolve(import.meta.dirname, 'dineds.html'),
+        dinegep: resolve(import.meta.dirname, 'dinegep.html'),
+        dinegrd: resolve(import.meta.dirname, 'dinegrd.html'),
+        dineip: resolve(import.meta.dirname, 'dineip.html'),
+        dinesap: resolve(import.meta.dirname, 'dinesap.html'),
+        dinesc: resolve(import.meta.dirname, 'dinesc.html'),
         iaDerechoPrimera: resolve(import.meta.dirname, 'ia-derecho-1ra-edicion.html'),
         iaDerechoSegunda: resolve(import.meta.dirname, 'ia-derecho-2da-edicion.html'),
         iaDerechoTercera: resolve(import.meta.dirname, 'ia-derecho-3ra-edicion.html'),
