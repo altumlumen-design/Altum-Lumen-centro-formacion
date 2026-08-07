@@ -1,6 +1,6 @@
 # Entrega del Aula Virtual con acceso por DNI
 
-Esta entrega integra el padrón de `SIRA 2026 (1).xlsm` con los tres cursos abiertos en agosto de 2026. Los programas anteriores conservan la etiqueta visual `Cerrado`, pero esa etiqueta no bloquea el ingreso cuando el curso está asignado al usuario.
+Esta entrega integra las 177 filas académicas de `SIRA 2026 (1).xlsm` con las once aulas del catálogo. Los programas anteriores conservan la etiqueta visual `Cerrado`, pero esa etiqueta no bloquea el ingreso cuando el curso está asignado al usuario.
 
 ## Acceso
 
@@ -8,7 +8,7 @@ Esta entrega integra el padrón de `SIRA 2026 (1).xlsm` con los tres cursos abie
 - Usuario maestro: `77800233` / `77800233`.
 - Un DNI puede tener uno o varios cursos. **Mis cursos** reúne automáticamente todas sus matrículas asignadas.
 - Un DNI inexistente, incompleto o sin cursos asignados no puede iniciar sesión.
-- El usuario maestro puede revisar las nueve aulas del catálogo.
+- El usuario maestro puede revisar las once aulas del catálogo.
 - **Cerrar sesión** elimina la sesión del navegador y regresa al formulario de ingreso.
 
 ## Cursos abiertos
@@ -18,20 +18,41 @@ Esta entrega integra el padrón de `SIRA 2026 (1).xlsm` con los tres cursos abie
 | Inteligencia Artificial Aplicada al Derecho – Cuarta Edición | 14 | 4 |
 | Formulación de Inversiones Públicas con Inteligencia Artificial | 26 | 4 |
 | Gestión del Servicio de Serenazgo Municipal | 11 | 4 |
-| **Total de asignaciones** | **51** |  |
+| **Subtotal abierto** | **51** |  |
 
-El padrón contiene 49 usuarios únicos. Una persona está matriculada en los tres cursos, por lo que recibe las tres aulas después de iniciar sesión.
-
-La revisión encontró cero DNI inválidos y cero conflictos de identidad dentro de los cursos abiertos. Las 26 matrículas de inversiones y las 11 de serenazgo coinciden completamente con las listas auxiliares de `Hoja 2`.
+Las 26 matrículas de inversiones y las 11 de serenazgo coinciden completamente con las listas auxiliares de `Hoja 2`.
 
 ## Programas cerrados
 
-Las tres ediciones anteriores de IA para el Derecho, el PAE de Gerencia de Seguridad y Criminología, el Diplomado de Orden Interno y Seguridad Ciudadana y la edición anterior de Proyectos de Inversión Pública con IA conservan la etiqueta `Cerrado`. Esta etiqueta es solo informativa: un alumno puede ingresar si su DNI tiene ese curso asignado en `alumnos-accesos.csv`.
+| Aula finalizada | Asignaciones con acceso |
+|---|---:|
+| Inteligencia Artificial para el Derecho – Tercera Edición | 3 |
+| Inteligencia Artificial para el Derecho – Segunda Edición | 42 |
+| Inteligencia Artificial para el Derecho – Primera Edición | 15 |
+| Gerencia de Seguridad y Criminología | 4 |
+| Orden Interno y Seguridad Ciudadana | 34 |
+| Dirección y Gestión de la Seguridad Ciudadana | 20 |
+| Interculturalidad, Convivencia y Desarrollo Social | 1 |
+| Proyectos de Inversión Pública con Inteligencia Artificial | 3 |
+| **Subtotal finalizado** | **122** |
+
+Estas ocho aulas conservan la etiqueta `Cerrado`. La etiqueta es solo informativa: el alumno puede ingresar normalmente cuando el curso está asignado a su DNI. Tanto la tarjeta de **Mis cursos** como el aula muestran el aviso: “Este curso o programa ya finalizó. Puedes acceder a tus clases virtuales”.
+
+## Resultado de la revisión del SIRA
+
+- 177 filas académicas revisadas y asociadas a un aula.
+- 173 relaciones únicas alumno–curso después de eliminar matrículas duplicadas del mismo curso.
+- 157 usuarios únicos con DNI válido.
+- 13 personas tienen más de un curso; el máximo encontrado es tres.
+- Eloy Zenón (`80320361`) recibe el PAE de Gerencia de Seguridad y Criminología.
+- Jaime Calderón (`09679293`) recibe Serenazgo Municipal, Orden Interno y el PAE.
+- Una matrícula de Orden Interno no puede convertirse en acceso porque el SIRA no contiene DNI para esa persona.
+- Dos variantes de nombre asociadas al mismo DNI se resolvieron usando el registro más reciente, conforme al criterio indicado.
 
 ## Archivos de datos
 
 - `alumnos-accesos.csv`: padrón que lee el aula en tiempo de ejecución.
-- `inconsistencias-alumnos.csv`: archivo de control; en esta entrega contiene solo la cabecera porque no se detectaron incidencias activas.
+- `inconsistencias-alumnos.csv`: contiene la matrícula sin DNI y las dos variantes de nombre detectadas.
 - `resumen-integracion-alumnos.json`: conteos y criterios aplicados durante la conversión.
 - `alumnos-plantilla.csv`: ejemplo ficticio para futuras actualizaciones.
 

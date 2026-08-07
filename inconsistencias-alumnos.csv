@@ -1,1 +1,4 @@
 ﻿tipo,dni,nombre_elegido,variantes_o_fuente,resolucion
+sin_dni_valido,,Susy Geovana León Baldeón,Fila 46: vacío,No se crea acceso hasta corregir el DNI en SIRA.
+mismo_dni_variantes_nombre,41022148,Mario Ronnal Barrozo Gonzalez,Mario Ronnal Barrozo Gonzales | Mario Ronnal Barrozo Gonzalez,Se usa el nombre del registro más reciente (fila 40).
+mismo_dni_variantes_nombre,17405123,Cesar Augusto Orellano Olazabal,Cesar Augusto Orelllano Olazabal | Carlos Augusto Orellano Olazabal | Cesar Augusto Orellano Olazabal,Se usa el nombre del registro más reciente (fila 121).

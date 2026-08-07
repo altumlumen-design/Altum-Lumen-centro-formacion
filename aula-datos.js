@@ -102,6 +102,32 @@
       description: 'Diplomado anterior disponible para los alumnos que lo tengan asignado.'
     },
     {
+      id: 'direccion-gestion-seguridad-ciudadana',
+      title: 'Diplomado Especializado en Dirección y Gestión de la Seguridad Ciudadana',
+      shortTitle: 'Dirección y Gestión de la Seguridad Ciudadana',
+      type: 'Diplomado especializado',
+      area: 'Gestión pública y seguridad ciudadana',
+      duration: '240 horas académicas',
+      sessionCount: 6,
+      status: 'Cerrado',
+      file: 'diplomado-direccion-gestion-seguridad-ciudadana.html',
+      flyer: 'logo-centro-formacion.jpg',
+      description: 'Diplomado finalizado y disponible para los alumnos que lo tengan asignado.'
+    },
+    {
+      id: 'interculturalidad-convivencia-desarrollo-social',
+      title: 'Diplomado Especializado en Interculturalidad, Convivencia y Desarrollo Social',
+      shortTitle: 'Interculturalidad, Convivencia y Desarrollo Social',
+      type: 'Diplomado especializado',
+      area: 'Desarrollo social',
+      duration: '240 horas académicas',
+      sessionCount: 0,
+      status: 'Cerrado',
+      file: 'diplomado-interculturalidad-convivencia-desarrollo-social.html',
+      flyer: 'logo-centro-formacion.jpg',
+      description: 'Archivo académico del diplomado disponible para la persona matriculada.'
+    },
+    {
       id: 'proyectos-inversion-publica-ia',
       title: 'Curso Especializado en Proyectos de Inversión Pública con Inteligencia Artificial',
       shortTitle: 'Proyectos de Inversión Pública con Inteligencia Artificial',

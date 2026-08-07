@@ -21,6 +21,8 @@ Los identificadores válidos son:
 - `ia-derecho-1ra`
 - `pae-gerencia-seguridad-criminologia`
 - `orden-interno-seguridad-ciudadana`
+- `direccion-gestion-seguridad-ciudadana`
+- `interculturalidad-convivencia-desarrollo-social`
 - `proyectos-inversion-publica-ia`
 
 ## Reglas de actualización
@@ -29,7 +31,7 @@ Los identificadores válidos son:
 - `estado` debe ser `activo` para habilitar el acceso.
 - Los nombres de archivo y las cabeceras del CSV no deben modificarse.
 - El archivo debe guardarse como CSV UTF-8 en la misma carpeta que `aula-virtual.html`.
-- El usuario maestro `77800233` tiene acceso a las nueve aulas del catálogo.
+- El usuario maestro `77800233` tiene acceso a las once aulas del catálogo.
 - Las etiquetas `Abierto` y `Cerrado` son únicamente informativas y no alteran el permiso de ingreso.
 - Un curso con etiqueta `Cerrado` se habilita normalmente cuando existe una fila activa que lo asigna al DNI.
 

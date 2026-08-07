@@ -33,6 +33,9 @@
 
     grid.innerHTML = assigned.map((course) => {
       const statusClass = course.status === 'Cerrado' ? 'is-closed' : 'is-active';
+      const endedNotice = course.status === 'Cerrado'
+        ? '<p class="portal-course-ended">Este curso o programa ya finalizó. Puedes acceder a tus clases virtuales.</p>'
+        : '';
       return `
         <article class="portal-course-card">
           <div class="portal-course-image">
@@ -43,6 +46,7 @@
             <span class="portal-course-type">${escapeHtml(course.type)}</span>
             <h3>${escapeHtml(course.shortTitle)}</h3>
             <p>${escapeHtml(course.description)}</p>
+            ${endedNotice}
             <dl class="portal-course-meta">
               <div><dt>Área</dt><dd>${escapeHtml(course.area)}</dd></div>
               <div><dt>Duración</dt><dd>${escapeHtml(course.duration)}</dd></div>

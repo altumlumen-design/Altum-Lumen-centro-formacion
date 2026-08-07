@@ -29,6 +29,8 @@ export default defineConfig({
         serenazgoMunicipal: resolve(import.meta.dirname, 'gestion-servicio-serenazgo-municipal.html'),
         paeSeguridad: resolve(import.meta.dirname, 'pae-gerencia-seguridad-criminologia.html'),
         diplomadoOrdenInterno: resolve(import.meta.dirname, 'diplomado-orden-interno-seguridad-ciudadana.html'),
+        diplomadoDireccionSeguridad: resolve(import.meta.dirname, 'diplomado-direccion-gestion-seguridad-ciudadana.html'),
+        diplomadoInterculturalidad: resolve(import.meta.dirname, 'diplomado-interculturalidad-convivencia-desarrollo-social.html'),
         proyectosInversionIa: resolve(import.meta.dirname, 'proyectos-inversion-publica-ia.html')
       }
     }

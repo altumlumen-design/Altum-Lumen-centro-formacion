@@ -4,7 +4,7 @@
   const config = window.ALTUM_AULA_CONFIG || {};
   const courses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const catalogCourseIds = new Set(courses.map((course) => course.id));
-  const sessionKey = config.sessionKey || 'altum_aula_session_v4';
+  const sessionKey = config.sessionKey || 'altum_aula_session_v5';
   let rosterPromise = null;
 
   function readSession() {
@@ -305,6 +305,23 @@
     });
   }
 
+  function mountCourseStatusNotice(courseId) {
+    const course = courses.find((item) => item.id === courseId);
+    const main = document.querySelector('body.aula-course main');
+    if (!course || course.status !== 'Cerrado' || !main || main.querySelector('.aula-course-ended-notice')) return;
+
+    const notice = document.createElement('aside');
+    notice.className = 'aula-course-ended-notice';
+    notice.setAttribute('role', 'note');
+    notice.innerHTML = `
+      <span class="aula-course-ended-icon" aria-hidden="true">✓</span>
+      <div>
+        <strong>Este curso o programa ya finalizó.</strong>
+        <p>Puedes acceder a tus clases virtuales y a los materiales que permanezcan disponibles.</p>
+      </div>`;
+    main.prepend(notice);
+  }
+
   function guardCoursePage() {
     const body = document.body;
     if (!body.classList.contains('aula-course')) return;
@@ -323,6 +340,7 @@
     }
 
     enhanceCourseHeader(session);
+    mountCourseStatusNotice(courseId);
     replaceInactiveLinks();
     body.classList.remove('auth-pending');
     body.classList.add('auth-ready');
