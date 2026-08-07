@@ -8,7 +8,7 @@ const rosterText = await readFile(new URL('alumnos-accesos.csv', root), 'utf8');
 const summary = JSON.parse(await readFile(new URL('resumen-integracion-alumnos.json', root), 'utf8'));
 const portalStyles = await readFile(new URL('aula-estilos.css', root), 'utf8');
 await readFile(new URL('cielo.jpg', root));
-assert.match(portalStyles, /url\(["']\.\/cielo\.jpg["']\)/, 'El login debe utilizar cielo.jpg como imagen de fondo');
+assert.match(portalStyles, /url\(["']\.\/cielo\.jpg\?v=20260807-unificado["']\)/, 'El login debe utilizar la versión unificada de cielo.jpg como imagen de fondo');
 
 function parseCsv(source) {
   const rows = [];

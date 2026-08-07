@@ -12,8 +12,8 @@
   --portal-glass-strong: rgba(255, 255, 255, 0.94);
   --portal-line: rgba(255, 255, 255, 0.54);
   --portal-line-dark: rgba(9, 43, 76, 0.12);
-  --portal-shadow: 0 24px 70px rgba(4, 28, 54, 0.2);
-  --portal-shadow-soft: 0 15px 36px rgba(4, 28, 54, 0.13);
+  --portal-shadow: 0 18px 52px rgba(4, 28, 54, 0.16);
+  --portal-shadow-soft: 0 12px 30px rgba(4, 28, 54, 0.1);
 }
 
 html {
@@ -24,7 +24,20 @@ body {
   min-height: 100vh;
   color: var(--portal-ink);
   background: var(--portal-navy) !important;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.006em;
   isolation: isolate;
+}
+
+button,
+input,
+select,
+textarea,
+summary {
+  font-family: inherit;
 }
 
 body::before {
@@ -34,7 +47,7 @@ body::before {
   z-index: -2;
   background:
     linear-gradient(180deg, rgba(2, 25, 50, 0.15), rgba(2, 25, 50, 0.35)),
-    url("cielo.jpg") center / cover no-repeat;
+    url("cielo.jpg?v=20260807-unificado") center / cover no-repeat;
 }
 
 body::after {
@@ -99,14 +112,16 @@ summary:focus-visible {
 .brand h1 {
   max-width: 370px;
   color: #fff;
-  font-size: 13px !important;
-  line-height: 1.24;
-  letter-spacing: 0.02em;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.35;
+  letter-spacing: 0.015em;
 }
 
 .brand small {
   color: rgba(255, 255, 255, 0.72) !important;
   font-size: 9.5px !important;
+  font-weight: 500 !important;
   line-height: 1.35;
 }
 
@@ -126,7 +141,7 @@ summary:focus-visible {
   border-radius: 999px !important;
   padding: 10px 11px !important;
   font-size: 11px !important;
-  font-weight: 850 !important;
+  font-weight: 650 !important;
   white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0, 18, 38, 0.34);
   box-shadow:
@@ -157,7 +172,7 @@ summary:focus-visible {
 .navdrop > summary {
   list-style: none;
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 650;
 }
 
 .navdrop > summary::-webkit-details-marker {
@@ -232,7 +247,7 @@ summary:focus-visible {
   border-radius: 14px;
   color: #fff;
   background: rgba(255, 255, 255, 0.1);
-  font: 900 20px/1 Montserrat, sans-serif;
+  font: 700 20px/1 Inter, ui-sans-serif, sans-serif;
   cursor: pointer;
 }
 
@@ -243,6 +258,7 @@ summary:focus-visible {
   padding: 11px 16px !important;
   border-radius: 13px !important;
   font-size: 11px !important;
+  font-weight: 700 !important;
   letter-spacing: 0.01em;
   box-shadow: none !important;
   transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease !important;
@@ -283,7 +299,7 @@ summary:focus-visible {
 .hero-side {
   min-height: 540px;
   border: 1px solid var(--portal-line) !important;
-  border-radius: 32px !important;
+  border-radius: 26px !important;
   box-shadow: var(--portal-shadow) !important;
   overflow: hidden;
 }
@@ -295,7 +311,7 @@ summary:focus-visible {
   color: #fff;
   background:
     linear-gradient(118deg, rgba(4, 30, 58, 0.95), rgba(8, 55, 94, 0.76) 68%, rgba(184, 20, 43, 0.62)),
-    url("cielo.jpg") center / cover no-repeat !important;
+    url("cielo.jpg?v=20260807-unificado") center / cover no-repeat !important;
 }
 
 .hero-card::before {
@@ -340,7 +356,7 @@ summary:focus-visible {
   color: rgba(255, 255, 255, 0.9);
   background: rgba(255, 255, 255, 0.09);
   font-size: 10px;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -357,17 +373,18 @@ summary:focus-visible {
   max-width: 720px;
   margin: 20px 0 14px !important;
   color: #fff;
-  font-size: clamp(34px, 4.3vw, 62px) !important;
-  line-height: 1.01 !important;
-  letter-spacing: -0.048em !important;
+  font-size: clamp(30px, 3.55vw, 48px) !important;
+  font-weight: 720 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.036em !important;
 }
 
 .hero p {
   max-width: 680px;
   color: rgba(255, 255, 255, 0.82) !important;
-  font-size: clamp(13px, 1.35vw, 17px);
-  font-weight: 600 !important;
-  line-height: 1.7 !important;
+  font-size: clamp(13px, 1.15vw, 15px);
+  font-weight: 500 !important;
+  line-height: 1.68 !important;
 }
 
 .hero-actions {
@@ -405,15 +422,15 @@ summary:focus-visible {
 
 .hero-metric strong {
   color: #fff;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 17px;
+  font-weight: 750;
 }
 
 .hero-metric span {
   margin-top: 3px;
   color: rgba(255, 255, 255, 0.68);
   font-size: 9px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.35;
   text-transform: uppercase;
 }
@@ -428,6 +445,15 @@ summary:focus-visible {
 .side-title b {
   color: var(--portal-navy);
   font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.side-item b {
+  font-weight: 700 !important;
+}
+
+.side-item span {
+  font-weight: 500 !important;
 }
 
 .side-list {
@@ -457,7 +483,7 @@ main > section > .container {
   position: relative;
   padding: clamp(24px, 4vw, 48px) !important;
   border: 1px solid var(--portal-line);
-  border-radius: 32px;
+  border-radius: 26px;
   background: var(--portal-glass);
   box-shadow: var(--portal-shadow);
   -webkit-backdrop-filter: blur(20px) saturate(120%);
@@ -470,16 +496,18 @@ main > section > .container {
 
 .section-head h3 {
   color: var(--portal-navy);
-  font-size: clamp(20px, 2.3vw, 31px) !important;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  font-size: clamp(20px, 2vw, 27px) !important;
+  font-weight: 720 !important;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .section-head p {
   max-width: 760px;
   margin-top: 7px !important;
   color: var(--portal-muted) !important;
-  font-size: 12px !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
   line-height: 1.6;
 }
 
@@ -490,7 +518,7 @@ main > section > .container {
   margin-bottom: 9px;
   color: var(--portal-red);
   font-size: 10px;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -516,7 +544,7 @@ main > section > .container {
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--portal-line-dark);
-  border-radius: 22px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.78);
   box-shadow: var(--portal-shadow-soft);
   transition: transform 180ms ease, box-shadow 180ms ease;
@@ -563,6 +591,7 @@ main > section > .container {
   display: block;
   color: var(--portal-navy);
   font-size: 12px;
+  font-weight: 700;
   line-height: 1.35;
 }
 
@@ -571,7 +600,7 @@ main > section > .container {
   margin-top: 4px;
   color: var(--portal-muted);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .publication-arrow {
@@ -633,7 +662,7 @@ main > section > .container {
 .faculty-card {
   min-height: 100%;
   padding: 17px !important;
-  border-radius: 21px !important;
+  border-radius: 18px !important;
 }
 
 .faculty-card .avatar img {
@@ -643,11 +672,19 @@ main > section > .container {
 .faculty-name {
   color: var(--portal-navy) !important;
   font-size: 13px !important;
+  font-weight: 700 !important;
 }
 
 .faculty-role {
   color: var(--portal-muted) !important;
+  font-weight: 500 !important;
   line-height: 1.55 !important;
+}
+
+.mini-pill,
+.join-title,
+.join-text {
+  font-weight: 600 !important;
 }
 
 .mini-pill,
@@ -671,6 +708,7 @@ main > section > .container {
 
 .plus-card > div:last-child {
   color: rgba(255, 255, 255, 0.78) !important;
+  font-weight: 600 !important;
 }
 
 .join-card {
@@ -687,7 +725,7 @@ main > section > .container {
 .offer {
   min-height: 315px !important;
   border: 1px solid var(--portal-line-dark) !important;
-  border-radius: 22px !important;
+  border-radius: 18px !important;
   background: rgba(255, 255, 255, 0.78) !important;
   box-shadow: var(--portal-shadow-soft) !important;
   transition: transform 180ms ease, box-shadow 180ms ease;
@@ -714,6 +752,7 @@ main > section > .container {
   color: #fff !important;
   border-color: rgba(255, 255, 255, 0.24) !important;
   background: rgba(255, 255, 255, 0.11) !important;
+  font-weight: 650 !important;
 }
 
 .offer .body {
@@ -723,11 +762,17 @@ main > section > .container {
 .offer h4 {
   color: var(--portal-navy);
   font-size: 15px !important;
+  font-weight: 700 !important;
 }
 
 .offer ul {
   color: var(--portal-muted) !important;
+  font-weight: 500 !important;
   line-height: 1.65 !important;
+}
+
+.offer .meta {
+  font-weight: 500 !important;
 }
 
 /* Áreas, autoridades, verificación y contacto */
@@ -739,6 +784,7 @@ main > section > .container {
   padding: 11px 14px !important;
   border-radius: 999px !important;
   color: var(--portal-navy) !important;
+  font-weight: 600 !important;
 }
 
 .auth-grid {
@@ -748,7 +794,7 @@ main > section > .container {
 
 .person {
   grid-template-columns: 150px 1fr !important;
-  border-radius: 23px !important;
+  border-radius: 20px !important;
   overflow: hidden;
 }
 
@@ -762,11 +808,31 @@ main > section > .container {
 
 .person h4 {
   color: var(--portal-navy);
+  font-size: 15px !important;
+  font-weight: 700 !important;
 }
 
 .person p {
   color: var(--portal-muted) !important;
+  font-weight: 500 !important;
   line-height: 1.6 !important;
+}
+
+.person .role {
+  font-weight: 650 !important;
+}
+
+.person .chip {
+  max-width: 100%;
+  font-weight: 550 !important;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.person--secretaria {
+  grid-column: 1 / -1;
+  width: calc(50% - 7px);
+  justify-self: center;
 }
 
 .verify {
@@ -785,6 +851,7 @@ main > section > .container {
   border-radius: 17px !important;
   color: var(--portal-muted) !important;
   background: rgba(242, 248, 252, 0.8) !important;
+  font-weight: 550 !important;
 }
 
 .email,
@@ -878,7 +945,7 @@ footer .navlink.dir-special:focus-visible {
   border-radius: 16px !important;
   color: #fff !important;
   box-shadow: 0 14px 34px rgba(4, 28, 54, 0.28) !important;
-  font: 800 12px/1.25 Montserrat, system-ui, sans-serif !important;
+  font: 700 12px/1.25 Inter, ui-sans-serif, system-ui, sans-serif !important;
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
@@ -1003,6 +1070,11 @@ footer .navlink.dir-special:focus-visible {
   .auth-grid {
     grid-template-columns: 1fr !important;
   }
+
+  .person--secretaria {
+    grid-column: auto;
+    width: 100%;
+  }
 }
 
 @media (max-width: 680px) {
@@ -1066,7 +1138,7 @@ footer .navlink.dir-special:focus-visible {
   }
 
   .hero h2 {
-    font-size: clamp(34px, 12vw, 48px) !important;
+    font-size: clamp(30px, 10vw, 38px) !important;
   }
 
   .hero-metrics {
