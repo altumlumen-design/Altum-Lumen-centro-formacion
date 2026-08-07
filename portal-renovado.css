@@ -121,20 +121,22 @@ summary:focus-visible {
 .topbar .navlink,
 .navdrop > summary {
   color: rgba(255, 255, 255, 0.84) !important;
-  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(46, 118, 168, 0.4), rgba(15, 72, 113, 0.46)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
   border-radius: 999px !important;
   padding: 10px 11px !important;
   font-size: 11px !important;
   white-space: nowrap;
-  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .topbar .navlink:hover,
 .navdrop > summary:hover,
 .navdrop[open] > summary {
   color: #fff !important;
-  background: rgba(255, 255, 255, 0.12) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: linear-gradient(135deg, rgba(56, 141, 198, 0.68), rgba(23, 91, 139, 0.76)) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .navdrop {
