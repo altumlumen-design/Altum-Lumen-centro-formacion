@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Padrón de accesos del Aula Virtual | Altum-Lumen-centro-formacion</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Padrón de accesos del Aula Virtual" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/FORMATO-ALUMNOS.html" />
+<meta property="og:url" content="https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/FORMATO-ALUMNOS.html" />
+<meta property="og:site_name" content="Altum-Lumen-centro-formacion" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Padrón de accesos del Aula Virtual" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"Padrón de accesos del Aula Virtual","url":"https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/FORMATO-ALUMNOS.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/Altum-Lumen-centro-formacion/assets/css/style.css?v=ec79b32405e13ab1b204418c2284940b9a2ca701">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/Altum-Lumen-centro-formacion/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+    <!-- ALTUM SEO SEARCH START -->
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="googlebot" content="noindex, nofollow, noarchive">
+  <!-- ALTUM SEO SEARCH END -->
+</head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/">Altum-Lumen-centro-formacion</a></h1>
+      
+
+      <h1 id="padrón-de-accesos-del-aula-virtual">Padrón de accesos del Aula Virtual</h1>
+
+<p>El aula utiliza <code class="language-plaintext highlighter-rouge">alumnos-accesos.csv</code> como padrón público. Cada acceso emplea el DNI de ocho dígitos como usuario y como contraseña.</p>
+
+<h2 id="formato">Formato</h2>
+
+<pre><code class="language-csv">dni,nombre,curso_id,programa,estado
+00000000,Estudiante de demostración,ia-derecho-4ta,Inteligencia Artificial Aplicada al Derecho – Cuarta Edición,activo
+</code></pre>
+
+<p>Debe existir una fila por cada relación alumno–curso. Si una persona pertenece a dos cursos, se repite el mismo DNI en dos filas y se cambia <code class="language-plaintext highlighter-rouge">curso_id</code>. Al iniciar sesión, el aula agrupa automáticamente todas las filas activas del DNI y muestra únicamente esos cursos.</p>
+
+<p>Los identificadores válidos son:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ia-derecho-4ta</code></li>
+  <li><code class="language-plaintext highlighter-rouge">formulacion-inversiones-publicas-ia</code></li>
+  <li><code class="language-plaintext highlighter-rouge">gestion-servicio-serenazgo-municipal</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ia-derecho-3ra</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ia-derecho-2da</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ia-derecho-1ra</code></li>
+  <li><code class="language-plaintext highlighter-rouge">pae-gerencia-seguridad-criminologia</code></li>
+  <li><code class="language-plaintext highlighter-rouge">orden-interno-seguridad-ciudadana</code></li>
+  <li><code class="language-plaintext highlighter-rouge">direccion-gestion-seguridad-ciudadana</code></li>
+  <li><code class="language-plaintext highlighter-rouge">interculturalidad-convivencia-desarrollo-social</code></li>
+  <li><code class="language-plaintext highlighter-rouge">proyectos-inversion-publica-ia</code></li>
+</ul>
+
+<h2 id="reglas-de-actualización">Reglas de actualización</h2>
+
+<ul>
+  <li>El DNI debe conservarse como texto de exactamente ocho dígitos, incluidos los ceros iniciales.</li>
+  <li><code class="language-plaintext highlighter-rouge">estado</code> debe ser <code class="language-plaintext highlighter-rouge">activo</code> para habilitar el acceso.</li>
+  <li>Los nombres de archivo y las cabeceras del CSV no deben modificarse.</li>
+  <li>El archivo debe guardarse como CSV UTF-8 en la misma carpeta que <code class="language-plaintext highlighter-rouge">aula-virtual.html</code>.</li>
+  <li>El usuario maestro <code class="language-plaintext highlighter-rouge">77800233</code> tiene acceso a las once aulas del catálogo.</li>
+  <li>Las etiquetas <code class="language-plaintext highlighter-rouge">Abierto</code> y <code class="language-plaintext highlighter-rouge">Cerrado</code> son únicamente informativas y no alteran el permiso de ingreso.</li>
+  <li>Un curso con etiqueta <code class="language-plaintext highlighter-rouge">Cerrado</code> se habilita normalmente cuando existe una fila activa que lo asigna al DNI.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">resumen-integracion-alumnos.json</code> registra los conteos obtenidos del SIRA e <code class="language-plaintext highlighter-rouge">inconsistencias-alumnos.csv</code> conserva los casos que requieren revisión administrativa.</p>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
