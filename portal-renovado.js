@@ -21,6 +21,17 @@
     });
   });
 
+  const mainNav = document.querySelector(".main-nav");
+  if (mainNav && !mainNav.querySelector('[data-corporate-portal="true"]')) {
+    const corporateLink = document.createElement("a");
+    corporateLink.className = "navlink";
+    corporateLink.href = "https://altumlumen-design.github.io/Altum-Lumen-S.A.C./";
+    corporateLink.textContent = "Portal corporativo";
+    corporateLink.setAttribute("data-corporate-portal", "true");
+    corporateLink.setAttribute("aria-label", "Ir al portal corporativo de ALTUM LUMEN S.A.C.");
+    mainNav.appendChild(corporateLink);
+  }
+
   document.querySelectorAll(".main-nav a").forEach(function (link) {
     link.addEventListener("click", function () {
       if (header) header.classList.remove("nav-open");
