@@ -1023,7 +1023,7 @@
           <div class="field">
             <label for="nameInput">Apellidos y nombres</label>
             <input id="nameInput" class="pill-input" type="text" autocomplete="off" placeholder="Nombre completo" />
-            <div class="helper">La búsqueda por nombre no distingue mayúsculas, minúsculas ni tildes</div>
+            <div class="helper">Ingrese al menos un nombre y un apellido. No distingue mayúsculas, minúsculas ni tildes.</div>
           </div>
 
           <div class="small-field">
@@ -1032,7 +1032,7 @@
           </div>
 
           <div class="search-rule">
-            Debe ingresar solo un criterio de búsqueda: <strong>DNI</strong> o <strong>nombre completo</strong> o <strong>código de emisión</strong>.
+            Debe ingresar solo un criterio de búsqueda: <strong>DNI de 8 dígitos</strong> o <strong>al menos un nombre y un apellido</strong> o <strong>código de emisión</strong>.
           </div>
 
           <div class="captcha-wrap">
@@ -1112,7 +1112,7 @@
         <div class="guide-box">
           <h2>¿Cómo usar el aplicativo?</h2>
           <ol>
-            <li>Ingrese solo un criterio: DNI, nombre completo o código de emisión.</li>
+            <li>Ingrese solo un criterio: DNI de 8 dígitos, al menos un nombre y un apellido, o código de emisión.</li>
             <li>Escriba el código de validación visual mostrado en pantalla.</li>
             <li>Presione <strong>Buscar</strong>.</li>
             <li>Si existen varios documentos para el mismo criterio, el sistema mostrará todos.</li>
@@ -1194,9 +1194,25 @@
     }
 
     function validateCriteria(){
-      const filled = [dniInput.value.trim(), nameInput.value.trim(), codeInput.value.trim()].filter(Boolean);
+      const rawDni = dniInput.value.trim();
+      const rawName = nameInput.value.trim();
+      const rawCode = codeInput.value.trim();
+      const filled = [rawDni, rawName, rawCode].filter(Boolean);
+
       if(filled.length === 0) return {ok:false, msg:'Ingrese un criterio de búsqueda.'};
-      if(filled.length > 1) return {ok:false, msg:'Use solo un criterio: DNI o nombre completo o código de emisión.'};
+      if(filled.length > 1) return {ok:false, msg:'Use solo un criterio: DNI o nombre o código de emisión.'};
+
+      if(rawDni && !/^\d{8}$/.test(rawDni)){
+        return {ok:false, msg:'El DNI debe contener exactamente 8 dígitos.'};
+      }
+
+      if(rawName){
+        const nameParts = normalize(rawName).split(' ').filter(Boolean);
+        if(nameParts.length < 2){
+          return {ok:false, msg:'Para buscar por nombre, ingrese al menos un nombre y un apellido.'};
+        }
+      }
+
       return {ok:true};
     }
 
@@ -1270,9 +1286,13 @@
 
       let matches = [];
       if(qDni){
-        matches = dataset.filter(r => digits(r.numero_documento).includes(qDni));
+        matches = dataset.filter(r => digits(r.numero_documento) === qDni);
       } else if(qName){
-        matches = dataset.filter(r => normalize(r.nombre_completo) === qName || normalize(r.nombre_completo).includes(qName));
+        const queryParts = qName.split(' ').filter(Boolean);
+        matches = dataset.filter(r => {
+          const recordParts = new Set(normalize(r.nombre_completo).split(' ').filter(Boolean));
+          return queryParts.every(part => recordParts.has(part));
+        });
       } else if(qCode){
         matches = dataset.filter(r => normalize(r.codigo_emision) === qCode);
       }
