@@ -1,0 +1,10 @@
+CENTRO DE FORMACIÓN — PREVISUALIZACIÓN DE ENLACES
+
+Sube el contenido de este ZIP respetando exactamente las carpetas.
+
+1) Los HTML incluidos son copias de la versión actualmente publicada y solo reciben metadatos sociales en <head>.
+2) portal-renovado.js se reemplaza para que las vistas Oferta, Docentes, Autoridades, Validez y Contacto tengan una URL real y compartible.
+3) Los archivos oferta.html, docentes.html, autoridades.html, validez-verificacion.html y contacto.html son nuevos endpoints de previsualización; al abrirlos redirigen a la vista correspondiente del portal.
+4) La carpeta assets/social-preview/ contiene las miniaturas 1200x630.
+
+No se modifican textos, tarjetas, docentes, autoridades, convenios, cursos, registros ni diseño visible de las páginas existentes.

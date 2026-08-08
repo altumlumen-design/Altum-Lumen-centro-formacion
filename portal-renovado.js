@@ -4,12 +4,12 @@
   const mainNav = document.querySelector(".main-nav");
 
   const viewMeta = {
-    inicio: { hash: "#inicio", label: "Inicio" },
-    oferta: { hash: "#oferta", label: "Oferta académica" },
-    docentes: { hash: "#docentes", label: "Docentes y especialistas" },
-    autoridades: { hash: "#autoridades", label: "Autoridades" },
-    verificacion: { hash: "#verificacion", label: "Validez y verificación" },
-    contacto: { hash: "#contacto", label: "Contacto" }
+    inicio: { hash: "#inicio", label: "Inicio", path: "./" },
+    oferta: { hash: "#oferta", label: "Oferta académica", path: "oferta.html" },
+    docentes: { hash: "#docentes", label: "Docentes y especialistas", path: "docentes.html" },
+    autoridades: { hash: "#autoridades", label: "Autoridades", path: "autoridades.html" },
+    verificacion: { hash: "#verificacion", label: "Validez y verificación", path: "validez-verificacion.html" },
+    contacto: { hash: "#contacto", label: "Contacto", path: "contacto.html" }
   };
 
   const routeByHash = new Map([
@@ -138,7 +138,7 @@
       const meta = viewMeta[view];
       const link = document.createElement("a");
       link.className = "navlink";
-      link.href = meta.hash;
+      link.href = meta.path;
       link.textContent = meta.label;
       link.dataset.portalView = view;
       fragment.appendChild(link);
@@ -311,17 +311,40 @@
     });
   }
 
+  function sharePathForHash(hash) {
+    const view = resolveView(hash);
+    let path = viewMeta[view].path;
+    if (hash === "#publicaciones" || hash === "#convenios") path = "./" + hash;
+    if (hash === "#areas") path = "oferta.html#areas";
+    return path;
+  }
+
+  function hashFromLocation() {
+    if (routeByHash.has(window.location.hash)) return window.location.hash;
+    const file = window.location.pathname.split("/").pop();
+    const match = Object.keys(viewMeta).find(function (key) {
+      return viewMeta[key].path.replace(/^\.\//, "") === file;
+    });
+    return match ? viewMeta[match].hash : "#inicio";
+  }
+
   document.addEventListener("click", function (event) {
-    const link = event.target.closest('a[href^="#"]');
+    const link = event.target.closest("a");
     if (!link || event.defaultPrevented || event.button !== 0) return;
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
-    const hash = link.getAttribute("href");
-    if (!routeByHash.has(hash)) return;
+    const portalView = link.dataset.portalView;
+    let hash = null;
+    if (portalView && viewMeta[portalView]) hash = viewMeta[portalView].hash;
+    else {
+      const href = link.getAttribute("href") || "";
+      if (href.startsWith("#") && routeByHash.has(href)) hash = href;
+    }
+    if (!hash) return;
 
     event.preventDefault();
-    if (window.location.hash === hash) history.replaceState(null, "", hash);
-    else history.pushState(null, "", hash);
+    const path = sharePathForHash(hash);
+    history.pushState({ portalView: resolveView(hash), hash: hash }, "", path);
     showView(hash);
   });
 
@@ -333,13 +356,13 @@
     if (window.innerWidth > 940) closeMobileNavigation();
   });
 
-  window.addEventListener("popstate", function () {
-    showView(window.location.hash || "#inicio");
+  window.addEventListener("popstate", function (event) {
+    const hash = event.state && routeByHash.has(event.state.hash) ? event.state.hash : hashFromLocation();
+    showView(hash);
   });
 
-  const initialHash = routeByHash.has(window.location.hash) ? window.location.hash : "#inicio";
-  if (window.location.hash && !routeByHash.has(window.location.hash)) {
-    history.replaceState(null, "", "#inicio");
-  }
+  const initialHash = routeByHash.has(window.location.hash) ? window.location.hash : hashFromLocation();
+  const initialView = resolveView(initialHash);
+  history.replaceState({ portalView: initialView, hash: initialHash }, "", sharePathForHash(initialHash));
   showView(initialHash, { scroll: false });
 })();
