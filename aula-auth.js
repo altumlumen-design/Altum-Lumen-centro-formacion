@@ -276,7 +276,7 @@
     header.className = 'aula-site-header';
     header.innerHTML = `
       <div class="container aula-header-inner">
-        <a class="aula-brand" href="aula-virtual.html" aria-label="Ir a Mis cursos">
+        <a class="aula-brand" href="index.html" aria-label="Ir al Centro de Formación y Capacitación Profesional">
           <img src="logo-centro-formacion.jpg" alt="Altum Lumen">
           <span><small>Centro de Formación</small><strong>Aula Virtual</strong></span>
         </a>
