@@ -28,53 +28,6 @@
   <link rel="icon" type="image/jpeg" href="logo-centro-formacion.jpg">
   <link rel="apple-touch-icon" href="logo-centro-formacion.jpg">
   <link rel="stylesheet" href="aula-estilos.css?v=20260807-1">
-  <style>
-    /* Ajuste del acceso al portal: X bien esquinada, arriba a la derecha y sin burbuja. */
-    .portal-login-main {
-      position: relative;
-    }
-
-    .portal-login-card {
-      padding-top: 0;
-    }
-
-    .portal-login-close {
-      position: absolute;
-      top: clamp(12px, 1.5vw, 18px);
-      right: clamp(14px, 1.8vw, 22px);
-      z-index: 2;
-      width: auto;
-      height: auto;
-      display: inline-block;
-      border: 0;
-      border-radius: 0;
-      color: #8d97a2;
-      background: transparent;
-      box-shadow: none;
-      font-size: 22px;
-      font-weight: 500;
-      line-height: 1;
-      padding: 0;
-      text-decoration: none;
-      opacity: 0.9;
-    }
-
-    .portal-login-close:hover,
-    .portal-login-close:focus-visible {
-      transform: none;
-      background: transparent;
-      color: #66727f;
-      opacity: 1;
-    }
-
-    @media (max-width: 640px) {
-      .portal-login-close {
-        top: 12px;
-        right: 14px;
-        font-size: 20px;
-      }
-    }
-  </style>
   <script type="module" src="aula-portal-entry.js"></script>
   <meta name="description" content="Accede al Aula Virtual de ALTUM LUMEN para consultar cursos asignados, sesiones, materiales y recursos académicos.">
   <!-- ALTUM SEO SEARCH START -->
@@ -110,7 +63,6 @@
 
       <div class="portal-login-main">
         <div class="portal-login-card">
-          <a class="portal-login-close" href="index.html" aria-label="Cerrar e ir al Centro de Formación" title="Ir al Centro de Formación">×</a>
           <h2 id="loginTitle">Bienvenido</h2>
           <p>Ingresa tu DNI como usuario y contraseña para acceder a los cursos asociados a tu matrícula.</p>
 
