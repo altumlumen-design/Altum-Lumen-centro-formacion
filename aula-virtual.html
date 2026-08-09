@@ -28,6 +28,35 @@
   <link rel="icon" type="image/jpeg" href="logo-centro-formacion.jpg">
   <link rel="apple-touch-icon" href="logo-centro-formacion.jpg">
   <link rel="stylesheet" href="aula-estilos.css?v=20260807-1">
+  <style>
+    /* Ajuste de cierre del login: botón dentro de la tarjeta, sobre el saludo. */
+    .portal-login-card {
+      padding-top: 46px;
+    }
+
+    .portal-login-close {
+      top: 0;
+      right: 0;
+      width: 32px;
+      height: 32px;
+      border-color: rgba(13, 38, 58, 0.12);
+      box-shadow: 0 8px 18px rgba(13, 38, 58, 0.13);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      .portal-login-card {
+        padding-top: 42px;
+      }
+
+      .portal-login-close {
+        width: 30px;
+        height: 30px;
+        font-size: 19px;
+      }
+    }
+  </style>
   <script type="module" src="aula-portal-entry.js"></script>
   <meta name="description" content="Accede al Aula Virtual de ALTUM LUMEN para consultar cursos asignados, sesiones, materiales y recursos académicos.">
   <!-- ALTUM SEO SEARCH START -->
