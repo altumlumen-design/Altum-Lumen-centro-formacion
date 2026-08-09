@@ -29,31 +29,46 @@
   <link rel="apple-touch-icon" href="logo-centro-formacion.jpg">
   <link rel="stylesheet" href="aula-estilos.css?v=20260807-1">
   <style>
-    /* Ajuste de cierre del login: botón dentro de la tarjeta, sobre el saludo. */
+    /* Ajuste sutil del acceso al portal: X discreta, más esquinada y sin burbuja. */
     .portal-login-card {
-      padding-top: 46px;
+      padding-top: 10px;
     }
 
     .portal-login-close {
-      top: 0;
-      right: 0;
-      width: 32px;
-      height: 32px;
-      border-color: rgba(13, 38, 58, 0.12);
-      box-shadow: 0 8px 18px rgba(13, 38, 58, 0.13);
+      top: -24px;
+      right: 2px;
+      width: auto;
+      height: auto;
+      display: inline-block;
+      border: 0;
+      border-radius: 0;
+      color: #8f99a3;
+      background: transparent;
+      box-shadow: none;
       font-size: 20px;
-      font-weight: 700;
+      font-weight: 600;
+      line-height: 1;
+      padding: 0;
+      opacity: 0.92;
+    }
+
+    .portal-login-close:hover,
+    .portal-login-close:focus-visible {
+      transform: none;
+      background: transparent;
+      color: #677380;
+      opacity: 1;
     }
 
     @media (max-width: 640px) {
       .portal-login-card {
-        padding-top: 42px;
+        padding-top: 8px;
       }
 
       .portal-login-close {
-        width: 30px;
-        height: 30px;
-        font-size: 19px;
+        top: -20px;
+        right: 2px;
+        font-size: 18px;
       }
     }
   </style>
