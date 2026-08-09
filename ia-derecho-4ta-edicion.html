@@ -57,6 +57,12 @@
     .live-guidance p{margin:0;color:#65748A;font-size:12.5px;line-height:1.65}
     @media(max-width:760px){.live-schedule{grid-template-columns:1fr 1fr}.live-class-head{padding:18px 18px 13px}.live-schedule,.live-join{padding-left:18px;padding-right:18px}.live-guidance{padding-left:18px;padding-right:18px}}
     @media(max-width:460px){.live-schedule{grid-template-columns:1fr}.live-class-head h2{font-size:20px}.live-join a{font-size:13px}}
+
+    .session-resource-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+    .session-resource-link{min-height:38px;display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border:1px solid rgba(14,42,59,.14);border-radius:10px;font:inherit;font-size:11.5px;font-weight:900;text-decoration:none;cursor:pointer}
+    .session-resource-link--video{color:#fff!important;background:linear-gradient(90deg,#B10D1B,#D4142A);border-color:transparent}
+    .session-resource-link--locked{color:#66768a;background:#f3f6f9}
+    .session-resource-link--locked:hover{background:#e9eef3}
   </style>
 </head>
 <body class="aula-course auth-pending" data-course-id="ia-derecho-4ta" style="--course-accent:#b10d1b;--course-accent-dark:#7f0914;--course-accent-soft:rgba(177,13,27,.09)">
@@ -123,14 +129,55 @@
     <section class="container course-grid">
       <div class="course-panel">
         <h2>Sesiones y materiales</h2>
-        <article class="course-session"><div class="course-session-number">S01</div><div><h3>Sesión 1</h3><p>La grabación y los materiales aparecerán aquí cuando sean publicados por la Dirección Académica.</p></div><span class="aula-resource-status">Programada</span></article>
-        <article class="course-session"><div class="course-session-number">S02</div><div><h3>Sesión 2</h3><p>La grabación y los materiales aparecerán aquí cuando sean publicados por la Dirección Académica.</p></div><span class="aula-resource-status">Programada</span></article>
-        <article class="course-session"><div class="course-session-number">S03</div><div><h3>Sesión 3</h3><p>La grabación y los materiales aparecerán aquí cuando sean publicados por la Dirección Académica.</p></div><span class="aula-resource-status">Programada</span></article>
-        <article class="course-session"><div class="course-session-number">S04</div><div><h3>Sesión 4</h3><p>La grabación y los materiales aparecerán aquí cuando sean publicados por la Dirección Académica.</p></div><span class="aula-resource-status">Programada</span></article>
+        <article class="course-session">
+          <div class="course-session-number">S01</div>
+          <div>
+            <h3>Sesión 1 · Sábado 8 de agosto</h3>
+            <p>La grabación de la primera sesión ya se encuentra disponible. El material académico será habilitado una vez finalizadas las clases teóricas del curso.</p>
+            <div class="session-resource-actions">
+              <a class="session-resource-link session-resource-link--video" href="https://youtu.be/ZnJm8CCfsss" target="_blank" rel="noopener noreferrer">Ver grabación</a>
+              <button class="session-resource-link session-resource-link--locked" type="button" data-material-locked>Material de clase</button>
+            </div>
+          </div>
+          <span class="aula-resource-status">Disponible</span>
+        </article>
+        <article class="course-session">
+          <div class="course-session-number">S02</div>
+          <div>
+            <h3>Sesión 2</h3>
+            <p>La grabación será publicada después de la sesión. El material académico será habilitado una vez finalizadas las clases teóricas del curso.</p>
+            <div class="session-resource-actions">
+              <button class="session-resource-link session-resource-link--locked" type="button" data-material-locked>Material de clase</button>
+            </div>
+          </div>
+          <span class="aula-resource-status">Programada</span>
+        </article>
+        <article class="course-session">
+          <div class="course-session-number">S03</div>
+          <div>
+            <h3>Sesión 3</h3>
+            <p>La grabación será publicada después de la sesión. El material académico será habilitado una vez finalizadas las clases teóricas del curso.</p>
+            <div class="session-resource-actions">
+              <button class="session-resource-link session-resource-link--locked" type="button" data-material-locked>Material de clase</button>
+            </div>
+          </div>
+          <span class="aula-resource-status">Programada</span>
+        </article>
+        <article class="course-session">
+          <div class="course-session-number">S04</div>
+          <div>
+            <h3>Sesión 4</h3>
+            <p>La grabación será publicada después de la sesión. El material académico será habilitado una vez finalizadas las clases teóricas del curso.</p>
+            <div class="session-resource-actions">
+              <button class="session-resource-link session-resource-link--locked" type="button" data-material-locked>Material de clase</button>
+            </div>
+          </div>
+          <span class="aula-resource-status">Programada</span>
+        </article>
       </div>
       <aside class="course-panel">
         <h2>Información académica</h2>
-        <p class="course-note">El aula mostrará solamente enlaces oficiales. Las opciones de grabación, material y evaluación se habilitarán cuando exista una dirección válida.</p>
+        <p class="course-note">Las grabaciones se publicarán progresivamente después de cada sesión. El material académico permanecerá restringido y será habilitado una vez finalizadas las clases teóricas del curso.</p>
         <div class="course-actions">
           <a href="mailto:direccionacademica.altumlumen@gmail.com?subject=Consulta%20-%20IA%20Aplicada%20al%20Derecho%204ta%20edici%C3%B3n">Consulta académica</a>
           <a href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20tengo%20una%20consulta%20sobre%20IA%20Aplicada%20al%20Derecho%204ta%20edici%C3%B3n." target="_blank" rel="noopener">Soporte por WhatsApp</a>
@@ -139,5 +186,12 @@
     </section>
   </main>
   <footer class="course-footer">© Altum Lumen S.A.C. · Dirección Académica · Aula Virtual</footer>
+  <script>
+    document.querySelectorAll('[data-material-locked]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        window.alert('El material académico estará disponible una vez finalizadas las clases teóricas del curso.');
+      });
+    });
+  </script>
 </body>
 </html>
