@@ -181,76 +181,6 @@
     return `${formatCompactDate(start, timeZone)} · ${formatTime(start, timeZone)}`;
   }
 
-  function escapeIcs(value) {
-    return String(value || '')
-      .replace(/\\/g, '\\\\')
-      .replace(/\n/g, '\\n')
-      .replace(/,/g, '\\,')
-      .replace(/;/g, '\\;');
-  }
-
-  function utcStamp(dateValue) {
-    const date = toDate(dateValue);
-    if (!date) return '';
-    return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
-  }
-
-  function buildIcs(courseOrId, session) {
-    const course = getCourse(courseOrId);
-    if (!course || !session) return '';
-    const start = toDate(session.start);
-    const end = toDate(session.end);
-    if (!start || !end) return '';
-    const liveUrl = course?.schedule?.liveUrl || '';
-    const title = `${session.label || 'Sesión'} · ${course.shortTitle || course.title}`;
-    const description = liveUrl
-      ? `Aula Virtual ALTUM LUMEN. Acceso a la sesión: ${liveUrl}`
-      : 'Aula Virtual ALTUM LUMEN.';
-
-    return [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//ALTUM LUMEN//Aula Virtual//ES',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      `UID:${escapeIcs(`${course.id}-${session.number || session.index + 1}@altumlumen`)}`,
-      `DTSTAMP:${utcStamp(new Date())}`,
-      `DTSTART:${utcStamp(start)}`,
-      `DTEND:${utcStamp(end)}`,
-      `SUMMARY:${escapeIcs(title)}`,
-      `DESCRIPTION:${escapeIcs(description)}`,
-      liveUrl ? `URL:${escapeIcs(liveUrl)}` : '',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].filter(Boolean).join('\r\n');
-  }
-
-  function safeFileName(value) {
-    return String(value || 'sesion-altum-lumen')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-zA-Z0-9_-]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .toLowerCase();
-  }
-
-  function downloadCalendar(courseOrId, session) {
-    const course = getCourse(courseOrId);
-    const ics = buildIcs(course, session);
-    if (!course || !ics) return false;
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${safeFileName(course.shortTitle || course.title)}-${safeFileName(session.label)}.ics`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-    return true;
-  }
-
   window.AltumSchedule = Object.freeze({
     DEFAULT_TIME_ZONE,
     getCourse,
@@ -258,8 +188,6 @@
     formatTime,
     formatDate,
     formatCompactDate,
-    relativeLabel,
-    buildIcs,
-    downloadCalendar
+    relativeLabel
   });
 })();

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '20260810-final';
+  const VERSION = '20260810-final-r1';
   const courses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const scheduleApi = window.AltumSchedule || null;
   let observer = null;
@@ -77,29 +77,14 @@
       });
     });
 
+    const intro = document.querySelector('.portal-login-card > h2 + p');
+    if (intro) intro.textContent = 'Ingresa tu usuario y contraseña para acceder a los cursos asociados a tu matrícula.';
+    const help = document.getElementById('loginHelp');
+    if (help) help.textContent = 'Tu usuario es tu DNI.';
+
     const field = password.closest('.portal-field');
     if (field) {
       field.classList.add('portal-password-field');
-      const label = field.querySelector('label');
-      if (label) {
-        const row = document.createElement('div');
-        row.className = 'portal-password-label-row';
-        label.replaceWith(row);
-        row.appendChild(label);
-        const useDni = document.createElement('button');
-        useDni.type = 'button';
-        useDni.className = 'portal-use-dni-button';
-        useDni.textContent = 'Usar mi DNI';
-        useDni.addEventListener('click', () => {
-          if (dni.value.length !== 8) {
-            dni.focus();
-            return;
-          }
-          password.value = dni.value;
-          password.focus();
-        });
-        row.appendChild(useDni);
-      }
 
       const wrap = document.createElement('div');
       wrap.className = 'portal-password-input-wrap';
@@ -321,12 +306,8 @@
         <span>${escapeHtml(live ? 'En vivo ahora' : scheduleApi.relativeLabel(session, target.course, info.now))} · ${escapeHtml(session.label)}</span>
       </div>
       <div class="portal-ux-next-actions">
-        <button type="button" data-next-calendar>Calendario</button>
         <a href="${escapeHtml(target.course.file)}">${live ? 'Ir al curso' : 'Abrir curso'}</a>
       </div>`;
-    banner.querySelector('[data-next-calendar]').addEventListener('click', () => {
-      scheduleApi.downloadCalendar(target.course, session);
-    });
   }
 
   function refreshSchedule(cards) {

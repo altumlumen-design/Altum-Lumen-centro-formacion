@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '20260810-final';
+  const VERSION = '20260810-final-r1';
   const MOBILE = window.matchMedia('(max-width: 760px)');
   const courses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const scheduleApi = window.AltumSchedule || null;
@@ -190,21 +190,10 @@
           <span id="courseUxNextDetail"></span>
         </div>
         <div class="course-ux-overview-actions">
-          <button class="course-ux-secondary-button" type="button" id="courseUxCalendarButton">Añadir al calendario</button>
           <a class="course-ux-primary-button" id="courseUxOverviewJoin" href="#" target="_blank" rel="noopener noreferrer">Ingresar a Zoom</a>
         </div>
       </div>`;
     hero.insertAdjacentElement('afterend', overview);
-
-    overview.querySelector('#courseUxCalendarButton').addEventListener('click', () => {
-      const info = scheduleApi.getInfo(course);
-      const target = info.current || info.upcoming;
-      if (!target) {
-        notify('El cronograma de clases ya concluyó.');
-        return;
-      }
-      if (scheduleApi.downloadCalendar(course, target)) notify('Sesión añadida como archivo de calendario.');
-    });
   }
 
   function sessionKey(index) {
@@ -380,18 +369,11 @@
       const tools = document.createElement('div');
       tools.className = 'course-ux-live-tools';
       tools.innerHTML = `
-        <button type="button" class="course-ux-tool-button" data-course-copy>Copiar enlace</button>
-        <button type="button" class="course-ux-tool-button" data-course-calendar>Añadir próxima clase</button>`;
+        <button type="button" class="course-ux-tool-button" data-course-copy>Copiar enlace</button>`;
       join.insertAdjacentElement('afterend', tools);
       tools.querySelector('[data-course-copy]').addEventListener('click', async () => {
         const ok = await copyText(liveUrl);
         notify(ok ? 'Enlace de Zoom copiado.' : 'No se pudo copiar el enlace.');
-      });
-      tools.querySelector('[data-course-calendar]').addEventListener('click', () => {
-        const info = scheduleApi?.getInfo(course);
-        const target = info?.current || info?.upcoming;
-        if (target && scheduleApi.downloadCalendar(course, target)) notify('Sesión añadida al calendario.');
-        else notify('No hay una próxima sesión programada.');
       });
     }
   }
@@ -446,7 +428,6 @@
     const nextKicker = overview.querySelector('#courseUxNextKicker');
     const nextText = overview.querySelector('#courseUxNextText');
     const nextDetail = overview.querySelector('#courseUxNextDetail');
-    const calendar = overview.querySelector('#courseUxCalendarButton');
     const join = overview.querySelector('#courseUxOverviewJoin');
 
     progressText.textContent = `${info.completedCount} de ${info.total} ${info.total === 1 ? 'sesión realizada' : 'sesiones realizadas'}`;
@@ -468,7 +449,6 @@
       nextDetail.textContent = 'Los recursos habilitados permanecen disponibles en las sesiones.';
     }
 
-    calendar.hidden = !target;
     join.hidden = !info.liveUrl;
     if (info.liveUrl) join.href = info.liveUrl;
     join.textContent = info.joinable ? 'Entrar a clase ahora' : 'Ingresar a Zoom';
