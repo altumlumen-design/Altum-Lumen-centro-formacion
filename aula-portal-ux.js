@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '20260810-final-r1';
+  const VERSION = '20260810-final-r2';
   const courses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const scheduleApi = window.AltumSchedule || null;
   let observer = null;
