@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '20260810-final-r2';
+  const VERSION = '20260810-final-r3';
   const courses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const scheduleApi = window.AltumSchedule || null;
   let observer = null;
@@ -36,9 +36,31 @@
   }
 
   function courseForCard(card) {
-    const href = card.querySelector('.portal-course-link')?.getAttribute('href') || '';
-    const file = href.split('?')[0].split('#')[0];
-    return courses.find((course) => course.file === file) || null;
+    const storedId = card.dataset.courseId || '';
+    if (storedId) {
+      const stored = courses.find((course) => course.id === storedId);
+      if (stored) return stored;
+    }
+
+    const anchor = card.querySelector('.portal-course-link');
+    const href = anchor?.getAttribute('href') || '';
+    if (!href) return null;
+
+    let url;
+    try { url = new URL(href, document.baseURI); } catch (_error) { return null; }
+
+    const filename = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
+    const byLegacyFile = courses.find((course) => course.file === filename || url.pathname.endsWith(`/${course.file}`));
+    if (byLegacyFile) return byLegacyFile;
+
+    const routes = window.AltumCleanRoutes?.routes || {};
+    const normalizedPath = url.pathname.replace(/\/+$/, '/') ;
+    return courses.find((course) => {
+      const cleanRoute = routes[course.file];
+      if (!cleanRoute) return false;
+      const cleanPath = new URL(cleanRoute, window.AltumCleanRoutes.root || document.baseURI).pathname.replace(/\/+$/, '/');
+      return normalizedPath === cleanPath;
+    }) || null;
   }
 
   function scheduleInfo(course) {

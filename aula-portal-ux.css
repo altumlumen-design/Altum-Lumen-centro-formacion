@@ -244,3 +244,250 @@ body.aula-portal.portal-ux-ready .portal-course-link{min-height:43px;border-radi
   body.aula-portal.portal-ux-ready *::before,
   body.aula-portal.portal-ux-ready *::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
 }
+
+/* ==========================================================================\n   R3 · Dashboard responsive real\n   Corrige el desborde de flyers causado por aspect-ratio + min-height heredados\n   y estandariza tarjetas desde 320 px hasta escritorio.\n   ========================================================================== */
+
+body.aula-portal.portal-ux-ready .portal-course-card,
+body.aula-portal.portal-ux-ready .portal-course-image,
+body.aula-portal.portal-ux-ready .portal-course-body{
+  min-width:0;
+}
+
+/* Tablet: evita tres columnas demasiado estrechas. */
+@media (min-width:701px) and (max-width:1080px){
+  body.aula-portal.portal-ux-ready .portal-course-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:14px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-image{
+    aspect-ratio:16/10;
+  }
+}
+
+/* Teléfonos: tarjeta horizontal diseñada expresamente para móvil. */
+@media (max-width:700px){
+  .portal-ux-filter{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+    overflow:visible;
+  }
+  .portal-ux-filter button{
+    width:100%;
+    min-width:0;
+    min-height:40px;
+    justify-content:center;
+    padding:0 8px;
+    font-size:10px;
+  }
+  .portal-ux-filter button span{
+    min-width:19px;
+    width:19px;
+    height:19px;
+    font-size:8.5px;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-grid{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:12px !important;
+    width:100%;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-card{
+    width:100%;
+    min-width:0;
+    min-height:194px;
+    display:grid !important;
+    grid-template-columns:112px minmax(0,1fr) !important;
+    grid-template-rows:1fr !important;
+    align-items:stretch;
+    overflow:hidden !important;
+    border-radius:17px !important;
+    background:#fff;
+  }
+
+  /* Critical fix: remove the desktop 16:10 aspect ratio from the grid item. */
+  body.aula-portal.portal-ux-ready .portal-course-image{
+    position:relative !important;
+    grid-column:1 !important;
+    grid-row:1 !important;
+    width:112px !important;
+    max-width:112px !important;
+    min-width:0 !important;
+    height:100% !important;
+    min-height:0 !important;
+    max-height:none !important;
+    aspect-ratio:auto !important;
+    overflow:hidden !important;
+    align-self:stretch !important;
+    border-right:1px solid var(--portal-ux-line) !important;
+    border-bottom:0 !important;
+    background:#edf2f6;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-image img{
+    position:absolute !important;
+    inset:0 !important;
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    max-height:none !important;
+    object-fit:cover !important;
+    object-position:center top !important;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-status{
+    top:9px !important;
+    left:8px !important;
+    right:auto !important;
+    z-index:3;
+    max-width:calc(100% - 16px);
+    padding:5px 7px !important;
+    border-radius:999px !important;
+    font-size:7.8px !important;
+    line-height:1.1;
+    white-space:nowrap;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-body{
+    grid-column:2 !important;
+    grid-row:1 !important;
+    width:auto !important;
+    min-width:0 !important;
+    height:auto !important;
+    display:flex !important;
+    flex-direction:column;
+    align-items:stretch;
+    padding:13px 12px 12px !important;
+    overflow:hidden;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-type{
+    display:block;
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:8px !important;
+    line-height:1.2;
+    letter-spacing:.055em;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-card h3{
+    display:-webkit-box;
+    max-width:100%;
+    margin:5px 0 7px !important;
+    overflow:hidden;
+    color:var(--portal-ux-navy);
+    font-size:13.2px !important;
+    line-height:1.22 !important;
+    letter-spacing:-.015em;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-card p,
+  body.aula-portal.portal-ux-ready .portal-course-meta{
+    display:none !important;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-ux-schedule{
+    width:100%;
+    min-width:0;
+    margin:2px 0 9px !important;
+    padding:7px 8px !important;
+    border-radius:9px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-ux-schedule-head{
+    min-width:0;
+    gap:6px;
+  }
+  body.aula-portal.portal-ux-ready .portal-ux-schedule-head span{
+    min-width:0;
+    font-size:9px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-ux-schedule-head b{
+    flex:0 0 auto;
+    font-size:8.5px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-ux-progress{
+    height:4px;
+    margin:5px 0 !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-ux-schedule small{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:8.2px !important;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-link{
+    width:100%;
+    min-width:0;
+    min-height:38px !important;
+    margin-top:auto;
+    display:flex !important;
+    align-items:center;
+    justify-content:space-between !important;
+    gap:8px;
+    padding:0 10px !important;
+    border-radius:10px !important;
+    overflow:hidden;
+    font-size:9.2px !important;
+    line-height:1.15;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-link span{
+    flex:0 0 auto;
+  }
+
+  body.aula-portal.portal-ux-ready .portal-course-archive{
+    min-height:164px;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-archive .portal-course-image img{
+    filter:saturate(.68) brightness(.96);
+  }
+}
+
+/* Teléfonos muy estrechos: aún conserva dos columnas internas sin invadir texto. */
+@media (max-width:390px){
+  body.aula-portal.portal-ux-ready .portal-course-card{
+    grid-template-columns:98px minmax(0,1fr) !important;
+    min-height:188px;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-image{
+    width:98px !important;
+    max-width:98px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-body{
+    padding:12px 10px 10px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-card h3{
+    font-size:12.5px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-link{
+    padding:0 8px !important;
+    font-size:8.7px !important;
+  }
+}
+
+/* 320–350 px: compacta solo lo secundario, nunca el título ni el botón principal. */
+@media (max-width:350px){
+  .portal-ux-filter button{font-size:9px;padding:0 5px}
+  .portal-ux-filter button span{display:none}
+  body.aula-portal.portal-ux-ready .portal-course-card{
+    grid-template-columns:88px minmax(0,1fr) !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-image{
+    width:88px !important;
+    max-width:88px !important;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-type{display:none}
+  body.aula-portal.portal-ux-ready .portal-ux-schedule small{display:none}
+}
+
