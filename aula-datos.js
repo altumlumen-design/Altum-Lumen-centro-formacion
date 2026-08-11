@@ -1,6 +1,8 @@
 (function () {
   'use strict';
 
+  const lima = 'America/Lima';
+
   window.ALTUM_COURSES = Object.freeze([
     {
       id: 'ia-derecho-4ta',
@@ -13,7 +15,17 @@
       status: 'Abierto',
       file: 'ia-derecho-4ta-edicion.html',
       flyer: 'flyer-ia-derecho-4ta.png',
-      description: 'Redacción jurídica, análisis de casos y estrategia legal asistida con inteligencia artificial.'
+      description: 'Redacción jurídica, análisis de casos y estrategia legal asistida con inteligencia artificial.',
+      schedule: Object.freeze({
+        timeZone: lima,
+        liveUrl: 'https://us06web.zoom.us/j/89623750850?pwd=laPQag0tqVIOQVQnT3qqeNaQInOF0i.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-08-08T19:00:00-05:00', end: '2026-08-08T21:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-08-09T19:00:00-05:00', end: '2026-08-09T21:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-08-15T19:00:00-05:00', end: '2026-08-15T21:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-08-16T19:00:00-05:00', end: '2026-08-16T21:00:00-05:00' })
+        ])
+      })
     },
     {
       id: 'formulacion-inversiones-publicas-ia',
@@ -26,7 +38,17 @@
       status: 'Abierto',
       file: 'formulacion-inversiones-publicas-ia.html',
       flyer: 'flyer-formulacion-inversiones-publicas-ia.png',
-      description: 'Formulación y evaluación de inversiones públicas con apoyo de herramientas de inteligencia artificial.'
+      description: 'Formulación y evaluación de inversiones públicas con apoyo de herramientas de inteligencia artificial.',
+      schedule: Object.freeze({
+        timeZone: lima,
+        liveUrl: 'https://us06web.zoom.us/j/89634321952?pwd=uy8BDflYnNZgQK5x2wyEbdgwmPF6yc.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-08-10T18:00:00-05:00', end: '2026-08-10T20:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-08-12T18:00:00-05:00', end: '2026-08-12T20:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-08-17T18:00:00-05:00', end: '2026-08-17T20:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-08-19T18:00:00-05:00', end: '2026-08-19T20:00:00-05:00' })
+        ])
+      })
     },
     {
       id: 'gestion-servicio-serenazgo-municipal',
@@ -39,7 +61,17 @@
       status: 'Abierto',
       file: 'gestion-servicio-serenazgo-municipal.html',
       flyer: 'flyer-gestion-servicio-serenazgo-municipal.png',
-      description: 'Gestión operativa del serenazgo municipal y aplicación del Manual del Sereno Municipal.'
+      description: 'Gestión operativa del serenazgo municipal y aplicación del Manual del Sereno Municipal.',
+      schedule: Object.freeze({
+        timeZone: lima,
+        liveUrl: 'https://us06web.zoom.us/j/87260810478?pwd=Idtk6zOGzt6vhwc5aAefRQMOLJSTj9.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-08-11T19:00:00-05:00', end: '2026-08-11T21:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-08-13T19:00:00-05:00', end: '2026-08-13T21:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-08-18T19:00:00-05:00', end: '2026-08-18T21:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-08-20T19:00:00-05:00', end: '2026-08-20T21:00:00-05:00' })
+        ])
+      })
     },
     {
       id: 'ia-derecho-3ra',

@@ -1,0 +1,260 @@
+/* ALTUM LUMEN · Aula Virtual · Experiencia definitiva del portal
+   GitHub Pages / CSV compatible · 2026-08-10 */
+
+body.aula-portal.portal-ux-ready{
+  --portal-ux-navy:#0d263a;
+  --portal-ux-blue:#2b6f9c;
+  --portal-ux-red:#b41627;
+  --portal-ux-green:#188451;
+  --portal-ux-muted:#66758a;
+  --portal-ux-line:rgba(13,38,58,.12);
+  --portal-ux-soft:#f7f9fc;
+}
+
+/* Login */
+.portal-password-label-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.portal-password-label-row label{margin:0 !important}
+.portal-use-dni-button{
+  min-height:30px;
+  padding:4px 8px;
+  border:1px solid var(--portal-ux-line);
+  border-radius:8px;
+  color:var(--portal-ux-navy);
+  background:#f7f9fc;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+.portal-password-input-wrap{position:relative}
+.portal-password-input-wrap input{padding-right:82px !important}
+.portal-password-toggle{
+  position:absolute;
+  top:50%;
+  right:8px;
+  min-height:36px;
+  transform:translateY(-50%);
+  padding:0 9px;
+  border:0;
+  border-radius:8px;
+  color:var(--portal-ux-navy);
+  background:#eef3f7;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+.portal-network-status{
+  margin:0 0 18px !important;
+  padding:10px 12px;
+  border:1px solid rgba(161,98,7,.2);
+  border-radius:11px;
+  color:#7a4e08 !important;
+  background:#fff9e8;
+  font-size:11px !important;
+  font-weight:800;
+}
+
+/* Banner próxima clase */
+.portal-ux-next-class{
+  width:min(1240px,92vw);
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr) auto;
+  align-items:center;
+  gap:14px;
+  margin:0 auto 20px;
+  padding:14px 16px;
+  border:1px solid rgba(43,111,156,.16);
+  border-radius:18px;
+  background:linear-gradient(100deg,#fff,#f4f8fb);
+  box-shadow:0 10px 28px rgba(13,38,58,.065);
+}
+.portal-ux-next-class.is-live{border-color:rgba(180,22,39,.25);background:linear-gradient(100deg,#fff,#fff6f7)}
+.portal-ux-next-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  color:#fff;
+  background:var(--portal-ux-blue);
+  font-size:14px;
+  font-weight:900;
+}
+.portal-ux-next-class.is-live .portal-ux-next-icon{background:var(--portal-ux-red)}
+.portal-ux-next-copy{min-width:0}
+.portal-ux-next-copy small,.portal-ux-next-copy strong,.portal-ux-next-copy span{display:block}
+.portal-ux-next-copy small{color:var(--portal-ux-muted);font-size:9px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+.portal-ux-next-copy strong{margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--portal-ux-navy);font-size:14px}
+.portal-ux-next-copy span{margin-top:3px;color:var(--portal-ux-muted);font-size:11px;font-weight:700}
+.portal-ux-next-actions{display:flex;gap:8px;align-items:center}
+.portal-ux-next-actions button,.portal-ux-next-actions a{
+  min-height:40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 12px;
+  border-radius:10px;
+  font:inherit;
+  font-size:10.5px;
+  font-weight:900;
+  text-decoration:none;
+  cursor:pointer;
+}
+.portal-ux-next-actions button{border:1px solid var(--portal-ux-line);color:var(--portal-ux-navy);background:#fff}
+.portal-ux-next-actions a{border:0;color:#fff;background:var(--portal-ux-red)}
+
+/* Filtros */
+.portal-ux-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin:0 0 16px;
+}
+.portal-ux-filter{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
+.portal-ux-filter::-webkit-scrollbar{display:none}
+.portal-ux-filter button{
+  min-height:38px;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:0 12px;
+  border:1px solid var(--portal-ux-line);
+  border-radius:999px;
+  color:var(--portal-ux-navy);
+  background:#fff;
+  font:inherit;
+  font-size:10.5px;
+  font-weight:900;
+  cursor:pointer;
+}
+.portal-ux-filter button span{
+  min-width:20px;
+  height:20px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  color:var(--portal-ux-muted);
+  background:#eef2f6;
+  font-size:9px;
+}
+.portal-ux-filter button.is-selected{color:#fff;border-color:var(--portal-ux-navy);background:var(--portal-ux-navy)}
+.portal-ux-filter button.is-selected span{color:var(--portal-ux-navy);background:#fff}
+.portal-ux-search{width:min(280px,100%)}
+.portal-ux-search input{
+  width:100%;
+  min-height:40px;
+  padding:0 13px;
+  border:1px solid var(--portal-ux-line);
+  border-radius:11px;
+  color:var(--portal-ux-navy);
+  background:#fff;
+  font-size:11px;
+}
+.portal-ux-search input:focus{outline:none;border-color:var(--portal-ux-blue);box-shadow:0 0 0 3px rgba(43,111,156,.1)}
+.portal-ux-filter-empty{
+  margin:16px 0 0;
+  padding:18px;
+  border:1px dashed rgba(13,38,58,.18);
+  border-radius:14px;
+  color:var(--portal-ux-muted);
+  background:#fff;
+  font-size:12px;
+  text-align:center;
+}
+
+/* Tarjetas */
+body.aula-portal.portal-ux-ready .portal-course-grid{gap:16px}
+body.aula-portal.portal-ux-ready .portal-course-card{border-radius:18px;box-shadow:0 10px 28px rgba(13,38,58,.065);transform:none !important}
+body.aula-portal.portal-ux-ready .portal-course-card:hover{box-shadow:0 14px 34px rgba(13,38,58,.1)}
+body.aula-portal.portal-ux-ready .portal-course-card.portal-course-is-live{border-color:rgba(180,22,39,.28);box-shadow:0 12px 32px rgba(180,22,39,.09)}
+body.aula-portal.portal-ux-ready .portal-course-card.portal-course-archive{background:#fcfdfe}
+body.aula-portal.portal-ux-ready .portal-course-card.portal-course-archive .portal-course-image img{filter:saturate(.78)}
+body.aula-portal.portal-ux-ready .portal-course-body{padding:16px}
+body.aula-portal.portal-ux-ready .portal-course-card h3{font-size:16px;line-height:1.28}
+body.aula-portal.portal-ux-ready .portal-course-card p{display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+body.aula-portal.portal-ux-ready .portal-course-ended{display:none !important}
+body.aula-portal.portal-ux-ready .portal-course-link{min-height:43px;border-radius:11px}
+
+.portal-ux-schedule{
+  margin:13px 0 12px;
+  padding:10px 11px;
+  border:1px solid var(--portal-ux-line);
+  border-radius:12px;
+  background:#f8fafc;
+}
+.portal-ux-schedule-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.portal-ux-schedule-head span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--portal-ux-navy);font-size:10.5px;font-weight:900}
+.portal-ux-schedule-head b{color:var(--portal-ux-muted);font-size:9.5px}
+.portal-ux-progress{height:5px;margin:7px 0;overflow:hidden;border-radius:999px;background:#e6ebf0}
+.portal-ux-progress span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--aula-red),#d14452)}
+.portal-ux-schedule small{display:block;color:var(--portal-ux-muted);font-size:9.5px;line-height:1.4}
+
+@media(max-width:900px){
+  .portal-ux-next-class{width:92vw;grid-template-columns:40px minmax(0,1fr)}
+  .portal-ux-next-actions{grid-column:2;justify-content:flex-start}
+}
+
+@media(max-width:700px){
+  body.aula-portal.portal-ux-ready .portal-header-inner{width:94vw;min-height:62px;gap:10px}
+  body.aula-portal.portal-ux-ready .portal-brand img{width:42px;height:42px;border-radius:11px}
+  body.aula-portal.portal-ux-ready .portal-brand small{display:none}
+  body.aula-portal.portal-ux-ready .portal-brand strong{font-size:14px}
+  body.aula-portal.portal-ux-ready .portal-nav-link{min-height:38px;padding:0 8px !important;font-size:10.5px !important}
+  body.aula-portal.portal-ux-ready .aula-user-copy{display:none}
+
+  .portal-ux-next-class{width:94vw;grid-template-columns:38px minmax(0,1fr);gap:10px;margin-bottom:14px;padding:11px 12px;border-radius:15px}
+  .portal-ux-next-icon{width:38px;height:38px;border-radius:11px}
+  .portal-ux-next-copy strong{font-size:12.5px}
+  .portal-ux-next-copy span{font-size:10px}
+  .portal-ux-next-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .portal-ux-next-actions button,.portal-ux-next-actions a{min-height:39px;padding:0 9px}
+
+  .portal-ux-toolbar{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:12px}
+  .portal-ux-filter{width:100%}
+  .portal-ux-search{width:100%}
+  .portal-ux-search input{min-height:42px}
+
+  body.aula-portal.portal-ux-ready .portal-course-grid{grid-template-columns:1fr !important;gap:10px !important}
+  body.aula-portal.portal-ux-ready .portal-course-card{
+    display:grid;
+    grid-template-columns:94px minmax(0,1fr);
+    min-height:0;
+    overflow:hidden;
+    border-radius:15px;
+  }
+  body.aula-portal.portal-ux-ready .portal-course-image{min-height:100%;height:auto}
+  body.aula-portal.portal-ux-ready .portal-course-image img{height:100%;min-height:150px;object-fit:cover}
+  body.aula-portal.portal-ux-ready .portal-status{top:8px;left:8px;font-size:8px;padding:5px 7px}
+  body.aula-portal.portal-ux-ready .portal-course-body{padding:11px}
+  body.aula-portal.portal-ux-ready .portal-course-type{font-size:8.5px}
+  body.aula-portal.portal-ux-ready .portal-course-card h3{margin:5px 0 6px;font-size:13px;line-height:1.23}
+  body.aula-portal.portal-ux-ready .portal-course-card p{display:none}
+  body.aula-portal.portal-ux-ready .portal-course-meta{display:none}
+  .portal-ux-schedule{margin:8px 0;padding:8px;border-radius:10px}
+  .portal-ux-schedule-head span{font-size:9.5px}
+  .portal-ux-schedule small{font-size:8.8px}
+  body.aula-portal.portal-ux-ready .portal-course-link{min-height:38px;padding:0 9px;font-size:9.5px}
+
+  body.aula-portal.portal-ux-ready .portal-dashboard-main{width:94vw}
+  body.aula-portal.portal-ux-ready .portal-dashboard-hero{padding-top:22px;padding-bottom:18px}
+  body.aula-portal.portal-ux-ready .portal-dashboard-hero h1{font-size:27px}
+  body.aula-portal.portal-ux-ready .portal-dashboard-hero p{font-size:12px}
+}
+
+@media(max-width:520px){
+  body.aula-portal.portal-ux-ready .portal-login-view{padding:12px}
+  body.aula-portal.portal-ux-ready .portal-login-shell{min-height:0;border-radius:22px}
+  body.aula-portal.portal-ux-ready .portal-login-main{padding:30px 22px}
+  body.aula-portal.portal-ux-ready .portal-login-card h2{font-size:27px}
+  body.aula-portal.portal-ux-ready .portal-login-card>p{margin-bottom:22px}
+  body.aula-portal.portal-ux-ready .portal-field input{height:51px}
+  body.aula-portal.portal-ux-ready .portal-login-submit{min-height:51px}
+  .portal-password-toggle{min-height:34px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.aula-portal.portal-ux-ready *,
+  body.aula-portal.portal-ux-ready *::before,
+  body.aula-portal.portal-ux-ready *::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+}
