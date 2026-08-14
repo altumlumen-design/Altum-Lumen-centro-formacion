@@ -5465,4 +5465,37 @@ window.REGISTROS_PUBLICOS = [
     "nota": "17.00",
     "codigo_registro": "20262788102"
   }
+,
+  {
+    "nombre_completo": "Vilca Apaza, Henry Mark",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "01888565",
+    "documento_mask": "DNI 0188****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho III",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "14/08/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260168565",
+    "estado": "VÁLIDO",
+    "nota": "20.00",
+    "codigo_registro": "20268565189"
+  },
+  {
+    "nombre_completo": "Muñoz Pretell, Edwin Miguel",
+    "tipo_doc_identidad": "DNI",
+    "numero_documento": "45032958",
+    "documento_mask": "DNI 4503****",
+    "tipo_documento": "Certificado",
+    "condicion_obtenida": "Aprobado",
+    "denominacion_programa": "Inteligencia Artificial para el Derecho III",
+    "tipo_programa": "Curso Especializado",
+    "fecha_emision": "14/08/2026",
+    "horas_academicas": "48",
+    "codigo_emision": "CURIAPD20260172958",
+    "estado": "VÁLIDO",
+    "nota": "20.00",
+    "codigo_registro": "20262958190"
+  }
 ];
