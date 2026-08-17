@@ -47,8 +47,6 @@
     .session-resource-link--video{color:#fff!important;background:linear-gradient(90deg,#B10D1B,#D4142A);border-color:transparent}
     .session-resource-link--material{color:#0E2238!important;background:#eef4f8;border-color:rgba(14,42,59,.16)}
     .session-resource-link--material:hover{background:#e3edf4}
-    .session-resource-link--locked{color:#66768a;background:#f3f6f9}
-    .session-resource-link--locked:hover{background:#e9eef3}
 
     @media(max-width:760px){
       .live-schedule{grid-template-columns:1fr 1fr}
@@ -101,15 +99,15 @@
           <div>
             <span class="live-class-kicker">● Clases en vivo</span>
             <h2 id="live-class-title">Horario y acceso a las sesiones</h2>
-            <p>El mismo enlace de Zoom será utilizado para las cuatro sesiones del curso.</p>
+            <p>El mismo enlace de Zoom será utilizado para las cuatro sesiones del curso. La tercera sesión fue reprogramada del sábado 15 al domingo 16 de agosto.</p>
           </div>
         </div>
 
         <div class="live-schedule">
           <div class="live-date"><b>Sábado 8 de agosto</b><span>7:00 p. m.</span></div>
           <div class="live-date"><b>Domingo 9 de agosto</b><span>7:00 p. m.</span></div>
-          <div class="live-date"><b>Sábado 15 de agosto</b><span>7:00 p. m.</span></div>
-          <div class="live-date"><b>Domingo 16 de agosto</b><span>7:00 p. m.</span></div>
+          <div class="live-date"><b>Domingo 16 de agosto</b><span>7:00 p. m. · Reprogramada</span></div>
+          <div class="live-date"><b>Domingo 23 de agosto</b><span>7:00 p. m. · Sesión final</span></div>
         </div>
 
         <div class="live-join">
@@ -162,23 +160,20 @@
         <article class="course-session">
           <div class="course-session-number">S03</div>
           <div>
-            <h3>Sesión 3 · Sábado 15 de agosto</h3>
-            <p>La grabación será publicada después de la sesión. El material académico se habilitará cuando corresponda.</p>
+            <h3>Sesión 3 · Domingo 16 de agosto</h3>
+            <p>Sesión práctica reprogramada del sábado 15 de agosto. La grabación se encuentra disponible. Por su naturaleza práctica, esta sesión no cuenta con material de clase independiente.</p>
             <div class="session-resource-actions">
-              <button class="session-resource-link session-resource-link--locked" type="button" data-material-locked>Material de clase</button>
+              <a class="session-resource-link session-resource-link--video" href="https://youtu.be/dS0c0lSQNeg" target="_blank" rel="noopener noreferrer">Ver grabación</a>
             </div>
           </div>
-          <span class="aula-resource-status">Programada</span>
+          <span class="aula-resource-status">Disponible</span>
         </article>
 
         <article class="course-session">
           <div class="course-session-number">S04</div>
           <div>
-            <h3>Sesión 4 · Domingo 16 de agosto</h3>
-            <p>La grabación será publicada después de la sesión. El material académico se habilitará cuando corresponda.</p>
-            <div class="session-resource-actions">
-              <button class="session-resource-link session-resource-link--locked" type="button" data-material-locked>Material de clase</button>
-            </div>
+            <h3>Sesión 4 · Domingo 23 de agosto</h3>
+            <p>Sesión final de carácter práctico. Por su naturaleza práctica, no contará con material de clase independiente. La grabación será publicada después de la sesión.</p>
           </div>
           <span class="aula-resource-status">Programada</span>
         </article>
@@ -186,7 +181,7 @@
 
       <aside class="course-panel">
         <h2>Información académica</h2>
-        <p class="course-note">Las grabaciones y materiales se publicarán progresivamente dentro de cada sesión. Las sesiones 1 y 2 ya cuentan con recursos disponibles.</p>
+        <p class="course-note">Las sesiones 1 y 2 cuentan con grabación y material académico. Las sesiones 3 y 4 son de aplicación práctica, por lo que no cuentan con material de clase independiente; sus grabaciones se publican después de cada sesión.</p>
         <div class="course-actions">
           <a href="mailto:direccionacademica.altumlumen@gmail.com?subject=Consulta%20-%20IA%20Aplicada%20al%20Derecho%204ta%20edici%C3%B3n">Consulta académica</a>
           <a href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20tengo%20una%20consulta%20sobre%20IA%20Aplicada%20al%20Derecho%204ta%20edici%C3%B3n." target="_blank" rel="noopener">Soporte por WhatsApp</a>
@@ -196,13 +191,5 @@
   </main>
 
   <footer class="course-footer">© Altum Lumen S.A.C. · Dirección Académica · Aula Virtual</footer>
-
-  <script>
-    document.querySelectorAll('[data-material-locked]').forEach(function (button) {
-      button.addEventListener('click', function () {
-        window.alert('Este material todavía no se encuentra habilitado.');
-      });
-    });
-  </script>
 </body>
 </html>
