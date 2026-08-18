@@ -4,36 +4,12 @@
   const config = window.ALTUM_AULA_CONFIG || {};
   const courses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const catalogCourseIds = new Set(courses.map((course) => course.id));
-  const sessionKey = config.sessionKey || 'altum_aula_session_v5';
+  const sessionKey = config.sessionKey || 'altum_aula_session_v6';
   let rosterPromise = null;
 
-  function readSession() {
-    try {
-      const value = window.sessionStorage.getItem(sessionKey);
-      if (!value) return null;
-      const session = JSON.parse(value);
-      const dni = normalizeDni(session?.dni || session?.studentCode);
-      if (!session || !dni || !Array.isArray(session.courses)) return null;
-      session.dni = dni;
-      session.studentCode = dni;
-      session.courses = normalizeCourses(session.role === 'master' ? '*' : session.courses);
-      return session;
-    } catch (_error) {
-      return null;
-    }
-  }
-
-  function saveSession(session) {
-    window.sessionStorage.setItem(sessionKey, JSON.stringify(session));
-    return session;
-  }
-
-  function clearSession() {
-    try {
-      window.sessionStorage.removeItem(sessionKey);
-    } catch (_error) {
-      // The redirect still completes when browser storage is unavailable.
-    }
+  function normalizeDni(value) {
+    const digits = String(value || '').replace(/\D/g, '');
+    return digits.length === 8 ? digits : '';
   }
 
   function normalizeCourses(value) {
@@ -48,51 +24,64 @@
     return parts.slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase();
   }
 
-  function normalizeDni(value) {
-    const digits = String(value || '').replace(/\D/g, '');
-    return digits.length === 8 ? digits : '';
+  function buildSession(payload) {
+    const dni = normalizeDni(payload.dni || payload.studentCode);
+    const displayName = String(payload.name || dni || 'Alumno').trim();
+    return {
+      dni,
+      studentCode: String(payload.studentCode || dni || '').trim(),
+      displayName,
+      initials: initials(displayName, dni),
+      role: 'student',
+      courses: normalizeCourses(payload.courses),
+      source: 'SIRA',
+      createdAt: new Date().toISOString()
+    };
+  }
+
+  function readSession() {
+    try {
+      const value = window.sessionStorage.getItem(sessionKey);
+      if (!value) return null;
+      const session = JSON.parse(value);
+      const dni = normalizeDni(session?.dni);
+      if (!session || !dni || !Array.isArray(session.courses)) return null;
+      session.dni = dni;
+      session.courses = normalizeCourses(session.courses);
+      if (!session.courses.length) return null;
+      return session;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function saveSession(session) {
+    window.sessionStorage.setItem(sessionKey, JSON.stringify(session));
+    return session;
+  }
+
+  function clearSession() {
+    try { window.sessionStorage.removeItem(sessionKey); } catch (_error) {}
   }
 
   function parseCsv(source) {
     const rows = [];
-    let row = [];
-    let cell = '';
-    let quoted = false;
+    let row = [], cell = '', quoted = false;
     const text = String(source || '').replace(/^\uFEFF/, '');
-
     for (let index = 0; index < text.length; index += 1) {
       const character = text[index];
       if (quoted) {
-        if (character === '"' && text[index + 1] === '"') {
-          cell += '"';
-          index += 1;
-        } else if (character === '"') {
-          quoted = false;
-        } else {
-          cell += character;
-        }
-      } else if (character === '"') {
-        quoted = true;
-      } else if (character === ',') {
-        row.push(cell);
-        cell = '';
-      } else if (character === '\n') {
-        row.push(cell.replace(/\r$/, ''));
-        rows.push(row);
-        row = [];
-        cell = '';
-      } else {
-        cell += character;
-      }
+        if (character === '"' && text[index + 1] === '"') { cell += '"'; index += 1; }
+        else if (character === '"') quoted = false;
+        else cell += character;
+      } else if (character === '"') quoted = true;
+      else if (character === ',') { row.push(cell); cell = ''; }
+      else if (character === '\n') { row.push(cell.replace(/\r$/, '')); rows.push(row); row = []; cell = ''; }
+      else cell += character;
     }
-    if (cell || row.length) {
-      row.push(cell.replace(/\r$/, ''));
-      rows.push(row);
-    }
-
+    if (cell || row.length) { row.push(cell.replace(/\r$/, '')); rows.push(row); }
     const headers = (rows.shift() || []).map((header) => header.trim().toLowerCase());
-    return rows
-      .filter((values) => values.some((value) => value.trim()))
+    return rows.filter((values) => values.some((value) => value.trim()))
       .map((values) => Object.fromEntries(headers.map((header, index) => [header, String(values[index] || '').trim()])));
   }
 
@@ -101,133 +90,120 @@
     if (!rosterPromise) {
       const rosterUrl = new URL(config.rosterFile, document.baseURI).href;
       rosterPromise = window.fetch(rosterUrl, { cache: 'no-store' })
-        .then((response) => {
-          if (!response.ok) throw new Error('Roster request failed');
-          return response.text();
-        })
+        .then((response) => { if (!response.ok) throw new Error('Roster request failed'); return response.text(); })
         .then(parseCsv)
-        .catch((error) => {
-          rosterPromise = null;
-          throw error;
-        });
+        .catch((error) => { rosterPromise = null; throw error; });
     }
     return rosterPromise;
   }
 
-  function buildSession(payload) {
-    const dni = normalizeDni(payload.dni || payload.studentCode);
-    const displayName = String(payload.name || dni || 'Alumno').trim();
-    return {
-      dni,
-      studentCode: dni,
-      displayName,
-      initials: initials(displayName, dni),
-      role: payload.role === 'master' ? 'master' : 'student',
-      courses: normalizeCourses(payload.courses),
-      createdAt: new Date().toISOString()
-    };
+  function addHidden(form, name, value) {
+    const input = document.createElement('input');
+    input.type = 'hidden'; input.name = name; input.value = String(value || '');
+    form.appendChild(input);
   }
 
-  async function authenticate(dniValue, password) {
-    const user = normalizeDni(dniValue);
-    const secret = normalizeDni(password);
-    const master = config.masterAccount || {};
-    const invalidMessage = 'El DNI o la contraseña no son correctos.';
+  function authenticateThroughSira(dni, password) {
+    const endpoint = String(config.authEndpoint || '').trim();
+    if (!endpoint) return Promise.resolve({ ok: false, message: 'El servicio SIRA no está configurado.' });
 
+    return new Promise((resolve) => {
+      const requestId = `sira-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      const frame = document.createElement('iframe');
+      const frameName = `siraAuth_${requestId.replace(/[^a-z0-9_]/gi, '')}`;
+      frame.name = frameName;
+      frame.setAttribute('aria-hidden', 'true');
+      frame.style.cssText = 'position:fixed;width:1px;height:1px;border:0;opacity:0;pointer-events:none;left:-9999px;top:-9999px';
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = endpoint;
+      form.target = frameName;
+      form.style.display = 'none';
+      addHidden(form, 'action', 'aulaAuth');
+      addHidden(form, 'requestId', requestId);
+      addHidden(form, 'dni', dni);
+      addHidden(form, 'password', password);
+
+      let done = false;
+      const finish = (result) => {
+        if (done) return;
+        done = true;
+        window.removeEventListener('message', onMessage);
+        clearTimeout(timer);
+        form.remove();
+        setTimeout(() => frame.remove(), 0);
+        resolve(result);
+      };
+
+      const onMessage = (event) => {
+        if (event.source !== frame.contentWindow) return;
+        const data = event.data || {};
+        if (data.source !== 'SIRA_AULA_AUTH' || data.requestId !== requestId) return;
+        finish(data.payload || { ok: false, message: 'Respuesta inválida del SIRA.' });
+      };
+
+      const timer = window.setTimeout(() => finish({ ok: false, message: 'SIRA tardó demasiado en responder. Inténtalo nuevamente.' }), 15000);
+      window.addEventListener('message', onMessage);
+      document.body.append(frame, form);
+      form.submit();
+    });
+  }
+
+  async function authenticate(dniValue, passwordValue) {
+    const user = normalizeDni(dniValue);
+    const secret = normalizeDni(passwordValue);
+    const invalidMessage = 'El DNI o la contraseña no son correctos.';
     if (!user || !secret) return { ok: false, message: invalidMessage };
 
-    if (user === normalizeDni(master.user) && secret === normalizeDni(master.password)) {
-      return {
-        ok: true,
-        session: saveSession(buildSession({
-          dni: user,
-          name: 'Usuario maestro',
-          role: 'master',
-          courses: '*'
-        }))
-      };
+    // Cuando SIRA está configurado, es la única fuente de autenticación y autorización.
+    if (String(config.authEndpoint || '').trim()) {
+      try {
+        const result = await authenticateThroughSira(user, secret);
+        if (!result || result.ok !== true || !result.user) {
+          return { ok: false, message: result?.message || invalidMessage };
+        }
+        const session = buildSession(result.user);
+        if (!session.courses.length) return { ok: false, message: 'Tu matrícula no tiene aulas habilitadas actualmente.' };
+        return { ok: true, session: saveSession(session) };
+      } catch (_error) {
+        return { ok: false, message: 'No fue posible validar el acceso con SIRA. Inténtalo nuevamente.' };
+      }
     }
 
+    // Compatibilidad temporal hasta activar SIRA en aula-config.js.
+    const master = config.masterAccount || {};
+    if (user === normalizeDni(master.user) && secret === normalizeDni(master.password)) {
+      const session = buildSession({ dni: user, name: 'Usuario maestro', courses: '*' });
+      session.role = 'master';
+      session.courses = [...catalogCourseIds];
+      return { ok: true, session: saveSession(session) };
+    }
     if (user !== secret) return { ok: false, message: invalidMessage };
-
     if (config.rosterFile) {
       try {
         const roster = await loadRoster();
-        const matches = roster.filter((record) => (
-          normalizeDni(record.dni) === user && String(record.estado || '').toLowerCase() === 'activo'
-        ));
+        const matches = roster.filter((record) => normalizeDni(record.dni) === user && String(record.estado || '').toLowerCase() === 'activo');
         if (matches.length) {
-          const session = buildSession({
-            dni: user,
-            name: matches.at(-1).nombre,
-            role: 'student',
-            courses: matches.map((record) => record.curso_id)
-          });
-          if (!session.courses.length) {
-            return { ok: false, message: 'Tu DNI no tiene cursos asignados actualmente.' };
-          }
-          return { ok: true, session: saveSession(session) };
+          const session = buildSession({ dni: user, name: matches.at(-1).nombre, courses: matches.map((record) => record.curso_id) });
+          if (session.courses.length) return { ok: true, session: saveSession(session) };
         }
-      } catch (_error) {
-        if (!config.authEndpoint) {
-          return { ok: false, message: 'No fue posible cargar el padrón de alumnos. Inténtalo nuevamente.' };
-        }
-      }
+      } catch (_error) {}
     }
-
-    if (!config.authEndpoint) return { ok: false, message: invalidMessage };
-
-    try {
-      const response = await window.fetch(config.authEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dni: user, password: secret })
-      });
-      if (!response.ok) throw new Error('Auth request failed');
-      const result = await response.json();
-      if (!result || result.ok !== true || !result.user) {
-        return { ok: false, message: invalidMessage };
-      }
-
-      const session = buildSession({
-        dni: result.user.dni || result.user.studentCode || user,
-        name: result.user.name,
-        role: 'student',
-        courses: result.user.courses
-      });
-      if (!session.courses.length) {
-        return { ok: false, message: 'Tu usuario no tiene cursos asignados actualmente.' };
-      }
-      return { ok: true, session: saveSession(session) };
-    } catch (_error) {
-      return { ok: false, message: 'No fue posible validar el acceso. Inténtalo nuevamente.' };
-    }
+    return { ok: false, message: invalidMessage };
   }
 
   function hasCourse(session, courseId) {
-    return Boolean(
-      catalogCourseIds.has(courseId)
-      && session
-      && Array.isArray(session.courses)
-      && session.courses.includes(courseId)
-    );
+    return Boolean(catalogCourseIds.has(courseId) && session && Array.isArray(session.courses) && session.courses.includes(courseId));
   }
 
   function escapeHtml(value) {
-    return String(value || '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+    return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
   }
 
   function mountUserMenu(container, session) {
     if (!container || !session) return;
-    const name = escapeHtml(session.displayName);
-    const code = escapeHtml(session.dni || session.studentCode);
-    const badge = escapeHtml(session.initials);
-
+    const name = escapeHtml(session.displayName), code = escapeHtml(session.dni), badge = escapeHtml(session.initials);
     container.innerHTML = `
       <div class="aula-user-menu">
         <button class="aula-user-trigger" type="button" aria-haspopup="true" aria-expanded="false">
@@ -240,34 +216,14 @@
           <button class="aula-logout" type="button" role="menuitem">Cerrar sesión</button>
         </div>
       </div>`;
-
     const trigger = container.querySelector('.aula-user-trigger');
     const popover = container.querySelector('.aula-user-popover');
     const logoutButton = container.querySelector('.aula-logout');
-
-    function closeMenu() {
-      trigger.setAttribute('aria-expanded', 'false');
-      popover.hidden = true;
-    }
-
-    trigger.addEventListener('click', () => {
-      const willOpen = popover.hidden;
-      popover.hidden = !willOpen;
-      trigger.setAttribute('aria-expanded', String(willOpen));
-    });
-    logoutButton.addEventListener('click', () => {
-      clearSession();
-      window.location.replace('aula-virtual.html');
-    });
-    document.addEventListener('click', (event) => {
-      if (!container.contains(event.target)) closeMenu();
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        closeMenu();
-        trigger.focus();
-      }
-    });
+    function closeMenu() { trigger.setAttribute('aria-expanded', 'false'); popover.hidden = true; }
+    trigger.addEventListener('click', () => { const open = popover.hidden; popover.hidden = !open; trigger.setAttribute('aria-expanded', String(open)); });
+    logoutButton.addEventListener('click', () => { clearSession(); window.location.replace('aula-virtual.html'); });
+    document.addEventListener('click', (event) => { if (!container.contains(event.target)) closeMenu(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeMenu(); trigger.focus(); } });
   }
 
   function enhanceCourseHeader(session) {
@@ -296,12 +252,8 @@
       else if (text.includes('material')) label = 'Material pendiente';
       else if (text.includes('evaluación')) label = 'Evaluación pendiente';
       else if (text.includes('grabación') || text.includes('pendiente')) label = 'Grabación pendiente';
-
       const status = document.createElement('span');
-      status.className = 'aula-resource-status';
-      status.textContent = label;
-      status.setAttribute('aria-label', label);
-      link.replaceWith(status);
+      status.className = 'aula-resource-status'; status.textContent = label; status.setAttribute('aria-label', label); link.replaceWith(status);
     });
   }
 
@@ -309,16 +261,9 @@
     const course = courses.find((item) => item.id === courseId);
     const main = document.querySelector('body.aula-course main');
     if (!course || course.status !== 'Cerrado' || !main || main.querySelector('.aula-course-ended-notice')) return;
-
     const notice = document.createElement('aside');
-    notice.className = 'aula-course-ended-notice';
-    notice.setAttribute('role', 'note');
-    notice.innerHTML = `
-      <span class="aula-course-ended-icon" aria-hidden="true">✓</span>
-      <div>
-        <strong>Este curso o programa ya finalizó.</strong>
-        <p>Puedes acceder a tus clases virtuales y a los materiales que permanezcan disponibles.</p>
-      </div>`;
+    notice.className = 'aula-course-ended-notice'; notice.setAttribute('role', 'note');
+    notice.innerHTML = '<span class="aula-course-ended-icon" aria-hidden="true">✓</span><div><strong>Este curso o programa ya finalizó.</strong><p>Puedes acceder a tus clases virtuales y a los materiales que permanezcan disponibles.</p></div>';
     main.prepend(notice);
   }
 
@@ -328,7 +273,6 @@
     const courseId = body.dataset.courseId;
     const session = readSession();
     const currentFile = window.location.pathname.split('/').pop() || '';
-
     if (!session) {
       const next = /^[a-z0-9-]+\.html$/i.test(currentFile) ? currentFile : '';
       window.location.replace(`aula-virtual.html?login=1${next ? `&next=${encodeURIComponent(next)}` : ''}`);
@@ -338,21 +282,12 @@
       window.location.replace('aula-virtual.html?error=sin-acceso');
       return;
     }
-
     enhanceCourseHeader(session);
     mountCourseStatusNotice(courseId);
     replaceInactiveLinks();
-    body.classList.remove('auth-pending');
-    body.classList.add('auth-ready');
+    body.classList.remove('auth-pending'); body.classList.add('auth-ready');
   }
 
-  window.AltumAuth = Object.freeze({
-    authenticate,
-    clearSession,
-    getSession: readSession,
-    hasCourse,
-    mountUserMenu
-  });
-
+  window.AltumAuth = Object.freeze({ authenticate, clearSession, getSession: readSession, hasCourse, mountUserMenu });
   document.addEventListener('DOMContentLoaded', guardCoursePage);
 })();
