@@ -22,8 +22,8 @@
         sessions: Object.freeze([
           Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-08-08T19:00:00-05:00', end: '2026-08-08T21:00:00-05:00' }),
           Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-08-09T19:00:00-05:00', end: '2026-08-09T21:00:00-05:00' }),
-          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-08-15T19:00:00-05:00', end: '2026-08-15T21:00:00-05:00' }),
-          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-08-16T19:00:00-05:00', end: '2026-08-16T21:00:00-05:00' })
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-08-16T19:00:00-05:00', end: '2026-08-16T21:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-08-23T19:00:00-05:00', end: '2026-08-23T21:00:00-05:00' })
         ])
       })
     },
