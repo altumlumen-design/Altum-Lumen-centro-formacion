@@ -1,8 +1,3 @@
-/*
-  NUEVOS REGISTROS SIRA — 25 y 26 de agosto de 2026
-  INSERTAR ESTE BLOQUE JUSTO ANTES DEL `];` FINAL
-  DE `registros_publicos.js`.
-*/
 ,
 {
   "nombre_completo": "Arditto Bejarano, Jimmy Alexander",
