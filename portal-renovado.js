@@ -3,6 +3,10 @@
   const toggle = document.querySelector(".menu-toggle");
   const mainNav = document.querySelector(".main-nav");
 
+  const TARIFF_PAGE = "tarifario.html";
+  const CORPORATE_PORTAL = "https://altumlumen-design.github.io/Altum-Lumen-S.A.C./";
+  const CORPORATE_TRANSPARENCY_TARIFF = "https://altumlumen-design.github.io/Altum-Lumen-S.A.C./transparencia.html#tarifario-costos";
+
   const viewMeta = {
     inicio: { hash: "#inicio", label: "Inicio", path: "./" },
     oferta: { hash: "#oferta", label: "Oferta académica", path: "oferta.html" },
@@ -59,6 +63,37 @@
         box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 7px 18px rgba(91,9,25,.24) !important;
       }
 
+      .topbar .main-nav > .tariff-nav-link {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 7px !important;
+        color: #fff !important;
+        background: linear-gradient(135deg, #9f1028 0%, #bf1731 52%, #0e2a3b 160%) !important;
+        border-color: rgba(255,255,255,.62) !important;
+        box-shadow: 0 8px 20px rgba(128,13,34,.19) !important;
+      }
+
+      .topbar .main-nav > .tariff-nav-link:hover,
+      .topbar .main-nav > .tariff-nav-link:focus-visible {
+        color: #fff !important;
+        background: linear-gradient(135deg, #b3122d 0%, #d01b39 55%, #123c5d 165%) !important;
+        border-color: rgba(255,255,255,.86) !important;
+      }
+
+      .tariff-nav-icon {
+        width: 17px;
+        height: 17px;
+        display: inline-grid;
+        place-items: center;
+        flex: 0 0 17px;
+      }
+
+      .tariff-nav-icon svg {
+        width: 17px;
+        height: 17px;
+        display: block;
+      }
+
       .topbar .main-nav > .corporate-portal-link {
         display: inline-flex !important;
         align-items: center !important;
@@ -74,6 +109,61 @@
         border-radius: 50% !important;
         background: #fff !important;
         box-shadow: 0 0 0 1px rgba(255,255,255,.45) !important;
+      }
+
+      .hero-actions .tariff-hero-link {
+        color: #fff !important;
+        border: 1px solid rgba(14,42,59,.14) !important;
+        background: linear-gradient(135deg, #0e2a3b, #205f86) !important;
+        box-shadow: 0 10px 22px rgba(14,42,59,.13) !important;
+      }
+
+      .tariff-side-item {
+        position: relative;
+        overflow: hidden;
+        border-color: rgba(177,13,27,.18) !important;
+        background:
+          radial-gradient(420px 160px at 100% 0%, rgba(74,167,218,.18), transparent 60%),
+          linear-gradient(180deg, #fff, #f8fbfd) !important;
+      }
+
+      .tariff-side-item::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 4px;
+        background: linear-gradient(180deg, #b10d1b, #2e6f9e);
+      }
+
+      .tariff-side-kicker {
+        display: inline-flex !important;
+        width: fit-content;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+        padding: 5px 8px;
+        border-radius: 999px;
+        color: #8c1021 !important;
+        background: rgba(177,13,27,.07);
+        border: 1px solid rgba(177,13,27,.14);
+        font-size: 10px !important;
+        font-weight: 900 !important;
+        letter-spacing: .35px;
+        text-transform: uppercase;
+      }
+
+      .tariff-side-item .btn {
+        justify-content: center;
+      }
+
+      .tariff-side-item .tariff-secondary-link {
+        display: inline-block;
+        margin-top: 8px;
+        color: #2e6f9e;
+        font-size: 11px;
+        font-weight: 900;
+        text-decoration: underline;
+        text-underline-offset: 3px;
       }
 
       .floating-actions .float-icon {
@@ -109,7 +199,8 @@
       }
 
       @media (max-width: 940px) {
-        .topbar .main-nav > .corporate-portal-link {
+        .topbar .main-nav > .corporate-portal-link,
+        .topbar .main-nav > .tariff-nav-link {
           justify-content: flex-start !important;
         }
       }
@@ -125,23 +216,51 @@
           width: 18px !important;
           height: 18px !important;
         }
+
+        .hero-actions .tariff-hero-link {
+          width: 100%;
+          justify-content: center;
+        }
       }
     `;
     document.head.appendChild(style);
+  }
+
+  function makeViewLink(view) {
+    const meta = viewMeta[view];
+    const link = document.createElement("a");
+    link.className = "navlink";
+    link.href = meta.path;
+    link.textContent = meta.label;
+    link.dataset.portalView = view;
+    return link;
+  }
+
+  function makeTariffNavLink() {
+    const link = document.createElement("a");
+    link.className = "navlink tariff-nav-link";
+    link.href = TARIFF_PAGE;
+    link.setAttribute("aria-label", "Consultar Tarifario y costos institucionales vigentes");
+    link.innerHTML = `
+      <span class="tariff-nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M7 3h7l4 4v14H7V3Zm7 0v5h5M9.5 12h6M9.5 16h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span>Tarifario y costos</span>
+    `;
+    return link;
   }
 
   function buildNavigation() {
     if (!mainNav) return;
 
     const fragment = document.createDocumentFragment();
-    ["inicio", "oferta", "docentes", "autoridades", "verificacion", "contacto"].forEach(function (view) {
-      const meta = viewMeta[view];
-      const link = document.createElement("a");
-      link.className = "navlink";
-      link.href = meta.path;
-      link.textContent = meta.label;
-      link.dataset.portalView = view;
-      fragment.appendChild(link);
+    fragment.appendChild(makeViewLink("inicio"));
+    fragment.appendChild(makeViewLink("oferta"));
+    fragment.appendChild(makeTariffNavLink());
+    ["docentes", "autoridades", "verificacion", "contacto"].forEach(function (view) {
+      fragment.appendChild(makeViewLink(view));
     });
 
     const platforms = document.createElement("details");
@@ -167,7 +286,7 @@
 
     const corporateLink = document.createElement("a");
     corporateLink.className = "navlink corporate-portal-link";
-    corporateLink.href = "https://altumlumen-design.github.io/Altum-Lumen-S.A.C./";
+    corporateLink.href = CORPORATE_PORTAL;
     corporateLink.setAttribute("data-corporate-portal", "true");
     corporateLink.setAttribute("aria-label", "Ir al portal corporativo de ALTUM LUMEN S.A.C.");
 
@@ -184,6 +303,34 @@
     corporateLink.append(icon, label);
     fragment.appendChild(corporateLink);
     mainNav.replaceChildren(fragment);
+  }
+
+  function injectTariffAccess() {
+    const heroActions = document.querySelector("#inicio .hero-actions");
+    if (heroActions && !heroActions.querySelector(".tariff-hero-link")) {
+      const heroLink = document.createElement("a");
+      heroLink.className = "btn tariff-hero-link";
+      heroLink.href = TARIFF_PAGE;
+      heroLink.textContent = "Tarifario y costos";
+      heroLink.setAttribute("aria-label", "Consultar Tarifario y costos institucionales");
+      heroActions.appendChild(heroLink);
+    }
+
+    const sideList = document.querySelector("#inicio .side-list");
+    if (sideList && !sideList.querySelector(".tariff-side-item")) {
+      const item = document.createElement("div");
+      item.className = "side-item tariff-side-item";
+      item.innerHTML = `
+        <span class="tariff-side-kicker">Información institucional</span>
+        <b>Tarifario y costos vigentes</b>
+        <span>Consulta las tarifas oficiales del Centro, derechos de emisión, evaluaciones, duplicados y demás conceptos aprobados para 2026.</span>
+        <div style="margin-top:10px;">
+          <a class="btn red" href="${TARIFF_PAGE}">Consultar tarifas vigentes</a>
+        </div>
+        <a class="tariff-secondary-link" href="${CORPORATE_TRANSPARENCY_TARIFF}" target="_blank" rel="noopener">Ver publicación en el Portal de Transparencia ↗</a>
+      `;
+      sideList.prepend(item);
+    }
   }
 
   function setupDropdowns() {
@@ -293,6 +440,7 @@
 
   injectPortalStyles();
   buildNavigation();
+  injectTariffAccess();
   setupDropdowns();
   enhanceFloatingActions();
 
