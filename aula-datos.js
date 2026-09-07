@@ -5,6 +5,98 @@
 
   window.ALTUM_COURSES = Object.freeze([
     {
+      id: 'formulacion-inversiones-publicas-ia-2da',
+      title: 'Curso Especializado en Formulación de Inversiones Públicas con Inteligencia Artificial – Segunda Edición',
+      shortTitle: 'Formulación de Inversiones Públicas con Inteligencia Artificial – Segunda Edición',
+      type: 'Curso especializado',
+      area: 'Gestión de inversiones públicas',
+      duration: '48 horas académicas',
+      sessionCount: 4,
+      status: 'Abierto',
+      file: 'formulacion-inversiones-publicas-ia-2da.html',
+      flyer: 'flyer-formulacion-inversiones-publicas-ia-2da.webp',
+      description: 'Formulación de inversiones públicas con apoyo de inteligencia artificial, en el marco del Decreto Supremo N.° 140-2026-EF.',
+      schedule: Object.freeze({
+        timeZone: lima,
+        liveUrl: 'https://us06web.zoom.us/j/89825488426?pwd=DuUb1hEweHRGhmjBjlGspGucL6iu7H.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-09-07T18:00:00-05:00', end: '2026-09-07T20:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-09-09T18:00:00-05:00', end: '2026-09-09T20:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-09-14T18:00:00-05:00', end: '2026-09-14T20:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-09-16T18:00:00-05:00', end: '2026-09-16T20:00:00-05:00' })
+        ])
+      })
+    },
+    {
+      id: 'procedimiento-administrativo-disciplinario-servicio-civil',
+      title: 'Curso Especializado en Procedimiento Administrativo Disciplinario y Servicio Civil',
+      shortTitle: 'Procedimiento Administrativo Disciplinario y Servicio Civil',
+      type: 'Curso especializado',
+      area: 'Derecho administrativo y servicio civil',
+      duration: '48 horas académicas',
+      sessionCount: 4,
+      status: 'Abierto',
+      file: 'procedimiento-administrativo-disciplinario-servicio-civil.html',
+      flyer: 'flyer-procedimiento-administrativo-disciplinario-servicio-civil.webp',
+      description: 'Procedimiento administrativo disciplinario conforme al TUO de la Ley N.° 27444, la Ley N.° 30057 y su Reglamento.',
+      schedule: Object.freeze({
+        timeZone: lima,
+        liveUrl: 'https://us06web.zoom.us/j/87901122304?pwd=CMNGHMDhaHaZauGb4BuPV4MrA24AAZ.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-09-08T18:00:00-05:00', end: '2026-09-08T20:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-09-10T18:00:00-05:00', end: '2026-09-10T20:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-09-15T18:00:00-05:00', end: '2026-09-15T20:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-09-17T18:00:00-05:00', end: '2026-09-17T20:00:00-05:00' })
+        ])
+      })
+    },
+    {
+      id: 'fiscalizacion-gestion-regional-municipal',
+      title: 'Curso Especializado en Fiscalización de la Gestión Regional y Municipal',
+      shortTitle: 'Fiscalización de la Gestión Regional y Municipal',
+      type: 'Curso especializado',
+      area: 'Gestión pública y control gubernamental',
+      duration: '48 horas académicas',
+      sessionCount: 4,
+      status: 'Abierto',
+      file: 'fiscalizacion-gestion-regional-municipal.html',
+      flyer: 'flyer-fiscalizacion-gestion-regional-municipal.webp',
+      description: 'Fiscalización regional y municipal actualizada a la Directiva N.° 002-2026-CG/PREV: PAF, fiscalización y Balance Semestral ante la Contraloría.',
+      schedule: Object.freeze({
+        timeZone: lima,
+        liveUrl: 'https://us06web.zoom.us/j/85626908076?pwd=pJpj8IfxrkJi4BCxCzERr5MZADiaNS.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-09-12T19:00:00-05:00', end: '2026-09-12T21:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-09-13T19:00:00-05:00', end: '2026-09-13T21:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-09-19T19:00:00-05:00', end: '2026-09-19T21:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-09-20T19:00:00-05:00', end: '2026-09-20T21:00:00-05:00' })
+        ])
+      })
+    },
+    {
+      id: 'ejecucion-presupuestal-gasto-publico',
+      title: 'Curso Especializado en Ejecución Presupuestal y Gestión del Gasto Público',
+      shortTitle: 'Ejecución Presupuestal y Gestión del Gasto Público',
+      type: 'Curso especializado',
+      area: 'Presupuesto y gestión pública',
+      duration: '48 horas académicas',
+      sessionCount: 4,
+      status: 'Abierto',
+      file: 'ejecucion-presupuestal-gasto-publico.html',
+      flyer: 'flyer-ejecucion-presupuestal-gasto-publico.webp',
+      description: 'Ejecución presupuestal y gestión del gasto público en el marco de la Ley N.° 32513, Ley de Presupuesto del Sector Público para el Año Fiscal 2026.',
+      schedule: Object.freeze({
+        timeZone: lima,
+        liveUrl: 'https://us06web.zoom.us/j/89496319774?pwd=MFxNajLxW5bnL8qePFlxlOjb5Wf4LR.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-09-12T17:00:00-05:00', end: '2026-09-12T19:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-09-13T17:00:00-05:00', end: '2026-09-13T19:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-09-19T17:00:00-05:00', end: '2026-09-19T19:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-09-20T17:00:00-05:00', end: '2026-09-20T19:00:00-05:00' })
+        ])
+      })
+    },
+    {
       id: 'ia-derecho-4ta',
       title: 'Curso Especializado en Inteligencia Artificial Aplicada al Derecho – Cuarta Edición',
       shortTitle: 'Inteligencia Artificial Aplicada al Derecho – Cuarta Edición',

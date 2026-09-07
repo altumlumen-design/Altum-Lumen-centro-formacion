@@ -1,0 +1,10 @@
+historical_roster_rows_preserved: 205
+new_roster_rows_added: 17
+final_roster_rows: 222
+jaime_course_count: 4
+existing_courses_preserved: 11
+new_courses_added: 4
+final_catalog_courses: 15
+historical_roster_git_blob_sha: d296fa526ca186cebbc8d97f61c74b51cb0a08bc
+historical_aula_datos_git_blob_sha: e00f0e71f92b6de47c33076a7fc2f99bb71ae99e
+files_in_package: ['LEEME-SUBIDA.txt', 'alumnos-accesos.csv', 'aula-datos.js', 'ejecucion-presupuestal-gasto-publico.html', 'fiscalizacion-gestion-regional-municipal.html', 'flyer-ejecucion-presupuestal-gasto-publico.webp', 'flyer-fiscalizacion-gestion-regional-municipal.webp', 'flyer-formulacion-inversiones-publicas-ia-2da.webp', 'flyer-procedimiento-administrativo-disciplinario-servicio-civil.webp', 'formulacion-inversiones-publicas-ia-2da.html', 'procedimiento-administrativo-disciplinario-servicio-civil.html']

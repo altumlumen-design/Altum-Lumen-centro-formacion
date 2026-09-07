@@ -1,0 +1,16 @@
+ALTUM LUMEN – ACTUALIZACIÓN DEL AULA VIRTUAL
+
+Subir el contenido de este ZIP a la RAÍZ del repositorio Altum-Lumen-centro-formacion.
+
+ARCHIVOS QUE SE REEMPLAZAN:
+- alumnos-accesos.csv (misma denominación oficial; conserva íntegramente el padrón existente y agrega 17 matrículas de PROG-015 Edición 2).
+- aula-datos.js (conserva los 11 cursos existentes y agrega 4 cursos nuevos).
+
+ARCHIVOS NUEVOS:
+- 4 páginas HTML de los cursos de septiembre.
+- 4 flyers WebP optimizados.
+
+No se modifica aula-auth.js, aula-config.js ni la cuenta maestra.
+El usuario maestro seguirá visualizando automáticamente todo el catálogo.
+
+En alumnos-accesos.csv se conservaron las matrículas previas de cada DNI. Un mismo alumno puede tener varias filas, una por curso. Jaime Calderón (09679293) conserva sus 3 cursos anteriores y suma la nueva segunda edición de Formulación de Inversiones Públicas con IA.
