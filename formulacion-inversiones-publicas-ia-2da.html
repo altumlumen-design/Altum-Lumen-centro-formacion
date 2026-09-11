@@ -10,9 +10,8 @@
   <link rel="apple-touch-icon" href="logo-centro-formacion.jpg">
   <link rel="stylesheet" href="aula-curso-cuatro-sesiones.css">
   <link rel="stylesheet" href="aula-estilos.css">
+  <script type="module" src="aula-datos.js?v=20260810-final-r2"></script>
   <script type="module">
-    import './aula-datos.js?v=20260910-formulacion-2da-r1';
-
     const course = Array.isArray(window.ALTUM_COURSES)
       ? window.ALTUM_COURSES.find((item) => item.id === 'formulacion-inversiones-publicas-ia-2da')
       : null;
@@ -29,13 +28,8 @@
         ])
       });
     }
-
-    await import('./aula-schedule.js?v=20260810-final-r2');
-    await import('./aula-config.js');
-    await import('./aula-auth.js');
-    await import('./aula-course-ux.js?v=20260810-final-r2');
-    await import('./aula-clean-routes.js?v=20260810-final-r2');
   </script>
+  <script type="module" src="aula-course-entry.js"></script>
 </head>
 <body class="aula-course auth-pending" data-course-id="formulacion-inversiones-publicas-ia-2da" style="--course-accent:#00725a;--course-accent-dark:#004b3b;--course-accent-soft:rgba(0,114,90,.09)">
   <header>
