@@ -10,7 +10,32 @@
   <link rel="apple-touch-icon" href="logo-centro-formacion.jpg">
   <link rel="stylesheet" href="aula-curso-cuatro-sesiones.css">
   <link rel="stylesheet" href="aula-estilos.css">
-  <script type="module" src="aula-course-entry.js"></script>
+  <script type="module">
+    import './aula-datos.js?v=20260910-formulacion-2da-r1';
+
+    const course = Array.isArray(window.ALTUM_COURSES)
+      ? window.ALTUM_COURSES.find((item) => item.id === 'formulacion-inversiones-publicas-ia-2da')
+      : null;
+
+    if (course) {
+      course.schedule = Object.freeze({
+        timeZone: 'America/Lima',
+        liveUrl: 'https://us06web.zoom.us/j/89825488426?pwd=DuUb1hEweHRGhmjBjlGspGucL6iu7H.1',
+        sessions: Object.freeze([
+          Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-09-09T18:00:00-05:00', end: '2026-09-09T20:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-09-14T18:00:00-05:00', end: '2026-09-14T20:00:00-05:00' }),
+          Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-09-16T18:00:00-05:00', end: '2026-09-16T20:00:00-05:00' }),
+          Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-09-21T18:00:00-05:00', end: '2026-09-21T20:00:00-05:00' })
+        ])
+      });
+    }
+
+    await import('./aula-schedule.js?v=20260810-final-r2');
+    await import('./aula-config.js');
+    await import('./aula-auth.js');
+    await import('./aula-course-ux.js?v=20260810-final-r2');
+    await import('./aula-clean-routes.js?v=20260810-final-r2');
+  </script>
 </head>
 <body class="aula-course auth-pending" data-course-id="formulacion-inversiones-publicas-ia-2da" style="--course-accent:#00725a;--course-accent-dark:#004b3b;--course-accent-soft:rgba(0,114,90,.09)">
   <header>
@@ -29,10 +54,10 @@
           <h1>Formulación de Inversiones Públicas con Inteligencia Artificial – Segunda Edición</h1>
           <p class="course-description">Formulación de inversiones públicas con apoyo de inteligencia artificial, en el marco del Decreto Supremo N.° 140-2026-EF.</p>
           <div class="course-meta">
-            <div><b>Inicio</b><span>7 de septiembre de 2026</span></div>
+            <div><b>Inicio efectivo</b><span>9 de septiembre de 2026</span></div>
             <div><b>Horario</b><span>Lun. y mié. · 6:00–8:00 p. m.</span></div>
             <div><b>Sesiones</b><span>4</span></div>
-            <div><b>Estado</b><span>Abierto</span></div>
+            <div><b>Cierre</b><span>21 de septiembre de 2026</span></div>
           </div>
         </div>
       </div>
@@ -44,10 +69,16 @@
           <div>
             <span class="live-class-kicker">Clases 100% virtuales · En vivo</span>
             <h2 id="live-class-title">Cronograma de sesiones</h2>
-            <p>El enlace oficial de Zoom ya se encuentra habilitado. Utiliza el botón de acceso para ingresar a las clases programadas.</p>
+            <p>La clase prevista para el lunes 7 de septiembre fue pospuesta y no se contabilizó como sesión. La Sesión 1 se desarrolló el miércoles 9 de septiembre; por la reprogramación se añadió una fecha y el curso culmina el lunes 21 de septiembre.</p>
           </div>
         </div>
-        <div class="live-schedule"><div class="live-date"><b>Lunes 7 de septiembre</b><span>Sesión 1 · Inicio del curso</span></div><div class="live-date"><b>Miércoles 9 de septiembre</b><span>Sesión 2 · Programada</span></div><div class="live-date"><b>Lunes 14 de septiembre</b><span>Sesión 3 · Programada</span></div><div class="live-date"><b>Miércoles 16 de septiembre</b><span>Sesión 4 · Programada</span></div></div>
+        <div class="live-schedule">
+          <div class="live-date"><b>Lunes 7 de septiembre</b><span>Fecha pospuesta · No contabilizada</span></div>
+          <div class="live-date"><b>Miércoles 9 de septiembre</b><span>Sesión 1 · Desarrollada</span></div>
+          <div class="live-date"><b>Lunes 14 de septiembre</b><span>Sesión 2 · Programada</span></div>
+          <div class="live-date"><b>Miércoles 16 de septiembre</b><span>Sesión 3 · Programada</span></div>
+          <div class="live-date"><b>Lunes 21 de septiembre</b><span>Sesión 4 · Cierre del curso</span></div>
+        </div>
         <div class="live-join"><a href="https://us06web.zoom.us/j/89825488426?pwd=DuUb1hEweHRGhmjBjlGspGucL6iu7H.1" target="_blank" rel="noopener noreferrer">Ingresar a Zoom</a></div>
         <div class="live-guidance">
           <strong>Datos de acceso</strong>
@@ -59,22 +90,22 @@
     <section class="container course-grid">
       <div class="course-panel">
         <h2>Sesiones, materiales y grabaciones</h2>
-        <p class="course-panel-intro">Los recursos se habilitarán progresivamente en la sesión correspondiente.</p>
+        <p class="course-panel-intro">La fecha del lunes 7 de septiembre fue pospuesta y no consumió una sesión. Los recursos se habilitan dentro de cada sesión efectiva.</p>
         <article class="course-session">
           <div class="course-session-number">S01</div>
           <div>
-            <h3>Sesión 1 · Lunes 7 de septiembre</h3>
-            <p>La grabación y el material académico se habilitarán en esta sección cuando sean publicados por la Dirección Académica.</p>
+            <h3>Sesión 1 · Miércoles 9 de septiembre</h3>
+            <p>Ya se encuentran disponibles la grabación de la primera sesión y el material académico correspondiente.</p>
             <div class="session-resource-actions">
-              <span class="session-resource-chip">Grabación: pendiente</span>
-              <span class="session-resource-chip">Material: pendiente</span>
+              <a class="session-resource-link session-resource-link--video" href="https://youtu.be/iotF75r44uM" target="_blank" rel="noopener noreferrer">Ver grabación</a>
+              <a class="session-resource-link session-resource-link--material" href="https://drive.google.com/file/d/1DIg2ZUmmM_LqX7CERS0rq7B9YCQ9rXiK/view?usp=sharing" target="_blank" rel="noopener noreferrer">Ver material</a>
             </div>
           </div>
-          <span class="aula-resource-status">Programada</span>
+          <span class="aula-resource-status">Disponible</span>
         </article><article class="course-session">
           <div class="course-session-number">S02</div>
           <div>
-            <h3>Sesión 2 · Miércoles 9 de septiembre</h3>
+            <h3>Sesión 2 · Lunes 14 de septiembre</h3>
             <p>La grabación y el material académico se habilitarán en esta sección cuando sean publicados por la Dirección Académica.</p>
             <div class="session-resource-actions">
               <span class="session-resource-chip">Grabación: pendiente</span>
@@ -85,7 +116,7 @@
         </article><article class="course-session">
           <div class="course-session-number">S03</div>
           <div>
-            <h3>Sesión 3 · Lunes 14 de septiembre</h3>
+            <h3>Sesión 3 · Miércoles 16 de septiembre</h3>
             <p>La grabación y el material académico se habilitarán en esta sección cuando sean publicados por la Dirección Académica.</p>
             <div class="session-resource-actions">
               <span class="session-resource-chip">Grabación: pendiente</span>
@@ -96,8 +127,8 @@
         </article><article class="course-session">
           <div class="course-session-number">S04</div>
           <div>
-            <h3>Sesión 4 · Miércoles 16 de septiembre</h3>
-            <p>La grabación y el material académico se habilitarán en esta sección cuando sean publicados por la Dirección Académica.</p>
+            <h3>Sesión 4 · Lunes 21 de septiembre</h3>
+            <p>La cuarta sesión corresponde al cierre del curso. Su grabación y material académico se habilitarán cuando sean publicados por la Dirección Académica.</p>
             <div class="session-resource-actions">
               <span class="session-resource-chip">Grabación: pendiente</span>
               <span class="session-resource-chip">Material: pendiente</span>
@@ -109,7 +140,7 @@
 
       <aside class="course-panel">
         <h2>Información académica</h2>
-        <p class="course-note">Curso de cuatro sesiones. El aula queda habilitada desde el inicio para participantes matriculados.</p>
+        <p class="course-note">Curso de cuatro sesiones efectivas. La fecha inicialmente prevista para el 7 de septiembre fue pospuesta; el cronograma vigente culmina el lunes 21 de septiembre.</p>
         <div class="course-info-list">
           <div class="course-info-item"><strong>Docente</strong><span>Abog. CPC. Jeanfranco Vargas L.</span></div>
           <div class="course-info-item"><strong>Perfil</strong><span>Egresado de la Maestría en Ingeniería Civil con mención en Gerencia de la Construcción por la Universidad Nacional San Luis Gonzaga.</span></div>
