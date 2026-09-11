@@ -44,7 +44,7 @@
         liveUrl: 'https://us06web.zoom.us/j/87901122304?pwd=CMNGHMDhaHaZauGb4BuPV4MrA24AAZ.1',
         sessions: Object.freeze([
           Object.freeze({ number: 1, label: 'Sesión 1', start: '2026-09-08T18:00:00-05:00', end: '2026-09-08T20:00:00-05:00' }),
-          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-09-10T18:00:00-05:00', end: '2026-09-10T20:00:00-05:00' }),
+          Object.freeze({ number: 2, label: 'Sesión 2', start: '2026-09-11T18:00:00-05:00', end: '2026-09-11T20:00:00-05:00' }),
           Object.freeze({ number: 3, label: 'Sesión 3', start: '2026-09-15T18:00:00-05:00', end: '2026-09-15T20:00:00-05:00' }),
           Object.freeze({ number: 4, label: 'Sesión 4', start: '2026-09-17T18:00:00-05:00', end: '2026-09-17T20:00:00-05:00' })
         ])
