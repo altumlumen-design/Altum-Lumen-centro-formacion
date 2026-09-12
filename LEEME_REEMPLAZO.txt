@@ -1,39 +1,39 @@
-ALTUM LUMEN — CENTRO DE FORMACIÓN
-REDISEÑO PREMIUM MULTIPÁGINA
+CENTRO DE FORMACIÓN ALTUM LUMEN — PORTAL ACADÉMICO V4
 
-ARCHIVOS QUE DEBES SUBIR/REEMPLAZAR EN LA RAÍZ DEL REPOSITORIO:
-- index.html (reemplaza el actual)
-- oferta-academica.html (nuevo)
-- docentes.html (nuevo)
-- convenios.html (nuevo)
-- publicaciones.html (nuevo)
-- institucion.html (nuevo)
-- portal-premium.css (nuevo)
-- portal-premium.js (nuevo)
+ARCHIVOS DEL PAQUETE
+1. index.html
+2. portal-academico-v4.css
+3. portal-academico-v4.js
 
-NO BORRES NI MODIFIQUES:
+CÓMO INSTALAR
+- Suba los 3 archivos a la RAÍZ del repositorio:
+  altumlumen-design/Altum-Lumen-centro-formacion
+- Reemplace el index.html actual.
+- Agregue portal-academico-v4.css y portal-academico-v4.js.
+- NO elimine ni reemplace los demás archivos del repositorio.
+
+SE CONSERVAN Y SE UTILIZAN
+- cielo.jpg
+- assets/performance/logo-centro-portal.png
+- assets/performance/qr-verificacion-portal.png
+- assets-especialista-1.png a assets-especialista-6.png
+- assets-convenio-1.png a assets-convenio-6.png
+- assets/autoridad-oscar.png
+- assets/autoridad-gerardo.png
+- assets/autoridad-norma-moreno.png
+- assets/publicaciones/*
+
+RUTAS PRESERVADAS
 - aula-virtual.html
 - verificacion.html
 - directorio-expertos.html
-- carpeta assets/
-- archivos assets-especialista-*.png
-- archivos assets-convenio-*.png
-- cielo.jpg
-- demás páginas/cursos existentes
 
-MODO DE REEMPLAZO:
-1. Descomprime este ZIP.
-2. Arrastra TODOS los archivos anteriores a la raíz del repositorio GitHub.
-3. Cuando GitHub pregunte, reemplaza index.html. Los demás se agregarán como archivos nuevos.
-4. No reemplaces ni elimines los recursos existentes.
+NAVEGACIÓN
+El portal funciona por vistas mediante hash:
+#inicio · #oferta · #docentes · #actualidad · #institucion
+También conserva compatibilidad con hashes antiguos:
+#publicaciones · #convenios · #autoridades · #verificacion · #contacto · #areas
 
-RESULTADO:
-- Portal multipágina (ya no es una sola página larga).
-- Transiciones animadas entre páginas.
-- Menú móvil tipo drawer.
-- Oferta académica interactiva.
-- Especialistas en burbujas con ficha dinámica.
-- Alianzas en composición visual radial.
-- Publicaciones en galería.
-- Institución y verificación en página propia.
-- Mantiene enlaces actuales al Aula Virtual, Registros Académicos y Directorio de Expertos.
+IDENTIDAD
+Eslogan oficial utilizado:
+“Especialización que impulsa tu carrera y el desarrollo del país.”
