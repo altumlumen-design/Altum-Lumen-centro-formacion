@@ -1,0 +1,39 @@
+ALTUM LUMEN — CENTRO DE FORMACIÓN
+REDISEÑO PREMIUM MULTIPÁGINA
+
+ARCHIVOS QUE DEBES SUBIR/REEMPLAZAR EN LA RAÍZ DEL REPOSITORIO:
+- index.html (reemplaza el actual)
+- oferta-academica.html (nuevo)
+- docentes.html (nuevo)
+- convenios.html (nuevo)
+- publicaciones.html (nuevo)
+- institucion.html (nuevo)
+- portal-premium.css (nuevo)
+- portal-premium.js (nuevo)
+
+NO BORRES NI MODIFIQUES:
+- aula-virtual.html
+- verificacion.html
+- directorio-expertos.html
+- carpeta assets/
+- archivos assets-especialista-*.png
+- archivos assets-convenio-*.png
+- cielo.jpg
+- demás páginas/cursos existentes
+
+MODO DE REEMPLAZO:
+1. Descomprime este ZIP.
+2. Arrastra TODOS los archivos anteriores a la raíz del repositorio GitHub.
+3. Cuando GitHub pregunte, reemplaza index.html. Los demás se agregarán como archivos nuevos.
+4. No reemplaces ni elimines los recursos existentes.
+
+RESULTADO:
+- Portal multipágina (ya no es una sola página larga).
+- Transiciones animadas entre páginas.
+- Menú móvil tipo drawer.
+- Oferta académica interactiva.
+- Especialistas en burbujas con ficha dinámica.
+- Alianzas en composición visual radial.
+- Publicaciones en galería.
+- Institución y verificación en página propia.
+- Mantiene enlaces actuales al Aula Virtual, Registros Académicos y Directorio de Expertos.
