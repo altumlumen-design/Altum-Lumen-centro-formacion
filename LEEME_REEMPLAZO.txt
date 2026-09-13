@@ -1,44 +1,36 @@
-CENTRO DE FORMACIÓN Y CAPACITACIÓN PROFESIONAL · ALTUM LUMEN S.A.C.
-PAQUETE DE RENOVACIÓN VISUAL — VERSIÓN FINAL MULTIPÁGINA
+ALTUM LUMEN · CENTRO DE FORMACIÓN
+ACTUALIZACIÓN V6 · EXPERIENCIA VISUAL Y PLANA DOCENTE
 
-ARCHIVOS A SUBIR A LA RAÍZ DEL REPOSITORIO:
-- index.html                         (REEMPLAZA el actual)
-- oferta-academica.html              (NUEVO)
-- docentes.html                      (NUEVO)
-- convenios.html                     (NUEVO)
-- publicaciones.html                 (NUEVO)
-- institucion.html                   (NUEVO)
-- portal-cf-2026.css                 (NUEVO)
-- portal-cf-2026.js                  (NUEVO)
+Suba/reemplace en la RAÍZ del repositorio estos archivos:
+- index.html
+- oferta-academica.html
+- docentes.html
+- convenios.html
+- publicaciones.html
+- institucion.html
+- portal-cf-2026.css
+- portal-cf-2026.js
 
-NO BORRAR NI REEMPLAZAR:
+NO ELIMINE los demás archivos del repositorio.
+
+MEJORAS PRINCIPALES V6
+- Contador animado que culmina exactamente en 41 especialistas de la plana docente.
+- Se retiraron del portal académico los accesos que no corresponden a la plana docente.
+- Se corrigió la presentación del logotipo del pie de página con una ruta estable y respaldo automático.
+- El bloque de acceso al Aula ahora explica de forma natural: “utiliza tu DNI en ambos campos”.
+- Barra flotante académica rediseñada y reposicionada: Aula, Verificación, Tarifario y WhatsApp.
+- En móvil, los accesos rápidos funcionan como un dock compacto con etiquetas visibles.
+- Plataformas institucionales depuradas para mostrar únicamente accesos académicos pertinentes.
+- Se preservan Aula Virtual, Verificación, Tarifario, cursos, assets y demás archivos existentes.
+
+IMPORTANTE
+No reemplace ni borre:
 - aula-virtual.html
 - verificacion.html
-- directorio-expertos.html
+- tarifario.html
 - cielo.jpg
-- carpeta assets/
-- assets-especialista-1.png ... assets-especialista-6.png
-- assets-convenio-1.png ... assets-convenio-6.png
-- páginas individuales de cursos
-- scripts y datos del Aula Virtual
+- assets/
+- documentos/
+- HTML de los cursos
 
-INSTALACIÓN:
-1. Descomprimir este ZIP.
-2. Arrastrar los 8 archivos indicados arriba a la raíz del repositorio.
-3. Confirmar el reemplazo únicamente de index.html.
-4. Esperar la actualización de GitHub Pages y hacer una recarga forzada.
-
-DISEÑO:
-- Mantiene el cielo/nubes como identidad visual de ALTUM.
-- Conserva fotografías rectangulares de docentes, como en la versión previa.
-- Navegación REAL entre páginas; no es un pergamino único.
-- Transiciones entre documentos con View Transitions cuando el navegador las soporta.
-- WhatsApp visible en cabecera y acceso flotante.
-- Aula Virtual, Registros Académicos y Directorio de Expertos tienen accesos diferenciados.
-- Institución usa un workspace por pestañas internas: Identidad / Autoridades / Plataformas / Verificación / Contacto.
-- Responsive para escritorio, tablet y móvil.
-- Se preservan los enlaces existentes del ecosistema académico.
-
-COMPATIBILIDAD:
-Los antiguos hashes #oferta, #docentes, #convenios, #publicaciones, #autoridades, #verificacion y #contacto
-redirigen desde index.html hacia la nueva página correspondiente.
+Versión preparada para reemplazo directo en GitHub Pages.
