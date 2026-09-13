@@ -15,6 +15,15 @@ if(!reduceMotion&&!compactMotion&&'IntersectionObserver' in window){
 }else{reveal.forEach(el=>el.classList.add('is-visible'))}
 // Fixed academic services dock: aligned to the content grid and consistent across every portal page.
 const dock=document.createElement('nav');dock.className='academic-dock';dock.setAttribute('aria-label','Accesos académicos rápidos');dock.innerHTML=`<a class="dock-item aula" href="aula-virtual.html" aria-label="Aula Virtual" title="Aula Virtual"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16M8 7h8M8 11h6"/></svg><span>Aula</span></a><a class="dock-item verify" href="verificacion.html" aria-label="Verificación académica" title="Verificación académica"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v6c0 5-3.4 8.1-8 9-4.6-.9-8-4-8-9V6z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg><span>Verificar</span></a><a class="dock-item tariff" href="tarifario.html" aria-label="Tarifario 2026" title="Tarifario 2026"><svg viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span>Tarifario</span></a><a class="dock-item whatsapp" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20informaci%C3%B3n%20acad%C3%A9mica." target="_blank" rel="noopener" aria-label="WhatsApp académico" title="WhatsApp académico"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9 9 0 0 1-3.7-.8L3 21l1.7-5A8.7 8.7 0 1 1 21 11.5Z"/><path d="M8.2 8.2c.3 3.6 3 6.3 6.6 6.6"/></svg><span>WhatsApp</span></a>`;body.appendChild(dock);
+// Image fallback: never expose broken-image ALT text inside circular authority portraits.
+const prepareAuthorityImage=(img)=>{
+  if(!img)return;
+  const wrap=img.closest('.authority-photo');
+  const fail=()=>{wrap?.classList.add('image-fallback');img.setAttribute('aria-hidden','true');img.alt='';};
+  img.addEventListener('error',fail,{once:true});
+  if(img.complete&&img.naturalWidth===0)fail();
+};
+document.querySelectorAll('.authority-photo img').forEach(prepareAuthorityImage);
 // Legacy anchors.
 const legacy={'#oferta':'oferta-academica.html','#docentes':'docentes.html','#convenios':'convenios.html','#publicaciones':'publicaciones.html','#areas':'oferta-academica.html#areas-formativas','#autoridades':'institucion.html?tab=autoridades','#verificacion':'institucion.html?tab=verificacion','#contacto':'institucion.html?tab=contacto'};if(body.dataset.page==='inicio'&&legacy[location.hash])location.replace(legacy[location.hash]);
 // Offer level explorer.
@@ -25,7 +34,7 @@ const areaButtons=[...document.querySelectorAll('.area-menu button[data-area]')]
 const counterEls=[...document.querySelectorAll('[data-count-to]')];
 function counterText(el,n){const grouped=el.dataset.countGroup==='true';const rounded=Math.round(n);const value=grouped?rounded.toLocaleString('en-US'):String(rounded);return `${el.dataset.countPrefix||''}${value}${el.dataset.countSuffix||''}`}
 function setCounter(el,n){el.textContent=counterText(el,n)}
-function finishCounter(el,target){setCounter(el,target);el.dataset.countAnimated='true';el.classList.remove('is-counting');el.classList.add('count-finished');window.setTimeout(()=>el.classList.remove('count-finished'),520)}
+function finishCounter(el,target){setCounter(el,target);el.style.removeProperty('transform');el.style.removeProperty('opacity');el.dataset.countAnimated='true';delete el.dataset.countRunning;el.classList.remove('is-counting');el.classList.add('count-finished');window.setTimeout(()=>el.classList.remove('count-finished'),520)}
 function animateCounter(el){
   if(!el||el.dataset.countAnimated==='true'||el.dataset.countRunning==='true')return;
   const target=Number(el.dataset.countTo||0);
@@ -35,14 +44,18 @@ function animateCounter(el){
   el.dataset.countRunning='true';
   el.classList.add('is-counting');
   setCounter(el,from);
-  const duration=Math.max(900,Number(el.dataset.countDuration||1500));
+  const duration=Math.max(1000,Number(el.dataset.countDuration||1500));
   let started;
   const tick=(now)=>{
     if(started===undefined)started=now;
     const progress=Math.min(1,(now-started)/duration);
     const eased=1-Math.pow(1-progress,4);
     setCounter(el,from+(target-from)*eased);
-    if(progress<1){requestAnimationFrame(tick)}else{delete el.dataset.countRunning;finishCounter(el,target)}
+    const scale=(.84+.16*eased).toFixed(4);
+    const opacity=(.58+.42*eased).toFixed(4);
+    el.style.transform=`scale(${scale})`;
+    el.style.opacity=opacity;
+    if(progress<1){requestAnimationFrame(tick)}else{finishCounter(el,target)}
   };
   requestAnimationFrame(tick);
 }
@@ -122,18 +135,19 @@ function setupHorizontalRail(rail,prev,next,itemSelector){
     prev.hidden=x<=3;
     next.hidden=m<=3||x>=m-3;
   };
+  const itemLeft=el=>{const rr=rail.getBoundingClientRect(),er=el.getBoundingClientRect();return er.left-rr.left+rail.scrollLeft};
   const nearestIndex=()=>{
     const list=items();if(!list.length)return 0;
     let best=0,dist=Infinity;
-    list.forEach((el,i)=>{const d=Math.abs(el.offsetLeft-rail.scrollLeft);if(d<dist){dist=d;best=i}});
+    list.forEach((el,i)=>{const d=Math.abs(itemLeft(el)-rail.scrollLeft);if(d<dist){dist=d;best=i}});
     return best;
   };
   const go=dir=>{
     const list=items();if(!list.length)return;
     let idx=nearestIndex()+dir;idx=Math.max(0,Math.min(list.length-1,idx));
-    const target=Math.min(max(),Math.max(0,list[idx].offsetLeft));
+    const target=Math.min(max(),Math.max(0,itemLeft(list[idx])));
     try{rail.scrollTo({left:target,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}catch(_){rail.scrollLeft=target}
-    setTimeout(update,260);
+    setTimeout(update,300);
   };
   prev.addEventListener('click',()=>go(-1));next.addEventListener('click',()=>go(1));
   let raf=0;rail.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(update)},{passive:true});
@@ -150,7 +164,7 @@ if(tabs.length&&workspaceRail){tabs.forEach(btn=>btn.addEventListener('click',()
 const authorityTab=tabs.find(btn=>btn.dataset.tab==='autoridades');
 authorityTab?.addEventListener('click',()=>requestAnimationFrame(()=>requestAnimationFrame(()=>authorityRailCtl?.update())));
 // Authority modal.
-const am=document.getElementById('authorityModal');document.querySelectorAll('[data-authority-open]').forEach(btn=>btn.addEventListener('click',()=>{if(!am)return;const im=am.querySelector('[data-authority-photo]');im.src=btn.dataset.photo;im.alt=btn.dataset.name;am.querySelector('[data-authority-name]').textContent=btn.dataset.name;am.querySelector('[data-authority-role]').textContent=btn.dataset.role;am.querySelector('[data-authority-bio]').textContent=btn.dataset.bio;am.querySelector('[data-authority-resolution]').textContent=btn.dataset.resolution;const mail=am.querySelector('[data-authority-email]');mail.textContent=btn.dataset.email;mail.href='mailto:'+btn.dataset.email;am.showModal()}));am?.querySelector('[data-authority-close]')?.addEventListener('click',()=>am.close());am?.addEventListener('click',e=>{if(e.target===am)am.close()});
+const am=document.getElementById('authorityModal');document.querySelectorAll('[data-authority-open]').forEach(btn=>btn.addEventListener('click',()=>{if(!am)return;const im=am.querySelector('[data-authority-photo]');const photoWrap=im?.closest('.profile-modal-photo');if(photoWrap)photoWrap.classList.remove('image-fallback');if(im){im.hidden=false;im.src=btn.dataset.photo;im.alt='';im.onerror=()=>{im.hidden=true;photoWrap?.classList.add('image-fallback')}}am.querySelector('[data-authority-name]').textContent=btn.dataset.name;am.querySelector('[data-authority-role]').textContent=btn.dataset.role;am.querySelector('[data-authority-bio]').textContent=btn.dataset.bio;am.querySelector('[data-authority-resolution]').textContent=btn.dataset.resolution;const mail=am.querySelector('[data-authority-email]');mail.textContent=btn.dataset.email;mail.href='mailto:'+btn.dataset.email;am.showModal()}));am?.querySelector('[data-authority-close]')?.addEventListener('click',()=>am.close());am?.addEventListener('click',e=>{if(e.target===am)am.close()});
 // Year.
 document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
 })();

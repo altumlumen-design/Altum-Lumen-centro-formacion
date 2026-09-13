@@ -262,3 +262,121 @@ html,body{max-width:100%;overflow-x:hidden}
   .advisor-panel p{font-size:.76rem;line-height:1.55}
   .advisor-panel>.button{grid-column:1/-1;width:100%;margin-top:3px}
 }
+
+/* V12 · Autoridades mobile-safe + contadores con crecimiento visible */
+.authority-photo{position:relative;flex:0 0 auto;isolation:isolate}
+.authority-photo img{position:relative;z-index:2;display:block}
+.authority-photo.image-fallback{background:
+  radial-gradient(circle at 50% 35%,#9eb5c2 0 19%,transparent 20%),
+  radial-gradient(ellipse at 50% 103%,#7795a6 0 38%,transparent 39%),
+  linear-gradient(145deg,#f2f8fb,#dceaf1)}
+.authority-photo.image-fallback img{display:none!important}
+
+.metric-number,.network-circle .count-number{
+  will-change:transform,opacity;
+  transform-origin:center bottom;
+}
+.metric-number.is-counting,.network-circle .count-number.is-counting{
+  animation:none!important;
+}
+
+/* Keep the authority carousel compact on desktop/tablet. */
+.authority-track{align-items:stretch}
+.authority-slide{display:flex;min-width:0}
+.authority-card{
+  min-width:0;
+  overflow:visible;
+  justify-content:flex-start;
+}
+.authority-card strong,.authority-card small{
+  width:100%;
+  max-width:100%;
+  overflow:visible;
+  overflow-wrap:break-word;
+  word-break:normal;
+  hyphens:auto;
+}
+
+@media(max-width:680px){
+  .workspace-panel[data-panel="autoridades"]{overflow:visible}
+  .workspace-panel[data-panel="autoridades"] .workspace-heading{padding-inline:2px}
+  .authority-carousel{
+    width:100%;
+    max-width:100%;
+    margin-inline:0;
+    padding:2px 42px 6px;
+    overflow:visible;
+  }
+  .authority-track{
+    width:100%;
+    max-width:100%;
+    gap:10px;
+    padding:2px 0 10px;
+    overflow-x:auto;
+    overflow-y:visible;
+    scroll-padding-inline:0;
+    align-items:stretch;
+  }
+  .authority-slide{
+    flex:0 0 100%;
+    max-width:100%;
+    width:100%;
+    scroll-snap-align:center;
+  }
+  .authority-card{
+    width:100%;
+    min-height:0;
+    height:auto;
+    padding:15px 13px 16px;
+    border-radius:15px;
+    justify-content:flex-start;
+    overflow:visible;
+  }
+  .authority-photo{width:70px;height:70px}
+  .authority-card strong{
+    margin-top:10px;
+    font-size:.76rem;
+    line-height:1.34;
+  }
+  .authority-card small{
+    margin-top:5px;
+    font-size:.59rem;
+    line-height:1.42;
+  }
+  .authority-card em{
+    margin-top:auto;
+    padding-top:10px;
+    font-size:.58rem;
+  }
+  .authority-arrow{
+    top:50%;
+    width:32px;
+    height:32px;
+  }
+  .authority-arrow.carousel-arrow-prev{left:4px}
+  .authority-arrow.carousel-arrow-next{right:4px}
+  .authority-arrow svg{width:15px;height:15px}
+}
+
+@media(max-width:390px){
+  .authority-carousel{padding-inline:38px}
+  .authority-track{gap:8px}
+  .authority-card{padding:14px 11px 15px}
+  .authority-photo{width:66px;height:66px}
+  .authority-card strong{font-size:.73rem;line-height:1.34}
+  .authority-card small{font-size:.57rem;line-height:1.4}
+  .authority-arrow{width:30px;height:30px}
+}
+
+@media(max-width:360px){
+  .authority-carousel{padding-inline:35px}
+  .authority-card{padding-inline:10px}
+  .authority-photo{width:62px;height:62px}
+  .authority-card strong{font-size:.71rem}
+  .authority-card small{font-size:.55rem}
+}
+.profile-modal-photo.image-fallback{background:
+  radial-gradient(circle at 50% 35%,#9eb5c2 0 19%,transparent 20%),
+  radial-gradient(ellipse at 50% 103%,#7795a6 0 38%,transparent 39%),
+  linear-gradient(145deg,#f2f8fb,#dceaf1)}
+.profile-modal-photo.image-fallback img{display:none!important}

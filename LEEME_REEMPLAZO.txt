@@ -1,6 +1,6 @@
-ALTUM LUMEN · CENTRO DE FORMACIÓN · V11
+ALTUM LUMEN · Centro de Formación · V12
 
-Reemplazar en la raíz del repositorio:
+Reemplace/agregue en la raíz del repositorio estos 8 archivos:
 - index.html
 - oferta-academica.html
 - docentes.html
@@ -10,19 +10,11 @@ Reemplazar en la raíz del repositorio:
 - portal-cf-2026.css
 - portal-cf-2026.js
 
-No borrar ni reemplazar:
-- aula-virtual.html
-- verificacion.html
-- tarifario.html
-- cielo.jpg
-- assets/
-- documentos/
-- páginas internas de cursos
+Ajustes V12:
+- Autoridades: una tarjeta completa por vista en celulares verticales; sin recortes de nombres/cargos.
+- Retratos de autoridades con fallback visual si una imagen demora o falla; nunca muestra texto ALT cortado dentro del círculo.
+- Flechas del carrusel conservan la lógica de aparecer/desaparecer al inicio y final.
+- Contadores +36, +1,000 y +40 con crecimiento visual progresivo y ejecución única por carga.
+- Refuerzo para 360x640, 375x667, 390x693 y escritorio.
 
-Ajustes V11:
-- textos públicos institucionalizados; sin comentarios sobre el diseño del portal;
-- función de Secretaría General reformulada con enfoque de apoyo a la alta dirección, formalización, registro, custodia y comunicación institucional;
-- pestañas de Institución compactas y contenidas dentro del ancho visible;
-- autoridades en tarjetas más pequeñas y carrusel responsive;
-- modal de autoridades adaptado a pantallas pequeñas;
-- protección adicional contra desbordamiento horizontal.
+NO borrar ni reemplazar: aula-virtual.html, verificacion.html, tarifario.html, cielo.jpg, assets/, documentos/ ni páginas de cursos.
