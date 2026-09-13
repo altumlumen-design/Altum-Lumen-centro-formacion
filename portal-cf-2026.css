@@ -106,3 +106,55 @@ html.reveal-ready [data-reveal].is-visible{opacity:1;filter:none}
 /* Touch devices: prioritize stability over decorative compositor effects. */
 @media(max-width:900px){::view-transition-old(root),::view-transition-new(root){animation:none!important}.button:hover,.profile-card:hover,.service-item:hover,.dock-item:hover{transform:none!important}}
 @media(hover:none){.carousel-arrow:hover{transform:translateY(-50%)!important}.dock-item:hover,.button:hover,.profile-card:hover{transform:none!important}}
+
+/* V10 · Institution navigation rails + responsive authority carousel */
+.workspace-nav-shell{position:relative;min-width:0}
+.workspace-scroll-arrow{display:none}
+.authority-carousel{position:relative;min-width:0;overflow:visible}
+.authority-track{display:flex;gap:14px;min-width:0;overflow-x:auto;overflow-y:hidden;padding:4px 2px 12px;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+.authority-track::-webkit-scrollbar{display:none}
+.authority-slide{flex:0 0 calc((100% - 14px)/2);min-width:0;scroll-snap-align:start;scroll-snap-stop:normal}
+.authority-card{height:100%;min-width:0;overflow:hidden}
+.authority-card strong,.authority-card small{overflow-wrap:anywhere;word-break:normal}
+.authority-arrow{top:50%;width:42px;height:42px}
+.authority-arrow.carousel-arrow-prev{left:7px}
+.authority-arrow.carousel-arrow-next{right:7px}
+.authority-arrow[hidden]{display:none!important}
+
+@media(max-width:900px){
+  .workspace-nav-shell{margin-inline:-2px}
+  .workspace-nav{position:static;display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;padding:8px 39px;scroll-snap-type:x proximity;scroll-padding-inline:42px;scrollbar-width:none;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+  .workspace-nav::-webkit-scrollbar{display:none}
+  .workspace-nav button{flex:0 0 auto;min-width:max-content;width:auto;scroll-snap-align:start}
+  .workspace-scroll-arrow{position:absolute;top:50%;z-index:7;width:31px;height:31px;display:grid;place-items:center;padding:0;border:1px solid rgba(11,41,64,.12);border-radius:50%;background:rgba(255,255,255,.98);color:var(--navy);box-shadow:0 8px 20px rgba(11,41,64,.13);cursor:pointer;transform:translateY(-50%);transition:opacity .16s ease,transform .16s ease,box-shadow .16s ease}
+  .workspace-scroll-arrow svg{width:15px;height:15px}
+  .workspace-scroll-arrow:hover{transform:translateY(-50%) scale(1.04);box-shadow:0 10px 24px rgba(11,41,64,.17)}
+  .workspace-scroll-prev{left:5px}.workspace-scroll-next{right:5px}
+  .workspace-scroll-arrow[hidden]{display:none!important}
+  .authority-slide{flex-basis:calc((100% - 14px)/1.45)}
+}
+
+@media(max-width:680px){
+  .workspace-nav-shell{margin-inline:-4px}
+  .workspace-nav{padding:7px 36px;gap:4px;border-radius:15px}
+  .workspace-nav button{padding:10px 11px;font-size:.71rem}
+  .workspace-scroll-arrow{width:29px;height:29px}
+  .workspace-scroll-prev{left:4px}.workspace-scroll-next{right:4px}
+  .authority-carousel{width:100%;max-width:100%;overflow:hidden;padding-inline:0}
+  .authority-track{width:100%;max-width:100%;gap:10px;padding:4px 3px 12px;scroll-padding-inline:3px}
+  .authority-slide{flex:0 0 min(84%,280px);max-width:min(84%,280px)}
+  .authority-card{min-height:244px;padding:19px 14px;border-radius:17px}
+  .authority-photo{width:88px;height:88px}
+  .authority-card strong{max-width:18ch;margin-top:13px;font-size:.84rem}
+  .authority-card small{max-width:24ch;font-size:.62rem;line-height:1.4}
+  .authority-card em{margin-top:10px;font-size:.61rem}
+  .authority-arrow{top:49%;width:38px;height:38px}
+  .authority-arrow.carousel-arrow-prev{left:7px}.authority-arrow.carousel-arrow-next{right:7px}
+  .authority-arrow svg{width:18px;height:18px}
+}
+
+@media(max-width:390px){
+  .authority-slide{flex-basis:min(86%,258px);max-width:min(86%,258px)}
+  .authority-card{min-height:232px;padding-inline:12px}
+  .authority-arrow{width:36px;height:36px}
+}

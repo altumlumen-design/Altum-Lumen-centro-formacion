@@ -112,6 +112,43 @@ const pm=document.getElementById('profileModal');document.querySelectorAll('[dat
 const nm=document.getElementById('networkModal');document.querySelector('[data-network-open]')?.addEventListener('click',()=>{if(nm)nm.showModal()});nm?.querySelector('[data-network-close]')?.addEventListener('click',()=>nm.close());nm?.addEventListener('click',e=>{if(e.target===nm)nm.close()});
 // Institution workspace.
 const tabs=[...document.querySelectorAll('.workspace-nav button[data-tab]')],panels=[...document.querySelectorAll('.workspace-panel[data-panel]')];function activate(k,write=true){if(!tabs.length)return;if(!tabs.some(b=>b.dataset.tab===k))k=tabs[0].dataset.tab;tabs.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===k)));panels.forEach(p=>p.classList.toggle('is-active',p.dataset.panel===k));if(write){const u=new URL(location.href);u.searchParams.set('tab',k);history.replaceState(null,'',u)}}tabs.forEach(b=>b.addEventListener('click',()=>activate(b.dataset.tab)));if(tabs.length)activate(new URLSearchParams(location.search).get('tab')||'identidad',false);
+// Institution horizontal controls (mobile tab rail + authorities).
+function setupHorizontalRail(rail,prev,next,itemSelector){
+  if(!rail||!prev||!next)return null;
+  const items=()=>[...rail.querySelectorAll(itemSelector)].filter(el=>el.offsetParent!==null);
+  const max=()=>Math.max(0,rail.scrollWidth-rail.clientWidth);
+  const update=()=>{
+    const m=max(),x=rail.scrollLeft;
+    prev.hidden=x<=3;
+    next.hidden=m<=3||x>=m-3;
+  };
+  const nearestIndex=()=>{
+    const list=items();if(!list.length)return 0;
+    let best=0,dist=Infinity;
+    list.forEach((el,i)=>{const d=Math.abs(el.offsetLeft-rail.scrollLeft);if(d<dist){dist=d;best=i}});
+    return best;
+  };
+  const go=dir=>{
+    const list=items();if(!list.length)return;
+    let idx=nearestIndex()+dir;idx=Math.max(0,Math.min(list.length-1,idx));
+    const target=Math.min(max(),Math.max(0,list[idx].offsetLeft));
+    try{rail.scrollTo({left:target,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}catch(_){rail.scrollLeft=target}
+    setTimeout(update,260);
+  };
+  prev.addEventListener('click',()=>go(-1));next.addEventListener('click',()=>go(1));
+  let raf=0;rail.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(update)},{passive:true});
+  rail.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}else if(e.key==='ArrowRight'){e.preventDefault();go(1)}});
+  if('ResizeObserver' in window)new ResizeObserver(()=>requestAnimationFrame(update)).observe(rail);else window.addEventListener('resize',update,{passive:true});
+  requestAnimationFrame(()=>requestAnimationFrame(update));
+  return {update,go};
+}
+const workspaceRail=document.querySelector('.workspace-nav');
+const workspaceRailCtl=setupHorizontalRail(workspaceRail,document.querySelector('[data-workspace-prev]'),document.querySelector('[data-workspace-next]'),'button[data-tab]');
+const authorityRail=document.querySelector('.authority-track');
+const authorityRailCtl=setupHorizontalRail(authorityRail,document.querySelector('[data-authority-prev]'),document.querySelector('[data-authority-next]'),'.authority-slide');
+if(tabs.length&&workspaceRail){tabs.forEach(btn=>btn.addEventListener('click',()=>{try{btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}catch(_){workspaceRail.scrollLeft=btn.offsetLeft-36}setTimeout(()=>workspaceRailCtl?.update(),240)}))}
+const authorityTab=tabs.find(btn=>btn.dataset.tab==='autoridades');
+authorityTab?.addEventListener('click',()=>requestAnimationFrame(()=>requestAnimationFrame(()=>authorityRailCtl?.update())));
 // Authority modal.
 const am=document.getElementById('authorityModal');document.querySelectorAll('[data-authority-open]').forEach(btn=>btn.addEventListener('click',()=>{if(!am)return;const im=am.querySelector('[data-authority-photo]');im.src=btn.dataset.photo;im.alt=btn.dataset.name;am.querySelector('[data-authority-name]').textContent=btn.dataset.name;am.querySelector('[data-authority-role]').textContent=btn.dataset.role;am.querySelector('[data-authority-bio]').textContent=btn.dataset.bio;am.querySelector('[data-authority-resolution]').textContent=btn.dataset.resolution;const mail=am.querySelector('[data-authority-email]');mail.textContent=btn.dataset.email;mail.href='mailto:'+btn.dataset.email;am.showModal()}));am?.querySelector('[data-authority-close]')?.addEventListener('click',()=>am.close());am?.addEventListener('click',e=>{if(e.target===am)am.close()});
 // Year.

@@ -1,15 +1,28 @@
-ALTUM LUMEN · Centro de Formación · V9 Mobile Robust
+ALTUM LUMEN · CENTRO DE FORMACIÓN · V10
 
-Reemplaza/agrega en la raíz del repositorio los 9 archivos de este paquete.
+REEMPLAZAR/AGREGAR en la raíz del repositorio estos 9 archivos:
+- index.html
+- oferta-academica.html
+- docentes.html
+- convenios.html
+- publicaciones.html
+- institucion.html
+- portal-cf-2026.css
+- portal-cf-2026.js
+- LEEME_REEMPLAZO.txt
 
-Mejoras principales:
-- Experiencia móvil robusta: el contenido nunca depende de una animación para ser visible.
-- Animaciones de aparición desactivadas en móvil para evitar pantallas blancas; los contadores siguen funcionando.
-- Carrusel de docentes sin numeración 1/7: solo flechas contextuales.
-- La flecha izquierda desaparece al inicio y la derecha al llegar al final; reaparecen al desplazarse en sentido contrario.
-- Soporte de swipe táctil y teclas izquierda/derecha.
-- Dock académico optimizado para zonas seguras de iPhone/Android.
-- Contadores: +36 programas, +1,000 alumnos y +40 especialistas.
+V10 conserva la línea visual de V9 y solo afina Institución:
+- mini flechas para navegar las pestañas institucionales en pantallas estrechas;
+- flechas izquierda/derecha para el carrusel de autoridades;
+- las flechas desaparecen automáticamente al llegar a cada extremo;
+- autoridades reajustadas para no desbordar en celular, tablet o escritorio;
+- navegación táctil por swipe y navegación por teclado preservadas.
 
-NO borrar ni reemplazar:
-aula-virtual.html, verificacion.html, tarifario.html, cielo.jpg, assets/, documentos/ ni páginas internas de cursos.
+NO BORRAR ni reemplazar:
+- aula-virtual.html
+- verificacion.html
+- tarifario.html
+- cielo.jpg
+- assets/
+- documentos/
+- páginas internas de cursos y programas.
