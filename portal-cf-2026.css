@@ -37,3 +37,31 @@
 .dock-item:focus-visible{outline:2px solid rgba(47,118,159,.34);outline-offset:2px}
 @media(max-width:900px){.academic-dock{right:12px;bottom:10px;left:12px}.footer-brand img.footer-logo{width:58px!important;height:58px!important;min-width:58px!important;max-width:58px!important;min-height:58px!important;max-height:58px!important}}
 @media(max-width:680px){.intro-facts article{border-left:0;border-top:1px solid rgba(255,255,255,.12)}.intro-facts article:first-child{border-top:0}.intro-facts strong,.intro-facts strong.metric-number{font-size:1.8rem}.footer-brand img.footer-logo{width:56px!important;height:56px!important;min-width:56px!important;max-width:56px!important;min-height:56px!important;max-height:56px!important}}
+
+/* V8 · Contadores académicos: legibles, una sola ejecución por carga y cierre visual sutil. */
+.metric-number,.network-circle .count-number,.network-modal-circle .count-number{
+  display:inline-block;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+  transform-origin:center;
+}
+.metric-number.is-counting,.network-circle .count-number.is-counting{
+  animation:altum-counter-breathe .72s ease-in-out infinite alternate;
+}
+.metric-number.count-finished,.network-circle .count-number.count-finished{
+  animation:altum-counter-settle .48s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes altum-counter-breathe{
+  from{opacity:.72;transform:scale(.985)}
+  to{opacity:1;transform:scale(1.025)}
+}
+@keyframes altum-counter-settle{
+  0%{transform:scale(.98)}
+  55%{transform:scale(1.07)}
+  100%{transform:scale(1)}
+}
+@media(prefers-reduced-motion:reduce){
+  .metric-number.is-counting,.network-circle .count-number.is-counting,.metric-number.count-finished,.network-circle .count-number.count-finished{animation:none!important}
+}

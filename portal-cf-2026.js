@@ -13,16 +13,50 @@ const legacy={'#oferta':'oferta-academica.html','#docentes':'docentes.html','#co
 let pdata=[];const pnode=document.getElementById('programData');if(pnode){try{pdata=JSON.parse(pnode.textContent)}catch(_){}}const pbuttons=[...document.querySelectorAll('[data-program]')],detail=document.getElementById('programDetail');function showProgram(i){const d=pdata[i];if(!d||!detail)return;pbuttons.forEach((b,n)=>b.setAttribute('aria-selected',String(n===i)));detail.querySelector('[data-detail-level]').textContent=d.level;detail.querySelector('[data-detail-title]').textContent=d.title;detail.querySelector('[data-detail-hours]').textContent=d.hours;detail.querySelector('[data-detail-copy]').textContent=d.copy;const wa=detail.querySelector('[data-detail-wa]');wa.href='https://wa.me/51928928767?text='+encodeURIComponent('Hola ALTUM LUMEN, deseo información sobre '+d.title+'.')}pbuttons.forEach((b,i)=>b.addEventListener('click',()=>showProgram(i)));if(pbuttons.length)showProgram(0);
 // Area explorer.
 const areaButtons=[...document.querySelectorAll('.area-menu button[data-area]')],areaPanel=document.querySelector('.area-panel'),areas={gestion:{title:'Gestión Pública',copy:'Formación orientada a la conducción de organizaciones públicas, sistemas administrativos, presupuesto, servicio civil y mejora de la gestión.',tags:['Gestión pública','Servicio civil','Presupuesto','Administración pública','Fiscalización']},derecho:{title:'Derecho',copy:'Programas para fortalecer el análisis jurídico aplicado a procedimientos, función pública, contratación y toma de decisiones institucionales.',tags:['Derecho administrativo','PAD','Contrataciones','Procedimiento administrativo','Responsabilidad funcional']},proyectos:{title:'Gestión de Proyectos',copy:'Contenidos aplicados a inversión pública, formulación, evaluación, ejecución, dirección y seguimiento de proyectos.',tags:['Invierte.pe','Formulación','Evaluación','Dirección de proyectos','Obras']},salud:{title:'Salud Pública',copy:'Capacitación especializada en gestión sanitaria, intervención pública, prevención y articulación territorial.',tags:['Salud pública','Gestión sanitaria','Prevención','Desarrollo social']},otras:{title:'Otras áreas',copy:'Líneas complementarias para responder a necesidades de actualización profesional y desarrollo de capacidades.',tags:['Economía','Seguridad ciudadana','Administración','Tecnología','Investigación']}};function showArea(k){const d=areas[k];if(!d||!areaPanel)return;areaButtons.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.area===k)));areaPanel.innerHTML=`<span class="eyebrow">Área formativa</span><h3>${d.title}</h3><p>${d.copy}</p><div class="area-tags">${d.tags.map(t=>`<span>${t}</span>`).join('')}</div><a class="button button-outline" style="margin-top:24px" href="https://wa.me/51928928767?text=${encodeURIComponent('Hola ALTUM LUMEN, deseo información sobre programas del área de '+d.title+'.')}" target="_blank" rel="noopener">Consultar programas</a>`}areaButtons.forEach(b=>b.addEventListener('click',()=>showArea(b.dataset.area)));if(areaButtons.length)showArea(areaButtons[0].dataset.area);
-// One-time academic counters. Smooth, legible, accessible and persistent for the current browsing session.
+// One-time academic counters. They animate once per page load when first visible, then remain fixed.
 const counterEls=[...document.querySelectorAll('[data-count-to]')];
-const counterStorePrefix='altum-cf-counter-v7:';
-function counterKey(el){return counterStorePrefix+(el.dataset.countKey||`${location.pathname}:${el.dataset.countTo}`)}
-function counterWasPlayed(el){try{return sessionStorage.getItem(counterKey(el))==='1'}catch{return el.dataset.countDone==='true'}}
-function markCounterPlayed(el){el.dataset.countDone='true';try{sessionStorage.setItem(counterKey(el),'1')}catch{}}
-function counterText(el,n){const grouped=el.dataset.countGroup==='true';const value=grouped?Math.round(n).toLocaleString('en-US'):String(Math.round(n));return `${el.dataset.countPrefix||''}${value}${el.dataset.countSuffix||''}`}
+function counterText(el,n){const grouped=el.dataset.countGroup==='true';const rounded=Math.round(n);const value=grouped?rounded.toLocaleString('en-US'):String(rounded);return `${el.dataset.countPrefix||''}${value}${el.dataset.countSuffix||''}`}
 function setCounter(el,n){el.textContent=counterText(el,n)}
-function animateCounter(el){if(!el)return;const target=Number(el.dataset.countTo||0);if(counterWasPlayed(el)){setCounter(el,target);return}if(matchMedia('(prefers-reduced-motion: reduce)').matches){setCounter(el,target);markCounterPlayed(el);return}const from=Number(el.dataset.countFrom||0);const duration=Math.max(500,Number(el.dataset.countDuration||1300));let started=null,lastValue=null;setCounter(el,from);function frame(now){if(started===null)started=now;const p=Math.min(1,(now-started)/duration);const eased=1-Math.pow(1-p,3);const value=Math.round(from+(target-from)*eased);if(value!==lastValue){setCounter(el,value);lastValue=value}if(p<1){requestAnimationFrame(frame)}else{setCounter(el,target);markCounterPlayed(el)}}requestAnimationFrame(frame)}
-if('IntersectionObserver'in window){const counterObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){animateCounter(entry.target);counterObserver.unobserve(entry.target)}}),{threshold:.48,rootMargin:'0px 0px -8% 0px'});counterEls.forEach(el=>counterObserver.observe(el))}else counterEls.forEach(animateCounter);
+function finishCounter(el,target){setCounter(el,target);el.dataset.countAnimated='true';el.classList.remove('is-counting');el.classList.add('count-finished');window.setTimeout(()=>el.classList.remove('count-finished'),520)}
+function animateCounter(el){
+  if(!el||el.dataset.countAnimated==='true'||el.dataset.countRunning==='true')return;
+  const target=Number(el.dataset.countTo||0);
+  const from=Number(el.dataset.countFrom||0);
+  if(!Number.isFinite(target)){return}
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){finishCounter(el,target);return}
+  el.dataset.countRunning='true';
+  el.classList.add('is-counting');
+  setCounter(el,from);
+  const duration=Math.max(900,Number(el.dataset.countDuration||1500));
+  let started;
+  const tick=(now)=>{
+    if(started===undefined)started=now;
+    const progress=Math.min(1,(now-started)/duration);
+    const eased=1-Math.pow(1-progress,4);
+    setCounter(el,from+(target-from)*eased);
+    if(progress<1){requestAnimationFrame(tick)}else{delete el.dataset.countRunning;finishCounter(el,target)}
+  };
+  requestAnimationFrame(tick);
+}
+function queueCounter(el){
+  if(!el||el.dataset.countAnimated==='true'||el.dataset.countQueued==='true'||el.dataset.countRunning==='true')return;
+  el.dataset.countQueued='true';
+  const delay=Math.max(80,Number(el.dataset.countDelay||180));
+  window.setTimeout(()=>{delete el.dataset.countQueued;animateCounter(el)},delay);
+}
+function isCounterVisible(el){const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.right>0&&r.top<(window.innerHeight||document.documentElement.clientHeight)&&r.left<(window.innerWidth||document.documentElement.clientWidth)}
+let counterObserver=null;
+if('IntersectionObserver' in window){
+  counterObserver=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting&&entry.intersectionRatio>0){queueCounter(entry.target);counterObserver.unobserve(entry.target)}}},{threshold:[0,.05,.15],rootMargin:'0px 0px -2% 0px'});
+  counterEls.forEach(el=>counterObserver.observe(el));
+}else{counterEls.forEach(queueCounter)}
+// Fallback for browsers/embeds where IntersectionObserver fires late. Only counters actually on screen are triggered.
+const counterFallback=()=>counterEls.forEach(el=>{if(el.dataset.countAnimated!=='true'&&isCounterVisible(el)){queueCounter(el);counterObserver?.unobserve(el)}});
+window.addEventListener('load',()=>setTimeout(counterFallback,180),{once:true});
+window.addEventListener('pageshow',()=>setTimeout(counterFallback,220),{once:true});
+window.addEventListener('scroll',counterFallback,{passive:true});
+window.addEventListener('resize',counterFallback,{passive:true});
+setTimeout(counterFallback,650);
 const ffilters=[...document.querySelectorAll('.faculty-filter[data-specialty]')],slides=[...document.querySelectorAll('.profile-slide')],track=document.querySelector('.profile-track'),status=document.querySelector('[data-carousel-status]'),progress=document.querySelector('[data-carousel-progress]');function visibleSlides(){return slides.filter(s=>!s.hidden)}function updateCarousel(){const v=visibleSlides();if(!track||!v.length)return;const first=v.reduce((best,s)=>Math.abs(s.offsetLeft-track.scrollLeft)<Math.abs(best.offsetLeft-track.scrollLeft)?s:best,v[0]),idx=Math.max(0,v.indexOf(first));if(status)status.textContent=`${idx+1} / ${v.length}`;if(progress){const pct=Math.max(18,100/Math.max(1,v.length));const max=100-pct,move=v.length>1?idx/(v.length-1)*max:0;progress.style.width=pct+'%';progress.style.transform=`translateX(${move/pct*100}%)`}}function scrollFaculty(dir){const v=visibleSlides();if(!track||!v.length)return;const w=v[0].getBoundingClientRect().width+14;track.scrollBy({left:dir*w,behavior:'smooth'})}document.querySelector('[data-carousel-prev]')?.addEventListener('click',()=>scrollFaculty(-1));document.querySelector('[data-carousel-next]')?.addEventListener('click',()=>scrollFaculty(1));track?.addEventListener('scroll',()=>requestAnimationFrame(updateCarousel));ffilters.forEach(b=>b.addEventListener('click',()=>{ffilters.forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');const s=b.dataset.specialty;slides.forEach(sl=>{if(sl.querySelector('[data-network-open]'))sl.hidden=false;else sl.hidden=!(s==='all'||(sl.dataset.specialty||'').includes(s))});track?.scrollTo({left:0,behavior:'smooth'});setTimeout(updateCarousel,200)}));updateCarousel();
 // Profile modal.
 const pm=document.getElementById('profileModal');document.querySelectorAll('[data-profile-open]').forEach(btn=>btn.addEventListener('click',()=>{if(!pm)return;pm.querySelector('[data-modal-photo]').src=btn.dataset.photo;pm.querySelector('[data-modal-photo]').alt=btn.dataset.name;pm.querySelector('[data-modal-role]').textContent=btn.dataset.role;pm.querySelector('[data-modal-name]').textContent=btn.dataset.name;pm.querySelector('[data-modal-bio]').textContent=btn.dataset.bio;pm.querySelector('[data-modal-extra]').textContent=btn.dataset.extra||'';pm.querySelector('[data-modal-tags]').innerHTML=(btn.dataset.tags||'').split('|').filter(Boolean).map(t=>`<span>${t}</span>`).join('');pm.showModal()}));pm?.querySelector('[data-modal-close]')?.addEventListener('click',()=>pm.close());pm?.addEventListener('click',e=>{if(e.target===pm)pm.close()});
