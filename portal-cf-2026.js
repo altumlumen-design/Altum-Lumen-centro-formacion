@@ -1,106 +1,27 @@
-(() => {
-  const body = document.body;
-  const toggle = document.querySelector('.menu-toggle');
-  const overlay = document.querySelector('.mobile-overlay');
-  const drawer = document.querySelector('.mobile-drawer');
-  function setMenu(open){
-    body.classList.toggle('menu-open', open);
-    if(toggle) toggle.setAttribute('aria-expanded', String(open));
-    if(drawer) drawer.setAttribute('aria-hidden', String(!open));
-  }
-  toggle?.addEventListener('click',()=>setMenu(!body.classList.contains('menu-open')));
-  overlay?.addEventListener('click',()=>setMenu(false));
-  drawer?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){setMenu(false);document.querySelectorAll('dialog[open]').forEach(d=>d.close())}});
 
-  // Soft reveal: opacity only. No vertical carousel-like movement.
-  document.documentElement.classList.add('reveal-ready');
-  const reveal=[...document.querySelectorAll('[data-reveal]')];
-  if('IntersectionObserver' in window){
-    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}}),{threshold:.08,rootMargin:'0px 0px -4%'});
-    reveal.forEach(el=>io.observe(el));
-  }else reveal.forEach(el=>el.classList.add('is-visible'));
-
-  // Old hash compatibility from the original single-page portal.
-  const legacy={
-    '#oferta':'oferta-academica.html', '#docentes':'docentes.html', '#convenios':'convenios.html',
-    '#publicaciones':'publicaciones.html', '#areas':'oferta-academica.html#areas-formativas',
-    '#autoridades':'institucion.html?tab=autoridades', '#verificacion':'institucion.html?tab=verificacion',
-    '#contacto':'institucion.html?tab=contacto'
-  };
-  if(body.dataset.page==='inicio' && legacy[location.hash]) location.replace(legacy[location.hash]);
-
-  // Academic offer filters.
-  const offerFilters=[...document.querySelectorAll('.filter-button[data-filter]')];
-  const programs=[...document.querySelectorAll('.program-card[data-level]')];
-  offerFilters.forEach(btn=>btn.addEventListener('click',()=>{
-    offerFilters.forEach(b=>b.setAttribute('aria-pressed','false'));btn.setAttribute('aria-pressed','true');
-    const value=btn.dataset.filter;
-    programs.forEach(card=>card.hidden=!(value==='all'||card.dataset.level===value));
-  }));
-
-  // Area explorer.
-  const areaButtons=[...document.querySelectorAll('.area-menu button[data-area]')];
-  const areaPanel=document.querySelector('.area-panel');
-  const areaContent={
-    gestion:{title:'Gestión Pública',copy:'Formación orientada a la conducción de organizaciones públicas, sistemas administrativos, presupuesto, servicio civil y mejora de la gestión.',tags:['Gestión pública','Servicio civil','Presupuesto','Administración pública','Fiscalización']},
-    derecho:{title:'Derecho',copy:'Programas para fortalecer el análisis jurídico aplicado a procedimientos, función pública, contratación y toma de decisiones institucionales.',tags:['Derecho administrativo','PAD','Contrataciones','Procedimiento administrativo','Responsabilidad funcional']},
-    proyectos:{title:'Gestión de Proyectos',copy:'Contenidos aplicados a inversión pública, formulación, evaluación, ejecución, dirección y seguimiento de proyectos.',tags:['Invierte.pe','Formulación','Evaluación','Dirección de proyectos','Obras']},
-    salud:{title:'Salud Pública',copy:'Capacitación especializada en gestión sanitaria, intervención pública, prevención y articulación territorial.',tags:['Salud pública','Gestión sanitaria','Prevención','Desarrollo social']},
-    otras:{title:'Otras áreas',copy:'Líneas complementarias para responder a necesidades de actualización profesional y desarrollo de capacidades.',tags:['Economía','Seguridad ciudadana','Administración','Tecnología','Investigación']}
-  };
-  function showArea(key){
-    const d=areaContent[key]; if(!d||!areaPanel) return;
-    areaButtons.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.area===key)));
-    areaPanel.innerHTML=`<span class="eyebrow">Área formativa</span><h3>${d.title}</h3><p>${d.copy}</p><div class="area-tags">${d.tags.map(t=>`<span>${t}</span>`).join('')}</div><a class="button button-outline" style="margin-top:24px" href="https://wa.me/51928928767?text=${encodeURIComponent('Hola ALTUM LUMEN, deseo información sobre programas del área de '+d.title+'.')}" target="_blank" rel="noopener">Consultar programas</a>`;
-  }
-  areaButtons.forEach(b=>b.addEventListener('click',()=>showArea(b.dataset.area)));
-  if(areaButtons.length) showArea(areaButtons[0].dataset.area);
-
-  // Faculty filters.
-  const facultyFilters=[...document.querySelectorAll('.faculty-filter[data-specialty]')];
-  const facultyCards=[...document.querySelectorAll('.faculty-card[data-specialty]')];
-  facultyFilters.forEach(btn=>btn.addEventListener('click',()=>{
-    facultyFilters.forEach(b=>b.setAttribute('aria-pressed','false'));btn.setAttribute('aria-pressed','true');
-    const s=btn.dataset.specialty;
-    facultyCards.forEach(card=>card.hidden=!(s==='all'||card.dataset.specialty.includes(s)));
-  }));
-
-  // Faculty modal.
-  const modal=document.getElementById('facultyModal');
-  if(modal){
-    const img=modal.querySelector('[data-modal-photo]'), role=modal.querySelector('[data-modal-role]'), name=modal.querySelector('[data-modal-name]'), bio=modal.querySelector('[data-modal-bio]'), tags=modal.querySelector('[data-modal-tags]');
-    document.querySelectorAll('[data-faculty-open]').forEach(btn=>btn.addEventListener('click',()=>{
-      const card=btn.closest('.faculty-card');
-      if(!card) return;
-      img.src=card.dataset.photo; img.alt=card.dataset.name;
-      role.textContent=card.dataset.label; name.textContent=card.dataset.name; bio.textContent=card.dataset.bio;
-      tags.innerHTML=(card.dataset.tags||'').split('|').filter(Boolean).map(t=>`<span>${t}</span>`).join('');
-      modal.showModal();
-    }));
-    modal.querySelector('[data-modal-close]')?.addEventListener('click',()=>modal.close());
-    modal.addEventListener('click',e=>{if(e.target===modal) modal.close()});
-  }
-
-  // Institution workspace tabs.
-  const workspaceButtons=[...document.querySelectorAll('.workspace-nav button[data-tab]')];
-  const panels=[...document.querySelectorAll('.workspace-panel[data-panel]')];
-  function activateTab(key, updateUrl=true){
-    if(!workspaceButtons.length) return;
-    if(!workspaceButtons.some(b=>b.dataset.tab===key)) key=workspaceButtons[0].dataset.tab;
-    workspaceButtons.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===key)));
-    panels.forEach(p=>p.classList.toggle('is-active',p.dataset.panel===key));
-    if(updateUrl){const u=new URL(location.href);u.searchParams.set('tab',key);history.replaceState(null,'',u)}
-  }
-  workspaceButtons.forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.tab)));
-  if(workspaceButtons.length) activateTab(new URLSearchParams(location.search).get('tab')||'identidad',false);
-
-  // Copy verification email.
-  document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{
-    const text=btn.dataset.copy;
-    try{await navigator.clipboard.writeText(text);const old=btn.textContent;btn.textContent='Copiado';setTimeout(()=>btn.textContent=old,1400)}catch(_){location.href='mailto:'+text}
-  }));
-
-  // Footer year.
-  document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
+(()=>{
+const body=document.body,toggle=document.querySelector('.menu-toggle'),overlay=document.querySelector('.mobile-overlay'),drawer=document.querySelector('.mobile-drawer');
+function setMenu(open){body.classList.toggle('menu-open',open);toggle?.setAttribute('aria-expanded',String(open));drawer?.setAttribute('aria-hidden',String(!open))}toggle?.addEventListener('click',()=>setMenu(!body.classList.contains('menu-open')));overlay?.addEventListener('click',()=>setMenu(false));drawer?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){setMenu(false);document.querySelectorAll('dialog[open]').forEach(d=>d.close())}});
+// Reveal: opacity / blur only. No upward motion.
+document.documentElement.classList.add('reveal-ready');const reveal=[...document.querySelectorAll('[data-reveal]')];if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}}),{threshold:.07,rootMargin:'0px 0px -3%'});reveal.forEach(x=>io.observe(x))}else reveal.forEach(x=>x.classList.add('is-visible'));
+// Fixed academic services dock.
+const dock=document.createElement('nav');dock.className='academic-dock';dock.setAttribute('aria-label','Accesos académicos rápidos');dock.innerHTML=`<a class="dock-item verify" href="verificacion.html" aria-label="Verificación académica"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v6c0 5-3.4 8.1-8 9-4.6-.9-8-4-8-9V6z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg><span>Verificar</span></a><a class="dock-item tariff" href="tarifario.html" aria-label="Tarifario"><svg viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span>Tarifario</span></a><a class="dock-item aula" href="aula-virtual.html" aria-label="Aula Virtual"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16M8 7h8M8 11h6"/></svg><span>Aula</span></a><a class="dock-item whatsapp" href="https://wa.me/51928928767?text=Hola%20ALTUM%20LUMEN%2C%20deseo%20informaci%C3%B3n%20acad%C3%A9mica." target="_blank" rel="noopener" aria-label="WhatsApp académico"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9 9 0 0 1-3.7-.8L3 21l1.7-5A8.7 8.7 0 1 1 21 11.5Z"/><path d="M8.2 8.2c.3 3.6 3 6.3 6.6 6.6"/></svg><span>WhatsApp</span></a>`;body.appendChild(dock);
+// Legacy anchors.
+const legacy={'#oferta':'oferta-academica.html','#docentes':'docentes.html','#convenios':'convenios.html','#publicaciones':'publicaciones.html','#areas':'oferta-academica.html#areas-formativas','#autoridades':'institucion.html?tab=autoridades','#verificacion':'institucion.html?tab=verificacion','#contacto':'institucion.html?tab=contacto'};if(body.dataset.page==='inicio'&&legacy[location.hash])location.replace(legacy[location.hash]);
+// Offer level explorer.
+let pdata=[];const pnode=document.getElementById('programData');if(pnode){try{pdata=JSON.parse(pnode.textContent)}catch(_){}}const pbuttons=[...document.querySelectorAll('[data-program]')],detail=document.getElementById('programDetail');function showProgram(i){const d=pdata[i];if(!d||!detail)return;pbuttons.forEach((b,n)=>b.setAttribute('aria-selected',String(n===i)));detail.querySelector('[data-detail-level]').textContent=d.level;detail.querySelector('[data-detail-title]').textContent=d.title;detail.querySelector('[data-detail-hours]').textContent=d.hours;detail.querySelector('[data-detail-copy]').textContent=d.copy;const wa=detail.querySelector('[data-detail-wa]');wa.href='https://wa.me/51928928767?text='+encodeURIComponent('Hola ALTUM LUMEN, deseo información sobre '+d.title+'.')}pbuttons.forEach((b,i)=>b.addEventListener('click',()=>showProgram(i)));if(pbuttons.length)showProgram(0);
+// Area explorer.
+const areaButtons=[...document.querySelectorAll('.area-menu button[data-area]')],areaPanel=document.querySelector('.area-panel'),areas={gestion:{title:'Gestión Pública',copy:'Formación orientada a la conducción de organizaciones públicas, sistemas administrativos, presupuesto, servicio civil y mejora de la gestión.',tags:['Gestión pública','Servicio civil','Presupuesto','Administración pública','Fiscalización']},derecho:{title:'Derecho',copy:'Programas para fortalecer el análisis jurídico aplicado a procedimientos, función pública, contratación y toma de decisiones institucionales.',tags:['Derecho administrativo','PAD','Contrataciones','Procedimiento administrativo','Responsabilidad funcional']},proyectos:{title:'Gestión de Proyectos',copy:'Contenidos aplicados a inversión pública, formulación, evaluación, ejecución, dirección y seguimiento de proyectos.',tags:['Invierte.pe','Formulación','Evaluación','Dirección de proyectos','Obras']},salud:{title:'Salud Pública',copy:'Capacitación especializada en gestión sanitaria, intervención pública, prevención y articulación territorial.',tags:['Salud pública','Gestión sanitaria','Prevención','Desarrollo social']},otras:{title:'Otras áreas',copy:'Líneas complementarias para responder a necesidades de actualización profesional y desarrollo de capacidades.',tags:['Economía','Seguridad ciudadana','Administración','Tecnología','Investigación']}};function showArea(k){const d=areas[k];if(!d||!areaPanel)return;areaButtons.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.area===k)));areaPanel.innerHTML=`<span class="eyebrow">Área formativa</span><h3>${d.title}</h3><p>${d.copy}</p><div class="area-tags">${d.tags.map(t=>`<span>${t}</span>`).join('')}</div><a class="button button-outline" style="margin-top:24px" href="https://wa.me/51928928767?text=${encodeURIComponent('Hola ALTUM LUMEN, deseo información sobre programas del área de '+d.title+'.')}" target="_blank" rel="noopener">Consultar programas</a>`}areaButtons.forEach(b=>b.addEventListener('click',()=>showArea(b.dataset.area)));if(areaButtons.length)showArea(areaButtons[0].dataset.area);
+// Faculty filter and carousel.
+const ffilters=[...document.querySelectorAll('.faculty-filter[data-specialty]')],slides=[...document.querySelectorAll('.profile-slide')],track=document.querySelector('.profile-track'),status=document.querySelector('[data-carousel-status]'),progress=document.querySelector('[data-carousel-progress]');function visibleSlides(){return slides.filter(s=>!s.hidden)}function updateCarousel(){const v=visibleSlides();if(!track||!v.length)return;const first=v.reduce((best,s)=>Math.abs(s.offsetLeft-track.scrollLeft)<Math.abs(best.offsetLeft-track.scrollLeft)?s:best,v[0]),idx=Math.max(0,v.indexOf(first));if(status)status.textContent=`${idx+1} / ${v.length}`;if(progress){const pct=Math.max(18,100/Math.max(1,v.length));const max=100-pct,move=v.length>1?idx/(v.length-1)*max:0;progress.style.width=pct+'%';progress.style.transform=`translateX(${move/pct*100}%)`}}function scrollFaculty(dir){const v=visibleSlides();if(!track||!v.length)return;const w=v[0].getBoundingClientRect().width+14;track.scrollBy({left:dir*w,behavior:'smooth'})}document.querySelector('[data-carousel-prev]')?.addEventListener('click',()=>scrollFaculty(-1));document.querySelector('[data-carousel-next]')?.addEventListener('click',()=>scrollFaculty(1));track?.addEventListener('scroll',()=>requestAnimationFrame(updateCarousel));ffilters.forEach(b=>b.addEventListener('click',()=>{ffilters.forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');const s=b.dataset.specialty;slides.forEach(sl=>{if(sl.querySelector('[data-network-open]'))sl.hidden=false;else sl.hidden=!(s==='all'||(sl.dataset.specialty||'').includes(s))});track?.scrollTo({left:0,behavior:'smooth'});setTimeout(updateCarousel,200)}));updateCarousel();
+// Profile modal.
+const pm=document.getElementById('profileModal');document.querySelectorAll('[data-profile-open]').forEach(btn=>btn.addEventListener('click',()=>{if(!pm)return;pm.querySelector('[data-modal-photo]').src=btn.dataset.photo;pm.querySelector('[data-modal-photo]').alt=btn.dataset.name;pm.querySelector('[data-modal-role]').textContent=btn.dataset.role;pm.querySelector('[data-modal-name]').textContent=btn.dataset.name;pm.querySelector('[data-modal-bio]').textContent=btn.dataset.bio;pm.querySelector('[data-modal-extra]').textContent=btn.dataset.extra||'';pm.querySelector('[data-modal-tags]').innerHTML=(btn.dataset.tags||'').split('|').filter(Boolean).map(t=>`<span>${t}</span>`).join('');pm.showModal()}));pm?.querySelector('[data-modal-close]')?.addEventListener('click',()=>pm.close());pm?.addEventListener('click',e=>{if(e.target===pm)pm.close()});
+const nm=document.getElementById('networkModal');document.querySelector('[data-network-open]')?.addEventListener('click',()=>nm?.showModal());nm?.querySelector('[data-network-close]')?.addEventListener('click',()=>nm.close());nm?.addEventListener('click',e=>{if(e.target===nm)nm.close()});
+// Institution workspace.
+const tabs=[...document.querySelectorAll('.workspace-nav button[data-tab]')],panels=[...document.querySelectorAll('.workspace-panel[data-panel]')];function activate(k,write=true){if(!tabs.length)return;if(!tabs.some(b=>b.dataset.tab===k))k=tabs[0].dataset.tab;tabs.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===k)));panels.forEach(p=>p.classList.toggle('is-active',p.dataset.panel===k));if(write){const u=new URL(location.href);u.searchParams.set('tab',k);history.replaceState(null,'',u)}}tabs.forEach(b=>b.addEventListener('click',()=>activate(b.dataset.tab)));if(tabs.length)activate(new URLSearchParams(location.search).get('tab')||'identidad',false);
+// Authority modal.
+const am=document.getElementById('authorityModal');document.querySelectorAll('[data-authority-open]').forEach(btn=>btn.addEventListener('click',()=>{if(!am)return;const im=am.querySelector('[data-authority-photo]');im.src=btn.dataset.photo;im.alt=btn.dataset.name;am.querySelector('[data-authority-name]').textContent=btn.dataset.name;am.querySelector('[data-authority-role]').textContent=btn.dataset.role;am.querySelector('[data-authority-bio]').textContent=btn.dataset.bio;am.querySelector('[data-authority-resolution]').textContent=btn.dataset.resolution;const mail=am.querySelector('[data-authority-email]');mail.textContent=btn.dataset.email;mail.href='mailto:'+btn.dataset.email;am.showModal()}));am?.querySelector('[data-authority-close]')?.addEventListener('click',()=>am.close());am?.addEventListener('click',e=>{if(e.target===am)am.close()});
+// Year.
+document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
 })();
