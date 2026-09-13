@@ -1,33 +1,15 @@
-CENTRO DE FORMACIÓN ALTUM LUMEN · V8 HOMOGENEIDAD Y CONTADORES
+ALTUM LUMEN · Centro de Formación · V9 Mobile Robust
 
-Sube estos archivos a la raíz del repositorio y reemplaza los que tengan el mismo nombre.
+Reemplaza/agrega en la raíz del repositorio los 9 archivos de este paquete.
 
-ARCHIVOS:
-- index.html
-- oferta-academica.html
-- docentes.html
-- convenios.html
-- publicaciones.html
-- institucion.html
-- portal-cf-2026.css
-- portal-cf-2026.js
+Mejoras principales:
+- Experiencia móvil robusta: el contenido nunca depende de una animación para ser visible.
+- Animaciones de aparición desactivadas en móvil para evitar pantallas blancas; los contadores siguen funcionando.
+- Carrusel de docentes sin numeración 1/7: solo flechas contextuales.
+- La flecha izquierda desaparece al inicio y la derecha al llegar al final; reaparecen al desplazarse en sentido contrario.
+- Soporte de swipe táctil y teclas izquierda/derecha.
+- Dock académico optimizado para zonas seguras de iPhone/Android.
+- Contadores: +36 programas, +1,000 alumnos y +40 especialistas.
 
-NO BORRAR NI REEMPLAZAR:
-- aula-virtual.html
-- verificacion.html
-- tarifario.html
-- cielo.jpg
-- assets/
-- documentos/
-- páginas internas de cursos y programas
-
-MEJORAS V8:
-- Contadores animados una sola vez por carga de página: +36 programas académicos, +1,000 alumnos y +40 especialistas.
-- Contador de la plana docente estable: no se reinicia al abrir la ficha.
-- Números blancos y legibles en fondos institucionales.
-- Logotipo inferior unificado en las seis páginas con dimensiones fijas.
-- Dock académico flotante alineado al portal y homogéneo en escritorio/móvil.
-- Cache-busting V8 para asegurar que GitHub Pages cargue CSS y JS nuevos.
-
-
-V8: contadores corregidos y reforzados. Valores: +36 programas académicos, +1,000 alumnos y +40 especialistas. La animación se ejecuta una sola vez por carga de página y queda fija en el valor final.
+NO borrar ni reemplazar:
+aula-virtual.html, verificacion.html, tarifario.html, cielo.jpg, assets/, documentos/ ni páginas internas de cursos.
