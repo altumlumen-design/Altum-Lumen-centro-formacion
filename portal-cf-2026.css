@@ -380,3 +380,73 @@ html,body{max-width:100%;overflow-x:hidden}
   radial-gradient(ellipse at 50% 103%,#7795a6 0 38%,transparent 39%),
   linear-gradient(145deg,#f2f8fb,#dceaf1)}
 .profile-modal-photo.image-fallback img{display:none!important}
+
+/* V13 · Autoridades con composición diferenciada por tamaño de pantalla */
+/* Escritorio amplio: las tres autoridades se presentan completas y alineadas con el contenido. */
+@media (min-width:1101px){
+  .workspace-panel[data-panel="autoridades"] .workspace-heading{max-width:900px}
+  .authority-carousel{
+    width:min(100%,980px);
+    max-width:980px;
+    margin-inline:0;
+    padding:2px 2px 5px;
+    overflow:hidden;
+  }
+  .authority-track{
+    gap:16px;
+    width:100%;
+    max-width:100%;
+    padding:4px 2px 12px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-padding-inline:2px;
+  }
+  .authority-slide{
+    flex:0 0 calc((100% - 32px)/3);
+    width:auto;
+    max-width:none;
+  }
+  .authority-card{
+    min-height:246px;
+    padding:21px 18px 19px;
+    border-radius:18px;
+    justify-content:flex-start;
+  }
+  .authority-photo{width:88px;height:88px}
+  .authority-card strong{margin-top:13px;font-size:.82rem;line-height:1.32}
+  .authority-card small{margin-top:6px;font-size:.61rem;line-height:1.42}
+  .authority-card em{margin-top:auto;padding-top:12px;font-size:.61rem}
+  .authority-arrow{width:38px;height:38px}
+  .authority-arrow.carousel-arrow-prev{left:8px}
+  .authority-arrow.carousel-arrow-next{right:8px}
+}
+
+/* Escritorio compacto / portátil: dos fichas por vista y navegación lateral si hace falta. */
+@media (min-width:901px) and (max-width:1100px){
+  .authority-carousel{
+    width:min(100%,760px);
+    max-width:760px;
+    margin-inline:0;
+    padding:2px 2px 5px;
+    overflow:hidden;
+  }
+  .authority-track{gap:14px;padding:4px 2px 11px;scroll-padding-inline:2px}
+  .authority-slide{
+    flex:0 0 calc((100% - 14px)/2);
+    width:auto;
+    max-width:none;
+  }
+  .authority-card{min-height:226px;padding:18px 15px 17px;justify-content:flex-start}
+  .authority-photo{width:80px;height:80px}
+  .authority-card strong{margin-top:11px;font-size:.78rem}
+  .authority-card small{font-size:.58rem}
+  .authority-card em{margin-top:auto;padding-top:10px;font-size:.59rem}
+}
+
+/* Tablet mantiene carrusel, pero evita fichas excesivamente estrechas. */
+@media (min-width:681px) and (max-width:900px){
+  .authority-carousel{width:min(100%,700px);max-width:700px;margin-inline:0;overflow:hidden}
+  .authority-track{gap:12px;padding:3px 2px 10px}
+  .authority-slide{flex:0 0 calc((100% - 12px)/2);max-width:none}
+  .authority-card{min-height:218px;padding:16px 13px}
+}

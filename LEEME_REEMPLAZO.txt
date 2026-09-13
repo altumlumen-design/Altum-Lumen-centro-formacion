@@ -1,6 +1,6 @@
-ALTUM LUMEN · Centro de Formación · V12
+ALTUM LUMEN · V13 · AUTORIDADES RESPONSIVE
 
-Reemplace/agregue en la raíz del repositorio estos 8 archivos:
+Reemplazar en la raíz del repositorio estos archivos:
 - index.html
 - oferta-academica.html
 - docentes.html
@@ -10,11 +10,9 @@ Reemplace/agregue en la raíz del repositorio estos 8 archivos:
 - portal-cf-2026.css
 - portal-cf-2026.js
 
-Ajustes V12:
-- Autoridades: una tarjeta completa por vista en celulares verticales; sin recortes de nombres/cargos.
-- Retratos de autoridades con fallback visual si una imagen demora o falla; nunca muestra texto ALT cortado dentro del círculo.
-- Flechas del carrusel conservan la lógica de aparecer/desaparecer al inicio y final.
-- Contadores +36, +1,000 y +40 con crecimiento visual progresivo y ejecución única por carga.
-- Refuerzo para 360x640, 375x667, 390x693 y escritorio.
+Ajuste principal V13:
+- Autoridades con composición específica para escritorio amplio, portátil/tablet y celular.
+- En escritorio amplio se muestran las tres autoridades completas, sin recortes ni tarjeta parcial.
+- En móvil se conserva el carrusel de una ficha por vista de V12.
 
-NO borrar ni reemplazar: aula-virtual.html, verificacion.html, tarifario.html, cielo.jpg, assets/, documentos/ ni páginas de cursos.
+No reemplazar ni borrar activos, documentos, Aula Virtual, Verificación, Tarifario ni páginas internas de cursos.
