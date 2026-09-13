@@ -1,39 +1,44 @@
-CENTRO DE FORMACIÓN ALTUM LUMEN — PORTAL ACADÉMICO V4
+CENTRO DE FORMACIÓN Y CAPACITACIÓN PROFESIONAL · ALTUM LUMEN S.A.C.
+PAQUETE DE RENOVACIÓN VISUAL — VERSIÓN FINAL MULTIPÁGINA
 
-ARCHIVOS DEL PAQUETE
-1. index.html
-2. portal-academico-v4.css
-3. portal-academico-v4.js
+ARCHIVOS A SUBIR A LA RAÍZ DEL REPOSITORIO:
+- index.html                         (REEMPLAZA el actual)
+- oferta-academica.html              (NUEVO)
+- docentes.html                      (NUEVO)
+- convenios.html                     (NUEVO)
+- publicaciones.html                 (NUEVO)
+- institucion.html                   (NUEVO)
+- portal-cf-2026.css                 (NUEVO)
+- portal-cf-2026.js                  (NUEVO)
 
-CÓMO INSTALAR
-- Suba los 3 archivos a la RAÍZ del repositorio:
-  altumlumen-design/Altum-Lumen-centro-formacion
-- Reemplace el index.html actual.
-- Agregue portal-academico-v4.css y portal-academico-v4.js.
-- NO elimine ni reemplace los demás archivos del repositorio.
-
-SE CONSERVAN Y SE UTILIZAN
-- cielo.jpg
-- assets/performance/logo-centro-portal.png
-- assets/performance/qr-verificacion-portal.png
-- assets-especialista-1.png a assets-especialista-6.png
-- assets-convenio-1.png a assets-convenio-6.png
-- assets/autoridad-oscar.png
-- assets/autoridad-gerardo.png
-- assets/autoridad-norma-moreno.png
-- assets/publicaciones/*
-
-RUTAS PRESERVADAS
+NO BORRAR NI REEMPLAZAR:
 - aula-virtual.html
 - verificacion.html
 - directorio-expertos.html
+- cielo.jpg
+- carpeta assets/
+- assets-especialista-1.png ... assets-especialista-6.png
+- assets-convenio-1.png ... assets-convenio-6.png
+- páginas individuales de cursos
+- scripts y datos del Aula Virtual
 
-NAVEGACIÓN
-El portal funciona por vistas mediante hash:
-#inicio · #oferta · #docentes · #actualidad · #institucion
-También conserva compatibilidad con hashes antiguos:
-#publicaciones · #convenios · #autoridades · #verificacion · #contacto · #areas
+INSTALACIÓN:
+1. Descomprimir este ZIP.
+2. Arrastrar los 8 archivos indicados arriba a la raíz del repositorio.
+3. Confirmar el reemplazo únicamente de index.html.
+4. Esperar la actualización de GitHub Pages y hacer una recarga forzada.
 
-IDENTIDAD
-Eslogan oficial utilizado:
-“Especialización que impulsa tu carrera y el desarrollo del país.”
+DISEÑO:
+- Mantiene el cielo/nubes como identidad visual de ALTUM.
+- Conserva fotografías rectangulares de docentes, como en la versión previa.
+- Navegación REAL entre páginas; no es un pergamino único.
+- Transiciones entre documentos con View Transitions cuando el navegador las soporta.
+- WhatsApp visible en cabecera y acceso flotante.
+- Aula Virtual, Registros Académicos y Directorio de Expertos tienen accesos diferenciados.
+- Institución usa un workspace por pestañas internas: Identidad / Autoridades / Plataformas / Verificación / Contacto.
+- Responsive para escritorio, tablet y móvil.
+- Se preservan los enlaces existentes del ecosistema académico.
+
+COMPATIBILIDAD:
+Los antiguos hashes #oferta, #docentes, #convenios, #publicaciones, #autoridades, #verificacion y #contacto
+redirigen desde index.html hacia la nueva página correspondiente.
