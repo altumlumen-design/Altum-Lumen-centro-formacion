@@ -1,7 +1,8 @@
-ALTUM LUMEN · CENTRO DE FORMACIÓN
-ACTUALIZACIÓN V6 · EXPERIENCIA VISUAL Y PLANA DOCENTE
+CENTRO DE FORMACIÓN ALTUM LUMEN · V7 HOMOGENEIDAD Y CONTADORES
 
-Suba/reemplace en la RAÍZ del repositorio estos archivos:
+Sube estos archivos a la raíz del repositorio y reemplaza los que tengan el mismo nombre.
+
+ARCHIVOS:
 - index.html
 - oferta-academica.html
 - docentes.html
@@ -11,26 +12,19 @@ Suba/reemplace en la RAÍZ del repositorio estos archivos:
 - portal-cf-2026.css
 - portal-cf-2026.js
 
-NO ELIMINE los demás archivos del repositorio.
-
-MEJORAS PRINCIPALES V6
-- Contador animado que culmina exactamente en 41 especialistas de la plana docente.
-- Se retiraron del portal académico los accesos que no corresponden a la plana docente.
-- Se corrigió la presentación del logotipo del pie de página con una ruta estable y respaldo automático.
-- El bloque de acceso al Aula ahora explica de forma natural: “utiliza tu DNI en ambos campos”.
-- Barra flotante académica rediseñada y reposicionada: Aula, Verificación, Tarifario y WhatsApp.
-- En móvil, los accesos rápidos funcionan como un dock compacto con etiquetas visibles.
-- Plataformas institucionales depuradas para mostrar únicamente accesos académicos pertinentes.
-- Se preservan Aula Virtual, Verificación, Tarifario, cursos, assets y demás archivos existentes.
-
-IMPORTANTE
-No reemplace ni borre:
+NO BORRAR NI REEMPLAZAR:
 - aula-virtual.html
 - verificacion.html
 - tarifario.html
 - cielo.jpg
 - assets/
 - documentos/
-- HTML de los cursos
+- páginas internas de cursos y programas
 
-Versión preparada para reemplazo directo en GitHub Pages.
+MEJORAS V7:
+- Contadores animados una sola vez por sesión: +76 programas/ediciones, +1,000 profesionales y 41 especialistas.
+- Contador de la plana docente estable: no se reinicia al abrir la ficha.
+- Números blancos y legibles en fondos institucionales.
+- Logotipo inferior unificado en las seis páginas con dimensiones fijas.
+- Dock académico flotante alineado al portal y homogéneo en escritorio/móvil.
+- Cache-busting V7 para asegurar que GitHub Pages cargue CSS y JS nuevos.
