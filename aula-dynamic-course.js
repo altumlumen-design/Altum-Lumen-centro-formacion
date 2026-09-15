@@ -1,8 +1,11 @@
 (function () {
   'use strict';
 
+  const TZ = 'America/Lima';
+  const COURSE_CACHE_TTL_MS = 2 * 60 * 1000;
+
   function esc(value) {
-    return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
   }
 
@@ -11,25 +14,53 @@
     return /^https:\/\/[^\s]+$/i.test(text) ? text : '';
   }
 
+  function asDate(value) {
+    if (!value) return null;
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  function dateParts(date) {
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'
+    }).formatToParts(date).reduce((o, p) => (o[p.type] = p.value, o), {});
+    return `${parts.year}-${parts.month}-${parts.day}`;
+  }
+
   function formatDate(value, withTime) {
-    if (!value) return '';
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return String(value);
+    const date = asDate(value);
+    if (!date) return value ? String(value) : '';
     const options = withTime
-      ? { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'America/Lima' }
-      : { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Lima' };
+      ? { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZone: TZ }
+      : { day: 'numeric', month: 'long', year: 'numeric', timeZone: TZ };
     return new Intl.DateTimeFormat('es-PE', options).format(date);
   }
 
-  const COURSE_CACHE_TTL_MS = 2 * 60 * 1000;
-
-  function courseCacheKey(courseId) {
-    return `altum_aula_course_cache_v1_${String(courseId || '')}`;
+  function formatShortDate(value) {
+    const date = asDate(value);
+    if (!date) return '';
+    return new Intl.DateTimeFormat('es-PE', { weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ }).format(date);
   }
 
-  function readCourseCache(courseId) {
+  function formatTime(value) {
+    const date = asDate(value);
+    if (!date) return '';
+    return new Intl.DateTimeFormat('es-PE', { hour: 'numeric', minute: '2-digit', timeZone: TZ }).format(date);
+  }
+
+  function money(value) {
+    const n = Number(value || 0);
+    return `S/ ${Number.isFinite(n) ? n.toFixed(2) : '0.00'}`;
+  }
+
+  function courseCacheKey(courseId, session) {
+    const who = String(session?.studentCode || session?.dni || session?.role || 'guest').replace(/[^a-z0-9_-]/gi, '');
+    return `altum_aula_course_cache_v2_${who}_${String(courseId || '')}`;
+  }
+
+  function readCourseCache(courseId, session) {
     try {
-      const raw = window.sessionStorage.getItem(courseCacheKey(courseId));
+      const raw = window.sessionStorage.getItem(courseCacheKey(courseId, session));
       if (!raw) return null;
       const cached = JSON.parse(raw);
       if (!cached?.course || !cached.cachedAt) return null;
@@ -38,89 +69,196 @@
     } catch (_error) { return null; }
   }
 
-  function writeCourseCache(courseId, course) {
+  function writeCourseCache(courseId, session, course) {
     try {
-      window.sessionStorage.setItem(courseCacheKey(courseId), JSON.stringify({ cachedAt: Date.now(), course }));
+      window.sessionStorage.setItem(courseCacheKey(courseId, session), JSON.stringify({ cachedAt: Date.now(), course }));
     } catch (_error) {}
   }
 
-  function resourceLink(url, label, kind) {
+  function zoomMark() {
+    return `<span class="zoom-mark" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><rect x="3" y="6" width="12" height="12" rx="3"></rect><path d="M15 10.1 20.2 7.5c.4-.2.8.1.8.6v7.8c0 .5-.4.8-.8.6L15 13.9z"></path></svg></span>`;
+  }
+
+  function resourceLink(url, label, kind, icon) {
     const href = safeUrl(url);
-    if (!href) return `<span class="dynamic-resource is-pending">${esc(label)} · pendiente</span>`;
-    return `<a class="dynamic-resource ${esc(kind || '')}" href="${esc(href)}" target="_blank" rel="noopener">${esc(label)}<span aria-hidden="true">↗</span></a>`;
+    if (!href) return `<span class="class-resource is-pending"><span>${esc(icon || '•')}</span>${esc(label)} pendiente</span>`;
+    return `<a class="class-resource ${esc(kind || '')}" href="${esc(href)}" target="_blank" rel="noopener"><span>${esc(icon || '↗')}</span>${esc(label)}</a>`;
+  }
+
+  function scheduleState(session, now, todayKey, nextId) {
+    const start = asDate(session.start), end = asDate(session.end) || start;
+    const key = start ? dateParts(start) : '';
+    if (key && key === todayKey) return { key: 'today', label: 'Hoy' };
+    if (end && end.getTime() < now.getTime()) return { key: 'done', label: 'Realizada' };
+    if (nextId && session.id === nextId) return { key: 'next', label: 'Próxima' };
+    return { key: 'scheduled', label: 'Programada' };
+  }
+
+  function copyButton(url) {
+    const href = safeUrl(url);
+    return href ? `<button class="copy-link-btn" type="button" data-copy-url="${esc(href)}" aria-label="Copiar enlace de Zoom">Copiar enlace</button>` : '';
+  }
+
+  function liveClassCard(course, sessions, now, todayKey) {
+    const today = sessions.find(s => asDate(s.start) && dateParts(asDate(s.start)) === todayKey);
+    const upcoming = sessions.filter(s => {
+      const d = asDate(s.start); return d && d.getTime() >= now.getTime();
+    }).sort((a, b) => asDate(a.start) - asDate(b.start))[0];
+    const focus = today || upcoming || null;
+    const zoomUrl = safeUrl(focus?.zoomUrl) || safeUrl(course.zoomUrl);
+    if (!focus && !zoomUrl) return '';
+
+    const title = today ? `Hoy tienes sesión${focus?.number ? ` · Sesión ${esc(focus.number)}` : ''}` : (focus ? `Próxima clase · Sesión ${esc(focus.number || '')}` : 'Acceso a clases en vivo');
+    const when = focus?.start ? `${formatDate(focus.start, true)}${focus.end ? ` – ${formatTime(focus.end)}` : ''}` : 'Consulta el cronograma del curso.';
+
+    return `<section class="class-live-card ${today ? 'is-today' : ''}">
+      <div class="class-live-icon">${today ? '<span class="bell-icon" aria-hidden="true">🔔</span>' : zoomMark()}</div>
+      <div class="class-live-copy">
+        <span class="eyebrow">${today ? 'Clase de hoy' : 'Clases en vivo'}</span>
+        <h2>${title}</h2>
+        <p>${esc(when)}</p>
+      </div>
+      <div class="class-live-actions">
+        ${zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Ingresar a clase</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace se habilitará cuando sea publicado.</span>'}
+      </div>
+    </section>`;
+  }
+
+  function financeCard(finance) {
+    if (!finance) return '';
+    if (finance.state === 'DEUDA') {
+      return `<div class="student-summary-card is-debt"><small>Estado económico</small><strong>Adeuda ${esc(money(finance.balance))}</strong><span>Saldo pendiente registrado</span></div>`;
+    }
+    if (finance.state === 'AL_DIA') {
+      return `<div class="student-summary-card is-ok"><small>Estado económico</small><strong>Al día</strong><span>No registra saldo pendiente</span></div>`;
+    }
+    return `<div class="student-summary-card"><small>Estado económico</small><strong>Sin saldo registrado</strong><span>No hay un saldo pendiente informado</span></div>`;
+  }
+
+  function certificateCard(certificate) {
+    if (!certificate?.available) return '';
+    const download = safeUrl(certificate.downloadUrl) || safeUrl(certificate.viewUrl);
+    if (!download) return '';
+    return `<div class="student-summary-card certificate-card"><small>Certificado</small><strong>Disponible</strong><span>${certificate.issueDate ? `Emitido ${esc(formatDate(certificate.issueDate, false))}` : 'Documento académico emitido'}</span><a class="mini-action" href="${esc(download)}" target="_blank" rel="noopener">Descargar certificado</a></div>`;
+  }
+
+  function renderAgenda(sessions, now, todayKey) {
+    if (!sessions.length) return '<div class="class-empty">El cronograma todavía no ha sido publicado.</div>';
+    const future = sessions.filter(s => asDate(s.start) && asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start));
+    const nextId = future[0]?.id || '';
+    return `<div class="agenda-list">${sessions.map(s => {
+      const st = scheduleState(s, now, todayKey, nextId);
+      const date = s.start ? formatShortDate(s.start) : 'Fecha por confirmar';
+      const time = s.start ? formatTime(s.start) : '';
+      return `<div class="agenda-item ${st.key === 'today' ? 'is-today' : ''}">
+        <div class="agenda-dot"></div>
+        <div class="agenda-date"><strong>${esc(date)}</strong><span>${esc(time)}</span></div>
+        <div class="agenda-copy"><strong>Sesión ${esc(s.number || '')}</strong><span>${esc(s.title || `Sesión ${s.number || ''}`)}</span></div>
+        <span class="agenda-status is-${esc(st.key)}">${esc(st.label)}</span>
+      </div>`;
+    }).join('')}</div>`;
+  }
+
+  function renderSessions(course, sessions, now, todayKey) {
+    if (!sessions.length) return '<div class="class-empty">Las sesiones de este curso todavía no han sido publicadas.</div>';
+    const future = sessions.filter(s => asDate(s.start) && asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start));
+    const nextId = future[0]?.id || '';
+    return sessions.map(session => {
+      const st = scheduleState(session, now, todayKey, nextId);
+      const zoom = safeUrl(session.zoomUrl) || safeUrl(course.zoomUrl);
+      return `<article class="class-session-card ${st.key === 'today' ? 'is-today' : ''}">
+        <div class="class-session-top">
+          <div class="class-session-number">${String(session.number || '').padStart(2, '0')}</div>
+          <div class="class-session-heading">
+            <span>Sesión ${esc(session.number || '')}</span>
+            <h3>${esc(session.title || `Sesión ${session.number || ''}`)}</h3>
+            ${session.start ? `<time>${esc(formatDate(session.start, true))}${session.end ? ` – ${esc(formatTime(session.end))}` : ''}</time>` : '<time>Fecha por confirmar</time>'}
+          </div>
+          <span class="agenda-status is-${esc(st.key)}">${esc(st.label)}</span>
+        </div>
+        <div class="class-session-actions">
+          ${zoom ? `<a class="class-resource is-live" href="${esc(zoom)}" target="_blank" rel="noopener">${zoomMark()}<span>Zoom</span></a>${copyButton(zoom)}` : '<span class="class-resource is-pending">Zoom pendiente</span>'}
+          ${resourceLink(session.recordingUrl, 'Grabación', 'is-recording', '▶')}
+          ${resourceLink(session.materialUrl, 'Material', 'is-material', '▣')}
+          ${session.evaluationUrl ? resourceLink(session.evaluationUrl, 'Evaluación', 'is-evaluation', '✓') : ''}
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  function bindCopyButtons(root) {
+    root.querySelectorAll('[data-copy-url]').forEach(button => {
+      button.addEventListener('click', async () => {
+        const url = button.dataset.copyUrl || '';
+        if (!url) return;
+        const original = button.textContent;
+        try {
+          await navigator.clipboard.writeText(url);
+          button.textContent = 'Copiado ✓';
+        } catch (_error) {
+          const area = document.createElement('textarea');
+          area.value = url; area.style.position = 'fixed'; area.style.opacity = '0';
+          document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove();
+          button.textContent = 'Copiado ✓';
+        }
+        window.setTimeout(() => { button.textContent = original; }, 1800);
+      });
+    });
   }
 
   function renderCourse(course) {
     const root = document.getElementById('dynamicCourse');
     const cover = safeUrl(course.coverUrl) || 'logo-centro-formacion.jpg';
-    const generalZoom = safeUrl(course.zoomUrl);
     const sessions = Array.isArray(course.sessions) ? course.sessions : [];
-    const start = formatDate(course.startDate, false);
-    const end = formatDate(course.endDate, false);
+    const start = formatDate(course.startDate, false), end = formatDate(course.endDate, false);
+    const participant = course.participant || {};
+    const now = new Date(), todayKey = dateParts(now);
 
-    document.title = `${course.shortTitle || course.title || 'Curso'} | ALTUM LUMEN`;
+    document.title = `${course.shortTitle || course.title || 'Curso'} | Aula Virtual ALTUM LUMEN`;
 
     root.innerHTML = `
-      <section class="dynamic-hero">
-        <div class="dynamic-shell dynamic-hero-grid">
-          <div class="dynamic-cover">
-            <img src="${esc(cover)}" alt="Portada de ${esc(course.shortTitle || course.title)}">
-          </div>
-          <div class="dynamic-hero-copy">
-            <span class="dynamic-kicker">${esc(course.type || 'Programa académico')} · ${esc(course.status || 'Abierto')}</span>
-            <h1>${esc(course.title || course.shortTitle)}</h1>
-            <p>${esc(course.description || 'Aula académica para participantes matriculados.')}</p>
-            <div class="dynamic-meta">
+      <section class="class-hero">
+        <div class="class-shell class-hero-grid">
+          <div class="class-cover"><img src="${esc(cover)}" alt="Portada de ${esc(course.shortTitle || course.title || 'curso')}"></div>
+          <div class="class-hero-copy">
+            <span class="class-kicker">${esc(course.type || 'Programa académico')} · Aula Virtual</span>
+            <h1>${esc(course.title || course.shortTitle || 'Curso')}</h1>
+            <p>${esc(course.description || 'Espacio académico para participantes matriculados.')}</p>
+            <div class="class-meta">
               ${start ? `<div><small>Inicio</small><strong>${esc(start)}</strong></div>` : ''}
-              ${end ? `<div><small>Fin</small><strong>${esc(end)}</strong></div>` : ''}
+              ${end ? `<div><small>Cierre</small><strong>${esc(end)}</strong></div>` : ''}
               ${course.duration ? `<div><small>Duración</small><strong>${esc(course.duration)}</strong></div>` : ''}
               ${course.scheduleText ? `<div><small>Horario</small><strong>${esc(course.scheduleText)}</strong></div>` : ''}
-              ${course.area ? `<div><small>Área</small><strong>${esc(course.area)}</strong></div>` : ''}
               <div><small>Sesiones</small><strong>${sessions.length}</strong></div>
             </div>
           </div>
         </div>
       </section>
 
-      ${generalZoom ? `
-      <section class="dynamic-shell dynamic-live">
-        <div>
-          <span>● Clases en vivo</span>
-          <h2>Acceso general a las sesiones</h2>
-          <p>Utiliza este acceso cuando la sesión no tenga un enlace propio.</p>
-        </div>
-        <a class="dynamic-btn primary" href="${esc(generalZoom)}" target="_blank" rel="noopener">Ingresar a Zoom ↗</a>
-      </section>` : ''}
+      <div class="class-shell class-dashboard">
+        <section class="student-summary-grid">
+          ${participant.name ? `<div class="student-summary-card"><small>Participante</small><strong>${esc(participant.name)}</strong><span>Acceso personal al curso</span></div>` : ''}
+          ${financeCard(course.finance)}
+          ${certificateCard(course.certificate)}
+        </section>
 
-      <section class="dynamic-shell dynamic-content">
-        <div class="dynamic-section-head">
-          <div><span>Contenido académico</span><h2>Sesiones y recursos</h2></div>
-          <p>Los enlaces se habilitan conforme avanza el programa.</p>
+        ${liveClassCard(course, sessions, now, todayKey)}
+
+        <div class="class-layout">
+          <section class="class-panel agenda-panel">
+            <div class="class-section-head"><div><span class="eyebrow">Agenda académica</span><h2>Cronograma del curso</h2></div><p>Fechas y horarios actualizados del curso.</p></div>
+            ${renderAgenda(sessions, now, todayKey)}
+          </section>
+
+          <section class="class-panel resources-panel">
+            <div class="class-section-head"><div><span class="eyebrow">Aula de clases</span><h2>Sesiones y recursos</h2></div><p>Ingresa a Zoom y consulta los recursos publicados.</p></div>
+            <div class="class-session-list">${renderSessions(course, sessions, now, todayKey)}</div>
+          </section>
         </div>
-        <div class="dynamic-sessions">
-          ${sessions.length ? sessions.map((session) => `
-            <article class="dynamic-session">
-              <div class="dynamic-session-number">${esc(session.number || '')}</div>
-              <div class="dynamic-session-body">
-                <div class="dynamic-session-title">
-                  <div>
-                    <small>Sesión ${esc(session.number || '')}</small>
-                    <h3>${esc(session.title || `Sesión ${session.number || ''}`)}</h3>
-                  </div>
-                  ${session.start ? `<time>${esc(formatDate(session.start, true))}</time>` : ''}
-                </div>
-                <div class="dynamic-resources">
-                  ${resourceLink(session.zoomUrl, 'Clase en vivo', 'is-live')}
-                  ${resourceLink(session.recordingUrl, 'Grabación', 'is-recording')}
-                  ${resourceLink(session.materialUrl, 'Material', 'is-material')}
-                  ${resourceLink(session.evaluationUrl, 'Evaluación', 'is-evaluation')}
-                </div>
-              </div>
-            </article>`).join('') :
-            '<div class="dynamic-empty">Las sesiones de este programa todavía no han sido publicadas.</div>'}
-        </div>
-      </section>`;
+      </div>`;
+
     root.hidden = false;
+    bindCopyButtons(root);
   }
 
   function optimizePortalReturn() {
@@ -130,13 +268,10 @@
       if (document.referrer && window.history.length > 1) {
         const ref = new URL(document.referrer);
         if (ref.origin === window.location.origin && /\/aula-virtual\.html$/i.test(ref.pathname)) {
-          link.addEventListener('click', (event) => { event.preventDefault(); window.history.back(); });
+          link.addEventListener('click', event => { event.preventDefault(); window.history.back(); });
         }
       }
-      const prefetch = document.createElement('link');
-      prefetch.rel = 'prefetch';
-      prefetch.href = 'aula-virtual.html';
-      document.head.appendChild(prefetch);
+      const prefetch = document.createElement('link'); prefetch.rel = 'prefetch'; prefetch.href = 'aula-virtual.html'; document.head.appendChild(prefetch);
     } catch (_error) {}
   }
 
@@ -150,69 +285,45 @@
   async function initDynamicCourse() {
     optimizePortalReturn();
     const courseId = new URLSearchParams(window.location.search).get('id') || '';
-    if (!/^[a-z0-9][a-z0-9-]{1,95}$/i.test(courseId)) {
-      showError('El identificador del curso no es válido.');
-      return;
-    }
+    if (!/^[a-z0-9][a-z0-9-]{1,95}$/i.test(courseId)) { showError('El identificador del curso no es válido.'); return; }
 
     let session = window.AltumAuth.getSession();
-    if (!session) {
-      window.location.replace(`aula-virtual.html?login=1&nextCourse=${encodeURIComponent(courseId)}`);
-      return;
-    }
+    if (!session) { window.location.replace(`aula-virtual.html?login=1&nextCourse=${encodeURIComponent(courseId)}`); return; }
 
-    // Si el curso no figura en la sesión local, hacemos una única revalidación.
-    // En el caso normal evitamos la llamada aulaSession porque aulaCourse ya valida
-    // token, alumno y matrícula en SIRA.
     if (!window.AltumAuth.hasCourse(session, courseId)) {
       const refreshed = await window.AltumAuth.refreshSession(session, { force: true });
       if (!refreshed.ok) {
         if (window.AltumAuth.isDefinitiveSessionFailure(refreshed)) window.AltumAuth.clearSession();
-        window.location.replace(`aula-virtual.html?error=sesion&nextCourse=${encodeURIComponent(courseId)}`);
-        return;
+        window.location.replace(`aula-virtual.html?error=sesion&nextCourse=${encodeURIComponent(courseId)}`); return;
       }
       session = refreshed.session;
-      if (!window.AltumAuth.hasCourse(session, courseId)) {
-        window.location.replace('aula-virtual.html?error=sin-acceso');
-        return;
-      }
+      if (!window.AltumAuth.hasCourse(session, courseId)) { window.location.replace('aula-virtual.html?error=sin-acceso'); return; }
     }
 
     window.AltumAuth.mountUserMenu(document.getElementById('courseUserArea'), session);
 
-    const cachedCourse = readCourseCache(courseId);
-    if (cachedCourse) {
-      document.getElementById('dynamicLoading').hidden = true;
-      renderCourse(cachedCourse);
-    }
+    const cachedCourse = readCourseCache(courseId, session);
+    if (cachedCourse) { document.getElementById('dynamicLoading').hidden = true; renderCourse(cachedCourse); }
 
-    // Una sola llamada remota. Si ya había contenido reciente en caché, esta
-    // actualización ocurre por detrás y el usuario no espera una pantalla vacía.
     const result = await window.AltumAuth.fetchCourse(courseId, session);
     if (!result?.ok) {
       if (cachedCourse && !window.AltumAuth.isDefinitiveSessionFailure(result)) return;
       if (window.AltumAuth.isDefinitiveSessionFailure(result)) window.AltumAuth.clearSession();
-      showError(result?.message || 'No fue posible cargar el curso.');
-      return;
+      showError(result?.message || 'No fue posible cargar los recursos del curso.'); return;
     }
 
     if (result.legacy) {
       const legacy = window.AltumAuth.getStaticCourse(courseId);
-      if (legacy?.file) {
-        window.location.replace(legacy.file);
-        return;
-      }
-      showError('Este curso utiliza el formato histórico, pero no encontramos su página en el catálogo actual.');
-      return;
+      if (legacy?.file) { window.location.replace(legacy.file); return; }
+      showError('Esta aula todavía no está disponible en el formato actualizado.'); return;
     }
 
     const course = result.course || {};
-    writeCourseCache(courseId, course);
+    writeCourseCache(courseId, session, course);
     document.getElementById('dynamicLoading').hidden = true;
     renderCourse(course);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDynamicCourse, { once: true });
   else initDynamicCourse();
-
 })();

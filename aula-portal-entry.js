@@ -1,4 +1,4 @@
-const PERF_VERSION = '20260915-courseadmin1';
+const PERF_VERSION = '20260915-aula24';
 const SESSION_KEY = 'altum_aula_session_v7';
 
 // FAST BOOT: si ya existe sesión, el formulario de login no vuelve a aparecer
@@ -33,7 +33,7 @@ function warmSiraInBackground() {
 
 // Las dependencias independientes se descargan en paralelo. La versión anterior
 // las esperaba una por una y podía sumar varios segundos en conexiones lentas.
-const configPromise = import('./aula-config.js?v=20260915-sira2');
+const configPromise = import('./aula-config.js?v=20260915-aula24');
 const dataPromise = import('./aula-datos.js?v=20260810-final-r2');
 const schedulePromise = import('./aula-schedule.js?v=20260810-final-r2');
 const routesPromise = import('./aula-clean-routes.js?v=20260810-final-r2');
@@ -41,8 +41,8 @@ const routesPromise = import('./aula-clean-routes.js?v=20260810-final-r2');
 await configPromise;
 warmSiraInBackground();
 await Promise.all([dataPromise, schedulePromise, routesPromise]);
-await import('./aula-auth.js?v=20260915-courseadmin1');
-await import('./aula-portal.js?v=20260915-courseadmin1');
+await import('./aula-auth.js?v=20260915-aula24');
+await import('./aula-portal.js?v=20260915-aula24');
 
 // Mejoras visuales no críticas: se cargan después de que el portal básico ya funciona.
 const loadUx = () => import('./aula-portal-ux.js?v=20260810-final-r3').catch(() => {});
