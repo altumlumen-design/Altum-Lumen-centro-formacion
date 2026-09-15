@@ -412,6 +412,17 @@
     else window.setTimeout(runner, 1200);
   }
 
+  function redirectLegacyPageToDynamic(session, courseId) {
+    try {
+      const course = getCourseCatalog(session).find((item) => item.id === String(courseId || ''));
+      if (course?.dynamic && /^curso\.html\?id=/i.test(String(course.file || ''))) {
+        window.location.replace(course.file);
+        return true;
+      }
+    } catch (_error) {}
+    return false;
+  }
+
   async function guardCoursePage() {
     const body = document.body;
     if (!body.classList.contains('aula-course')) return;
@@ -427,6 +438,9 @@
     // Si el curso ya está en la sesión firmada, mostramos la página inmediatamente.
     // La revalidación ocurre después y no bloquea la interfaz.
     if (courseId && hasCourse(stored, courseId)) {
+      // Los enlaces históricos siguen existiendo, pero si SIRA ya migró el curso
+      // a la gestión dinámica redirigimos de forma transparente al nuevo contenido.
+      if (redirectLegacyPageToDynamic(stored, courseId)) return;
       enhanceCourseHeader(stored);
       mountCourseStatusNotice(courseId);
       replaceInactiveLinks();
@@ -459,6 +473,7 @@
       window.location.replace('aula-virtual.html?error=sin-acceso');
       return;
     }
+    if (redirectLegacyPageToDynamic(refreshed.session, courseId)) return;
     enhanceCourseHeader(refreshed.session);
     mountCourseStatusNotice(courseId);
     replaceInactiveLinks();
