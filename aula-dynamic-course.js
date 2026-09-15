@@ -16,9 +16,32 @@
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return String(value);
     const options = withTime
-      ? { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }
-      : { day: 'numeric', month: 'long', year: 'numeric' };
+      ? { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'America/Lima' }
+      : { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Lima' };
     return new Intl.DateTimeFormat('es-PE', options).format(date);
+  }
+
+  const COURSE_CACHE_TTL_MS = 2 * 60 * 1000;
+
+  function courseCacheKey(courseId) {
+    return `altum_aula_course_cache_v1_${String(courseId || '')}`;
+  }
+
+  function readCourseCache(courseId) {
+    try {
+      const raw = window.sessionStorage.getItem(courseCacheKey(courseId));
+      if (!raw) return null;
+      const cached = JSON.parse(raw);
+      if (!cached?.course || !cached.cachedAt) return null;
+      if (Date.now() - Number(cached.cachedAt) > COURSE_CACHE_TTL_MS) return null;
+      return cached.course;
+    } catch (_error) { return null; }
+  }
+
+  function writeCourseCache(courseId, course) {
+    try {
+      window.sessionStorage.setItem(courseCacheKey(courseId), JSON.stringify({ cachedAt: Date.now(), course }));
+    } catch (_error) {}
   }
 
   function resourceLink(url, label, kind) {
@@ -114,28 +137,43 @@
       return;
     }
 
-    const stored = window.AltumAuth.getSession();
-    if (!stored) {
+    let session = window.AltumAuth.getSession();
+    if (!session) {
       window.location.replace(`aula-virtual.html?login=1&nextCourse=${encodeURIComponent(courseId)}`);
       return;
     }
 
-    const refreshed = await window.AltumAuth.refreshSession(stored);
-    if (!refreshed.ok) {
-      window.AltumAuth.clearSession();
-      window.location.replace(`aula-virtual.html?error=sesion&nextCourse=${encodeURIComponent(courseId)}`);
-      return;
-    }
-
-    const session = refreshed.session;
+    // Si el curso no figura en la sesión local, hacemos una única revalidación.
+    // En el caso normal evitamos la llamada aulaSession porque aulaCourse ya valida
+    // token, alumno y matrícula en SIRA.
     if (!window.AltumAuth.hasCourse(session, courseId)) {
-      window.location.replace('aula-virtual.html?error=sin-acceso');
-      return;
+      const refreshed = await window.AltumAuth.refreshSession(session, { force: true });
+      if (!refreshed.ok) {
+        if (window.AltumAuth.isDefinitiveSessionFailure(refreshed)) window.AltumAuth.clearSession();
+        window.location.replace(`aula-virtual.html?error=sesion&nextCourse=${encodeURIComponent(courseId)}`);
+        return;
+      }
+      session = refreshed.session;
+      if (!window.AltumAuth.hasCourse(session, courseId)) {
+        window.location.replace('aula-virtual.html?error=sin-acceso');
+        return;
+      }
     }
 
     window.AltumAuth.mountUserMenu(document.getElementById('courseUserArea'), session);
+
+    const cachedCourse = readCourseCache(courseId);
+    if (cachedCourse) {
+      document.getElementById('dynamicLoading').hidden = true;
+      renderCourse(cachedCourse);
+    }
+
+    // Una sola llamada remota. Si ya había contenido reciente en caché, esta
+    // actualización ocurre por detrás y el usuario no espera una pantalla vacía.
     const result = await window.AltumAuth.fetchCourse(courseId, session);
     if (!result?.ok) {
+      if (cachedCourse && !window.AltumAuth.isDefinitiveSessionFailure(result)) return;
+      if (window.AltumAuth.isDefinitiveSessionFailure(result)) window.AltumAuth.clearSession();
       showError(result?.message || 'No fue posible cargar el curso.');
       return;
     }
@@ -150,7 +188,10 @@
       return;
     }
 
+    const course = result.course || {};
+    writeCourseCache(courseId, course);
     document.getElementById('dynamicLoading').hidden = true;
-    renderCourse(result.course || {});
+    renderCourse(course);
   });
+
 })();

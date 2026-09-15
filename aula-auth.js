@@ -5,6 +5,19 @@
   const staticCourses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const staticById = new Map(staticCourses.map((course) => [String(course.id || ''), course]));
   const sessionKey = config.sessionKey || 'altum_aula_session_v7';
+  const SESSION_FRESH_MS = 90 * 1000;
+  let refreshPromise = null;
+
+  // Abre anticipadamente las conexiones que usa el puente de Apps Script.
+  // Reduce DNS/TLS en el primer login sin cambiar ninguna URL pública.
+  ['https://script.google.com', 'https://script.googleusercontent.com'].forEach((href) => {
+    if (document.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = href;
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+  });
 
   function formatPersonName(value) {
     const text = String(value || '').trim().replace(/\s+/g, ' ');
@@ -88,13 +101,38 @@
     }
   }
 
+  function sessionAgeMs(session) {
+    const stamp = Date.parse(session?.validatedAt || '');
+    return Number.isFinite(stamp) ? Math.max(0, Date.now() - stamp) : Number.POSITIVE_INFINITY;
+  }
+
+  function isSessionFresh(session, maxAgeMs) {
+    return Boolean(session?.token && sessionAgeMs(session) <= (Number(maxAgeMs) || SESSION_FRESH_MS));
+  }
+
+  function isDefinitiveSessionFailure(result) {
+    const message = String(result?.message || '').toLowerCase();
+    return message.includes('venció')
+      || message.includes('ya no se encuentra habilitado')
+      || message.includes('no tiene aulas habilitadas')
+      || message.includes('sesión del aula no válida');
+  }
+
   function saveSession(session) {
     window.sessionStorage.setItem(sessionKey, JSON.stringify(session));
     return session;
   }
 
   function clearSession() {
-    try { window.sessionStorage.removeItem(sessionKey); } catch (_error) {}
+    try {
+      window.sessionStorage.removeItem(sessionKey);
+      const keys = [];
+      for (let i = 0; i < window.sessionStorage.length; i += 1) {
+        const key = window.sessionStorage.key(i);
+        if (key && key.startsWith('altum_aula_course_cache_v1_')) keys.push(key);
+      }
+      keys.forEach((key) => window.sessionStorage.removeItem(key));
+    } catch (_error) {}
   }
 
   function addHidden(form, name, value) {
@@ -177,15 +215,24 @@
     return { ok: true, session: saveSession(session) };
   }
 
-  async function refreshSession(existingSession) {
+  async function refreshSession(existingSession, options) {
     const current = existingSession || readSession();
     if (!current?.token) return { ok: false, message: 'Debes iniciar sesión nuevamente.' };
-    const result = await requestSira('aulaSession', { token: current.token });
-    if (!result || result.ok !== true || !result.user || !result.token) {
-      return { ok: false, message: result?.message || 'No fue posible actualizar tu sesión.' };
-    }
-    const session = buildSession(result.user, result.token);
-    return { ok: true, session: saveSession(session) };
+    const force = options?.force === true;
+    if (!force && isSessionFresh(current)) return { ok: true, session: current, cached: true };
+    if (refreshPromise) return refreshPromise;
+
+    refreshPromise = (async () => {
+      const result = await requestSira('aulaSession', { token: current.token });
+      if (!result || result.ok !== true || !result.user || !result.token) {
+        return { ok: false, message: result?.message || 'No fue posible actualizar tu sesión.' };
+      }
+      const session = buildSession(result.user, result.token);
+      return { ok: true, session: saveSession(session) };
+    })();
+
+    try { return await refreshPromise; }
+    finally { refreshPromise = null; }
   }
 
   async function fetchCourse(courseId, existingSession) {
@@ -343,24 +390,48 @@
       return;
     }
 
-    const refreshed = await refreshSession(stored);
-    if (!refreshed.ok) {
-      clearSession();
-      window.location.replace('aula-virtual.html?error=sesion');
-      return;
-    }
-    const session = refreshed.session;
-    if (!courseId || !hasCourse(session, courseId)) {
-      window.location.replace('aula-virtual.html?error=sin-acceso');
+    // Si el curso ya está en la sesión firmada, mostramos la página inmediatamente.
+    // La revalidación ocurre después y no bloquea la interfaz.
+    if (courseId && hasCourse(stored, courseId)) {
+      enhanceCourseHeader(stored);
+      mountCourseStatusNotice(courseId);
+      replaceInactiveLinks();
+      body.classList.remove('auth-pending');
+      body.classList.add('auth-ready');
+
+      if (!isSessionFresh(stored)) {
+        window.setTimeout(async () => {
+          const refreshed = await refreshSession(stored, { force: true });
+          if (refreshed.ok) {
+            if (!hasCourse(refreshed.session, courseId)) window.location.replace('aula-virtual.html?error=sin-acceso');
+          } else if (isDefinitiveSessionFailure(refreshed)) {
+            clearSession();
+            window.location.replace('aula-virtual.html?error=sesion');
+          }
+        }, 0);
+      }
       return;
     }
 
-    enhanceCourseHeader(session);
+    // Caso poco frecuente: el curso pudo asignarse después de crear la sesión local.
+    // Revalidamos una sola vez antes de negar el acceso.
+    const refreshed = await refreshSession(stored, { force: true });
+    if (!refreshed.ok) {
+      if (isDefinitiveSessionFailure(refreshed)) clearSession();
+      window.location.replace('aula-virtual.html?error=sesion');
+      return;
+    }
+    if (!courseId || !hasCourse(refreshed.session, courseId)) {
+      window.location.replace('aula-virtual.html?error=sin-acceso');
+      return;
+    }
+    enhanceCourseHeader(refreshed.session);
     mountCourseStatusNotice(courseId);
     replaceInactiveLinks();
     body.classList.remove('auth-pending');
     body.classList.add('auth-ready');
   }
+
 
   window.AltumAuth = Object.freeze({
     authenticate,
@@ -368,6 +439,8 @@
     fetchCourse,
     clearSession,
     getSession: readSession,
+    isSessionFresh,
+    isDefinitiveSessionFailure,
     hasCourse,
     getCourseCatalog,
     getStaticCourse,

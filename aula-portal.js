@@ -70,14 +70,18 @@
     empty.hidden = assigned.length !== 0;
   }
 
+  function updateDashboardData(session) {
+    document.getElementById('welcomeName').textContent =
+      session.role === 'master' ? 'Usuario maestro' : session.displayName;
+    renderCourses(session);
+  }
+
   function showDashboard(session) {
     document.getElementById('loginView').hidden = true;
     document.getElementById('dashboardView').hidden = false;
     document.body.classList.add('portal-is-authenticated');
-    document.getElementById('welcomeName').textContent =
-      session.role === 'master' ? 'Usuario maestro' : session.displayName;
+    updateDashboardData(session);
     window.AltumAuth.mountUserMenu(document.getElementById('portalUserArea'), session);
-    renderCourses(session);
 
     const params = new URLSearchParams(window.location.search);
     const notice = document.getElementById('dashboardNotice');
@@ -103,14 +107,19 @@
     const stored = window.AltumAuth.getSession();
 
     if (stored) {
-      submit.disabled = true;
-      const refreshed = await window.AltumAuth.refreshSession(stored);
-      submit.disabled = false;
-      if (refreshed.ok) {
-        showDashboard(refreshed.session);
-      } else {
-        window.AltumAuth.clearSession();
-        showLogin(refreshed.message || 'Debes iniciar sesión nuevamente.');
+      // Stale-while-revalidate: el dashboard aparece de inmediato con la sesión
+      // ya firmada. SIRA se consulta después, sin mostrar el login como pantalla intermedia.
+      showDashboard(stored);
+      if (!window.AltumAuth.isSessionFresh(stored)) {
+        window.setTimeout(async () => {
+          const refreshed = await window.AltumAuth.refreshSession(stored, { force: true });
+          if (refreshed.ok) {
+            updateDashboardData(refreshed.session);
+          } else if (window.AltumAuth.isDefinitiveSessionFailure(refreshed)) {
+            window.AltumAuth.clearSession();
+            showLogin(refreshed.message || 'Tu sesión venció. Inicia sesión nuevamente.');
+          }
+        }, 0);
       }
     } else {
       showLogin();
@@ -121,7 +130,7 @@
       error.hidden = true;
       submit.disabled = true;
       submit.setAttribute('aria-busy', 'true');
-      submit.textContent = 'Validando con SIRA…';
+      submit.textContent = 'Ingresando…';
 
       const result = await window.AltumAuth.authenticate(
         document.getElementById('studentDni').value,
