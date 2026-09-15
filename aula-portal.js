@@ -12,6 +12,16 @@
     element.hidden = false;
   }
 
+  function clearFastBoot() {
+    document.querySelectorAll('style[data-altum-fast-boot]').forEach((node) => node.remove());
+  }
+
+  function runInBackground(task) {
+    const runner = () => Promise.resolve().then(task).catch(() => {});
+    if ('requestIdleCallback' in window) window.requestIdleCallback(runner, { timeout: 1800 });
+    else window.setTimeout(runner, 900);
+  }
+
   function courseCatalog(session) {
     return window.AltumAuth.getCourseCatalog(session);
   }
@@ -80,6 +90,7 @@
     document.getElementById('loginView').hidden = true;
     document.getElementById('dashboardView').hidden = false;
     document.body.classList.add('portal-is-authenticated');
+    clearFastBoot();
     updateDashboardData(session);
     window.AltumAuth.mountUserMenu(document.getElementById('portalUserArea'), session);
 
@@ -96,11 +107,12 @@
     document.getElementById('dashboardView').hidden = true;
     document.getElementById('loginView').hidden = false;
     document.body.classList.remove('portal-is-authenticated');
+    clearFastBoot();
     if (message) showMessage(document.getElementById('loginError'), message);
     window.setTimeout(() => document.getElementById('studentDni').focus(), 60);
   }
 
-  document.addEventListener('DOMContentLoaded', async () => {
+  async function initPortal() {
     const form = document.getElementById('loginForm');
     const error = document.getElementById('loginError');
     const submit = document.getElementById('loginSubmit');
@@ -111,7 +123,7 @@
       // ya firmada. SIRA se consulta después, sin mostrar el login como pantalla intermedia.
       showDashboard(stored);
       if (!window.AltumAuth.isSessionFresh(stored)) {
-        window.setTimeout(async () => {
+        runInBackground(async () => {
           const refreshed = await window.AltumAuth.refreshSession(stored, { force: true });
           if (refreshed.ok) {
             updateDashboardData(refreshed.session);
@@ -119,7 +131,7 @@
             window.AltumAuth.clearSession();
             showLogin(refreshed.message || 'Tu sesión venció. Inicia sesión nuevamente.');
           }
-        }, 0);
+        });
       }
     } else {
       showLogin();
@@ -130,7 +142,7 @@
       error.hidden = true;
       submit.disabled = true;
       submit.setAttribute('aria-busy', 'true');
-      submit.textContent = 'Ingresando…';
+      submit.textContent = 'Iniciando sesión...';
 
       const result = await window.AltumAuth.authenticate(
         document.getElementById('studentDni').value,
@@ -156,5 +168,8 @@
       window.history.replaceState({}, '', 'aula-virtual.html');
       showDashboard(result.session);
     });
-  });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPortal, { once: true });
+  else initPortal();
 })();

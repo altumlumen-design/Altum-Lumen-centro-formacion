@@ -95,7 +95,7 @@
       <section class="dynamic-shell dynamic-content">
         <div class="dynamic-section-head">
           <div><span>Contenido académico</span><h2>Sesiones y recursos</h2></div>
-          <p>Los enlaces se habilitan desde SIRA conforme avanza el programa.</p>
+          <p>Los enlaces se habilitan conforme avanza el programa.</p>
         </div>
         <div class="dynamic-sessions">
           ${sessions.length ? sessions.map((session) => `
@@ -123,6 +123,23 @@
     root.hidden = false;
   }
 
+  function optimizePortalReturn() {
+    const link = document.querySelector('.aula-nav-link');
+    if (!link) return;
+    try {
+      if (document.referrer && window.history.length > 1) {
+        const ref = new URL(document.referrer);
+        if (ref.origin === window.location.origin && /\/aula-virtual\.html$/i.test(ref.pathname)) {
+          link.addEventListener('click', (event) => { event.preventDefault(); window.history.back(); });
+        }
+      }
+      const prefetch = document.createElement('link');
+      prefetch.rel = 'prefetch';
+      prefetch.href = 'aula-virtual.html';
+      document.head.appendChild(prefetch);
+    } catch (_error) {}
+  }
+
   function showError(message) {
     document.getElementById('dynamicLoading').hidden = true;
     document.getElementById('dynamicCourse').hidden = true;
@@ -130,7 +147,8 @@
     document.getElementById('dynamicError').hidden = false;
   }
 
-  document.addEventListener('DOMContentLoaded', async () => {
+  async function initDynamicCourse() {
+    optimizePortalReturn();
     const courseId = new URLSearchParams(window.location.search).get('id') || '';
     if (!/^[a-z0-9][a-z0-9-]{1,95}$/i.test(courseId)) {
       showError('El identificador del curso no es válido.');
@@ -192,6 +210,9 @@
     writeCourseCache(courseId, course);
     document.getElementById('dynamicLoading').hidden = true;
     renderCourse(course);
-  });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDynamicCourse, { once: true });
+  else initDynamicCourse();
 
 })();

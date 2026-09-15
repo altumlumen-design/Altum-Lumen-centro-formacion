@@ -5,7 +5,7 @@
   const staticCourses = Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : [];
   const staticById = new Map(staticCourses.map((course) => [String(course.id || ''), course]));
   const sessionKey = config.sessionKey || 'altum_aula_session_v7';
-  const SESSION_FRESH_MS = 90 * 1000;
+  const SESSION_FRESH_MS = 5 * 60 * 1000;
   let refreshPromise = null;
 
   // Abre anticipadamente las conexiones que usa el puente de Apps Script.
@@ -145,7 +145,7 @@
 
   function requestSira(action, params) {
     const endpoint = String(config.authEndpoint || '').trim();
-    if (!endpoint) return Promise.resolve({ ok: false, message: 'El servicio SIRA no está configurado.' });
+    if (!endpoint) return Promise.resolve({ ok: false, message: 'El servicio de acceso no está disponible.' });
 
     const expectedSource = {
       aulaAuth: 'SIRA_AULA_AUTH',
@@ -179,7 +179,7 @@
         window.clearTimeout(timer);
         form.remove();
         window.setTimeout(() => frame.remove(), 0);
-        resolve(result || { ok: false, message: 'SIRA devolvió una respuesta vacía.' });
+        resolve(result || { ok: false, message: 'No fue posible completar la solicitud de acceso.' });
       };
       const onMessage = (event) => {
         const data = event.data || {};
@@ -190,7 +190,7 @@
         finish(data.payload);
       };
       const timer = window.setTimeout(
-        () => finish({ ok: false, message: 'SIRA tardó demasiado en responder. Inténtalo nuevamente.' }),
+        () => finish({ ok: false, message: 'El acceso está tardando demasiado. Inténtalo nuevamente.' }),
         Number(config.authTimeoutMs) || 20000
       );
 
@@ -333,6 +333,33 @@
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeMenu(); trigger.focus(); } });
   }
 
+  function canReturnInstantlyToPortal() {
+    try {
+      if (!document.referrer || window.history.length <= 1) return false;
+      const ref = new URL(document.referrer);
+      return ref.origin === window.location.origin && /\/aula-virtual\.html$/i.test(ref.pathname);
+    } catch (_error) { return false; }
+  }
+
+  function optimizeMyCoursesLink(link) {
+    if (!link || link.dataset.fastPortal === '1') return;
+    link.dataset.fastPortal = '1';
+    link.addEventListener('click', (event) => {
+      if (!canReturnInstantlyToPortal()) return;
+      event.preventDefault();
+      window.history.back();
+    });
+    try {
+      if (!document.querySelector('link[data-altum-prefetch-portal]')) {
+        const prefetch = document.createElement('link');
+        prefetch.rel = 'prefetch';
+        prefetch.href = 'aula-virtual.html';
+        prefetch.dataset.altumPrefetchPortal = '1';
+        document.head.appendChild(prefetch);
+      }
+    } catch (_error) {}
+  }
+
   function enhanceCourseHeader(session) {
     const header = document.querySelector('body.aula-course header');
     if (!header) return;
@@ -349,6 +376,7 @@
         </nav>
       </div>`;
     mountUserMenu(header.querySelector('#courseUserArea'), session);
+    optimizeMyCoursesLink(header.querySelector('.aula-nav-link'));
   }
 
   function replaceInactiveLinks() {
@@ -378,6 +406,12 @@
     main.prepend(notice);
   }
 
+  function runCourseCheckInBackground(task) {
+    const runner = () => Promise.resolve().then(task).catch(() => {});
+    if ('requestIdleCallback' in window) window.requestIdleCallback(runner, { timeout: 2200 });
+    else window.setTimeout(runner, 1200);
+  }
+
   async function guardCoursePage() {
     const body = document.body;
     if (!body.classList.contains('aula-course')) return;
@@ -400,7 +434,7 @@
       body.classList.add('auth-ready');
 
       if (!isSessionFresh(stored)) {
-        window.setTimeout(async () => {
+        runCourseCheckInBackground(async () => {
           const refreshed = await refreshSession(stored, { force: true });
           if (refreshed.ok) {
             if (!hasCourse(refreshed.session, courseId)) window.location.replace('aula-virtual.html?error=sin-acceso');
@@ -408,7 +442,7 @@
             clearSession();
             window.location.replace('aula-virtual.html?error=sesion');
           }
-        }, 0);
+        });
       }
       return;
     }
@@ -447,5 +481,6 @@
     mountUserMenu
   });
 
-  document.addEventListener('DOMContentLoaded', guardCoursePage);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', guardCoursePage, { once: true });
+  else guardCoursePage();
 })();
