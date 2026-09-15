@@ -2,7 +2,7 @@
   'use strict';
 
   const TZ = 'America/Lima';
-  const COURSE_CACHE_TTL_MS = 2 * 60 * 1000;
+  const COURSE_CACHE_TTL_MS = 60 * 1000;
 
   function esc(value) {
     return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -55,7 +55,7 @@
 
   function courseCacheKey(courseId, session) {
     const who = String(session?.studentCode || session?.dni || session?.role || 'guest').replace(/[^a-z0-9_-]/gi, '');
-    return `altum_aula_course_cache_v2_${who}_${String(courseId || '')}`;
+    return `altum_aula_course_cache_v3_${who}_${String(courseId || '')}`;
   }
 
   function readCourseCache(courseId, session) {
@@ -99,6 +99,39 @@
     return href ? `<button class="copy-link-btn" type="button" data-copy-url="${esc(href)}" aria-label="Copiar enlace de Zoom">Copiar enlace</button>` : '';
   }
 
+  function isEvaluationOnlySession(session) {
+    const semantic = String(session?.title || '').toLocaleLowerCase('es-PE');
+    const looksLikeEvaluation = /examen|evaluaci[oó]n/.test(semantic);
+    const hasClassResource = Boolean(safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) || safeUrl(session?.zoomUrl) || session?.start);
+    return looksLikeEvaluation && !hasClassResource;
+  }
+
+  function collectEvaluations(course, sessions) {
+    const out = [], seen = new Set();
+    (Array.isArray(course?.evaluations) ? course.evaluations : []).forEach(item => {
+      if (!item) return;
+      const key = String(item.url || item.id || '');
+      if (key && seen.has(key)) return;
+      if (key) seen.add(key);
+      out.push(item);
+    });
+    (sessions || []).forEach(session => {
+      const url = safeUrl(session?.evaluationUrl);
+      if (!url || seen.has(url)) return;
+      seen.add(url);
+      const semantic = String(session?.title || '').toLocaleLowerCase('es-PE');
+      const moduleMatch = semantic.match(/m[oó]dulo\s*(\d+)/i);
+      const moduleNumber = moduleMatch ? Number(moduleMatch[1]) : 0;
+      out.push({
+        id: `legacy-${session.id || session.number || out.length}`,
+        title: /examen|evaluaci[oó]n/.test(semantic) ? (session.title || 'Evaluación') : (moduleNumber ? `Evaluación · Módulo ${moduleNumber}` : `Evaluación · Sesión ${session.number || ''}`),
+        description: 'Evaluación académica del curso.',
+        type: moduleNumber ? 'MODULO' : 'LEGACY', moduleNumber, published: true, accepting: true, available: true, url
+      });
+    });
+    return out.sort((a, b) => Number(a.moduleNumber || 999) - Number(b.moduleNumber || 999));
+  }
+
   function liveClassCard(course, sessions, now, todayKey) {
     const today = sessions.find(s => asDate(s.start) && dateParts(asDate(s.start)) === todayKey);
     const upcoming = sessions.filter(s => {
@@ -117,6 +150,10 @@
         <span class="eyebrow">${today ? 'Clase de hoy' : 'Clases en vivo'}</span>
         <h2>${title}</h2>
         <p>${esc(when)}</p>
+        <div class="live-reminders" role="note" aria-label="Recordatorios para la clase en vivo">
+          <span>✓ Recuerda ingresar con tu nombre completo a la sesión.</span>
+          <span>✓ Ingresa 5 minutos antes de la hora programada.</span>
+        </div>
       </div>
       <div class="class-live-actions">
         ${zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Ingresar a clase</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace se habilitará cuando sea publicado.</span>'}
@@ -165,7 +202,6 @@
     const nextId = future[0]?.id || '';
     return sessions.map(session => {
       const st = scheduleState(session, now, todayKey, nextId);
-      const zoom = safeUrl(session.zoomUrl) || safeUrl(course.zoomUrl);
       return `<article class="class-session-card ${st.key === 'today' ? 'is-today' : ''}">
         <div class="class-session-top">
           <div class="class-session-number">${String(session.number || '').padStart(2, '0')}</div>
@@ -177,13 +213,30 @@
           <span class="agenda-status is-${esc(st.key)}">${esc(st.label)}</span>
         </div>
         <div class="class-session-actions">
-          ${zoom ? `<a class="class-resource is-live" href="${esc(zoom)}" target="_blank" rel="noopener">${zoomMark()}<span>Zoom</span></a>${copyButton(zoom)}` : '<span class="class-resource is-pending">Zoom pendiente</span>'}
           ${resourceLink(session.recordingUrl, 'Grabación', 'is-recording', '▶')}
           ${resourceLink(session.materialUrl, 'Material', 'is-material', '▣')}
-          ${session.evaluationUrl ? resourceLink(session.evaluationUrl, 'Evaluación', 'is-evaluation', '✓') : ''}
         </div>
       </article>`;
     }).join('');
+  }
+
+  function renderEvaluations(evaluations) {
+    if (!evaluations.length) return '<div class="class-empty">No hay evaluaciones publicadas para este curso.</div>';
+    return `<div class="evaluation-list">${evaluations.map((evaluation, index) => {
+      const href = safeUrl(evaluation.url);
+      const open = evaluation.available !== false && evaluation.accepting !== false && href;
+      const moduleLabel = Number(evaluation.moduleNumber || 0) ? `Módulo ${Number(evaluation.moduleNumber)}` : (evaluation.type === 'FINAL' ? 'Evaluación final' : 'Evaluación');
+      return `<article class="evaluation-card ${open ? 'is-open' : 'is-closed'}">
+        <div class="evaluation-icon" aria-hidden="true">${String(index + 1).padStart(2, '0')}</div>
+        <div class="evaluation-copy">
+          <span class="eyebrow">${esc(moduleLabel)}</span>
+          <h3>${esc(evaluation.title || moduleLabel)}</h3>
+          <p>${esc(evaluation.description || (open ? 'Evaluación habilitada para participantes matriculados.' : 'La evaluación se encuentra cerrada temporalmente.'))}</p>
+          ${Number(evaluation.totalPoints || 0) ? `<small>${esc(evaluation.totalPoints)} punto(s)${evaluation.minGrade !== null && evaluation.minGrade !== undefined ? ` · Nota mínima referencial: ${esc(evaluation.minGrade)}` : ''}</small>` : ''}
+        </div>
+        <div class="evaluation-action">${open ? `<a class="class-btn evaluation-btn" href="${esc(href)}" target="_blank" rel="noopener">Resolver evaluación</a>` : '<span class="evaluation-closed-label">Cerrada</span>'}</div>
+      </article>`;
+    }).join('')}</div>`;
   }
 
   function bindCopyButtons(root) {
@@ -209,7 +262,9 @@
   function renderCourse(course) {
     const root = document.getElementById('dynamicCourse');
     const cover = safeUrl(course.coverUrl) || 'logo-centro-formacion.jpg';
-    const sessions = Array.isArray(course.sessions) ? course.sessions : [];
+    const allSessions = Array.isArray(course.sessions) ? course.sessions : [];
+    const academicSessions = allSessions.filter(session => !isEvaluationOnlySession(session));
+    const evaluations = collectEvaluations(course, allSessions);
     const start = formatDate(course.startDate, false), end = formatDate(course.endDate, false);
     const participant = course.participant || {};
     const now = new Date(), todayKey = dateParts(now);
@@ -229,7 +284,7 @@
               ${end ? `<div><small>Cierre</small><strong>${esc(end)}</strong></div>` : ''}
               ${course.duration ? `<div><small>Duración</small><strong>${esc(course.duration)}</strong></div>` : ''}
               ${course.scheduleText ? `<div><small>Horario</small><strong>${esc(course.scheduleText)}</strong></div>` : ''}
-              <div><small>Sesiones</small><strong>${sessions.length}</strong></div>
+              <div><small>Sesiones</small><strong>${academicSessions.length}</strong></div>
             </div>
           </div>
         </div>
@@ -242,19 +297,21 @@
           ${certificateCard(course.certificate)}
         </section>
 
-        ${liveClassCard(course, sessions, now, todayKey)}
+        ${liveClassCard(course, academicSessions, now, todayKey)}
 
         <div class="class-layout">
           <section class="class-panel agenda-panel">
             <div class="class-section-head"><div><span class="eyebrow">Agenda académica</span><h2>Cronograma del curso</h2></div><p>Fechas y horarios actualizados del curso.</p></div>
-            ${renderAgenda(sessions, now, todayKey)}
+            ${renderAgenda(academicSessions, now, todayKey)}
           </section>
 
           <section class="class-panel resources-panel">
-            <div class="class-section-head"><div><span class="eyebrow">Aula de clases</span><h2>Sesiones y recursos</h2></div><p>Ingresa a Zoom y consulta los recursos publicados.</p></div>
-            <div class="class-session-list">${renderSessions(course, sessions, now, todayKey)}</div>
+            <div class="class-section-head"><div><span class="eyebrow">Aula de clases</span><h2>Sesiones y recursos</h2></div><p>Consulta grabaciones y materiales publicados por sesión.</p></div>
+            <div class="class-session-list">${renderSessions(course, academicSessions, now, todayKey)}</div>
           </section>
         </div>
+
+        ${evaluations.length ? `<section class="class-panel evaluation-panel"><div class="class-section-head"><div><span class="eyebrow">Evaluación académica</span><h2>Evaluaciones del curso</h2></div><p>Accede únicamente a las evaluaciones que se encuentren habilitadas.</p></div>${renderEvaluations(evaluations)}</section>` : ''}
       </div>`;
 
     root.hidden = false;
