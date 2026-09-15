@@ -7,6 +7,15 @@
   const sessionKey = config.sessionKey || 'altum_aula_session_v5';
   let rosterPromise = null;
 
+  function formatPersonName(value) {
+    const text = String(value || '').trim().replace(/\s+/g, ' ');
+    if (!text) return '';
+    const lower = text.toLocaleLowerCase('es-PE');
+    return lower.replace(/(^|[\s\-'])([a-záéíóúüñ])/g, (_match, separator, letter) =>
+      separator + letter.toLocaleUpperCase('es-PE')
+    );
+  }
+
   function readSession() {
     try {
       const value = window.sessionStorage.getItem(sessionKey);
@@ -16,6 +25,8 @@
       if (!session || !dni || !Array.isArray(session.courses)) return null;
       session.dni = dni;
       session.studentCode = dni;
+      session.displayName = formatPersonName(session.displayName || dni);
+      session.initials = initials(session.displayName, dni);
       session.courses = normalizeCourses(session.role === 'master' ? '*' : session.courses);
       return session;
     } catch (_error) {
@@ -84,7 +95,7 @@
 
   function buildSession(payload) {
     const dni = normalizeDni(payload.dni || payload.studentCode);
-    const displayName = String(payload.name || dni || 'Alumno').trim();
+    const displayName = formatPersonName(payload.name || dni || 'Alumno');
     return {
       dni,
       studentCode: dni,
