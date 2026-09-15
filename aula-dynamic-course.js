@@ -2,7 +2,7 @@
   'use strict';
 
   const TZ = 'America/Lima';
-  const COURSE_CACHE_TTL_MS = 60 * 1000;
+  const COURSE_CACHE_TTL_MS = 10 * 60 * 1000;
 
   function esc(value) {
     return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -55,7 +55,7 @@
 
   function courseCacheKey(courseId, session) {
     const who = String(session?.studentCode || session?.dni || session?.role || 'guest').replace(/[^a-z0-9_-]/gi, '');
-    return `altum_aula_course_cache_v3_${who}_${String(courseId || '')}`;
+    return `altum_aula_course_cache_v31_${who}_${String(courseId || '')}`;
   }
 
   function readCourseCache(courseId, session) {
@@ -79,16 +79,19 @@
     return `<span class="zoom-mark" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><rect x="3" y="6" width="12" height="12" rx="3"></rect><path d="M15 10.1 20.2 7.5c.4-.2.8.1.8.6v7.8c0 .5-.4.8-.8.6L15 13.9z"></path></svg></span>`;
   }
 
-  function resourceLink(url, label, kind, icon) {
-    const href = safeUrl(url);
-    if (!href) return `<span class="class-resource is-pending"><span>${esc(icon || '•')}</span>${esc(label)} pendiente</span>`;
-    return `<a class="class-resource ${esc(kind || '')}" href="${esc(href)}" target="_blank" rel="noopener"><span>${esc(icon || '↗')}</span>${esc(label)}</a>`;
+  function resourceBlock(url, label, kind, icon) {
+    const href = safeUrl(url), done = Boolean(href);
+    return `<div class="session-resource-state ${done ? 'is-done' : 'is-pending'}">
+      <div class="session-resource-copy"><span>${esc(icon || '•')}</span><div><small>${esc(label)}</small><strong>${done ? 'Realizado ✓' : 'Pendiente'}</strong></div></div>
+      ${done ? `<a class="class-resource ${esc(kind || '')}" href="${esc(href)}" target="_blank" rel="noopener">Abrir</a>` : ''}
+    </div>`;
   }
 
   function scheduleState(session, now, todayKey, nextId) {
     const start = asDate(session.start), end = asDate(session.end) || start;
-    const key = start ? dateParts(start) : '';
-    if (key && key === todayKey) return { key: 'today', label: 'Hoy' };
+    if (!start) return safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) ? { key: 'done', label: 'Realizada' } : { key: 'scheduled', label: 'Programada' };
+    const key = dateParts(start);
+    if (key === todayKey) return { key: 'today', label: 'Hoy' };
     if (end && end.getTime() < now.getTime()) return { key: 'done', label: 'Realizada' };
     if (nextId && session.id === nextId) return { key: 'next', label: 'Próxima' };
     return { key: 'scheduled', label: 'Programada' };
@@ -132,33 +135,52 @@
     return out.sort((a, b) => Number(a.moduleNumber || 999) - Number(b.moduleNumber || 999));
   }
 
-  function liveClassCard(course, sessions, now, todayKey) {
-    const today = sessions.find(s => asDate(s.start) && dateParts(asDate(s.start)) === todayKey);
-    const upcoming = sessions.filter(s => {
-      const d = asDate(s.start); return d && d.getTime() >= now.getTime();
-    }).sort((a, b) => asDate(a.start) - asDate(b.start))[0];
-    const focus = today || upcoming || null;
-    const zoomUrl = safeUrl(focus?.zoomUrl) || safeUrl(course.zoomUrl);
-    if (!focus && !zoomUrl) return '';
+  function countdownLabel(startValue, endValue, now) {
+    const start = asDate(startValue), end = asDate(endValue);
+    if (!start) return '';
+    const diff = start.getTime() - now.getTime();
+    if (diff <= 0 && (!end || now.getTime() <= end.getTime())) return 'La clase está en curso';
+    if (end && now.getTime() > end.getTime()) return 'La sesión de hoy ya finalizó';
+    const mins = Math.max(0, Math.ceil(diff / 60000));
+    if (mins < 60) return `Faltan ${mins} min`;
+    if (mins < 24 * 60) { const h = Math.floor(mins / 60), m = mins % 60; return `Faltan ${h} h${m ? ` ${m} min` : ''}`; }
+    const days = Math.ceil(mins / 1440); return `Faltan ${days} día${days === 1 ? '' : 's'}`;
+  }
 
-    const title = today ? `Hoy tienes sesión${focus?.number ? ` · Sesión ${esc(focus.number)}` : ''}` : (focus ? `Próxima clase · Sesión ${esc(focus.number || '')}` : 'Acceso a clases en vivo');
-    const when = focus?.start ? `${formatDate(focus.start, true)}${focus.end ? ` – ${formatTime(focus.end)}` : ''}` : 'Consulta el cronograma del curso.';
+  function liveClassCard(course, sessions, now, todayKey) {
+    const dated = sessions.filter(s => asDate(s.start));
+    const today = dated.find(s => dateParts(asDate(s.start)) === todayKey);
+    const upcoming = dated.filter(s => asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start))[0];
+    const focus = today || upcoming || null;
+    if (!focus) return '';
+    const zoomUrl = safeUrl(focus.zoomUrl);
+    const title = today ? `✓ Hoy tienes clase${focus.number ? ` · Sesión ${esc(focus.number)}` : ''}` : `Próxima clase${focus.number ? ` · Sesión ${esc(focus.number)}` : ''}`;
+    const when = `${formatDate(focus.start, true)}${focus.end ? ` – ${formatTime(focus.end)}` : ''}`;
+    const count = countdownLabel(focus.start, focus.end, now);
 
     return `<section class="class-live-card ${today ? 'is-today' : ''}">
-      <div class="class-live-icon">${today ? '<span class="bell-icon" aria-hidden="true">🔔</span>' : zoomMark()}</div>
+      <div class="class-live-icon">${today ? '<span class="today-check" aria-hidden="true">✓</span>' : zoomMark()}</div>
       <div class="class-live-copy">
-        <span class="eyebrow">${today ? 'Clase de hoy' : 'Clases en vivo'}</span>
+        <span class="eyebrow">${today ? 'Clase de hoy' : 'Siguiente sesión'}</span>
         <h2>${title}</h2>
         <p>${esc(when)}</p>
+        <strong class="class-countdown" data-countdown-start="${esc(focus.start || '')}" data-countdown-end="${esc(focus.end || '')}">${esc(count)}</strong>
+        ${focus.reprogrammed ? `<span class="reprogrammed-note">↻ Sesión reprogramada${focus.previousStart ? ` · fecha anterior: ${esc(formatDate(focus.previousStart, false))}` : ''}</span>` : ''}
         <div class="live-reminders" role="note" aria-label="Recordatorios para la clase en vivo">
           <span>✓ Recuerda ingresar con tu nombre completo a la sesión.</span>
           <span>✓ Ingresa 5 minutos antes de la hora programada.</span>
         </div>
       </div>
       <div class="class-live-actions">
-        ${zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Ingresar a clase</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace se habilitará cuando sea publicado.</span>'}
+        ${zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Ingresar a clase</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace de Zoom de esta sesión aún no ha sido publicado.</span>'}
       </div>
     </section>`;
+  }
+
+  function whatsappCard(course) {
+    const href = safeUrl(course?.whatsappUrl);
+    if (!href) return '';
+    return `<section class="course-community-card"><div><span class="eyebrow">Comunidad del curso</span><h2>Grupo de WhatsApp</h2><p>Accede al grupo oficial registrado para este curso.</p></div><a class="whatsapp-btn" href="${esc(href)}" target="_blank" rel="noopener">Entrar al grupo de WhatsApp</a></section>`;
   }
 
   function financeCard(finance) {
@@ -180,17 +202,16 @@
   }
 
   function renderAgenda(sessions, now, todayKey) {
-    if (!sessions.length) return '<div class="class-empty">El cronograma todavía no ha sido publicado.</div>';
-    const future = sessions.filter(s => asDate(s.start) && asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start));
+    const dated = sessions.filter(s => asDate(s.start));
+    if (!dated.length) return '<div class="class-empty">El cronograma se administra desde Gestión del curso.</div>';
+    const future = dated.filter(s => asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start));
     const nextId = future[0]?.id || '';
-    return `<div class="agenda-list">${sessions.map(s => {
-      const st = scheduleState(s, now, todayKey, nextId);
-      const date = s.start ? formatShortDate(s.start) : 'Fecha por confirmar';
-      const time = s.start ? formatTime(s.start) : '';
+    return `<div class="agenda-list">${dated.map(s => {
+      const st = scheduleState(s, now, todayKey, nextId), date = formatShortDate(s.start), time = formatTime(s.start);
       return `<div class="agenda-item ${st.key === 'today' ? 'is-today' : ''}">
         <div class="agenda-dot"></div>
-        <div class="agenda-date"><strong>${esc(date)}</strong><span>${esc(time)}</span></div>
-        <div class="agenda-copy"><strong>Sesión ${esc(s.number || '')}</strong><span>${esc(s.title || `Sesión ${s.number || ''}`)}</span></div>
+        <div class="agenda-date"><strong>${esc(date)}</strong><span>${esc(time)}${s.end ? ` – ${esc(formatTime(s.end))}` : ''}</span></div>
+        <div class="agenda-copy"><strong>Sesión ${esc(s.number || '')}</strong><span>${esc(s.title || `Sesión ${s.number || ''}`)}</span>${s.reprogrammed ? '<small class="agenda-reprogrammed">↻ Reprogramada</small>' : ''}</div>
         <span class="agenda-status is-${esc(st.key)}">${esc(st.label)}</span>
       </div>`;
     }).join('')}</div>`;
@@ -201,20 +222,21 @@
     const future = sessions.filter(s => asDate(s.start) && asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start));
     const nextId = future[0]?.id || '';
     return sessions.map(session => {
-      const st = scheduleState(session, now, todayKey, nextId);
+      const st = scheduleState(session, now, todayKey, nextId), dateLine = session.start ? `${formatDate(session.start, true)}${session.end ? ` – ${formatTime(session.end)}` : ''}` : '';
       return `<article class="class-session-card ${st.key === 'today' ? 'is-today' : ''}">
         <div class="class-session-top">
           <div class="class-session-number">${String(session.number || '').padStart(2, '0')}</div>
           <div class="class-session-heading">
             <span>Sesión ${esc(session.number || '')}</span>
             <h3>${esc(session.title || `Sesión ${session.number || ''}`)}</h3>
-            ${session.start ? `<time>${esc(formatDate(session.start, true))}${session.end ? ` – ${esc(formatTime(session.end))}` : ''}</time>` : '<time>Fecha por confirmar</time>'}
+            ${dateLine ? `<time>${esc(dateLine)}</time>` : ''}
+            ${session.reprogrammed ? `<small class="session-reprogrammed">↻ Reprogramada${session.previousStart ? ` · antes: ${esc(formatDate(session.previousStart, false))}` : ''}</small>` : ''}
           </div>
           <span class="agenda-status is-${esc(st.key)}">${esc(st.label)}</span>
         </div>
-        <div class="class-session-actions">
-          ${resourceLink(session.recordingUrl, 'Grabación', 'is-recording', '▶')}
-          ${resourceLink(session.materialUrl, 'Material', 'is-material', '▣')}
+        <div class="class-session-actions resource-progress-grid">
+          ${resourceBlock(session.recordingUrl, 'Grabación / video', 'is-recording', '▶')}
+          ${resourceBlock(session.materialUrl, 'Material', 'is-material', '▣')}
         </div>
       </article>`;
     }).join('');
@@ -259,6 +281,13 @@
     });
   }
 
+  function bindCountdowns(root) {
+    const nodes = [...root.querySelectorAll('[data-countdown-start]')];
+    if (!nodes.length) return;
+    const tick = () => { const now = new Date(); nodes.forEach(node => { node.textContent = countdownLabel(node.dataset.countdownStart, node.dataset.countdownEnd, now); }); };
+    tick(); window.setInterval(tick, 30000);
+  }
+
   function renderCourse(course) {
     const root = document.getElementById('dynamicCourse');
     const cover = safeUrl(course.coverUrl) || 'logo-centro-formacion.jpg';
@@ -298,6 +327,7 @@
         </section>
 
         ${liveClassCard(course, academicSessions, now, todayKey)}
+        ${whatsappCard(course)}
 
         <div class="class-layout">
           <section class="class-panel agenda-panel">
@@ -316,6 +346,7 @@
 
     root.hidden = false;
     bindCopyButtons(root);
+    bindCountdowns(root);
   }
 
   function optimizePortalReturn() {
