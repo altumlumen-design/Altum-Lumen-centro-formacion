@@ -82,17 +82,17 @@
   function resourceBlock(url, label, kind, icon) {
     const href = safeUrl(url), done = Boolean(href);
     return `<div class="session-resource-state ${done ? 'is-done' : 'is-pending'}">
-      <div class="session-resource-copy"><span>${esc(icon || '•')}</span><div><small>${esc(label)}</small><strong>${done ? 'Realizado ✓' : 'Pendiente'}</strong></div></div>
+      <div class="session-resource-copy"><span>${esc(icon || '•')}</span><div><small>${esc(label)}</small><strong>${done ? 'Disponible ✓' : 'Pendiente'}</strong></div></div>
       ${done ? `<a class="class-resource ${esc(kind || '')}" href="${esc(href)}" target="_blank" rel="noopener">Abrir</a>` : ''}
     </div>`;
   }
 
   function scheduleState(session, now, todayKey, nextId) {
     const start = asDate(session.start), end = asDate(session.end) || start;
-    if (!start) return safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) ? { key: 'done', label: 'Realizada' } : { key: 'scheduled', label: 'Programada' };
+    if (!start) return safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) ? { key: 'done', label: 'Sesión realizada' } : { key: 'scheduled', label: 'Programada' };
     const key = dateParts(start);
     if (key === todayKey) return { key: 'today', label: 'Hoy' };
-    if (end && end.getTime() < now.getTime()) return { key: 'done', label: 'Realizada' };
+    if (end && end.getTime() < now.getTime()) return { key: 'done', label: 'Sesión realizada' };
     if (nextId && session.id === nextId) return { key: 'next', label: 'Próxima' };
     return { key: 'scheduled', label: 'Programada' };
   }
