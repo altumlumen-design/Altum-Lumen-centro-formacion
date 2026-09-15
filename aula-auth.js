@@ -144,9 +144,11 @@
         resolve(result || { ok: false, message: 'SIRA devolvió una respuesta vacía.' });
       };
       const onMessage = (event) => {
-        if (event.source !== frame.contentWindow) return;
         const data = event.data || {};
         if (data.source !== expectedSource || data.requestId !== requestId) return;
+        const origin = String(event.origin || '');
+        const trustedGoogleOrigin = origin === 'null' || /^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|script\.google\.com)$/i.test(origin);
+        if (!trustedGoogleOrigin) return;
         finish(data.payload);
       };
       const timer = window.setTimeout(
