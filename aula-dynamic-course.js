@@ -79,6 +79,27 @@
     return `<span class="zoom-mark" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><rect x="3" y="6" width="12" height="12" rx="3"></rect><path d="M15 10.1 20.2 7.5c.4-.2.8.1.8.6v7.8c0 .5-.4.8-.8.6L15 13.9z"></path></svg></span>`;
   }
 
+  // Un único enlace de Zoom por curso. Primero usa SIRA; para cursos históricos
+  // todavía no normalizados aprovecha el enlace del catálogo estático existente.
+  function courseZoomUrl(course, sessions) {
+    const direct = safeUrl(course?.zoomUrl);
+    if (direct) return direct;
+    const inherited = (sessions || []).map(session => safeUrl(session?.zoomUrl)).find(Boolean);
+    if (inherited) return inherited;
+    const courseId = String(course?.id || '');
+    const legacy = (Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : []).find(item => String(item?.id || '') === courseId);
+    return safeUrl(legacy?.schedule?.liveUrl);
+  }
+
+  function zoomResourceBlock(url) {
+    const href = safeUrl(url);
+    if (!href) return '';
+    return `<div class="session-resource-state is-done is-zoom">
+      <div class="session-resource-copy">${zoomMark()}<div><small>Clase en vivo</small><strong>Zoom disponible</strong></div></div>
+      <a class="class-resource is-live" href="${esc(href)}" target="_blank" rel="noopener">Unirse</a>
+    </div>`;
+  }
+
   function resourceBlock(url, label, kind, icon) {
     const href = safeUrl(url), done = Boolean(href);
     return `<div class="session-resource-state ${done ? 'is-done' : 'is-pending'}">
@@ -105,7 +126,7 @@
   function isEvaluationOnlySession(session) {
     const semantic = String(session?.title || '').toLocaleLowerCase('es-PE');
     const looksLikeEvaluation = /examen|evaluaci[oó]n/.test(semantic);
-    const hasClassResource = Boolean(safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) || safeUrl(session?.zoomUrl) || session?.start);
+    const hasClassResource = Boolean(safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) || session?.start);
     return looksLikeEvaluation && !hasClassResource;
   }
 
@@ -152,8 +173,27 @@
     const today = dated.find(s => dateParts(asDate(s.start)) === todayKey);
     const upcoming = dated.filter(s => asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start))[0];
     const focus = today || upcoming || null;
-    if (!focus) return '';
-    const zoomUrl = safeUrl(focus.zoomUrl);
+    const zoomUrl = courseZoomUrl(course, sessions);
+    if (!focus && !zoomUrl) return '';
+
+    if (!focus) {
+      return `<section class="class-live-card">
+        <div class="class-live-icon">${zoomMark()}</div>
+        <div class="class-live-copy">
+          <span class="eyebrow">Clase en vivo</span>
+          <h2>Acceso de Zoom disponible</h2>
+          <p>Este es el enlace oficial del curso y se mantiene disponible mientras esté publicado.</p>
+          <div class="live-reminders" role="note" aria-label="Recordatorios para la clase en vivo">
+            <span>✓ Recuerda ingresar con tu nombre completo a la sesión.</span>
+            <span>✓ Ingresa 5 minutos antes de la hora programada.</span>
+          </div>
+        </div>
+        <div class="class-live-actions">
+          <a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Unirse a la sesión</span></a>${copyButton(zoomUrl)}
+        </div>
+      </section>`;
+    }
+
     const title = today ? `✓ Hoy tienes clase${focus.number ? ` · Sesión ${esc(focus.number)}` : ''}` : `Próxima clase${focus.number ? ` · Sesión ${esc(focus.number)}` : ''}`;
     const when = `${formatDate(focus.start, true)}${focus.end ? ` – ${formatTime(focus.end)}` : ''}`;
     const count = countdownLabel(focus.start, focus.end, now);
@@ -172,7 +212,7 @@
         </div>
       </div>
       <div class="class-live-actions">
-        ${zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Ingresar a clase</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace de Zoom de esta sesión aún no ha sido publicado.</span>'}
+        ${zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Unirse a la sesión</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace de Zoom del curso aún no ha sido publicado.</span>'}
       </div>
     </section>`;
   }
@@ -219,6 +259,7 @@
 
   function renderSessions(course, sessions, now, todayKey) {
     if (!sessions.length) return '<div class="class-empty">Las sesiones de este curso todavía no han sido publicadas.</div>';
+    const sharedZoom = courseZoomUrl(course, sessions);
     const future = sessions.filter(s => asDate(s.start) && asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start));
     const nextId = future[0]?.id || '';
     return sessions.map(session => {
@@ -235,6 +276,7 @@
           <span class="agenda-status is-${esc(st.key)}">${esc(st.label)}</span>
         </div>
         <div class="class-session-actions resource-progress-grid">
+          ${zoomResourceBlock(sharedZoom)}
           ${resourceBlock(session.recordingUrl, 'Grabación / video', 'is-recording', '▶')}
           ${resourceBlock(session.materialUrl, 'Material', 'is-material', '▣')}
         </div>
