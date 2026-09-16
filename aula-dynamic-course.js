@@ -276,7 +276,7 @@
           <span class="agenda-status is-${esc(st.key)}">${esc(st.label)}</span>
         </div>
         <div class="class-session-actions resource-progress-grid">
-          ${zoomResourceBlock(sharedZoom)}
+          ${st.key === 'today' ? zoomResourceBlock(sharedZoom) : ''}
           ${resourceBlock(session.recordingUrl, 'Grabación / video', 'is-recording', '▶')}
           ${resourceBlock(session.materialUrl, 'Material', 'is-material', '▣')}
         </div>
