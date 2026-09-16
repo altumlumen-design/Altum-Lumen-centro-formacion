@@ -55,7 +55,7 @@
 
   function courseCacheKey(courseId, session) {
     const who = String(session?.studentCode || session?.dni || session?.role || 'guest').replace(/[^a-z0-9_-]/gi, '');
-    return `altum_aula_course_cache_v31_${who}_${String(courseId || '')}`;
+    return `altum_aula_course_cache_v32_${who}_${String(courseId || '')}`;
   }
 
   function readCourseCache(courseId, session) {
@@ -174,25 +174,9 @@
     const upcoming = dated.filter(s => asDate(s.start).getTime() >= now.getTime()).sort((a, b) => asDate(a.start) - asDate(b.start))[0];
     const focus = today || upcoming || null;
     const zoomUrl = courseZoomUrl(course, sessions);
-    if (!focus && !zoomUrl) return '';
-
-    if (!focus) {
-      return `<section class="class-live-card">
-        <div class="class-live-icon">${zoomMark()}</div>
-        <div class="class-live-copy">
-          <span class="eyebrow">Clase en vivo</span>
-          <h2>Acceso de Zoom disponible</h2>
-          <p>Este es el enlace oficial del curso y se mantiene disponible mientras esté publicado.</p>
-          <div class="live-reminders" role="note" aria-label="Recordatorios para la clase en vivo">
-            <span>✓ Recuerda ingresar con tu nombre completo a la sesión.</span>
-            <span>✓ Ingresa 5 minutos antes de la hora programada.</span>
-          </div>
-        </div>
-        <div class="class-live-actions">
-          <a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Unirse a la sesión</span></a>${copyButton(zoomUrl)}
-        </div>
-      </section>`;
-    }
+    // El enlace Zoom es único por curso, pero solo debe exponerse el día de la clase.
+    // Un curso ya culminado no mantiene un botón de Zoom permanente en pantalla.
+    if (!focus) return '';
 
     const title = today ? `✓ Hoy tienes clase${focus.number ? ` · Sesión ${esc(focus.number)}` : ''}` : `Próxima clase${focus.number ? ` · Sesión ${esc(focus.number)}` : ''}`;
     const when = `${formatDate(focus.start, true)}${focus.end ? ` – ${formatTime(focus.end)}` : ''}`;
@@ -212,7 +196,9 @@
         </div>
       </div>
       <div class="class-live-actions">
-        ${zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Unirse a la sesión</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace de Zoom del curso aún no ha sido publicado.</span>'}
+        ${today
+          ? (zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Unirse a la sesión</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace de Zoom del curso aún no ha sido publicado.</span>')
+          : '<span class="class-muted-note">El acceso de Zoom se mostrará el día de la sesión.</span>'}
       </div>
     </section>`;
   }
@@ -303,6 +289,26 @@
     }).join('')}</div>`;
   }
 
+  function courseProgressCard(course, sessions, now) {
+    const total = Math.max(0, Number(course?.totalSessions || sessions.length || 0));
+    if (!total) return '';
+    let completed = Math.max(0, Number(course?.completedSessions || 0));
+    if (!course?.totalSessions) completed = sessions.filter(s => {
+      const end = asDate(s.end) || asDate(s.start);
+      return end ? end.getTime() < now.getTime() : Boolean(safeUrl(s.recordingUrl) || safeUrl(s.materialUrl));
+    }).length;
+    completed = Math.min(total, completed);
+    const percent = Math.max(0, Math.min(100, Number.isFinite(Number(course?.progressPercent)) && Number(course.progressPercent) > 0
+      ? Math.round(Number(course.progressPercent))
+      : Math.round((completed / total) * 100)));
+    const label = String(course?.statusLabel || (percent >= 100 ? 'Finalizado' : 'En curso'));
+    return `<section class="course-progress-card" aria-label="Avance del curso">
+      <div class="course-progress-head"><div><span class="eyebrow">Avance académico</span><strong>${esc(label)}</strong></div><b>${percent}%</b></div>
+      <div class="course-progress-track"><span style="width:${percent}%"></span></div>
+      <small>${completed} de ${total} sesiones realizadas</small>
+    </section>`;
+  }
+
   function bindCopyButtons(root) {
     root.querySelectorAll('[data-copy-url]').forEach(button => {
       button.addEventListener('click', async () => {
@@ -368,6 +374,7 @@
           ${certificateCard(course.certificate)}
         </section>
 
+        ${courseProgressCard(course, academicSessions, now)}
         ${liveClassCard(course, academicSessions, now, todayKey)}
         ${whatsappCard(course)}
 

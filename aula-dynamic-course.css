@@ -44,3 +44,25 @@
 @media(max-width:760px){.course-community-card{align-items:flex-start}.resource-progress-grid{grid-template-columns:1fr}.resource-progress-grid.class-session-actions{margin-left:0}}
 @media(max-width:620px){.course-community-card{display:block;padding:15px}.whatsapp-btn{width:100%;margin-top:13px;min-height:44px}.session-resource-state{padding:10px}.class-countdown{font-size:11px}.resource-progress-grid.class-session-actions{display:grid;grid-template-columns:1fr;margin-left:0}.session-resource-state .class-resource{width:auto;min-height:34px}}
 @media(max-width:390px){.session-resource-state{align-items:flex-start;flex-direction:column}.session-resource-state .class-resource{width:100%;justify-content:center}.course-community-card h2{font-size:18px}}
+
+/* AULA 3.2 · avance académico basado en sesiones reales de SIRA */
+.course-progress-card{
+  margin:0 0 18px;
+  padding:16px 18px;
+  border:1px solid rgba(13,38,58,.12);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 10px 28px rgba(13,38,58,.055);
+}
+.course-progress-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
+.course-progress-head .eyebrow{display:block;margin-bottom:3px}
+.course-progress-head strong{display:block;color:#0d263a;font-size:15px}
+.course-progress-head b{color:#0d263a;font-size:20px;line-height:1}
+.course-progress-track{height:7px;margin:11px 0 7px;overflow:hidden;border-radius:999px;background:#e7edf2}
+.course-progress-track span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#173d68,#188451)}
+.course-progress-card small{color:#66758a;font-size:10.5px;font-weight:800}
+@media(max-width:560px){
+  .course-progress-card{margin-bottom:12px;padding:13px 14px;border-radius:15px}
+  .course-progress-head strong{font-size:13px}
+  .course-progress-head b{font-size:18px}
+}

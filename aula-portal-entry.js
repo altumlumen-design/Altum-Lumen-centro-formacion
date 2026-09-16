@@ -1,9 +1,8 @@
-const PERF_VERSION = '20260915-aula24';
+const PERF_VERSION = '20260915-aula32';
 const SESSION_KEY = 'altum_aula_session_v7';
 
-// FAST BOOT: si ya existe sesión, el formulario de login no vuelve a aparecer
-// mientras cargan los módulos. El estilo se retira únicamente cuando portal.js
-// ya decidió qué vista debe quedar visible.
+// FAST BOOT: si ya existe sesión, evita que el formulario de login parpadee
+// mientras se hidrata el catálogo firmado que quedó en sessionStorage.
 try {
   if (window.sessionStorage.getItem(SESSION_KEY)) {
     const style = document.createElement('style');
@@ -20,31 +19,17 @@ function warmSiraInBackground() {
     const url = new URL(endpoint);
     url.searchParams.set('action', 'aulaHealth');
     url.searchParams.set('_', String(Date.now()));
-    // Respuesta opaca intencional: solo buscamos adelantar DNS/TLS, cold start y cachés.
-    window.fetch(url.href, {
-      method: 'GET',
-      mode: 'no-cors',
-      cache: 'no-store',
-      credentials: 'omit',
-      priority: 'low'
-    }).catch(() => {});
+    window.fetch(url.href, { method:'GET', mode:'no-cors', cache:'no-store', credentials:'omit', priority:'low' }).catch(() => {});
   } catch (_error) {}
 }
 
-// Las dependencias independientes se descargan en paralelo. La versión anterior
-// las esperaba una por una y podía sumar varios segundos en conexiones lentas.
-const configPromise = import('./aula-config.js?v=20260915-aula24');
-const dataPromise = import('./aula-datos.js?v=20260810-final-r2');
-const schedulePromise = import('./aula-schedule.js?v=20260810-final-r2');
-const routesPromise = import('./aula-clean-routes.js?v=20260810-final-r2');
-
-await configPromise;
+// Solo cargamos lo imprescindible. El antiguo aula-portal-ux.js ya no se importa:
+// su clasificación dependía de estados estáticos y podía mezclar Vigentes/Anteriores.
+await import('./aula-config.js?v=20260915-aula32');
 warmSiraInBackground();
-await Promise.all([dataPromise, schedulePromise, routesPromise]);
-await import('./aula-auth.js?v=20260915-aula24');
-await import('./aula-portal.js?v=20260915-aula24');
-
-// Mejoras visuales no críticas: se cargan después de que el portal básico ya funciona.
-const loadUx = () => import('./aula-portal-ux.js?v=20260810-final-r3').catch(() => {});
-if ('requestIdleCallback' in window) window.requestIdleCallback(loadUx, { timeout: 1200 });
-else window.setTimeout(loadUx, 120);
+await Promise.all([
+  import('./aula-datos.js?v=20260810-final-r2'),
+  import('./aula-clean-routes.js?v=20260810-final-r2')
+]);
+await import('./aula-auth.js?v=20260915-aula32');
+await import('./aula-portal.js?v=20260915-aula32');

@@ -62,6 +62,14 @@
         scheduleText: String(item.scheduleText || ''),
         startDate: String(item.startDate || ''),
         endDate: String(item.endDate || ''),
+        statusGroup: String(item.statusGroup || ''),
+        statusLabel: String(item.statusLabel || item.status || ''),
+        progressPercent: Math.max(0, Math.min(100, Number(item.progressPercent || 0))),
+        completedSessions: Math.max(0, Number(item.completedSessions || 0)),
+        totalSessions: Math.max(0, Number(item.totalSessions || 0)),
+        nextSessionStart: String(item.nextSessionStart || ''),
+        nextSessionTitle: String(item.nextSessionTitle || ''),
+        catalogVersion: String(item.catalogVersion || ''),
         dynamic: item.dynamic === true
       }));
   }
@@ -129,7 +137,7 @@
       const keys = [];
       for (let i = 0; i < window.sessionStorage.length; i += 1) {
         const key = window.sessionStorage.key(i);
-        if (key && key.startsWith('altum_aula_course_cache_v1_')) keys.push(key);
+        if (key && (key.startsWith('altum_aula_course_cache_v1_') || key.startsWith('altum_aula_course_cache_v31_') || key.startsWith('altum_aula_course_cache_v32_'))) keys.push(key);
       }
       keys.forEach((key) => window.sessionStorage.removeItem(key));
     } catch (_error) {}
@@ -266,10 +274,18 @@
           dynamic: true,
           scheduleText: remote.scheduleText || '',
           startDate: remote.startDate || '',
-          endDate: remote.endDate || ''
+          endDate: remote.endDate || '',
+          statusGroup: remote.statusGroup || (String(remote.status || '').toLowerCase() === 'cerrado' ? 'archive' : 'active'),
+          statusLabel: remote.statusLabel || remote.status || 'Abierto',
+          progressPercent: Number(remote.progressPercent || 0),
+          completedSessions: Number(remote.completedSessions || 0),
+          totalSessions: Number(remote.totalSessions || 0),
+          nextSessionStart: remote.nextSessionStart || '',
+          nextSessionTitle: remote.nextSessionTitle || '',
+          catalogVersion: remote.catalogVersion || ''
         };
       }
-      if (legacy) return Object.assign({}, legacy, { dynamic: false });
+      if (legacy) return Object.assign({}, legacy, { dynamic: false, statusGroup: String(legacy.status || '').toLowerCase() === 'cerrado' ? 'archive' : 'active', statusLabel: legacy.status || 'Abierto', progressPercent: 0, completedSessions: 0, totalSessions: Number(legacy.sessionCount || 0), catalogVersion: '' });
       return {
         id,
         title: remote?.title || id,
@@ -281,6 +297,14 @@
         file: remote?.dynamic ? `curso.html?id=${encodeURIComponent(id)}` : '',
         flyer: remote?.coverUrl || 'logo-centro-formacion.jpg',
         description: remote?.description || '',
+        statusGroup: remote?.statusGroup || (String(remote?.status || legacy?.status || '').toLowerCase() === 'cerrado' ? 'archive' : 'active'),
+        statusLabel: remote?.statusLabel || remote?.status || legacy?.status || 'Abierto',
+        progressPercent: Number(remote?.progressPercent || 0),
+        completedSessions: Number(remote?.completedSessions || 0),
+        totalSessions: Number(remote?.totalSessions || 0),
+        nextSessionStart: remote?.nextSessionStart || '',
+        nextSessionTitle: remote?.nextSessionTitle || '',
+        catalogVersion: remote?.catalogVersion || '',
         dynamic: Boolean(remote?.dynamic)
       };
     }).filter((course) => Boolean(course.file));
