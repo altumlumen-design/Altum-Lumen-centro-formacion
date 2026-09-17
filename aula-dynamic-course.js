@@ -2,7 +2,7 @@
   'use strict';
 
   const TZ = 'America/Lima';
-  const COURSE_CACHE_TTL_MS = 10 * 60 * 1000;
+  const COURSE_CACHE_TTL_MS = 0; // Datos financieros y permisos siempre se validan en SIRA.
 
   function esc(value) {
     return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -16,8 +16,7 @@
 
   function asDate(value) {
     if (!value) return null;
-    const text = String(value || '').trim();
-    const d = /^\d{4}-\d{2}-\d{2}$/.test(text) ? new Date(`${text}T12:00:00-05:00`) : new Date(value);
+    const d = new Date(value);
     return Number.isNaN(d.getTime()) ? null : d;
   }
 
@@ -26,11 +25,6 @@
       timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'
     }).formatToParts(date).reduce((o, p) => (o[p.type] = p.value, o), {});
     return `${parts.year}-${parts.month}-${parts.day}`;
-  }
-
-  function availableThrough(value) {
-    const until = String(value || '').trim().slice(0, 10);
-    return !until || dateParts(new Date()) <= until;
   }
 
   function formatDate(value, withTime) {
@@ -61,32 +55,15 @@
 
   function courseCacheKey(courseId, session) {
     const who = String(session?.studentCode || session?.dni || session?.role || 'guest').replace(/[^a-z0-9_-]/gi, '');
-    return `altum_aula_course_cache_v333_${who}_${String(courseId || '')}`;
+    return `altum_aula_course_cache_v32_${who}_${String(courseId || '')}`;
   }
 
   function readCourseCache(courseId, session) {
-    try {
-      const raw = window.sessionStorage.getItem(courseCacheKey(courseId, session));
-      if (!raw) return null;
-      const cached = JSON.parse(raw);
-      if (!cached?.course || !cached.cachedAt) return null;
-      if (Date.now() - Number(cached.cachedAt) > COURSE_CACHE_TTL_MS) return null;
-      return cached.course;
-    } catch (_error) { return null; }
+    return null;
   }
 
   function writeCourseCache(courseId, session, course) {
-    try {
-      // Evaluaciones y certificados tienen vigencia. La caché conserva solo contenido
-      // académico no sensible; los enlaces se revalidan contra SIRA en cada apertura.
-      const safeCourse = Object.assign({}, course, {
-        evaluations: [],
-        certificate: null,
-        finance: null,
-        sessions: (Array.isArray(course?.sessions) ? course.sessions : []).map(item => Object.assign({}, item, { evaluationUrl: '' }))
-      });
-      window.sessionStorage.setItem(courseCacheKey(courseId, session), JSON.stringify({ cachedAt: Date.now(), course: safeCourse }));
-    } catch (_error) {}
+    try { window.sessionStorage.removeItem(courseCacheKey(courseId, session)); } catch (_error) {}
   }
 
   function zoomMark() {
@@ -145,10 +122,9 @@
   }
 
   function collectEvaluations(course, sessions) {
-    if (course?.evaluationEnabled === false) return [];
     const out = [], seen = new Set();
     (Array.isArray(course?.evaluations) ? course.evaluations : []).forEach(item => {
-      if (!item || item.available === false || !availableThrough(item.availableUntil)) return;
+      if (!item) return;
       const key = String(item.url || item.id || '');
       if (key && seen.has(key)) return;
       if (key) seen.add(key);
@@ -226,11 +202,14 @@
 
   function financeCard(finance) {
     if (!finance) return '';
-    if (finance.state === 'DEUDA') {
-      const detail = Number(finance.agreed || 0) > 0
-        ? `${finance.partial ? `Has abonado ${money(finance.paid)} de ${money(finance.agreed)}. ` : ''}Regulariza tu saldo pendiente para evitar restricciones en procesos de evaluación y certificación.`
-        : 'Regulariza tu saldo pendiente para mantener tus procesos académicos al día.';
-      return `<div class="student-summary-card is-debt"><small>🔔 Aviso económico</small><strong>${finance.partial ? 'Pago parcial' : 'Pago pendiente'} · ${esc(money(finance.balance))}</strong><span>${esc(detail)}</span></div>`;
+    if (finance.state === 'MOROSO') {
+      return `<div class="student-summary-card is-debt"><small>Estado económico</small><strong>Moroso · ${esc(money(finance.balance))}</strong><span>${esc(finance.message || 'Cobranza cerrada administrativamente.')}</span></div>`;
+    }
+    if (finance.state === 'PENDIENTE') {
+      return `<div class="student-summary-card is-debt"><small>Estado económico</small><strong>Pendiente · ${esc(money(finance.balance))}</strong><span>${esc(finance.message || 'Tienes un saldo pendiente registrado.')}</span></div>`;
+    }
+    if (finance.state === 'EN_DEUDA_ATENDIDA') {
+      return `<div class="student-summary-card is-debt"><small>Estado económico</small><strong>Deuda registrada · ${esc(money(finance.balance))}</strong><span>${esc(finance.message || 'El equipo ya revisó este saldo.')}</span></div>`;
     }
     if (finance.state === 'AL_DIA') {
       return `<div class="student-summary-card is-ok"><small>Estado económico</small><strong>Al día</strong><span>No registra saldo pendiente</span></div>`;
@@ -239,14 +218,11 @@
   }
 
   function certificateCard(certificate) {
-    if (!certificate || certificate.notStarted) return '';
-    const days = Math.max(1, Number(certificate.windowDays || 15));
-    if (certificate.expired || !certificate.available || !availableThrough(certificate.availableUntil)) {
-      return `<div class="student-summary-card certificate-card"><small>Certificado</small><strong>Plazo de descarga finalizado</strong><span>El periodo de ${days} días calendario para descargar tu certificado ha concluido. Posterior a ese plazo, deberás solicitar el duplicado del certificado.</span></div>`;
-    }
+    if (certificate?.expired) return `<div class="student-summary-card is-debt"><small>Certificado</small><strong>Plazo de descarga finalizado</strong><span>${esc(certificate.message || 'Solicita el duplicado del certificado.')}</span></div>`;
+    if (!certificate?.available) return '';
     const download = safeUrl(certificate.downloadUrl) || safeUrl(certificate.viewUrl);
     if (!download) return '';
-    return `<div class="student-summary-card certificate-card"><small>Certificado</small><strong>Disponible</strong><span>${certificate.issueDate ? `Emitido ${esc(formatDate(certificate.issueDate, false))}. ` : ''}Recuerda que la descarga de tu certificado está disponible solo por ${days} días calendario. Posterior a ese plazo, deberás solicitar el duplicado del certificado.</span><a class="mini-action" href="${esc(download)}" target="_blank" rel="noopener">Descargar certificado</a></div>`;
+    return `<div class="student-summary-card certificate-card"><small>Certificado</small><strong>Disponible</strong><span>${certificate.message ? esc(certificate.message) : (certificate.issueDate ? `Emitido ${esc(formatDate(certificate.issueDate, false))}` : 'Documento académico emitido')}</span>${certificate.expiresDate ? `<span>Descarga disponible hasta ${esc(formatDate(certificate.expiresDate, false))}.</span>` : ''}<a class="mini-action" href="${esc(download)}" target="_blank" rel="noopener">Descargar certificado</a></div>`;
   }
 
   function renderAgenda(sessions, now, todayKey) {
@@ -296,7 +272,7 @@
     if (!evaluations.length) return '<div class="class-empty">No hay evaluaciones publicadas para este curso.</div>';
     return `<div class="evaluation-list">${evaluations.map((evaluation, index) => {
       const href = safeUrl(evaluation.url);
-      const open = evaluation.available !== false && evaluation.accepting !== false && availableThrough(evaluation.availableUntil) && href;
+      const open = evaluation.available !== false && evaluation.accepting !== false && href;
       const moduleLabel = Number(evaluation.moduleNumber || 0) ? `Módulo ${Number(evaluation.moduleNumber)}` : (evaluation.type === 'FINAL' ? 'Evaluación final' : 'Evaluación');
       return `<article class="evaluation-card ${open ? 'is-open' : 'is-closed'}">
         <div class="evaluation-icon" aria-hidden="true">${String(index + 1).padStart(2, '0')}</div>
@@ -461,12 +437,10 @@
 
     window.AltumAuth.mountUserMenu(document.getElementById('courseUserArea'), session);
 
-    const cachedCourse = readCourseCache(courseId, session);
-    if (cachedCourse) { document.getElementById('dynamicLoading').hidden = true; renderCourse(cachedCourse); }
+    const cachedCourse = null;
 
     const result = await window.AltumAuth.fetchCourse(courseId, session);
     if (!result?.ok) {
-      if (cachedCourse && !window.AltumAuth.isDefinitiveSessionFailure(result)) return;
       if (window.AltumAuth.isDefinitiveSessionFailure(result)) window.AltumAuth.clearSession();
       showError(result?.message || 'No fue posible cargar los recursos del curso.'); return;
     }
