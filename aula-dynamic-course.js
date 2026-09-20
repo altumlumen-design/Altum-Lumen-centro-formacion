@@ -99,6 +99,17 @@
     </div>`;
   }
 
+  function materialResourceBlock(session) {
+    const state = String(session?.materialState || '').trim().toUpperCase();
+    const note = String(session?.materialNote || '').trim();
+    if (state === 'NO_CORRESPONDE') {
+      return `<div class="session-resource-state is-pending" style="border-style:solid">
+        <div class="session-resource-copy"><span>▣</span><div><small>Material</small><strong>No corresponde</strong>${note ? `<small style="margin-top:4px;max-width:460px;white-space:normal;line-height:1.35;text-transform:none;letter-spacing:0">${esc(note)}</small>` : ''}</div></div>
+      </div>`;
+    }
+    return resourceBlock(session?.materialUrl, 'Material', 'is-material', '▣');
+  }
+
   function scheduleState(session, now, todayKey, nextId) {
     const start = asDate(session.start), end = asDate(session.end) || start;
     if (!start) return safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) ? { key: 'done', label: 'Sesión realizada' } : { key: 'scheduled', label: 'Programada' };
@@ -262,7 +273,7 @@
         <div class="class-session-actions resource-progress-grid">
           ${st.key === 'today' ? zoomResourceBlock(sharedZoom) : ''}
           ${resourceBlock(session.recordingUrl, 'Grabación / video', 'is-recording', '▶')}
-          ${resourceBlock(session.materialUrl, 'Material', 'is-material', '▣')}
+          ${materialResourceBlock(session)}
         </div>
       </article>`;
     }).join('');
