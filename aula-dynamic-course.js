@@ -279,23 +279,61 @@
     }).join('');
   }
 
+  function evaluationCountdownLabel(deadlineValue, now) {
+    const deadline = asDate(deadlineValue);
+    if (!deadline) return '';
+    const diff = deadline.getTime() - now.getTime();
+    if (diff <= 0) return 'Plazo finalizado';
+    const mins = Math.max(1, Math.ceil(diff / 60000));
+    if (mins < 60) return `Cierra en ${mins} min`;
+    if (mins < 24 * 60) { const h = Math.floor(mins / 60), m = mins % 60; return `Cierra en ${h} h${m ? ` ${m} min` : ''}`; }
+    const days = Math.floor(mins / 1440), rem = mins % 1440, hours = Math.floor(rem / 60);
+    return `Quedan ${days} día${days === 1 ? '' : 's'}${hours ? ` ${hours} h` : ''}`;
+  }
+
   function renderEvaluations(evaluations) {
     if (!evaluations.length) return '<div class="class-empty">No hay evaluaciones publicadas para este curso.</div>';
+    const now = new Date();
     return `<div class="evaluation-list">${evaluations.map((evaluation, index) => {
-      const href = safeUrl(evaluation.url);
-      const open = evaluation.available !== false && evaluation.accepting !== false && href;
+      const href = safeUrl(evaluation.url), deadline = asDate(evaluation.deadline), expired = evaluation.expired === true || Boolean(deadline && deadline.getTime() <= now.getTime());
+      const open = !expired && evaluation.available !== false && evaluation.accepting !== false && href;
       const moduleLabel = Number(evaluation.moduleNumber || 0) ? `Módulo ${Number(evaluation.moduleNumber)}` : (evaluation.type === 'FINAL' ? 'Evaluación final' : 'Evaluación');
-      return `<article class="evaluation-card ${open ? 'is-open' : 'is-closed'}">
+      const minGrade = Number(evaluation.minGrade || 13), attempts = Number(evaluation.maxAttempts || 3), pdf = safeUrl(evaluation.pdfUrl), countdown = evaluationCountdownLabel(evaluation.deadline, now);
+      return `<article class="evaluation-card ${open ? 'is-open' : 'is-closed'}" data-evaluation-card data-eval-deadline="${esc(evaluation.deadline || '')}">
         <div class="evaluation-icon" aria-hidden="true">${String(index + 1).padStart(2, '0')}</div>
         <div class="evaluation-copy">
           <span class="eyebrow">${esc(moduleLabel)}</span>
           <h3>${esc(evaluation.title || moduleLabel)}</h3>
-          <p>${esc(evaluation.description || (open ? 'Evaluación habilitada para participantes matriculados.' : 'La evaluación se encuentra cerrada temporalmente.'))}</p>
-          ${Number(evaluation.totalPoints || 0) ? `<small>${esc(evaluation.totalPoints)} punto(s)${evaluation.minGrade !== null && evaluation.minGrade !== undefined ? ` · Nota mínima referencial: ${esc(evaluation.minGrade)}` : ''}</small>` : ''}
+          <p>${esc(evaluation.description || (open ? 'Evaluación habilitada para participantes matriculados.' : 'La evaluación se encuentra cerrada.'))}</p>
+          <div class="evaluation-rules"><span>✓ Nota mínima: <b>${esc(minGrade)}</b></span><span>↻ Hasta <b>${esc(attempts)} intentos</b></span></div>
+          ${evaluation.comment ? `<div class="evaluation-comment">${esc(evaluation.comment)}</div>` : ''}
+          ${evaluation.deadline ? `<div class="evaluation-deadline ${expired ? 'is-expired' : ''}"><span>⏱</span><div><small>Cierre: ${esc(evaluation.deadlineText || formatDate(evaluation.deadline, true))}</small><strong data-eval-countdown>${esc(countdown)}</strong></div></div>` : ''}
+          ${Number(evaluation.totalPoints || 0) ? `<small>${esc(evaluation.totalPoints)} punto(s)</small>` : ''}
+          ${pdf ? `<a class="evaluation-pdf-link" href="${esc(pdf)}" target="_blank" rel="noopener">Ver PDF de indicaciones</a>` : ''}
         </div>
-        <div class="evaluation-action">${open ? `<a class="class-btn evaluation-btn" href="${esc(href)}" target="_blank" rel="noopener">Resolver evaluación</a>` : '<span class="evaluation-closed-label">Cerrada</span>'}</div>
+        <div class="evaluation-action">${open ? `<a class="class-btn evaluation-btn" data-eval-action href="${esc(href)}" target="_blank" rel="noopener">Resolver evaluación</a>` : '<span class="evaluation-closed-label" data-eval-action>Cerrada</span>'}</div>
       </article>`;
     }).join('')}</div>`;
+  }
+
+  function bindEvaluationCountdowns(root) {
+    const cards = [...root.querySelectorAll('[data-evaluation-card][data-eval-deadline]')].filter(card => card.dataset.evalDeadline);
+    if (!cards.length) return;
+    const tick = () => {
+      const now = new Date();
+      cards.forEach(card => {
+        const deadline = asDate(card.dataset.evalDeadline), label = card.querySelector('[data-eval-countdown]');
+        if (!deadline) return;
+        if (label) label.textContent = evaluationCountdownLabel(deadline, now);
+        if (deadline.getTime() <= now.getTime()) {
+          card.classList.remove('is-open'); card.classList.add('is-closed');
+          card.querySelector('.evaluation-deadline')?.classList.add('is-expired');
+          const action = card.querySelector('[data-eval-action]');
+          if (action && action.tagName === 'A') { action.removeAttribute('href'); action.removeAttribute('target'); action.className = 'evaluation-closed-label'; action.textContent = 'Cerrada'; }
+        }
+      });
+    };
+    tick(); window.setInterval(tick, 30000);
   }
 
   function courseProgressCard(course, sessions, now) {
@@ -405,6 +443,7 @@
     root.hidden = false;
     bindCopyButtons(root);
     bindCountdowns(root);
+    bindEvaluationCountdowns(root);
   }
 
   function optimizePortalReturn() {
