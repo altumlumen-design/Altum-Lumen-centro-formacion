@@ -1,6 +1,6 @@
 /*
  * ALTUM LUMEN · Verificación pública conectada a SIRA/PEDA
- * Versión: 2026-09-21 · SIRA 3.6.6
+ * Versión: 2026-09-21 · SIRA 3.6.7
  *
  * Transporte probado: el mismo POST + iframe + postMessage usado por el Aula Virtual.
  * No contiene ni descarga el padrón completo.
@@ -8,13 +8,14 @@
 (() => {
   'use strict';
 
-  const VERSION = '20260921-sira-366-post-fast';
+  const VERSION = '20260922-sira-367-dual-fast';
   const SIRA_API_URL = 'https://script.google.com/macros/s/AKfycbysdGK_9D_nDDrhj6pa53_4H6eOT0U3k_KBqZ1iX_Co7oTCvdEAqnE5Sac1ZRAugfZo/exec';
-  const REQUEST_TIMEOUT_MS = 20000;
+  const REQUEST_TIMEOUT_MS = 12000;
+  const FALLBACK_DELAY_MS = 1800;
   const EXPECTED_SOURCE = 'SIRA_REGISTRO_PUBLICO';
 
-  window.REGISTROS_PUBLICOS = Object.freeze([{ __sira_post_fast__: true }]);
-  window.REGISTROS_PUBLICOS_META = Object.freeze({version:VERSION,mode:'SIRA_PEDA_PRIVATE_POST_FAST',baseHistorica:0,actualizacion:0,total:0});
+  window.REGISTROS_PUBLICOS = Object.freeze([{ __sira_dual_fast__: true }]);
+  window.REGISTROS_PUBLICOS_META = Object.freeze({version:VERSION,mode:'SIRA_PEDA_PRIVATE_DUAL_FAST',baseHistorica:0,actualizacion:0,total:0});
 
   let busy=false;
   const pageCache=new Map();
@@ -60,19 +61,45 @@
     const key=cacheKey(type,value);if(pageCache.has(key))return Promise.resolve(pageCache.get(key));
     return new Promise(resolve=>{
       const requestId=`reg-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-      const frame=document.createElement('iframe'),frameName=`sira_reg_${requestId.replace(/[^a-z0-9_]/gi,'')}`;
-      frame.name=frameName;frame.setAttribute('aria-hidden','true');frame.style.cssText='position:fixed;width:1px;height:1px;border:0;opacity:0;pointer-events:none;left:-9999px;top:-9999px';
-      const form=document.createElement('form');form.method='POST';form.action=SIRA_API_URL;form.target=frameName;form.style.display='none';
-      addHidden(form,'action','registroConsultaPublica');addHidden(form,'requestId',requestId);addHidden(form,'tipo',type);addHidden(form,'valor',value);addHidden(form,'sid',SESSION_ID);addHidden(form,'v',VERSION);
-      let done=false;
-      const finish=result=>{if(done)return;done=true;window.removeEventListener('message',onMessage);window.clearTimeout(timer);form.remove();window.setTimeout(()=>frame.remove(),0);if(result?.ok)pageCache.set(key,result);resolve(result||{ok:false,message:'No fue posible completar la consulta.'});};
+      let done=false,postFrame=null,postForm=null,jsonpScript=null,jsonpCallback='',mainTimer=0,fallbackTimer=0;
+      const cleanup=()=>{
+        window.removeEventListener('message',onMessage);
+        window.clearTimeout(mainTimer);window.clearTimeout(fallbackTimer);
+        try{postForm?.remove();}catch(_e){};try{postFrame?.remove();}catch(_e){};
+        if(jsonpCallback){try{delete window[jsonpCallback];}catch(_e){window[jsonpCallback]=undefined;}}
+        try{jsonpScript?.remove();}catch(_e){}
+      };
+      const finish=result=>{
+        if(done)return;done=true;cleanup();
+        if(result?.ok)pageCache.set(key,result);
+        resolve(result||{ok:false,message:'No fue posible completar la consulta.'});
+      };
       const onMessage=event=>{
-        const data=event.data||{};if(data.source!==EXPECTED_SOURCE||data.requestId!==requestId)return;
-        const origin=String(event.origin||''),trusted=origin==='null'||/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|script\.google\.com)$/i.test(origin);if(!trusted)return;
+        const data=event.data||{};
+        // requestId es aleatorio por consulta y el backend firma lógicamente el
+        // mensaje con source. No dependemos del origen que Google asigne a su wrapper.
+        if(data.source!==EXPECTED_SOURCE||data.requestId!==requestId)return;
         finish(data.payload);
       };
-      const timer=window.setTimeout(()=>finish({ok:false,message:'SIRA no respondió dentro del tiempo esperado. Verifique que haya publicado la versión 3.6.6 de la implementación existente.'}),REQUEST_TIMEOUT_MS);
-      window.addEventListener('message',onMessage);document.body.append(frame,form);form.submit();
+      const launchPost=()=>{
+        const frame=document.createElement('iframe'),frameName=`sira_reg_${requestId.replace(/[^a-z0-9_]/gi,'')}`;
+        frame.name=frameName;frame.setAttribute('aria-hidden','true');frame.style.cssText='position:fixed;width:1px;height:1px;border:0;opacity:0;pointer-events:none;left:-9999px;top:-9999px';
+        const form=document.createElement('form');form.method='POST';form.action=SIRA_API_URL;form.target=frameName;form.style.display='none';
+        addHidden(form,'action','registroConsultaPublica');addHidden(form,'requestId',requestId);addHidden(form,'tipo',type);addHidden(form,'valor',value);addHidden(form,'sid',SESSION_ID);addHidden(form,'v',VERSION);
+        postFrame=frame;postForm=form;document.body.append(frame,form);form.submit();
+      };
+      const launchJsonp=()=>{
+        if(done||jsonpScript)return;
+        jsonpCallback=`__altumRegistryCB_${Date.now()}_${Math.random().toString(36).slice(2).replace(/[^a-z0-9_]/gi,'')}`;
+        window[jsonpCallback]=payload=>finish(payload);
+        const params=new URLSearchParams({action:'registroConsulta',callback:jsonpCallback,tipo:type,valor:value,sid:SESSION_ID,v:VERSION,_:String(Date.now())});
+        const script=document.createElement('script');script.async=true;script.src=`${SIRA_API_URL}?${params.toString()}`;
+        script.onerror=()=>{try{script.remove();}catch(_e){}};jsonpScript=script;document.head.appendChild(script);
+      };
+      window.addEventListener('message',onMessage);
+      launchPost();
+      fallbackTimer=window.setTimeout(launchJsonp,FALLBACK_DELAY_MS);
+      mainTimer=window.setTimeout(()=>finish({ok:false,message:'No fue posible obtener respuesta de SIRA. Confirme que la implementación web existente fue actualizada a la versión 3.6.7.'}),REQUEST_TIMEOUT_MS);
     });
   }
 
