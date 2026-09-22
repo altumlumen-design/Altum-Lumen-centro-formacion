@@ -1,25 +1,25 @@
 /*
  * ALTUM LUMEN · Verificación pública conectada a SIRA/PEDA
- * Versión: 2026-09-21 · SIRA 3.6.4
+ * Versión: 2026-09-21 · SIRA 3.6.5
  *
  * IMPORTANTE:
  * - Este archivo NO contiene la base de registros académicos.
  * - Mantiene intacta la interfaz de verificacion.html.
- * - Cada búsqueda realiza una sola consulta puntual a SIRA/PEDA mediante un iframe efímero.
+ * - Cada búsqueda usa JSONP: una sola petición directa a SIRA/PEDA.
+ * - No usa fetch/CORS, iframes, postMessage ni google.script.run.
  */
 (() => {
   'use strict';
 
-  const VERSION = '20260921-sira-364-one-shot';
+  const VERSION = '20260921-sira-365-jsonp';
   const SIRA_API_URL = 'https://script.google.com/macros/s/AKfycbysdGK_9D_nDDrhj6pa53_4H6eOT0U3k_KBqZ1iX_Co7oTCvdEAqnE5Sac1ZRAugfZo/exec';
-  const REQUEST_TIMEOUT_MS = 9000;
-  const GOOGLE_ORIGIN_RE = /^https:\/\/(?:script\.google\.com|(?:[a-z0-9-]+\.)*googleusercontent\.com)$/i;
+  const REQUEST_TIMEOUT_MS = 15000;
 
   /* Compatibilidad con el HTML histórico, sin publicar ningún padrón. */
-  window.REGISTROS_PUBLICOS = Object.freeze([{ __sira_one_shot__: true }]);
+  window.REGISTROS_PUBLICOS = Object.freeze([{ __sira_jsonp__: true }]);
   window.REGISTROS_PUBLICOS_META = Object.freeze({
     version: VERSION,
-    mode: 'SIRA_PEDA_PRIVATE_ONE_SHOT',
+    mode: 'SIRA_PEDA_PRIVATE_JSONP',
     baseHistorica: 0,
     actualizacion: 0,
     total: 0
@@ -27,6 +27,7 @@
 
   let requestSeq = 0;
   let busy = false;
+  const pageCache = new Map();
 
   function byId(id){ return document.getElementById(id); }
   function normalize(value){
@@ -45,7 +46,7 @@
       .replaceAll('>','&gt;');
   }
   function sessionId(){
-    const key='altum_registry_sid_v364';
+    const key='altum_registry_sid_v365';
     try{
       let value=sessionStorage.getItem(key)||'';
       if(/^[a-z0-9_-]{16,96}$/i.test(value))return value;
@@ -120,41 +121,58 @@
       </div>
     `;
   }
-  function frameRequest(action, type='', value='', timeoutMs=REQUEST_TIMEOUT_MS){
+
+  function cacheKey(type,value){
+    return type+':'+normalize(value);
+  }
+
+  function jsonpRequest(type, value, timeoutMs=REQUEST_TIMEOUT_MS){
+    const key=cacheKey(type,value);
+    if(pageCache.has(key)) return Promise.resolve(pageCache.get(key));
+
     return new Promise((resolve,reject) => {
-      const rid='rq-'+Date.now().toString(36)+'-'+(++requestSeq).toString(36)+'-'+Math.random().toString(36).slice(2,10);
-      const frame=document.createElement('iframe');
+      const suffix=Date.now().toString(36)+'_'+(++requestSeq).toString(36)+'_'+Math.random().toString(36).slice(2,10);
+      const callback='__altumRegistryCB_'+suffix.replace(/[^A-Za-z0-9_]/g,'');
+      const script=document.createElement('script');
       let settled=false;
       let timer=null;
+
+      const cleanup=()=>{
+        if(timer)clearTimeout(timer);
+        try{delete window[callback];}catch(_e){window[callback]=undefined;}
+        try{script.remove();}catch(_e){}
+      };
       const finish=(fn,payload)=>{
         if(settled)return;
         settled=true;
-        if(timer)clearTimeout(timer);
-        window.removeEventListener('message',onMessage,true);
-        try{frame.remove();}catch(_e){}
+        cleanup();
         fn(payload);
       };
-      const onMessage=event=>{
-        // Apps Script puede envolver el HTML en un iframe interno propio; por eso
-        // validamos origen Google + identificador aleatorio de la consulta, no event.source.
-        if(!GOOGLE_ORIGIN_RE.test(event.origin||''))return;
-        const data=event.data||{};
-        if(data.type!=='ALTUM_REGISTRY_FRAME_RESULT'||String(data.id||'')!==rid)return;
-        finish(resolve,data.result||{});
+
+      window[callback]=(payload)=>{
+        const result=payload||{ok:false,matches:[],message:'Respuesta vacía de SIRA.'};
+        if(result?.ok)pageCache.set(key,result);
+        finish(resolve,result);
       };
-      window.addEventListener('message',onMessage,true);
-      frame.title='Consulta segura SIRA';
-      frame.setAttribute('aria-hidden','true');
-      frame.tabIndex=-1;
-      frame.style.cssText='position:fixed!important;width:1px!important;height:1px!important;left:-9999px!important;top:-9999px!important;border:0!important;opacity:0!important;pointer-events:none!important;';
-      const query=new URLSearchParams({action,rid,sid:SESSION_ID,v:VERSION,_:String(Date.now())});
-      if(type)query.set('tipo',type);
-      if(value)query.set('valor',value);
-      frame.src=`${SIRA_API_URL}?${query.toString()}`;
+
+      script.async=true;
+      script.referrerPolicy='no-referrer';
+      script.onerror=()=>finish(reject,new Error('No se pudo conectar con SIRA. Verifique que la implementación web esté actualizada.'));
+      const query=new URLSearchParams({
+        action:'registroConsulta',
+        callback,
+        tipo:type,
+        valor:value,
+        sid:SESSION_ID,
+        v:VERSION,
+        _:String(Date.now())
+      });
+      script.src=`${SIRA_API_URL}?${query.toString()}`;
       timer=setTimeout(()=>finish(reject,new Error('La consulta está tardando más de lo esperado. Intente nuevamente.')),timeoutMs);
-      document.body.appendChild(frame);
+      (document.head||document.documentElement).appendChild(script);
     });
   }
+
   async function searchRemote(){
     if(busy) return;
     const criteriaCheck = validateCriteria();
@@ -183,7 +201,7 @@
     if(searchBtn) searchBtn.disabled = true;
     setStatus('Consultando Registro Académico…');
     try{
-      const response = await frameRequest('registroConsultaFrame',criteriaCheck.type,criteriaCheck.value);
+      const response = await jsonpRequest(criteriaCheck.type,criteriaCheck.value);
       if(!response?.ok) throw new Error(response?.message || 'No se pudo consultar SIRA.');
       const matches = Array.isArray(response.matches) ? response.matches : [];
       const resultsPanel = byId('resultsPanel');
@@ -240,13 +258,4 @@
     event.stopImmediatePropagation();
     searchRemote();
   }, true);
-
-  // Precarga en segundo plano cuando el navegador queda libre; no descarga datos personales.
-  const warm=()=>frameRequest('registroWarmFrame','','',7000).catch(()=>{});
-  const scheduleWarm=()=>{
-    if('requestIdleCallback' in window)window.requestIdleCallback(warm,{timeout:2500});
-    else setTimeout(warm,1200);
-  };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',scheduleWarm,{once:true});
-  else scheduleWarm();
 })();
