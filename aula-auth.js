@@ -158,7 +158,8 @@
     const expectedSource = {
       aulaAuth: 'SIRA_AULA_AUTH',
       aulaSession: 'SIRA_AULA_SESSION',
-      aulaCourse: 'SIRA_AULA_COURSE'
+      aulaCourse: 'SIRA_AULA_COURSE',
+      aulaEvaluationAccess: 'SIRA_AULA_EVALUATION'
     }[action];
     if (!expectedSource) return Promise.resolve({ ok: false, message: 'Solicitud de Aula no válida.' });
 
@@ -385,6 +386,12 @@
   }
 
   function enhanceCourseHeader(session) {
+    if (session?.role === 'master') document.querySelectorAll('[data-master-evaluation-url]').forEach(node => {
+      const url = node.dataset.masterEvaluationUrl;
+      if (!/^https:\/\/(?:forms\.gle\/|docs\.google\.com\/forms\/)/.test(url || '')) return;
+      const link = document.createElement('a'); link.className = node.className; link.href = url;
+      link.target = '_blank'; link.rel = 'noopener'; link.textContent = 'Abrir evaluación · Maestro'; node.replaceWith(link);
+    });
     const header = document.querySelector('body.aula-course header');
     if (!header) return;
     header.className = 'aula-site-header';
@@ -510,6 +517,7 @@
     authenticate,
     refreshSession,
     fetchCourse,
+    fetchEvaluation: (courseId,evaluationId) => requestSira('aulaEvaluationAccess', {token:readSession()?.token||'',courseId,evaluationId}),
     clearSession,
     getSession: readSession,
     isSessionFresh,

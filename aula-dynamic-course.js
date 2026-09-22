@@ -296,7 +296,7 @@
     const now = new Date();
     return `<div class="evaluation-list">${evaluations.map((evaluation, index) => {
       const href = safeUrl(evaluation.url), deadline = asDate(evaluation.deadline), expired = evaluation.expired === true || Boolean(deadline && deadline.getTime() <= now.getTime());
-      const open = !expired && evaluation.available !== false && evaluation.accepting !== false && href;
+      const open = !expired && evaluation.available !== false && evaluation.accepting !== false && (href || evaluation.requiresAttemptCheck);
       const moduleLabel = Number(evaluation.moduleNumber || 0) ? `Módulo ${Number(evaluation.moduleNumber)}` : (evaluation.type === 'FINAL' ? 'Evaluación final' : 'Evaluación');
       const minGrade = Number(evaluation.minGrade || 13), attempts = Number(evaluation.maxAttempts || 3), pdf = safeUrl(evaluation.pdfUrl), countdown = evaluationCountdownLabel(evaluation.deadline, now);
       return `<article class="evaluation-card ${open ? 'is-open' : 'is-closed'}" data-evaluation-card data-eval-deadline="${esc(evaluation.deadline || '')}">
@@ -306,12 +306,13 @@
           <h3>${esc(evaluation.title || moduleLabel)}</h3>
           <p>${esc(evaluation.description || (open ? 'Evaluación habilitada para participantes matriculados.' : 'La evaluación se encuentra cerrada.'))}</p>
           <div class="evaluation-rules"><span>✓ Nota mínima: <b>${esc(minGrade)}</b></span><span>↻ Hasta <b>${esc(attempts)} intentos</b></span></div>
+          ${evaluation.attemptMessage ? `<div class="evaluation-comment">${esc(evaluation.attemptMessage)}${evaluation.attemptsUsed !== null && evaluation.attemptsUsed !== undefined ? ` (${esc(evaluation.attemptsUsed)}/3)` : ''}</div>` : ''}
           ${evaluation.comment ? `<div class="evaluation-comment">${esc(evaluation.comment)}</div>` : ''}
           ${evaluation.deadline ? `<div class="evaluation-deadline ${expired ? 'is-expired' : ''}"><span>⏱</span><div><small>Cierre: ${esc(evaluation.deadlineText || formatDate(evaluation.deadline, true))}</small><strong data-eval-countdown>${esc(countdown)}</strong></div></div>` : ''}
           ${Number(evaluation.totalPoints || 0) ? `<small>${esc(evaluation.totalPoints)} punto(s)</small>` : ''}
           ${pdf ? `<a class="evaluation-pdf-link" href="${esc(pdf)}" target="_blank" rel="noopener">Ver PDF de indicaciones</a>` : ''}
         </div>
-        <div class="evaluation-action">${open ? `<a class="class-btn evaluation-btn" data-eval-action href="${esc(href)}" target="_blank" rel="noopener">Resolver evaluación</a>` : '<span class="evaluation-closed-label" data-eval-action>Cerrada</span>'}</div>
+        <div class="evaluation-action">${open && evaluation.requiresAttemptCheck ? `<button class="class-btn evaluation-btn" data-eval-action data-eval-id="${esc(evaluation.id)}">${evaluation.masterAccess ? "Revisar evaluación · Maestro" : "Resolver evaluación"}</button>` : open ? `<a class="class-btn evaluation-btn" data-eval-action href="${esc(href)}" target="_blank" rel="noopener">Resolver evaluación</a>` : '<span class="evaluation-closed-label" data-eval-action>Bloqueada</span>'}</div>
       </article>`;
     }).join('')}</div>`;
   }
@@ -329,7 +330,7 @@
           card.classList.remove('is-open'); card.classList.add('is-closed');
           card.querySelector('.evaluation-deadline')?.classList.add('is-expired');
           const action = card.querySelector('[data-eval-action]');
-          if (action && action.tagName === 'A') { action.removeAttribute('href'); action.removeAttribute('target'); action.className = 'evaluation-closed-label'; action.textContent = 'Cerrada'; }
+          if (action && (action.tagName === 'A' || action.tagName === 'BUTTON')) { action.removeAttribute('href'); if (action.tagName === 'BUTTON') action.disabled = true; action.removeAttribute('target'); action.className = 'evaluation-closed-label'; action.textContent = 'Bloqueada'; }
         }
       });
     };
@@ -444,6 +445,27 @@
     bindCopyButtons(root);
     bindCountdowns(root);
     bindEvaluationCountdowns(root);
+    root.querySelectorAll('[data-eval-id]').forEach(button => button.addEventListener('click', async () => {
+      if (button.disabled) return;
+      button.disabled = true; button.textContent = 'Verificando intentos…';
+      try {
+        const courseId = new URLSearchParams(window.location.search).get('id');
+        const result = await window.AltumAuth.fetchEvaluation(courseId, button.dataset.evalId);
+        if (result?.ok && result.masterReview) {
+          const dialog = document.createElement('dialog'); dialog.style.cssText = 'max-width:800px;width:90%;max-height:85vh;overflow:auto;padding:24px;border:0;border-radius:16px';
+          const editUrl = safeUrl(result.editUrl);
+          dialog.innerHTML = '<h2>' + esc(result.title || 'Evaluación') + '</h2><p>Revisión del usuario maestro. No envía respuestas ni modifica notas.</p>' +
+            (result.deadline ? '<p>Cierre para alumnos: ' + esc(formatDate(result.deadline, true)) + '</p>' : '') +
+            (Array.isArray(result.questions) && result.questions.length ? result.questions.map((q, i) => '<section><h3>' + (i+1) + '. ' + esc(q.title || '') + '</h3><ol>' + (q.options || []).map((option, n) => '<li>' + esc(option) + ((q.correct || []).includes(n) ? ' ✓' : '') + '</li>').join('') + '</ol></section>').join('') : '<p>Esta evaluación histórica no tiene preguntas guardadas en SIRA. Revisa su formulario original.</p>') +
+            (editUrl && /^https:\/\/docs\.google\.com\/forms\//.test(editUrl) ? '<p><a target="_blank" rel="noopener" href="' + esc(editUrl) + '">Administrar en Google Forms</a> (requiere una cuenta Google con permiso de edición)</p>' : '') + '<button type="button">Cerrar</button>';
+          dialog.querySelector('button').onclick = () => dialog.close(); dialog.addEventListener('close', () => dialog.remove()); document.body.appendChild(dialog); dialog.showModal(); button.textContent = 'Revisar evaluación · Maestro'; return;
+        }
+        const url = safeUrl(result?.url);
+        if (result?.ok && url && /^https:\/\/docs\.google\.com\/forms\//.test(url)) { window.location.assign(url); return; }
+        button.textContent = result?.message || 'No fue posible verificar. Vuelve a intentar.';
+      } catch (_error) { button.textContent = 'No fue posible verificar. Vuelve a intentar.'; }
+      finally { button.disabled = false; }
+    }));
   }
 
   function optimizePortalReturn() {
