@@ -1,6 +1,6 @@
 /*
  * ALTUM LUMEN · Verificación pública conectada a SIRA/PEDA
- * Versión: 2026-09-21 · SIRA 3.6.8
+ * Versión: 2026-09-21 · SIRA 3.6.9
  *
  * Transporte: POST + iframe + postMessage, con respaldo JSONP.
  * registroSessionId evita el parámetro sid reservado por Google Apps Script.
@@ -9,7 +9,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '20260922-sira-368-safe-session';
+  const VERSION = '20260922-sira-369-public-scope';
   const SIRA_API_URL = 'https://script.google.com/macros/s/AKfycbysdGK_9D_nDDrhj6pa53_4H6eOT0U3k_KBqZ1iX_Co7oTCvdEAqnE5Sac1ZRAugfZo/exec';
   const REQUEST_TIMEOUT_MS = 12000;
   const FALLBACK_DELAY_MS = 1800;
