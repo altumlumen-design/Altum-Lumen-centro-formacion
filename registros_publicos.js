@@ -1,14 +1,15 @@
 /*
  * ALTUM LUMEN · Verificación pública conectada a SIRA/PEDA
- * Versión: 2026-09-21 · SIRA 3.6.7
+ * Versión: 2026-09-21 · SIRA 3.6.8
  *
- * Transporte probado: el mismo POST + iframe + postMessage usado por el Aula Virtual.
+ * Transporte: POST + iframe + postMessage, con respaldo JSONP.
+ * registroSessionId evita el parámetro sid reservado por Google Apps Script.
  * No contiene ni descarga el padrón completo.
  */
 (() => {
   'use strict';
 
-  const VERSION = '20260922-sira-367-dual-fast';
+  const VERSION = '20260922-sira-368-safe-session';
   const SIRA_API_URL = 'https://script.google.com/macros/s/AKfycbysdGK_9D_nDDrhj6pa53_4H6eOT0U3k_KBqZ1iX_Co7oTCvdEAqnE5Sac1ZRAugfZo/exec';
   const REQUEST_TIMEOUT_MS = 12000;
   const FALLBACK_DELAY_MS = 1800;
@@ -85,21 +86,21 @@
         const frame=document.createElement('iframe'),frameName=`sira_reg_${requestId.replace(/[^a-z0-9_]/gi,'')}`;
         frame.name=frameName;frame.setAttribute('aria-hidden','true');frame.style.cssText='position:fixed;width:1px;height:1px;border:0;opacity:0;pointer-events:none;left:-9999px;top:-9999px';
         const form=document.createElement('form');form.method='POST';form.action=SIRA_API_URL;form.target=frameName;form.style.display='none';
-        addHidden(form,'action','registroConsultaPublica');addHidden(form,'requestId',requestId);addHidden(form,'tipo',type);addHidden(form,'valor',value);addHidden(form,'sid',SESSION_ID);addHidden(form,'v',VERSION);
+        addHidden(form,'action','registroConsultaPublica');addHidden(form,'requestId',requestId);addHidden(form,'tipo',type);addHidden(form,'valor',value);addHidden(form,'registroSessionId',SESSION_ID);addHidden(form,'v',VERSION);
         postFrame=frame;postForm=form;document.body.append(frame,form);form.submit();
       };
       const launchJsonp=()=>{
         if(done||jsonpScript)return;
         jsonpCallback=`__altumRegistryCB_${Date.now()}_${Math.random().toString(36).slice(2).replace(/[^a-z0-9_]/gi,'')}`;
         window[jsonpCallback]=payload=>finish(payload);
-        const params=new URLSearchParams({action:'registroConsulta',callback:jsonpCallback,tipo:type,valor:value,sid:SESSION_ID,v:VERSION,_:String(Date.now())});
+        const params=new URLSearchParams({action:'registroConsulta',callback:jsonpCallback,tipo:type,valor:value,registroSessionId:SESSION_ID,v:VERSION,_:String(Date.now())});
         const script=document.createElement('script');script.async=true;script.src=`${SIRA_API_URL}?${params.toString()}`;
         script.onerror=()=>{try{script.remove();}catch(_e){}};jsonpScript=script;document.head.appendChild(script);
       };
       window.addEventListener('message',onMessage);
       launchPost();
       fallbackTimer=window.setTimeout(launchJsonp,FALLBACK_DELAY_MS);
-      mainTimer=window.setTimeout(()=>finish({ok:false,message:'No fue posible obtener respuesta de SIRA. Confirme que la implementación web existente fue actualizada a la versión 3.6.7.'}),REQUEST_TIMEOUT_MS);
+      mainTimer=window.setTimeout(()=>finish({ok:false,message:'No se recibió respuesta de SIRA. Intente nuevamente; si persiste, comuníquese con soporte.'}),REQUEST_TIMEOUT_MS);
     });
   }
 
