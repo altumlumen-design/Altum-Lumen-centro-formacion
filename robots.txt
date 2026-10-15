@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/sitemap.xml

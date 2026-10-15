@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/aula-virtual.html</loc>
     <lastmod>2026-08-08</lastmod>
@@ -74,7 +74,13 @@
   </url>
   <url>
     <loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/docentes.html</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-10-14</lastmod>
+    <image:image><image:loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/assets-especialista-1.png</image:loc><image:title>Jeanfranco M. Vargas Luque</image:title></image:image>
+    <image:image><image:loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/assets-especialista-2.png</image:loc><image:title>Miguel F. Lostaunau Fuentes</image:title></image:image>
+    <image:image><image:loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/assets-especialista-3.png</image:loc><image:title>Martín R. Vargas Castañeda</image:title></image:image>
+    <image:image><image:loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/assets-especialista-4.png</image:loc><image:title>Oscar F. Moreno Túpia</image:title></image:image>
+    <image:image><image:loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/assets-especialista-5.png</image:loc><image:title>Carlo B. Catter Vergara</image:title></image:image>
+    <image:image><image:loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/assets-especialista-6.png</image:loc><image:title>María C. Luque Medina</image:title></image:image>
   </url>
   <url>
     <loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/formulacion-inversiones-publicas-ia.html</loc>
@@ -128,4 +134,9 @@
     <loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/informacion-institucional.html</loc>
     <lastmod>2026-08-08</lastmod>
   </url>
+  <url><loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/oferta-academica.html</loc><lastmod>2026-10-14</lastmod></url>
+  <url><loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/institucion.html</loc><lastmod>2026-10-14</lastmod></url>
+  <url><loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/convenios.html</loc><lastmod>2026-10-14</lastmod></url>
+  <url><loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/publicaciones.html</loc><lastmod>2026-10-14</lastmod></url>
+  <url><loc>https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/tarifario.html</loc><lastmod>2026-10-14</lastmod></url>
 </urlset>

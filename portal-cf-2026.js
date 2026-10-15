@@ -163,6 +163,47 @@ const authorityRailCtl=setupHorizontalRail(authorityRail,document.querySelector(
 if(tabs.length&&workspaceRail){tabs.forEach(btn=>btn.addEventListener('click',()=>{try{btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}catch(_){workspaceRail.scrollLeft=btn.offsetLeft-36}setTimeout(()=>workspaceRailCtl?.update(),240)}))}
 const authorityTab=tabs.find(btn=>btn.dataset.tab==='autoridades');
 authorityTab?.addEventListener('click',()=>requestAnimationFrame(()=>requestAnimationFrame(()=>authorityRailCtl?.update())));
+// Search-engine identity for the institution, its teachers and their public portraits.
+const seoBase='https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/';
+const seoGraph=[
+  {
+    '@type':'EducationalOrganization',
+    '@id':`${seoBase}#organization`,
+    name:'Centro de Formación y Capacitación Profesional de ALTUM LUMEN S.A.C.',
+    alternateName:'ALTUM LUMEN | Centro de Formación y Capacitación Profesional',
+    url:seoBase,
+    logo:{'@type':'ImageObject',url:`${seoBase}assets/performance/logo-centro-portal.png`},
+    image:`${seoBase}assets/social-preview/index-20260808.jpg`,
+    slogan:'Especialización que impulsa tu carrera y el desarrollo del país',
+    areaServed:{'@type':'Country',name:'Perú'},
+    parentOrganization:{'@type':'Organization',name:'ALTUM LUMEN S.A.C.',url:'https://altumlumen-design.github.io/Altum-Lumen-S.A.C./'}
+  },
+  {
+    '@type':'WebSite',
+    '@id':`${seoBase}#website`,
+    name:'Centro de Formación y Capacitación Profesional | ALTUM LUMEN',
+    url:seoBase,
+    inLanguage:'es-PE',
+    publisher:{'@id':`${seoBase}#organization`}
+  },
+  ...[...document.querySelectorAll('[data-profile-open]')].map((profile,index)=>({
+    '@type':'Person',
+    '@id':`${seoBase}docentes.html#docente-${index+1}`,
+    name:profile.dataset.name,
+    image:new URL(profile.dataset.photo,seoBase).href,
+    jobTitle:`Docente y especialista en ${profile.dataset.role}`,
+    description:profile.dataset.bio,
+    knowsAbout:(profile.dataset.tags||'').split('|').filter(Boolean),
+    url:`${seoBase}docentes.html#docente-${index+1}`,
+    worksFor:{'@id':`${seoBase}#organization`}
+  }))
+];
+if(['inicio','docentes'].includes(document.body.dataset.page)){
+  const seoScript=document.createElement('script');
+  seoScript.type='application/ld+json';
+  seoScript.textContent=JSON.stringify({'@context':'https://schema.org','@graph':seoGraph});
+  document.head.appendChild(seoScript);
+}
 // Authority modal.
 const am=document.getElementById('authorityModal');document.querySelectorAll('[data-authority-open]').forEach(btn=>btn.addEventListener('click',()=>{if(!am)return;const im=am.querySelector('[data-authority-photo]');const photoWrap=im?.closest('.profile-modal-photo');if(photoWrap)photoWrap.classList.remove('image-fallback');if(im){im.hidden=false;im.src=btn.dataset.photo;im.alt='';im.onerror=()=>{im.hidden=true;photoWrap?.classList.add('image-fallback')}}am.querySelector('[data-authority-name]').textContent=btn.dataset.name;am.querySelector('[data-authority-role]').textContent=btn.dataset.role;am.querySelector('[data-authority-bio]').textContent=btn.dataset.bio;am.querySelector('[data-authority-resolution]').textContent=btn.dataset.resolution;const mail=am.querySelector('[data-authority-email]');mail.textContent=btn.dataset.email;mail.href='mailto:'+btn.dataset.email;am.showModal()}));am?.querySelector('[data-authority-close]')?.addEventListener('click',()=>am.close());am?.addEventListener('click',e=>{if(e.target===am)am.close()});
 // Year.
