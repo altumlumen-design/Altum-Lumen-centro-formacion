@@ -1,26 +1,13 @@
-import { copyFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: './',
-  plugins: [{
-    name: 'copy-aula-data',
-    async closeBundle() {
-      await Promise.all([
-        'alumnos-accesos.csv',
-        'inconsistencias-alumnos.csv',
-        'resumen-integracion-alumnos.json'
-      ].map((fileName) => copyFile(
-        resolve(import.meta.dirname, fileName),
-        resolve(import.meta.dirname, 'dist', fileName)
-      )));
-    }
-  }],
   build: {
     rollupOptions: {
       input: {
         portal: resolve(import.meta.dirname, 'index.html'),
+        siraAcceso: resolve(import.meta.dirname, 'sira-acceso.html'),
         aula: resolve(import.meta.dirname, 'aula-virtual.html'),
         verificacion: resolve(import.meta.dirname, 'verificacion.html'),
         directorioExpertos: resolve(import.meta.dirname, 'directorio-expertos.html'),

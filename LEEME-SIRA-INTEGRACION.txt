@@ -1,0 +1,31 @@
+ALTUM LUMEN · Integración SIRA con el portal del Centro de Formación
+Fecha: 16/10/2026
+
+ARCHIVOS DEL REPOSITORIO
+1. Reemplazar index.html
+2. Reemplazar vite.config.js
+3. Agregar sira-acceso.html
+4. Agregar sira-acceso.js
+
+UBICACIÓN DEL ACCESO
+- Barra superior del portal: "Acceso SIRA".
+- Menú móvil: "SIRA · Acceso institucional".
+- Pie de página / Servicios académicos: "SIRA · Acceso institucional".
+- No se agrega SIRA al bloque principal de participantes para no confundirlo con el Aula Virtual.
+
+SEGURIDAD
+- sira-acceso.html no solicita ni almacena usuario o contraseña.
+- El ingreso de credenciales ocurre únicamente en el Web App oficial de SIRA.
+- Los nuevos archivos no contienen el URL de despliegue de Apps Script escrito de forma literal; reutilizan la configuración ya existente del Aula (aula-config.js).
+- El endpoint del Web App NO debe considerarse un secreto. El repositorio es público y el navegador necesita conocer el destino para abrir SIRA. La seguridad real está en autenticación, sesión, roles y validaciones de servidor.
+- Si se exige que el hostname/URL de Apps Script nunca sea observable desde el navegador, GitHub Pages por sí solo no puede lograrlo: se requiere un reverse proxy o gateway bajo un dominio controlado.
+
+APPS SCRIPT
+Instalar en paralelo la entrega SIRA 3.7.40 PORTAL SEGURO y actualizar la MISMA implementación del Web App.
+
+NO CAMBIAR
+- No eliminar aula-config.js: el Aula Virtual actual ya depende de ese archivo.
+- No copiar credenciales, contraseñas ni datos privados al repositorio.
+
+LIMPIEZA CRITICA DEL REPOSITORIO PUBLICO
+Antes de publicar, leer SEGURIDAD-ANTES-DE-PUBLICAR.txt. Deben eliminarse de GitHub los archivos alumnos-accesos.csv, inconsistencias-alumnos.csv y resumen-integracion-alumnos.json.
