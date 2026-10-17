@@ -14,6 +14,15 @@
     return /^https:\/\/[^\s]+$/i.test(text) ? text : '';
   }
 
+  function safeZoomUrl(value) {
+    const text = safeUrl(value);
+    if (!text) return '';
+    try {
+      const host = new URL(text).hostname.toLowerCase();
+      return host === 'zoom.us' || host.endsWith('.zoom.us') ? text : '';
+    } catch (_error) { return ''; }
+  }
+
   function asDate(value) {
     if (!value) return null;
     const d = new Date(value);
@@ -73,17 +82,17 @@
   // Un único enlace de Zoom por curso. Primero usa SIRA; para cursos históricos
   // todavía no normalizados aprovecha el enlace del catálogo estático existente.
   function courseZoomUrl(course, sessions) {
-    const direct = safeUrl(course?.zoomUrl);
+    const direct = safeZoomUrl(course?.zoomUrl);
     if (direct) return direct;
-    const inherited = (sessions || []).map(session => safeUrl(session?.zoomUrl)).find(Boolean);
+    const inherited = (sessions || []).map(session => safeZoomUrl(session?.zoomUrl)).find(Boolean);
     if (inherited) return inherited;
     const courseId = String(course?.id || '');
     const legacy = (Array.isArray(window.ALTUM_COURSES) ? window.ALTUM_COURSES : []).find(item => String(item?.id || '') === courseId);
-    return safeUrl(legacy?.schedule?.liveUrl);
+    return safeZoomUrl(legacy?.schedule?.liveUrl);
   }
 
   function zoomResourceBlock(url) {
-    const href = safeUrl(url);
+    const href = safeZoomUrl(url);
     if (!href) return '';
     return `<div class="session-resource-state is-done is-zoom">
       <div class="session-resource-copy">${zoomMark()}<div><small>Clase en vivo</small><strong>Zoom disponible</strong></div></div>
@@ -120,9 +129,8 @@
     return { key: 'scheduled', label: 'Programada' };
   }
 
-  function copyButton(url) {
-    const href = safeUrl(url);
-    return href ? `<button class="copy-link-btn" type="button" data-copy-url="${esc(href)}" aria-label="Copiar enlace de Zoom">Copiar enlace</button>` : '';
+  function copyButton() {
+    return '<button class="copy-link-btn" type="button" data-copy-zoom aria-label="Copiar el mismo enlace de Zoom del botón anterior">Copiar enlace</button>';
   }
 
   function isEvaluationOnlySession(session) {
@@ -199,7 +207,7 @@
       </div>
       <div class="class-live-actions">
         ${today
-          ? (zoomUrl ? `<a class="class-btn class-btn-primary" href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Unirse a la sesión</span></a>${copyButton(zoomUrl)}` : '<span class="class-muted-note">El enlace de Zoom del curso aún no ha sido publicado.</span>')
+          ? (zoomUrl ? `<a class="class-btn class-btn-primary" data-zoom-join href="${esc(zoomUrl)}" target="_blank" rel="noopener">${zoomMark()}<span>Unirse a la sesión</span></a>${copyButton()}` : '<span class="class-muted-note">El enlace de Zoom del curso aún no ha sido publicado.</span>')
           : '<span class="class-muted-note">El acceso de Zoom se mostrará el día de la sesión.</span>'}
       </div>
     </section>`;
@@ -358,10 +366,18 @@
   }
 
   function bindCopyButtons(root) {
-    root.querySelectorAll('[data-copy-url]').forEach(button => {
+    root.querySelectorAll('[data-copy-zoom]').forEach(button => {
       button.addEventListener('click', async () => {
-        const url = button.dataset.copyUrl || '';
-        if (!url) return;
+        // Fuente única: copiar siempre el href del mismo control que abre Zoom.
+        // No conservamos una segunda URL en data-* que pueda quedar desactualizada
+        // o cruzarse con el enlace independiente de WhatsApp.
+        const join = button.closest('.class-live-actions')?.querySelector('a[data-zoom-join][href]');
+        const url = safeZoomUrl(join?.href);
+        if (!url) {
+          button.textContent = 'Enlace no disponible';
+          window.setTimeout(() => { button.textContent = 'Copiar enlace'; }, 1800);
+          return;
+        }
         const original = button.textContent;
         try {
           await navigator.clipboard.writeText(url);
