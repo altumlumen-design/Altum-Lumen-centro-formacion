@@ -35,8 +35,8 @@
     if (document.querySelector('link[data-altum-portal-ux]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'aula-portal-ux.css?v=20260915-aula32';
-    link.dataset.altumPortalUx = '20260915-aula32';
+    link.href = 'aula-portal-ux.css?v=20261017-aula347-sections-r1';
+    link.dataset.altumPortalUx = '20261017-aula347-sections-r1';
     document.head.appendChild(link);
   }
 
@@ -202,17 +202,15 @@
       toolbar = document.createElement('div'); toolbar.id = 'portalUxToolbar'; toolbar.className = 'portal-ux-toolbar';
       toolbar.innerHTML = `<div class="portal-ux-filter" role="group" aria-label="Filtrar cursos">
         <button type="button" data-filter="active">Vigentes <span></span></button>
-        <button type="button" data-filter="archive">Anteriores <span></span></button>
+        <button type="button" data-filter="archive">Finalizados <span></span></button>
         <button type="button" data-filter="all">Todos <span></span></button>
       </div><label class="portal-ux-search"><span class="aula-sr-only">Buscar entre mis cursos</span><input type="search" placeholder="Buscar curso" autocomplete="off"></label>`;
       grid.insertAdjacentElement('beforebegin', toolbar);
       toolbar.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
         filterState = button.dataset.filter;
-        try { sessionStorage.setItem('altum_portal_filter', filterState); } catch (_error) {}
         applyFilters();
       }));
       toolbar.querySelector('input').addEventListener('input', event => { searchValue = normalize(event.target.value); applyFilters(); });
-      try { const saved = sessionStorage.getItem('altum_portal_filter'); if (['active', 'archive', 'all'].includes(saved)) filterState = saved; } catch (_error) {}
     }
     if (filterState === 'active' && !active) filterState = archive ? 'archive' : 'all';
     if (filterState === 'archive' && !archive) filterState = active ? 'active' : 'all';

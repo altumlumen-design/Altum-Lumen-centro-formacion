@@ -108,6 +108,24 @@
     </div>`;
   }
 
+  function driveFileId(value) {
+    const href = safeUrl(value);
+    if (!href) return '';
+    const patterns = [/\/file\/d\/([A-Za-z0-9_-]+)/i, /[?&]id=([A-Za-z0-9_-]+)/i, /\/d\/([A-Za-z0-9_-]+)/i];
+    for (const pattern of patterns) {
+      const match = href.match(pattern);
+      if (match) return match[1];
+    }
+    return '';
+  }
+
+  function anonymousMaterialUrl(session) {
+    const original = safeUrl(session?.materialUrl);
+    if (!original) return '';
+    const fileId = driveFileId(original) || String(session?.materialFileId || '').trim();
+    return fileId ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}` : original;
+  }
+
   function materialResourceBlock(session) {
     const state = String(session?.materialState || '').trim().toUpperCase();
     const note = String(session?.materialNote || '').trim();
@@ -116,7 +134,11 @@
         <div class="session-resource-copy"><span>▣</span><div><small>Material</small><strong>No corresponde</strong>${note ? `<small style="margin-top:4px;max-width:460px;white-space:normal;line-height:1.35;text-transform:none;letter-spacing:0">${esc(note)}</small>` : ''}</div></div>
       </div>`;
     }
-    return resourceBlock(session?.materialUrl, 'Material', 'is-material', '▣');
+    const href = anonymousMaterialUrl(session), done = Boolean(href), directDownload = Boolean(driveFileId(session?.materialUrl) || String(session?.materialFileId || '').trim());
+    return `<div class="session-resource-state ${done ? 'is-done' : 'is-pending'}">
+      <div class="session-resource-copy"><span>▣</span><div><small>Material</small><strong>${done ? 'Disponible ✓' : 'Pendiente'}</strong></div></div>
+      ${done ? `<a class="class-resource is-material" href="${esc(href)}" target="_blank" rel="noopener">${directDownload ? 'Descargar' : 'Abrir'}</a>` : ''}
+    </div>`;
   }
 
   function scheduleState(session, now, todayKey, nextId) {
