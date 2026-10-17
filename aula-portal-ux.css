@@ -253,6 +253,11 @@ body.aula-portal.portal-ux-ready .portal-course-body{
   min-width:0;
 }
 
+/* El filtro debe prevalecer incluso cuando la tarjeta móvil usa display:grid !important. */
+body.aula-portal.portal-ux-ready .portal-course-card[hidden]{
+  display:none !important;
+}
+
 /* Tablet: evita tres columnas demasiado estrechas. */
 @media (min-width:701px) and (max-width:1080px){
   body.aula-portal.portal-ux-ready .portal-course-grid{

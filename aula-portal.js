@@ -35,8 +35,8 @@
     if (document.querySelector('link[data-altum-portal-ux]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'aula-portal-ux.css?v=20261017-aula347-sections-r1';
-    link.dataset.altumPortalUx = '20261017-aula347-sections-r1';
+    link.href = 'aula-portal-ux.css?v=20261017-aula347-sections-r2';
+    link.dataset.altumPortalUx = '20261017-aula347-sections-r2';
     document.head.appendChild(link);
   }
 

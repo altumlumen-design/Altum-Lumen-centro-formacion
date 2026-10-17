@@ -1,4 +1,4 @@
-const PERF_VERSION = '20261017-aula347-sections-r1';
+const PERF_VERSION = '20261017-aula347-sections-r2';
 const SESSION_KEY = 'altum_aula_session_v7';
 
 // FAST BOOT: si ya existe sesión, evita que el formulario de login parpadee
@@ -32,4 +32,4 @@ await Promise.all([
   import('./aula-clean-routes.js?v=20260810-final-r2')
 ]);
 await import('./aula-auth.js?v=20260915-aula32');
-await import('./aula-portal.js?v=20261017-aula347-sections-r1');
+await import('./aula-portal.js?v=20261017-aula347-sections-r2');
