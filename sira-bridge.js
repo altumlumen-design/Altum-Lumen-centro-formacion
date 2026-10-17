@@ -2,7 +2,8 @@
   'use strict';
 
   const SOURCE = 'SIRA_PORTAL_RPC';
-  const NORMAL_TIMEOUT = 120000;
+  const NORMAL_TIMEOUT = 90000;
+  const LOGIN_TIMEOUT = 60000;
   const HEAVY_TIMEOUT = 345000;
   let sequence = 0;
 
@@ -33,7 +34,10 @@
 
     return new Promise((resolve, reject) => {
       sequence += 1;
-      const requestId = `sira-admin-${Date.now()}-${sequence}-${Math.random().toString(36).slice(2)}`;
+      // Identificador resistente a colisiones y a intentos de falsificar respuestas.
+      const entropy = new Uint32Array(4);
+      crypto.getRandomValues(entropy);
+      const requestId = `sira-admin-${Date.now()}-${sequence}-${Array.from(entropy, n => n.toString(36)).join('-')}`;
       const frame = document.createElement('iframe');
       const frameName = `sira_admin_${requestId.replace(/[^a-z0-9_]/gi, '')}`;
       frame.name = frameName;
@@ -67,17 +71,22 @@
         const data = event.data || {};
         if (data.source !== SOURCE || data.requestId !== requestId) return;
         if (!trustedGoogleOrigin(event.origin)) return;
-        if (event.source && frame.contentWindow && event.source !== frame.contentWindow) return;
+        // HtmlService puede originar la respuesta desde un iframe anidado de Google.
+        // En ese caso event.source es el iframe interno, no frame.contentWindow.
+        // El requestId aleatorio y el origen Google identifican la respuesta.
+
         const payload = data.payload || {};
         if (payload.ok === true) finish(null, payload.result);
         else finish(new Error(String(payload.error && payload.error.message || 'No fue posible completar la operación.')));
       };
 
-      const timeout = isHeavy(method, args) ? HEAVY_TIMEOUT : NORMAL_TIMEOUT;
+      const timeout = method === 'login' ? LOGIN_TIMEOUT : (isHeavy(method, args) ? HEAVY_TIMEOUT : NORMAL_TIMEOUT);
       const timer = window.setTimeout(() => finish(new Error('La operación está tardando demasiado. Puedes volver a intentarlo sin duplicar la acción.')), timeout);
       window.addEventListener('message', onMessage);
       document.body.append(frame, form);
-      form.submit();
+      try { form.submit(); } catch (err) {
+        finish(new Error('No se pudo iniciar la comunicación con SIRA: ' + (err && err.message || err)));
+      }
     });
   }
 
