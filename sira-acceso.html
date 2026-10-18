@@ -135,7 +135,7 @@
 </style>
   <script src="aula-config.js?v=20261018-trayectoria-docente-r1"></script>
   <script src="sira-bridge.js?v=20261018-trayectoria-docente-r1"></script>
-  <script defer src="sira-teacher-career.js?v=20261018-3749-r2"></script>
+  <script defer src="sira-teacher-career.js?v=20261018-3749-r3"></script>
 </head>
 
 <body>
@@ -219,7 +219,7 @@
   .teacher-aula-readonly{font-size:9px;color:#6c7d8f}
   .teacher-aula-back{margin-bottom:12px}
   @media(max-width:820px){
-    .sidebar.teacher-sidebar{grid-template-columns:1fr!important}.sidebar.teacher-sidebar #teacherCoursesNav{display:flex!important}
+    .sidebar.teacher-sidebar{grid-template-columns:repeat(3,minmax(0,1fr))!important}.sidebar.teacher-sidebar .teacher-nav{display:flex!important}
     .teacher-aula-modal-body{padding:12px!important}.teacher-aula-hero,.teacher-aula-section{border-radius:17px;padding:15px}
     .teacher-aula-session-head{grid-template-columns:42px 1fr}.teacher-aula-session-num{width:40px;height:40px}.teacher-aula-status{grid-column:2;justify-self:start}
     .teacher-aula-resources,.teacher-aula-upload{margin-left:0}.teacher-aula-resources{grid-template-columns:1fr}.teacher-aula-upload-row{grid-template-columns:1fr}.teacher-aula-upload-row .btn{width:100%}
@@ -236,7 +236,9 @@
     <button class="nav-btn" data-view="finance" onclick="showView('finance',this)"><span class="nav-icon">▣</span><span>Finanzas</span></button>
     <div class="nav-section">Académico</div>
     <button id="teachersAdminNav" class="nav-btn" data-view="teachers" onclick="showView('teachers',this)"><span class="nav-icon">♜</span><span>Docentes</span></button>
-    <button id="teacherCoursesNav" class="nav-btn hidden" data-view="teacher" onclick="showTeacherHome_(this)"><span class="nav-icon">▧</span><span>Mis cursos</span></button>
+    <button id="teacherHomeNav" class="nav-btn teacher-nav hidden" data-view="teacher" onclick="showTeacherSection_('home',this)"><span class="nav-icon">⌂</span><span>Inicio</span></button>
+    <button id="teacherCoursesNav" class="nav-btn teacher-nav hidden" data-view="teacher" onclick="showTeacherSection_('courses',this)"><span class="nav-icon">▧</span><span>Mis cursos</span></button>
+    <button id="teacherCareerNav" class="nav-btn teacher-nav hidden" data-view="teacher" onclick="showTeacherSection_('career',this)"><span class="nav-icon">◇</span><span>Trayectoria</span></button>
     <button class="nav-btn" data-view="peda" onclick="pedaV170Open(this)"><span class="nav-icon">▤</span><span>PEDA</span></button>
     <div class="nav-section">Acciones</div>
     <button class="nav-btn" onclick="openStudentCreate()"><span class="nav-icon">＋</span><span>Registrar alumno</span></button>
@@ -253,7 +255,7 @@
       <div id="view-payments" class="hidden"><div class="page-head"><div><h3>Pagos</h3><p>Consulta, filtra y corrige el control económico.</p></div><div class="actions"><button class="btn primary" onclick="openGlobalPayment()">＋ Registrar pago</button></div></div><div class="card"><div class="filterbar payments"><input id="paymentQuery" class="input wide-filter" placeholder="Alumno, DNI, pago, matrícula u operación" oninput="debouncedPaymentSearch()"><select id="paymentStatus" class="input" onchange="loadPayments()"><option>TODOS</option><option>REGISTRADO</option><option>ANULADO</option><option>SUSPENDIDO_MATRICULA</option><option>SUSPENDIDO_ALUMNO</option></select><select id="paymentMethod" class="input" onchange="loadPayments()"><option>TODOS</option><option>YAPE</option><option>PLIN</option><option>TRANSFERENCIA</option><option>EFECTIVO</option><option>POS</option><option>OTRO</option></select><select id="paymentProgram" class="input" onchange="loadPayments()"><option value="">Todos los programas</option></select><select id="paymentType" class="input" onchange="loadPayments()"><option>TODOS</option><option>CUOTA</option><option>MATRÍCULA</option><option>PAGO TOTAL</option><option>DIPLOMA</option><option>CERTIFICADO</option><option>REGULARIZACIÓN</option><option>OTRO</option></select><input id="paymentFrom" class="input" type="date" title="Desde" onchange="loadPayments()"><input id="paymentTo" class="input" type="date" title="Hasta" onchange="loadPayments()"><input id="paymentMin" class="input" type="number" min="0" step="0.01" placeholder="Importe mínimo" onchange="loadPayments()"><input id="paymentMax" class="input" type="number" min="0" step="0.01" placeholder="Importe máximo" onchange="loadPayments()"><select id="paymentSort" class="input" onchange="loadPayments()"><option value="NEW">Más recientes</option><option value="OLD">Más antiguos</option><option value="HIGH">Mayor importe</option><option value="LOW">Menor importe</option></select><button class="btn ghost" onclick="clearPaymentFilters()">Limpiar</button></div><div id="paymentsTable"></div></div></div>
       <div id="view-finance" class="hidden"><div class="page-head"><div><h3>Finanzas</h3><p>Control financiero gerencial: recaudación, gastos, campañas, descuentos y cuentas por cobrar.</p></div><div class="actions"><button class="btn ghost" onclick="openFinanceTariff()">Tarifario</button><button class="btn ghost" onclick="financeExport('PDF')">PDF</button><button class="btn ghost" onclick="financeExport('EXCEL')">Excel</button><button class="btn primary" onclick="openFinanceExpense()">＋ Registrar gasto</button></div></div><div class="card card-pad"><div class="finance-toolbar"><div class="field"><label>Desde</label><input id="finFrom" class="input" type="date" onchange="loadFinance(true)"></div><div class="field"><label>Hasta</label><input id="finTo" class="input" type="date" onchange="loadFinance(true)"></div><div class="field"><label>Campaña</label><select id="finCampaign" class="input" onchange="loadFinance(true)"><option value="">Todas</option></select></div><div class="field"><label>Programa</label><select id="finProgram" class="input" onchange="loadFinance(true)"><option value="">Todos</option></select></div><div class="field"><label>Concepto tarifario</label><select id="finTariff" class="input" onchange="loadFinance(true)"><option value="">Todos</option></select></div><div class="field"><label>Medio</label><select id="finMethod" class="input" onchange="loadFinance(true)"><option value="TODOS">Todos</option></select></div></div></div><div id="financeRoot"><div class="card finance-empty">Abre Finanzas para cargar el análisis.</div></div></div>
       <div id="view-teachers" class="hidden"><div class="page-head"><div><h3>Docentes</h3><p>Trayectoria, categorías, sesiones y asignaciones académicas.</p></div><div class="actions"><button class="btn ghost" onclick="loadTeachersAdmin_(true)">Actualizar</button><button class="btn primary" onclick="openTeacherProfileCreate_()">＋ Registrar docente</button></div></div><div id="teachersAdminRoot"><div class="card card-pad">Abre Docentes para cargar la información.</div></div></div>
-      <div id="view-teacher" class="hidden"><div class="page-head"><div><h3>Mi trayectoria</h3><p>Consulta tu avance y administra tus cursos asignados.</p></div><div class="actions"><button class="btn ghost" onclick="loadTeacherWorkspace_(true)">Actualizar</button></div></div><div id="teacherWorkspaceRoot"><div class="card card-pad">Cargando cursos asignados…</div></div></div>
+      <div id="view-teacher" class="hidden"><div class="page-head"><div><h3 id="teacherPageTitle">Inicio docente</h3><p id="teacherPageSubtitle">Resumen de tu avance académico y cursos asignados.</p></div><div class="actions"><button class="btn ghost" onclick="loadTeacherWorkspace_(true)">Actualizar</button></div></div><div id="teacherWorkspaceRoot"><div class="card card-pad">Cargando espacio docente…</div></div></div>
       <div id="view-peda" class="hidden"><div class="page-head"><div><h3>PEDA · Registros académicos</h3><p>Configuración, calificaciones, emisión y libros virtuales.</p></div><div class="actions"><button class="btn ghost" onclick="pedaV170Refresh(true)">Actualizar</button></div></div><div class="peda-tabs"><button id="pedaTabManage" class="btn secondary active" onclick="pedaV170Tab('manage')">Gestión y emisión</button><button id="pedaTabLedger" class="btn secondary" onclick="pedaV170Tab('ledger')">Libros virtuales</button></div><div id="pedaRoot"><div class="card peda-empty">Abre PEDA para cargar sus datos.</div></div></div>
       <div id="view-trash" class="hidden"><div class="page-head"><div><h3>Papelera</h3><p>Restaura alumnos, matrículas, pagos o programas.</p></div></div><div class="card"><div class="filterbar trash"><input id="trashQuery" class="input wide-filter" placeholder="Buscar registro, detalle o motivo" oninput="debouncedTrashSearch()"><select id="trashEntity" class="input" onchange="loadTrash()"><option>TODOS</option><option>ALUMNO</option><option>MATRICULA</option><option>PAGO</option><option>PROGRAMA</option></select><input id="trashFrom" class="input" type="date" title="Desde" onchange="loadTrash()"><input id="trashTo" class="input" type="date" title="Hasta" onchange="loadTrash()"><select id="trashSort" class="input" onchange="loadTrash()"><option value="NEW">Más recientes</option><option value="OLD">Más antiguos</option></select><button class="btn ghost" onclick="clearTrashFilters()">Limpiar</button></div><div id="trashTable"></div></div></div>
     </section>
@@ -1625,12 +1627,12 @@ async function saveTeacherEvaluationDesigner_(programId){const data=aulaEvalColl
   body.mobile-menu-open .sidebar:not(.teacher-sidebar)>.nav-btn>span:last-child{font-size:13px;text-align:left;max-width:none}
   body.mobile-menu-open .sidebar:not(.teacher-sidebar)>#siraMobileMore{order:-1;justify-content:center;background:rgba(255,255,255,.10)}
   .main{padding-bottom:calc(91px + env(safe-area-inset-bottom))}
-  .sidebar.teacher-sidebar{inset:auto 0 0;width:100%;height:calc(67px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;padding:7px 20px calc(7px + env(safe-area-inset-bottom));overflow:visible!important}
+  .sidebar.teacher-sidebar{inset:auto 0 0;width:100%;height:calc(72px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:5px;padding:6px 8px calc(6px + env(safe-area-inset-bottom));overflow:visible!important}
   .sidebar.teacher-sidebar>.nav-section,.sidebar.teacher-sidebar>.side-brand,.sidebar.teacher-sidebar>#siraMobileMore{display:none!important}
   .sidebar.teacher-sidebar>.nav-btn{display:none!important}
-  .sidebar.teacher-sidebar>#teacherCoursesNav:not(.hidden){display:flex!important;flex-direction:row;gap:12px;align-items:center;justify-content:center;width:min(360px,100%);min-height:47px;margin:0;padding:8px 16px}
-  .sidebar.teacher-sidebar>#teacherCoursesNav .nav-icon{font-size:19px}
-  .sidebar.teacher-sidebar>#teacherCoursesNav>span:last-child{display:inline!important;font-size:13px;font-weight:800}
+  .sidebar.teacher-sidebar>.teacher-nav:not(.hidden){display:flex!important;flex-direction:column;gap:2px;align-items:center;justify-content:center;width:auto;min-width:0;min-height:52px;margin:0;padding:5px 3px}
+  .sidebar.teacher-sidebar>.teacher-nav .nav-icon{font-size:18px}
+  .sidebar.teacher-sidebar>.teacher-nav>span:last-child{display:inline!important;font-size:9px;font-weight:800;line-height:1.05}
   /* Navegación por pestañas y filtros */
   .tabs,.finance-tabs,.peda-tabs,.program-timeline-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:5px}
   .tabs>button,.finance-tabs>button,.peda-tabs>button,.program-timeline-tabs>button{white-space:nowrap;flex:0 0 auto}
@@ -1799,11 +1801,11 @@ html[data-sira-role='DOCENTE'] #view-finance,
 html[data-sira-role='DOCENTE'] #view-campaigns,
 html[data-sira-role='DOCENTE'] #view-peda,
 html[data-sira-role='DOCENTE'] #view-trash,
-html[data-sira-role='DOCENTE'] .sidebar>.nav-btn:not(#teacherCoursesNav),
+html[data-sira-role='DOCENTE'] .sidebar>.nav-btn:not(.teacher-nav),
 html[data-sira-role='DOCENTE'] .sidebar>.nav-section,
 html[data-sira-role='DOCENTE'] .sidebar>.side-brand{display:none!important}
 html[data-sira-role='DOCENTE'] #view-teacher{display:block!important}
-html[data-sira-role='DOCENTE'] .sidebar>#teacherCoursesNav{display:flex!important}
+html[data-sira-role='DOCENTE'] .sidebar>.teacher-nav{display:flex!important}
 @media(max-width:820px){
   .sidebar:not(.teacher-sidebar){height:calc(66px + env(safe-area-inset-bottom));grid-template-columns:repeat(4,minmax(0,1fr))!important;padding-top:5px;padding-bottom:calc(5px + env(safe-area-inset-bottom))}
   .sidebar:not(.teacher-sidebar)>.nav-btn[data-view='peda']{display:none!important}
@@ -1846,14 +1848,14 @@ html[data-sira-role='DOCENTE'] .sidebar>#teacherCoursesNav{display:flex!importan
     const side=document.querySelector('#appScreen .sidebar');if(!side)return;
     side.classList.toggle('teacher-sidebar',teacher);
     side.querySelectorAll('.nav-section').forEach(x=>x.classList.toggle('hidden',teacher));
-    side.querySelectorAll('.nav-btn').forEach(b=>{const teacherHome=b.id==='teacherCoursesNav',blocked=teacher?!teacherHome:teacherHome;b.classList.toggle('hidden',blocked);if(blocked)b.setAttribute('inert','');else b.removeAttribute('inert');b.setAttribute('aria-hidden',String(blocked));if(teacher&&!teacherHome)b.classList.remove('active')});
-    document.getElementById('teacherCoursesNav')?.classList.toggle('active',teacher);
+    side.querySelectorAll('.nav-btn').forEach(b=>{const teacherNav=b.classList.contains('teacher-nav'),blocked=teacher?!teacherNav:teacherNav;b.classList.toggle('hidden',blocked);if(blocked)b.setAttribute('inert','');else b.removeAttribute('inert');b.setAttribute('aria-hidden',String(blocked));if(teacher&&!teacherNav)b.classList.remove('active')});
+    if(teacher&&!side.querySelector('.teacher-nav.active'))document.getElementById('teacherHomeNav')?.classList.add('active');
     document.getElementById('systemManualBtn')?.classList.toggle('hidden',teacher);
     document.getElementById('notificationBell')?.classList.toggle('hidden',teacher);
     if(teacher){
       operatorViews.forEach(v=>{const view=document.getElementById('view-'+v);if(view){view.classList.add('hidden');view.setAttribute('inert','');view.setAttribute('aria-hidden','true')}});
       const teacherView=document.getElementById('view-teacher');if(teacherView){teacherView.classList.remove('hidden');teacherView.removeAttribute('inert');teacherView.setAttribute('aria-hidden','false')}
-      if(document.getElementById('viewTitle'))document.getElementById('viewTitle').textContent='Mi trayectoria';
+      const activeTeacher=side.querySelector('.teacher-nav.active')?.id,title=activeTeacher==='teacherCoursesNav'?'Mis cursos':activeTeacher==='teacherCareerNav'?'Trayectoria académica':'Inicio docente';if(document.getElementById('viewTitle'))document.getElementById('viewTitle').textContent=title;
       document.body.classList.remove('mobile-menu-open');closeProgramMenus();
     }else{
       operatorViews.forEach(v=>{const view=document.getElementById('view-'+v);if(view){view.removeAttribute('inert');view.removeAttribute('aria-hidden')}});
@@ -1866,10 +1868,10 @@ html[data-sira-role='DOCENTE'] .sidebar>#teacherCoursesNav{display:flex!importan
   const priorShowLogin=window.showLogin;
   if(typeof priorShowLogin==='function')window.showLogin=function(){const result=priorShowLogin.apply(this,arguments);applyRoleShell('');return result};
   const priorShowView=window.showView;
-  if(typeof priorShowView==='function')window.showView=function(view,button){if(roleNow()==='DOCENTE'&&view!=='teacher')return window.showTeacherHome_?.(document.getElementById('teacherCoursesNav'));return priorShowView.call(this,view,button)};
+  if(typeof priorShowView==='function')window.showView=function(view,button){if(roleNow()==='DOCENTE'&&view!=='teacher')return window.showTeacherSection_?.('home',document.getElementById('teacherHomeNav'));return priorShowView.call(this,view,button)};
   const priorPedaOpen=window.pedaV170Open;
-  if(typeof priorPedaOpen==='function')window.pedaV170Open=function(){if(roleNow()==='DOCENTE')return window.showTeacherHome_?.(document.getElementById('teacherCoursesNav'));return priorPedaOpen.apply(this,arguments)};
-  document.addEventListener('click',event=>{if(roleNow()!=='DOCENTE')return;const target=event.target instanceof Element?event.target:null;if(!target)return;const nav=target.closest('.sidebar .nav-btn');if(nav&&nav.id!=='teacherCoursesNav'){event.preventDefault();event.stopImmediatePropagation();applyRoleShell('DOCENTE')}},true);
+  if(typeof priorPedaOpen==='function')window.pedaV170Open=function(){if(roleNow()==='DOCENTE')return window.showTeacherSection_?.('home',document.getElementById('teacherHomeNav'));return priorPedaOpen.apply(this,arguments)};
+  document.addEventListener('click',event=>{if(roleNow()!=='DOCENTE')return;const target=event.target instanceof Element?event.target:null;if(!target)return;const nav=target.closest('.sidebar .nav-btn');if(nav&&!nav.classList.contains('teacher-nav')){event.preventDefault();event.stopImmediatePropagation();applyRoleShell('DOCENTE')}},true);
   document.addEventListener('toggle',event=>{const menu=event.target;if(!(menu instanceof HTMLDetailsElement)||!menu.matches('.program-menu'))return;if(menu.open)document.querySelectorAll('details.program-menu[open]').forEach(x=>{if(x!==menu)x.open=false});document.body.classList.toggle('sira-program-menu-open',!!document.querySelector('details.program-menu[open]'))},true);
   document.addEventListener('click',event=>{const openMenu=event.target.closest?.('details.program-menu[open]');if(event.target.closest?.('.program-menu-panel button'))queueMicrotask(closeProgramMenus);else if(openMenu&&event.target===openMenu)closeProgramMenus()});
   document.addEventListener('keydown',event=>{if(event.key==='Escape')closeProgramMenus()});
