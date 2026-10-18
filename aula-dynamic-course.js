@@ -143,18 +143,20 @@
 
   function additionalMaterialResourceBlocks(session) {
     const items = Array.isArray(session?.additionalMaterials) ? session.additionalMaterials.slice(0, 2) : [];
-    return items.map((item) => {
+    const rows = items.map((item) => {
       const original = safeUrl(item?.url), fileId = driveFileId(original) || String(item?.fileId || '').trim();
       const href = fileId ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}` : original;
       if (!href) return '';
       const isReading = String(item?.kind || '').trim().toUpperCase() === 'LECTURA_OBLIGATORIA';
       const typeLabel = isReading ? 'Lectura obligatoria' : 'Material anexo';
       const title = String(item?.title || item?.name || typeLabel).trim();
-      return `<div class="session-resource-state is-done is-additional ${isReading ? 'is-required-reading' : 'is-annex'}">
-        <div class="session-resource-copy"><span>${isReading ? 'L' : 'A'}</span><div><small>${esc(typeLabel)}</small><strong>${esc(title)}</strong></div></div>
+      return `<div class="session-additional-row ${isReading ? 'is-required-reading' : 'is-annex'}">
+        <div class="session-additional-mark">${isReading ? 'L' : 'A'}</div>
+        <div class="session-additional-copy"><small>${esc(typeLabel)}</small><strong>${esc(title)}</strong></div>
         <a class="class-resource is-material" href="${esc(href)}" target="_blank" rel="noopener">${fileId ? 'Descargar' : 'Abrir'}</a>
       </div>`;
-    }).join('');
+    }).filter(Boolean).join('');
+    return rows ? `<div class="session-additional-list">${rows}</div>` : '';
   }
 
   function scheduleState(session, now, todayKey, nextId) {
