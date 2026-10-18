@@ -141,9 +141,25 @@
     </div>`;
   }
 
+  function additionalMaterialResourceBlocks(session) {
+    const items = Array.isArray(session?.additionalMaterials) ? session.additionalMaterials.slice(0, 2) : [];
+    return items.map((item) => {
+      const original = safeUrl(item?.url), fileId = driveFileId(original) || String(item?.fileId || '').trim();
+      const href = fileId ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}` : original;
+      if (!href) return '';
+      const isReading = String(item?.kind || '').trim().toUpperCase() === 'LECTURA_OBLIGATORIA';
+      const typeLabel = isReading ? 'Lectura obligatoria' : 'Material anexo';
+      const title = String(item?.title || item?.name || typeLabel).trim();
+      return `<div class="session-resource-state is-done is-additional ${isReading ? 'is-required-reading' : 'is-annex'}">
+        <div class="session-resource-copy"><span>${isReading ? 'L' : 'A'}</span><div><small>${esc(typeLabel)}</small><strong>${esc(title)}</strong></div></div>
+        <a class="class-resource is-material" href="${esc(href)}" target="_blank" rel="noopener">${fileId ? 'Descargar' : 'Abrir'}</a>
+      </div>`;
+    }).join('');
+  }
+
   function scheduleState(session, now, todayKey, nextId) {
     const start = asDate(session.start), end = asDate(session.end) || start;
-    if (!start) return safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) ? { key: 'done', label: 'Sesión realizada' } : { key: 'scheduled', label: 'Programada' };
+    if (!start) return safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) || (Array.isArray(session?.additionalMaterials) && session.additionalMaterials.length) ? { key: 'done', label: 'Sesión realizada' } : { key: 'scheduled', label: 'Programada' };
     const key = dateParts(start);
     if (key === todayKey) return { key: 'today', label: 'Hoy' };
     if (end && end.getTime() < now.getTime()) return { key: 'done', label: 'Sesión realizada' };
@@ -158,7 +174,7 @@
   function isEvaluationOnlySession(session) {
     const semantic = String(session?.title || '').toLocaleLowerCase('es-PE');
     const looksLikeEvaluation = /examen|evaluaci[oó]n/.test(semantic);
-    const hasClassResource = Boolean(safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) || session?.start);
+    const hasClassResource = Boolean(safeUrl(session?.recordingUrl) || safeUrl(session?.materialUrl) || (Array.isArray(session?.additionalMaterials) && session.additionalMaterials.length) || session?.start);
     return looksLikeEvaluation && !hasClassResource;
   }
 
@@ -304,6 +320,7 @@
           ${st.key === 'today' ? zoomResourceBlock(sharedZoom) : ''}
           ${resourceBlock(session.recordingUrl, 'Grabación / video', 'is-recording', '▶')}
           ${materialResourceBlock(session)}
+          ${additionalMaterialResourceBlocks(session)}
         </div>
       </article>`;
     }).join('');
