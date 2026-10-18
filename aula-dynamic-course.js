@@ -144,8 +144,8 @@
   function additionalMaterialResourceBlocks(session) {
     const items = Array.isArray(session?.additionalMaterials) ? session.additionalMaterials.slice(0, 2) : [];
     const rows = items.map((item) => {
-      const original = safeUrl(item?.url), fileId = driveFileId(original) || String(item?.fileId || '').trim();
-      const href = fileId ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}` : original;
+      const original = safeUrl(item?.url), fileId = driveFileId(original) || String(item?.fileId || '').trim(), resourceKey = String(item?.resourceKey || '').trim();
+      const href = fileId ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}${resourceKey ? `&resourcekey=${encodeURIComponent(resourceKey)}` : ''}` : original;
       if (!href) return '';
       const isReading = String(item?.kind || '').trim().toUpperCase() === 'LECTURA_OBLIGATORIA';
       const typeLabel = isReading ? 'Lectura obligatoria' : 'Material anexo';
