@@ -123,7 +123,7 @@
     const original = safeUrl(session?.materialUrl);
     if (!original) return '';
     const fileId = driveFileId(original) || String(session?.materialFileId || '').trim();
-    return fileId ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}` : original;
+    return fileId ? `https://drive.usercontent.google.com/download?id=${encodeURIComponent(fileId)}&export=download` : original;
   }
 
   function materialResourceBlock(session) {
@@ -145,7 +145,7 @@
     const items = Array.isArray(session?.additionalMaterials) ? session.additionalMaterials.slice(0, 2) : [];
     const rows = items.map((item) => {
       const original = safeUrl(item?.url), fileId = driveFileId(original) || String(item?.fileId || '').trim(), resourceKey = String(item?.resourceKey || '').trim();
-      const href = fileId ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}${resourceKey ? `&resourcekey=${encodeURIComponent(resourceKey)}` : ''}` : original;
+      const href = fileId ? `https://drive.usercontent.google.com/download?id=${encodeURIComponent(fileId)}&export=download${resourceKey ? `&resourcekey=${encodeURIComponent(resourceKey)}` : ''}` : original;
       if (!href) return '';
       const isReading = String(item?.kind || '').trim().toUpperCase() === 'LECTURA_OBLIGATORIA';
       const typeLabel = isReading ? 'Lectura obligatoria' : 'Material anexo';
