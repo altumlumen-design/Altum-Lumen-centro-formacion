@@ -159,6 +159,7 @@
       aulaAuth: 'SIRA_AULA_AUTH',
       aulaSession: 'SIRA_AULA_SESSION',
       aulaCourse: 'SIRA_AULA_COURSE',
+      aulaMaterialFile: 'SIRA_AULA_MATERIAL',
       aulaEvaluationAccess: 'SIRA_AULA_EVALUATION'
     }[action];
     if (!expectedSource) return Promise.resolve({ ok: false, message: 'Solicitud de Aula no válida.' });
@@ -198,9 +199,10 @@
         if (!trustedGoogleOrigin) return;
         finish(data.payload);
       };
+      const timeoutMs = action === 'aulaMaterialFile' ? 90000 : (Number(config.authTimeoutMs) || 20000);
       const timer = window.setTimeout(
         () => finish({ ok: false, message: 'El acceso está tardando demasiado. Inténtalo nuevamente.' }),
-        Number(config.authTimeoutMs) || 20000
+        timeoutMs
       );
 
       window.addEventListener('message', onMessage);
@@ -248,6 +250,17 @@
     const current = existingSession || readSession();
     if (!current?.token) return { ok: false, message: 'Debes iniciar sesión nuevamente.' };
     return requestSira('aulaCourse', { token: current.token, courseId: String(courseId || '') });
+  }
+
+  async function fetchAdditionalMaterial(courseId, sessionNumber, slot, existingSession) {
+    const current = existingSession || readSession();
+    if (!current?.token) return { ok: false, message: 'Debes iniciar sesión nuevamente.' };
+    return requestSira('aulaMaterialFile', {
+      token: current.token,
+      courseId: String(courseId || ''),
+      sessionNumber: Number(sessionNumber || 0),
+      slot: String(slot || '')
+    });
   }
 
   function hasCourse(session, courseId) {
@@ -517,6 +530,7 @@
     authenticate,
     refreshSession,
     fetchCourse,
+    fetchAdditionalMaterial,
     fetchEvaluation: (courseId,evaluationId) => requestSira('aulaEvaluationAccess', {token:readSession()?.token||'',courseId,evaluationId}),
     clearSession,
     getSession: readSession,
