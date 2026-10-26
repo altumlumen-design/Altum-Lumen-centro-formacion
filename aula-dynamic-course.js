@@ -155,9 +155,8 @@
       </div>`;
     };
     if (!items.length) return '';
-    if (items.length <= 2) return `<div class="session-additional-list">${items.map(row).join('')}</div>`;
     const names = items.map(item => String(item?.name || item?.title || 'Archivo').trim()).filter(Boolean).join(' · ');
-    return `<details class="session-additional-disclosure"><summary><span>Materiales adicionales</span><strong>${items.length} archivos</strong><small>${esc(names)}</small></summary><div class="session-additional-list">${items.map(row).join('')}</div></details>`;
+    return `<details class="session-additional-disclosure"><summary><span>Ver anexos</span><strong>${items.length} ${items.length === 1 ? 'archivo' : 'archivos'}</strong><small>${esc(names)}</small></summary><div class="session-additional-list">${items.map(row).join('')}</div></details>`;
   }
 
   function scheduleState(session, now, todayKey, nextId) {
