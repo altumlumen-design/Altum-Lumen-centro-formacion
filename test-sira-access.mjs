@@ -8,7 +8,7 @@ const html = read('sira-acceso.html');
 const config = read('aula-config.js');
 const bridge = read('sira-bridge.js');
 const endpoint = 'https://script.google.com/macros/s/AKfycbysdGK_9D_nDDrhj6pa53_4H6eOT0U3k_KBqZ1iX_Co7oTCvdEAqnE5Sac1ZRAugfZo/exec';
-const release = '20261027-sira-3754-r2';
+const release = '20261027-sira-3755-r2';
 const pageUrl = 'https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/sira-acceso.html';
 const parsed = new JSDOM(html, { url: pageUrl });
 const blocks = [...parsed.window.document.querySelectorAll('script:not([src])')];
@@ -16,7 +16,7 @@ assert.equal(blocks.length, 9, 'El mirror debe conservar los nueve bloques de la
 const scripts = blocks.map((block, index) => new Script(block.textContent, {
   filename: `sira-acceso.html:${block.id || `inline-${index + 1}`}`
 }));
-assert.match(html, /const SIRA_CLIENT_BUILD\s*=\s*['"]3\.7\.54['"]/);
+assert.match(html, /const SIRA_CLIENT_BUILD\s*=\s*['"]3\.7\.55['"]/);
 assert.doesNotMatch(html, /máximo de 15 materiales|\$\{additional\.length\}\/15|Nuevo anexo '\+slot\+' de 15/, 'No debe existir un límite fijo de cantidad.');
 assert.doesNotMatch(html, /(?:máximo\s*2\s*PDF|hasta\s*dos\s*PDF|aulaSessionHasAdditional|aula-additional-toggle)/i);
 assert.equal(parsed.window.document.querySelector('script[src*="sira-teacher-career"]'), null,
@@ -148,7 +148,7 @@ for (const role of ['DOCENTE', 'OPERADOR']) {
     window.document.getElementById('loginUser').value = `fixture.${role.toLowerCase()}`;
     window.document.getElementById('loginPass').value = 'contraseña-simulada';
     await window.doLogin();
-    assert.equal(window.document.documentElement.dataset.siraBuild, '3.7.54');
+    assert.equal(window.document.documentElement.dataset.siraBuild, '3.7.55');
     assert.equal(window.document.documentElement.dataset.siraRole, role);
     assert.ok(window.document.getElementById('loginScreen').classList.contains('hidden'));
     if (role === 'DOCENTE') {
@@ -229,4 +229,4 @@ try {
   bridgeDom.window.close();
 }
 
-console.log('SIRA 3.7.54: nueve scripts válidos; docente y operador, anexos sin tope fijo y plazos RPC verificados sin servicios externos.');
+console.log('SIRA 3.7.55: nueve scripts válidos; docente y operador, anexos sin tope fijo y plazos RPC verificados sin servicios externos.');
