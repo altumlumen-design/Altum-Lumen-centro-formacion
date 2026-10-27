@@ -49,6 +49,8 @@
 
 /* AULA 3.2 · avance académico basado en sesiones reales de SIRA */
 .session-additional-row .session-additional-actions .class-resource{min-height:44px;font-size:12px}.session-additional-disclosure>summary small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.material-download-feedback{flex-basis:100%;display:grid;gap:8px;max-width:340px;color:#176b52;font-size:12px;line-height:1.45;overflow-wrap:anywhere}.material-download-feedback.is-error{color:#9a2634}.material-download-feedback .material-save-link{justify-content:center}.material-download-feedback .class-resource:focus-visible,.session-additional-actions>button:focus-visible{outline:3px solid #1767bb;outline-offset:3px}.material-course-notice{margin:18px auto;padding:14px 18px;width:min(1180px,calc(100% - 36px));box-sizing:border-box;border:1px solid #e4d0a7;border-radius:12px;background:#fff9ed;color:#795515;font-size:14px;line-height:1.5}.material-course-notice:focus{outline:2px solid #1767bb;outline-offset:3px}
+.material-download-actions{display:grid;gap:8px;justify-items:end;min-width:0}.material-download-actions>button{appearance:none;cursor:pointer}.material-download-actions>button:disabled{cursor:progress;opacity:.65}.material-download-actions>button:focus-visible{outline:3px solid #1767bb;outline-offset:3px}.material-download-actions .material-download-feedback{width:100%}.material-download-actions .class-resource{min-height:44px;font-size:12px}@media(max-width:620px){.material-download-actions{justify-items:stretch}.material-download-feedback{max-width:100%}.session-resource-state:has(.material-download-feedback){align-items:stretch;flex-direction:column}}
 .course-progress-card{
   margin:0 0 18px;
   padding:16px 18px;

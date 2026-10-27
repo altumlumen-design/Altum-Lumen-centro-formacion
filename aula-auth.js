@@ -119,6 +119,7 @@
   }
 
   function isDefinitiveSessionFailure(result) {
+    if (result?.code === 'SESSION_EXPIRED') return true;
     const message = String(result?.message || '').toLowerCase();
     return message.includes('venció')
       || message.includes('ya no se encuentra habilitado')
@@ -165,10 +166,19 @@
     if (!expectedSource) return Promise.resolve({ ok: false, message: 'Solicitud de Aula no válida.' });
 
     return new Promise((resolve) => {
-      const requestId = `altum-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      let requestId;
+      try {
+        const random = new Uint8Array(16);
+        window.crypto.getRandomValues(random);
+        requestId = `altum-${Array.from(random, byte => byte.toString(16).padStart(2, '0')).join('')}`;
+      } catch (_error) {
+        resolve({ ok: false, code: 'REQUEST_FAILED', message: 'No fue posible preparar una solicitud segura. Recarga el aula e inténtalo nuevamente.' });
+        return;
+      }
       const frame = document.createElement('iframe');
       const frameName = `sira_${requestId.replace(/[^a-z0-9_]/gi, '')}`;
       frame.name = frameName;
+      frame.referrerPolicy = 'no-referrer';
       frame.setAttribute('aria-hidden', 'true');
       frame.style.cssText = 'position:fixed;width:1px;height:1px;border:0;opacity:0;pointer-events:none;left:-9999px;top:-9999px';
 
@@ -188,7 +198,7 @@
         window.removeEventListener('message', onMessage);
         window.clearTimeout(timer);
         form.remove();
-        window.setTimeout(() => frame.remove(), 0);
+        frame.remove();
         resolve(result || { ok: false, message: 'No fue posible completar la solicitud de acceso.' });
       };
       const onMessage = (event) => {
@@ -201,13 +211,19 @@
       };
       const timeoutMs = action === 'aulaMaterialFile' ? 90000 : (Number(config.authTimeoutMs) || 20000);
       const timer = window.setTimeout(
-        () => finish({ ok: false, message: 'El acceso está tardando demasiado. Inténtalo nuevamente.' }),
+        () => finish({ ok: false, code: 'REQUEST_TIMEOUT', message: action === 'aulaMaterialFile'
+          ? 'El archivo está tardando demasiado en llegar. Vuelve a pulsar Descargar para intentarlo nuevamente.'
+          : 'SIRA está tardando demasiado en responder. Inténtalo nuevamente.' }),
         timeoutMs
       );
 
       window.addEventListener('message', onMessage);
-      document.body.append(frame, form);
-      form.submit();
+      try {
+        document.body.append(frame, form);
+        form.submit();
+      } catch (_error) {
+        finish({ ok: false, code: 'REQUEST_FAILED', message: 'No fue posible enviar la solicitud a SIRA. Inténtalo nuevamente.' });
+      }
     });
   }
 
@@ -248,18 +264,30 @@
 
   async function fetchCourse(courseId, existingSession) {
     const current = existingSession || readSession();
-    if (!current?.token) return { ok: false, message: 'Debes iniciar sesión nuevamente.' };
+    if (!current?.token) return { ok: false, code: 'SESSION_EXPIRED', message: 'Debes iniciar sesión nuevamente.' };
     return requestSira('aulaCourse', { token: current.token, courseId: String(courseId || '') });
   }
 
   async function fetchAdditionalMaterial(courseId, sessionNumber, slot, revision, existingSession) {
     const current = existingSession || readSession();
-    if (!current?.token) return { ok: false, message: 'Debes iniciar sesión nuevamente.' };
+    if (!current?.token) return { ok: false, code: 'SESSION_EXPIRED', message: 'Debes iniciar sesión nuevamente.' };
     return requestSira('aulaMaterialFile', {
       token: current.token,
       courseId: String(courseId || ''),
       sessionNumber: Number(sessionNumber || 0),
       slot: String(slot || ''),
+      revision: String(revision || '')
+    });
+  }
+
+  async function fetchSessionMaterial(courseId, sessionNumber, revision, existingSession) {
+    const current = existingSession || readSession();
+    if (!current?.token) return { ok: false, code: 'SESSION_EXPIRED', message: 'Debes iniciar sesión nuevamente.' };
+    return requestSira('aulaMaterialFile', {
+      token: current.token,
+      courseId: String(courseId || ''),
+      sessionNumber: Number(sessionNumber || 0),
+      resource: 'MAIN',
       revision: String(revision || '')
     });
   }
@@ -532,6 +560,7 @@
     refreshSession,
     fetchCourse,
     fetchAdditionalMaterial,
+    fetchSessionMaterial,
     fetchEvaluation: (courseId,evaluationId) => requestSira('aulaEvaluationAccess', {token:readSession()?.token||'',courseId,evaluationId}),
     clearSession,
     getSession: readSession,

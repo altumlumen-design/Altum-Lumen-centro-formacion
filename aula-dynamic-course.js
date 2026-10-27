@@ -3,6 +3,19 @@
 
   const TZ = 'America/Lima';
   const COURSE_CACHE_TTL_MS = 0; // Datos financieros y permisos siempre se validan en SIRA.
+  const MATERIAL_MAX_BYTES = 15 * 1024 * 1024;
+  const MATERIAL_READY_MS = 5 * 60 * 1000;
+  const MATERIAL_READY_LIMIT = 3;
+  const preparedMaterials = new Set();
+  const courseCountdownTimers = [];
+  let materialFeedbackId = 0;
+  let materialPageHidden = false;
+
+  window.addEventListener('pagehide', () => {
+    materialPageHidden = true;
+    clearPreparedMaterials();
+  });
+  window.addEventListener('pageshow', () => { materialPageHidden = false; });
 
   function esc(value) {
     return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -111,6 +124,9 @@
   function driveFileId(value) {
     const href = safeUrl(value);
     if (!href) return '';
+    try {
+      if (!['drive.google.com', 'drive.usercontent.google.com'].includes(new URL(href).hostname.toLowerCase())) return '';
+    } catch (_error) { return ''; }
     const patterns = [/\/file\/d\/([A-Za-z0-9_-]+)/i, /[?&]id=([A-Za-z0-9_-]+)/i, /\/d\/([A-Za-z0-9_-]+)/i];
     for (const pattern of patterns) {
       const match = href.match(pattern);
@@ -119,14 +135,7 @@
     return '';
   }
 
-  function anonymousMaterialUrl(session) {
-    const original = safeUrl(session?.materialUrl);
-    if (!original) return '';
-    const fileId = driveFileId(original) || String(session?.materialFileId || '').trim();
-    return fileId ? `https://drive.usercontent.google.com/download?id=${encodeURIComponent(fileId)}&export=download` : original;
-  }
-
-  function materialResourceBlock(session) {
+  function materialResourceBlock(courseId, session) {
     const state = String(session?.materialState || '').trim().toUpperCase();
     const note = String(session?.materialNote || '').trim();
     if (state === 'NO_CORRESPONDE') {
@@ -134,10 +143,15 @@
         <div class="session-resource-copy"><span>▣</span><div><small>Material</small><strong>No corresponde</strong>${note ? `<small style="margin-top:4px;max-width:460px;white-space:normal;line-height:1.35;text-transform:none;letter-spacing:0">${esc(note)}</small>` : ''}</div></div>
       </div>`;
     }
-    const href = anonymousMaterialUrl(session), done = Boolean(href), directDownload = Boolean(driveFileId(session?.materialUrl) || String(session?.materialFileId || '').trim());
+    const href = safeUrl(session?.materialUrl);
+    const managed = Boolean(driveFileId(href) || String(session?.materialFileId || '').trim()
+      || (session?.materialDelivery === 'SIRA' && state === 'DISPONIBLE'));
+    const done = Boolean(href || managed);
+    const name = String(session?.materialName || `material-sesion-${session?.number || ''}.pdf`);
     return `<div class="session-resource-state ${done ? 'is-done' : 'is-pending'}">
       <div class="session-resource-copy"><span>▣</span><div><small>Material</small><strong>${done ? 'Disponible ✓' : 'Pendiente'}</strong></div></div>
-      ${done ? `<a class="class-resource is-material" href="${esc(href)}" target="_blank" rel="noopener">${directDownload ? 'Descargar' : 'Abrir'}</a>` : ''}
+      ${managed ? `<div class="material-download-actions"><button class="class-resource is-material" type="button" data-material-action="download" data-material-resource="MAIN" data-course="${esc(courseId)}" data-session="${esc(session?.number || '')}" data-revision="${esc(session?.materialRevision || '')}" data-name="${esc(name)}" aria-label="Descargar material: ${esc(name)}">Descargar</button></div>`
+        : done ? `<a class="class-resource is-material" href="${esc(href)}" target="_blank" rel="noopener">Abrir</a>` : ''}
     </div>`;
   }
 
@@ -322,7 +336,7 @@
         <div class="class-session-actions resource-progress-grid">
           ${st.key === 'today' ? zoomResourceBlock(sharedZoom) : ''}
           ${resourceBlock(session.recordingUrl, 'Grabación / video', 'is-recording', '▶')}
-          ${materialResourceBlock(session)}
+          ${materialResourceBlock(course?.id || course?.courseId || '', session)}
           ${additionalMaterialResourceBlocks(course?.id || course?.courseId || '', session)}
         </div>
       </article>`;
@@ -384,7 +398,7 @@
         }
       });
     };
-    tick(); window.setInterval(tick, 30000);
+    tick(); courseCountdownTimers.push(window.setInterval(tick, 30000));
   }
 
   function courseProgressCard(course, sessions, now) {
@@ -436,38 +450,145 @@
   }
 
   function blobFromMaterialPayload(payload) {
-    const raw = atob(String(payload?.base64 || ''));
+    const size = Number(payload?.size), encoded = String(payload?.base64 || '');
+    if (!Number.isSafeInteger(size) || size <= 0 || size > MATERIAL_MAX_BYTES || !encoded || encoded.length > Math.ceil(MATERIAL_MAX_BYTES / 3) * 4) {
+      throw new Error('El archivo recibido no es válido. Vuelve a pulsar Descargar.');
+    }
+    let raw;
+    try { raw = atob(encoded); }
+    catch (_error) { throw new Error('El archivo recibido está incompleto. Vuelve a pulsar Descargar.'); }
+    if (raw.length !== size) throw new Error('El archivo llegó incompleto. Vuelve a pulsar Descargar.');
     const bytes = new Uint8Array(raw.length);
     for (let i = 0; i < raw.length; i += 1) bytes[i] = raw.charCodeAt(i);
-    return new Blob([bytes], { type: payload?.mime || 'application/octet-stream' });
+    const blob = new Blob([bytes], { type: payload?.mime || 'application/octet-stream' });
+    if (blob.size !== size) throw new Error('No fue posible preparar el archivo completo. Vuelve a pulsar Descargar.');
+    return blob;
   }
 
-  function bindAdditionalMaterialButtons(root) {
-    root.querySelectorAll('[data-additional-action]').forEach(button => {
+  function releasePreparedMaterial(entry, message) {
+    if (!preparedMaterials.delete(entry)) return;
+    window.clearTimeout(entry.timer);
+    URL.revokeObjectURL(entry.url);
+    entry.link.remove();
+    if (message && entry.feedback.isConnected) setMaterialFeedback(entry.feedback, message);
+  }
+
+  function clearPreparedMaterials() {
+    [...preparedMaterials].forEach(entry => releasePreparedMaterial(entry, 'Para guardar este archivo, vuelve a pulsar Descargar.'));
+  }
+
+  function materialFeedback(button) {
+    const actions = button.closest('.session-additional-actions, .material-download-actions');
+    let feedback = actions.querySelector('[data-material-feedback]');
+    if (!feedback) {
+      feedback = document.createElement('div');
+      feedback.className = 'material-download-feedback';
+      feedback.dataset.materialFeedback = '';
+      feedback.id = `material-feedback-${++materialFeedbackId}`;
+      actions.appendChild(feedback);
+      button.setAttribute('aria-describedby', feedback.id);
+    }
+    return feedback;
+  }
+
+  function setMaterialFeedback(feedback, message, error = false) {
+    feedback.hidden = false;
+    feedback.classList.toggle('is-error', error);
+    feedback.setAttribute('role', error ? 'alert' : 'status');
+    feedback.setAttribute('aria-live', error ? 'assertive' : 'polite');
+    let copy = feedback.querySelector('[data-material-message]');
+    if (!copy) {
+      copy = document.createElement('span');
+      copy.dataset.materialMessage = '';
+      feedback.prepend(copy);
+    }
+    copy.textContent = message;
+  }
+
+  function materialSessionExpired(result, courseId, feedback) {
+    if (result?.code !== 'SESSION_EXPIRED' && !window.AltumAuth.isDefinitiveSessionFailure(result)) return false;
+    clearPreparedMaterials();
+    window.AltumAuth.clearSession();
+    setMaterialFeedback(feedback, 'Tu sesión venció. Vuelve a iniciar sesión para descargar el archivo.', true);
+    const login = document.createElement('a');
+    login.className = 'class-resource';
+    login.dataset.materialLogin = '';
+    login.href = `aula-virtual.html?login=1&error=sesion&nextCourse=${encodeURIComponent(courseId)}`;
+    login.textContent = 'Iniciar sesión';
+    feedback.appendChild(login);
+    window.location.replace(login.href);
+    return true;
+  }
+
+  async function refreshChangedMaterials(button, feedback) {
+    const courseId = button.dataset.course;
+    setMaterialFeedback(feedback, 'Los materiales cambiaron. Actualizando la lista…', true);
+    const result = await window.AltumAuth.fetchCourse(courseId);
+    if (!button.isConnected || materialPageHidden) return;
+    if (materialSessionExpired(result, courseId, feedback)) return;
+    if (!result?.ok || !result.course) throw new Error(result?.message || 'No fue posible actualizar la lista. Recarga el curso y selecciona el archivo nuevamente.');
+    writeCourseCache(courseId, window.AltumAuth.getSession(), result.course);
+    renderCourse(result.course);
+    const notice = document.createElement('div');
+    notice.className = 'material-course-notice';
+    notice.dataset.materialCourseNotice = '';
+    notice.setAttribute('role', 'alert');
+    notice.tabIndex = -1;
+    notice.textContent = 'Los materiales cambiaron. La lista está actualizada: selecciona nuevamente el archivo que deseas descargar.';
+    document.getElementById('dynamicCourse').prepend(notice);
+    notice.focus();
+  }
+
+  function prepareMaterialDownload(button, feedback, payload, fallbackName) {
+    const blob = blobFromMaterialPayload(payload);
+    while (preparedMaterials.size >= MATERIAL_READY_LIMIT) {
+      releasePreparedMaterial(preparedMaterials.values().next().value, 'Para guardar este archivo, vuelve a pulsar Descargar.');
+    }
+    const url = URL.createObjectURL(blob), link = document.createElement('a');
+    link.href = url;
+    link.target = '_self';
+    link.download = String(payload.name || fallbackName);
+    link.className = 'class-resource is-material material-save-link';
+    link.textContent = 'Guardar archivo';
+    link.setAttribute('aria-label', `Guardar archivo: ${link.download}`);
+    link.dataset.materialSave = '';
+    setMaterialFeedback(feedback, 'Archivo preparado. Pulsa Guardar archivo si la descarga no comienza.');
+    feedback.appendChild(link);
+    const entry = { url, link, feedback, button, timer: null };
+    preparedMaterials.add(entry);
+    entry.timer = window.setTimeout(() => releasePreparedMaterial(entry, 'El enlace de descarga venció. Vuelve a pulsar Descargar para preparar el archivo.'), MATERIAL_READY_MS);
+    link.addEventListener('click', () => setMaterialFeedback(feedback, 'Descarga solicitada. Si no aparece, pulsa Guardar archivo nuevamente.'));
+    // Algunos navegadores bloquean la descarga tras una espera. El enlace permanece
+    // visible para que el participante pueda iniciarla con un clic propio.
+    try { link.click(); } catch (_error) {}
+  }
+
+  function bindMaterialDownloadButtons(root) {
+    root.querySelectorAll('[data-additional-action], [data-material-action]').forEach(button => {
       button.addEventListener('click', async () => {
         if (button.disabled) return;
         const name = button.dataset.name || 'material adicional';
         const original = button.textContent;
+        const feedback = materialFeedback(button);
+        [...preparedMaterials].filter(entry => entry.button === button).forEach(entry => releasePreparedMaterial(entry));
+        feedback.querySelector('[data-material-login]')?.remove();
         button.disabled = true;
         button.textContent = 'Preparando…';
+        setMaterialFeedback(feedback, 'Preparando el archivo…');
         try {
-          const result = await window.AltumAuth.fetchAdditionalMaterial(
-            button.dataset.course,
-            Number(button.dataset.session || 0),
-            button.dataset.slot,
-            button.dataset.revision || ''
-          );
-          if (!result?.ok || !result?.base64) throw new Error(result?.message || 'El archivo no pudo entregarse.');
-          const url = URL.createObjectURL(blobFromMaterialPayload(result));
-          const link = document.createElement('a');
-          link.href = url; link.download = result.name || name;
-          document.body.appendChild(link); link.click(); link.remove();
-          button.textContent = 'Descarga iniciada ✓';
-          window.setTimeout(() => URL.revokeObjectURL(url), 120000);
+          const result = button.dataset.materialResource === 'MAIN'
+            ? await window.AltumAuth.fetchSessionMaterial(button.dataset.course, Number(button.dataset.session || 0), button.dataset.revision || '')
+            : await window.AltumAuth.fetchAdditionalMaterial(button.dataset.course, Number(button.dataset.session || 0), button.dataset.slot, button.dataset.revision || '');
+          if (!button.isConnected || materialPageHidden) return;
+          if (materialSessionExpired(result, button.dataset.course, feedback)) return;
+          if (result?.code === 'MATERIAL_CHANGED') { await refreshChangedMaterials(button, feedback); return; }
+          if (!result?.ok || !result?.base64) throw new Error(result?.message || 'El archivo no pudo entregarse. Vuelve a pulsar Descargar.');
+          prepareMaterialDownload(button, feedback, result, name);
         } catch (error) {
-          button.textContent = error?.message || 'Error de red · reintentar';
+          if (button.isConnected) setMaterialFeedback(feedback, error?.message || 'No fue posible recibir el archivo. Vuelve a pulsar Descargar.', true);
         } finally {
-          window.setTimeout(() => { button.disabled = false; button.textContent = original; }, 2800);
+          button.disabled = false;
+          button.textContent = original;
         }
       });
     });
@@ -477,10 +598,12 @@
     const nodes = [...root.querySelectorAll('[data-countdown-start]')];
     if (!nodes.length) return;
     const tick = () => { const now = new Date(); nodes.forEach(node => { node.textContent = countdownLabel(node.dataset.countdownStart, node.dataset.countdownEnd, now); }); };
-    tick(); window.setInterval(tick, 30000);
+    tick(); courseCountdownTimers.push(window.setInterval(tick, 30000));
   }
 
   function renderCourse(course) {
+    clearPreparedMaterials();
+    courseCountdownTimers.splice(0).forEach(timer => window.clearInterval(timer));
     const root = document.getElementById('dynamicCourse');
     const cover = safeUrl(course.coverUrl) || 'logo-centro-formacion.jpg';
     const allSessions = Array.isArray(course.sessions) ? course.sessions : [];
@@ -539,7 +662,7 @@
 
     root.hidden = false;
     bindCopyButtons(root);
-    bindAdditionalMaterialButtons(root);
+    bindMaterialDownloadButtons(root);
     bindCountdowns(root);
     bindEvaluationCountdowns(root);
     root.querySelectorAll('[data-eval-id]').forEach(button => button.addEventListener('click', async () => {
