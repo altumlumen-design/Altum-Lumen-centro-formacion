@@ -104,6 +104,22 @@ async function withFixture(options, run) {
 let passed = 0;
 async function test(name, run) { await run(); passed += 1; process.stdout.write(`PASS ${name}\n`); }
 
+for (const count of [16, 40]) {
+  await test(`student sees all ${count} session annexes with accessible list and download actions`, () => withFixture({ count }, async ({ window, buttons }) => {
+    assert.equal(buttons().length, count);
+    const disclosure = window.document.querySelector('.session-additional-disclosure');
+    assert.ok(disclosure);
+    assert.equal(disclosure.querySelector('summary strong').textContent, `${count} archivos`);
+    assert.equal(disclosure.querySelectorAll('.session-additional-row').length, count);
+    const last = buttons()[count - 1];
+    assert.equal(last.dataset.slot, `A${count}`);
+    assert.equal(last.getAttribute('aria-label'), `Descargar: Synthetic document ${count}`);
+    assert.match(disclosure.textContent, new RegExp(`synthetic-${count}\\.pdf`));
+    last.click();
+    await waitFor(() => window.document.querySelector('[data-material-save]'), 'last annex prepared');
+  }));
+}
+
 for (const role of ['student', 'master']) {
   await test(`${role}: signed-session material request through actual form bridge`, () => withFixture({ dynamic: false, session: false, role }, async ({ window, requests, messageListeners }) => {
     const login = await window.AltumAuth.authenticate('00000000', '00000000');

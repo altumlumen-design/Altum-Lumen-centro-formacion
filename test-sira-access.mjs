@@ -8,7 +8,7 @@ const html = read('sira-acceso.html');
 const config = read('aula-config.js');
 const bridge = read('sira-bridge.js');
 const endpoint = 'https://script.google.com/macros/s/AKfycbysdGK_9D_nDDrhj6pa53_4H6eOT0U3k_KBqZ1iX_Co7oTCvdEAqnE5Sac1ZRAugfZo/exec';
-const release = '20261027-sira-3753-r2';
+const release = '20261027-sira-3754-r1';
 const pageUrl = 'https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/sira-acceso.html';
 const parsed = new JSDOM(html, { url: pageUrl });
 const blocks = [...parsed.window.document.querySelectorAll('script:not([src])')];
@@ -16,8 +16,8 @@ assert.equal(blocks.length, 9, 'El mirror debe conservar los nueve bloques de la
 const scripts = blocks.map((block, index) => new Script(block.textContent, {
   filename: `sira-acceso.html:${block.id || `inline-${index + 1}`}`
 }));
-assert.match(html, /const SIRA_CLIENT_BUILD\s*=\s*['"]3\.7\.53['"]/);
-assert.match(html, /(?:máximo|de|\/|hasta)\s*15/i, 'Debe existir el límite de quince anexos.');
+assert.match(html, /const SIRA_CLIENT_BUILD\s*=\s*['"]3\.7\.54['"]/);
+assert.doesNotMatch(html, /máximo de 15 materiales|\$\{additional\.length\}\/15|Nuevo anexo '\+slot\+' de 15/, 'No debe existir un límite fijo de cantidad.');
 assert.doesNotMatch(html, /(?:máximo\s*2\s*PDF|hasta\s*dos\s*PDF|aulaSessionHasAdditional|aula-additional-toggle)/i);
 assert.equal(parsed.window.document.querySelector('script[src*="sira-teacher-career"]'), null,
   'Una capa docente antigua no debe sobreescribir la interfaz sincronizada.');
@@ -131,12 +131,12 @@ function assertAnnexRows(form, expectedCount, newNumber) {
     const empty = [...form.querySelectorAll('[data-existing="0"]')];
     assert.equal(empty.length, 1, 'Solo debe mostrarse un espacio nuevo.');
     assert.equal(empty[0].dataset.additionalSlot, `A${newNumber}`);
-    assert.equal(empty[0].querySelector('.additional-slot-head b').textContent, `Nuevo anexo ${newNumber} de 15`);
+    assert.equal(empty[0].querySelector('.additional-slot-head b').textContent, `Nuevo anexo ${newNumber}`);
     for (const extension of ['.pdf', '.docx', '.xlsx', '.zip']) {
       assert.ok(empty[0].querySelector('.additional-pdf').accept.includes(extension));
     }
   } else {
-    assert.equal(form.querySelector('[data-existing="0"]'), null, 'Con quince guardados no debe aparecer un anexo 16.');
+    assert.equal(form.querySelector('[data-existing="0"]'), null);
   }
   return rows;
 }
@@ -148,7 +148,7 @@ for (const role of ['DOCENTE', 'OPERADOR']) {
     window.document.getElementById('loginUser').value = `fixture.${role.toLowerCase()}`;
     window.document.getElementById('loginPass').value = 'contraseña-simulada';
     await window.doLogin();
-    assert.equal(window.document.documentElement.dataset.siraBuild, '3.7.53');
+    assert.equal(window.document.documentElement.dataset.siraBuild, '3.7.54');
     assert.equal(window.document.documentElement.dataset.siraRole, role);
     assert.ok(window.document.getElementById('loginScreen').classList.contains('hidden'));
     if (role === 'DOCENTE') {
@@ -174,17 +174,17 @@ for (const role of ['DOCENTE', 'OPERADOR']) {
       await window.teacherUploadAdditional_(slot.querySelector('.btn.primary'), program.id, 1, 'A3');
       assertAnnexRows(form, 4, 4);
       assert.equal(form.querySelector('[data-additional-slot="A3"] .additional-current-name b').textContent, 'actividad.docx');
-      assert.equal(form.querySelector('summary strong').textContent, '3/15');
+      assert.equal(form.querySelector('summary strong').textContent, '3 archivos');
     }
     const source = form.querySelector('[data-additional-slot="A1"]');
     const fifteen = Array.from({ length: 15 }, (_, index) => annex(index + 1));
     window.aulaRefreshAdditionalSession_(source, fifteen, program.id, 1, role === 'DOCENTE');
-    assertAnnexRows(form, 15, null);
+    assertAnnexRows(form, 16, 16);
     assert.equal(window.aulaValidateAdditionalCollection_(form, 1).length, 15);
-    const grid = form.querySelector('.aula-additional-grid');
-    grid.insertAdjacentHTML('beforeend', window.aulaAdditionalSlotHtml_(annex(16), 16, program.id, 1, role === 'DOCENTE'));
-    assert.throws(() => window.aulaValidateAdditionalCollection_(form, 1), /máximo de 15/,
-      'La validación debe rechazar dieciséis anexos activos.');
+    const forty = Array.from({ length: 40 }, (_, index) => annex(index + 1));
+    window.aulaRefreshAdditionalSession_(form.querySelector('[data-additional-slot="A1"]'), forty, program.id, 1, role === 'DOCENTE');
+    assertAnnexRows(form, 41, 41);
+    assert.equal(window.aulaValidateAdditionalCollection_(form, 1).length, 40);
     assert.deepEqual(errors, [], `La interfaz ${role} no debe producir errores.`);
   } finally {
     dom.window.close();
@@ -229,4 +229,4 @@ try {
   bridgeDom.window.close();
 }
 
-console.log('SIRA 3.7.53: nueve scripts válidos; acceso docente y operador, anexos progresivos hasta 15 y plazos RPC verificados sin servicios externos.');
+console.log('SIRA 3.7.54: nueve scripts válidos; docente y operador, anexos sin tope fijo y plazos RPC verificados sin servicios externos.');

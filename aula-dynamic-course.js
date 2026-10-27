@@ -156,7 +156,7 @@
   }
 
   function additionalMaterialResourceBlocks(courseId, session) {
-    const items = Array.isArray(session?.additionalMaterials) ? session.additionalMaterials.slice(0, 15) : [];
+    const items = Array.isArray(session?.additionalMaterials) ? session.additionalMaterials : [];
     const row = (item) => {
       const isReading = String(item?.kind || '').trim().toUpperCase() === 'LECTURA_OBLIGATORIA';
       const typeLabel = isReading ? 'Lectura obligatoria' : 'Material anexo';
