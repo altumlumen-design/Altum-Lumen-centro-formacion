@@ -13,7 +13,7 @@ const version=source.match(/const SIRA_CLIENT_BUILD='([^']+)'/)?.[1];
 if(!version||!source.includes('function aulaRefreshAdditionalSession_('))throw new Error('El archivo no corresponde a la interfaz vigente de SIRA.');
 if(source.includes('Hasta dos PDF'))throw new Error('Se rechazó una fuente anterior al gestor de anexos.');
 const sourceHash=crypto.createHash('sha256').update(source).digest('hex');
-const build='20261027-sira-'+version.replace(/\./g,'')+'-r1';
+const build='20261027-sira-'+version.replace(/\./g,'')+'-r2';
 const metadata=`<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">

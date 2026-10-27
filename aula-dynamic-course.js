@@ -539,7 +539,12 @@
     notice.focus();
   }
 
-  function prepareMaterialDownload(button, feedback, payload, fallbackName) {
+  function materialDownloadKey(button) {
+    const token = String(window.AltumAuth.getSession()?.token || '');
+    return token ? JSON.stringify([token, button.dataset.materialResource || 'ADDITIONAL', button.dataset.course || '', button.dataset.session || '', button.dataset.slot || '', button.dataset.revision || '']) : '';
+  }
+
+  function prepareMaterialDownload(button, feedback, payload, fallbackName, requestKey) {
     const blob = blobFromMaterialPayload(payload);
     while (preparedMaterials.size >= MATERIAL_READY_LIMIT) {
       releasePreparedMaterial(preparedMaterials.values().next().value, 'Para guardar este archivo, vuelve a pulsar Descargar.');
@@ -554,10 +559,17 @@
     link.dataset.materialSave = '';
     setMaterialFeedback(feedback, 'Archivo preparado. Pulsa Guardar archivo si la descarga no comienza.');
     feedback.appendChild(link);
-    const entry = { url, link, feedback, button, timer: null };
+    const entry = { url, link, feedback, button, key: requestKey, expiresAt: Date.now() + MATERIAL_READY_MS, timer: null };
     preparedMaterials.add(entry);
     entry.timer = window.setTimeout(() => releasePreparedMaterial(entry, 'El enlace de descarga venció. Vuelve a pulsar Descargar para preparar el archivo.'), MATERIAL_READY_MS);
-    link.addEventListener('click', () => setMaterialFeedback(feedback, 'Descarga solicitada. Si no aparece, pulsa Guardar archivo nuevamente.'));
+    link.addEventListener('click', event => {
+      if (!entry.key || entry.key !== materialDownloadKey(button) || Date.now() >= entry.expiresAt) {
+        event.preventDefault();
+        releasePreparedMaterial(entry, 'El archivo preparado venció o la sesión cambió. Vuelve a pulsar Descargar.');
+        return;
+      }
+      setMaterialFeedback(feedback, 'Descarga solicitada. Si no aparece, pulsa Guardar archivo nuevamente.');
+    });
     // Algunos navegadores bloquean la descarga tras una espera. El enlace permanece
     // visible para que el participante pueda iniciarla con un clic propio.
     try { link.click(); } catch (_error) {}
@@ -570,6 +582,13 @@
         const name = button.dataset.name || 'material adicional';
         const original = button.textContent;
         const feedback = materialFeedback(button);
+        const requestKey = materialDownloadKey(button);
+        const prepared = [...preparedMaterials].find(entry => entry.button === button && requestKey && entry.key === requestKey && entry.expiresAt > Date.now() && entry.link.isConnected);
+        if (prepared) {
+          setMaterialFeedback(feedback, 'Archivo preparado. Pulsa Guardar archivo si la descarga no comienza.');
+          try { prepared.link.click(); } catch (_error) {}
+          return;
+        }
         [...preparedMaterials].filter(entry => entry.button === button).forEach(entry => releasePreparedMaterial(entry));
         feedback.querySelector('[data-material-login]')?.remove();
         button.disabled = true;
@@ -580,10 +599,14 @@
             ? await window.AltumAuth.fetchSessionMaterial(button.dataset.course, Number(button.dataset.session || 0), button.dataset.revision || '')
             : await window.AltumAuth.fetchAdditionalMaterial(button.dataset.course, Number(button.dataset.session || 0), button.dataset.slot, button.dataset.revision || '');
           if (!button.isConnected || materialPageHidden) return;
+          if (requestKey !== materialDownloadKey(button)) {
+            setMaterialFeedback(feedback, 'La sesión o el material cambió. Vuelve a pulsar Descargar para recibir el archivo vigente.', true);
+            return;
+          }
           if (materialSessionExpired(result, button.dataset.course, feedback)) return;
           if (result?.code === 'MATERIAL_CHANGED') { await refreshChangedMaterials(button, feedback); return; }
           if (!result?.ok || !result?.base64) throw new Error(result?.message || 'El archivo no pudo entregarse. Vuelve a pulsar Descargar.');
-          prepareMaterialDownload(button, feedback, result, name);
+          prepareMaterialDownload(button, feedback, result, name, requestKey);
         } catch (error) {
           if (button.isConnected) setMaterialFeedback(feedback, error?.message || 'No fue posible recibir el archivo. Vuelve a pulsar Descargar.', true);
         } finally {

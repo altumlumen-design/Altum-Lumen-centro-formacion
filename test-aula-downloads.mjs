@@ -165,7 +165,7 @@ await test('90 second material timeout resolves with cleanup and retry guidance'
   assert.equal(messageListeners.size, 0);
 }));
 
-await test('actual button prepares verified bytes and keeps an explicit save link after automatic download is blocked', () => withFixture({ blockAuto: true }, async ({ window, buttons, feedback, liveUrls, anchorClicks, revoked }) => {
+await test('actual button prepares verified bytes and reuses its explicit save link after automatic download is blocked', () => withFixture({ blockAuto: true }, async ({ window, buttons, feedback, liveUrls, anchorClicks, revoked, requests }) => {
   buttons()[0].click();
   await waitFor(() => window.document.querySelector('[data-material-save]'), 'persistent save link');
   const link = window.document.querySelector('[data-material-save]');
@@ -185,8 +185,81 @@ await test('actual button prepares verified bytes and keeps an explicit save lin
   assert.equal(buttons()[0].disabled, false);
   const oldUrl = link.href;
   buttons()[0].click();
-  await waitFor(() => window.document.querySelector('[data-material-save]')?.href !== oldUrl && liveUrls.size === 1, 'repeat preparation');
+  assert.equal(window.document.querySelector('[data-material-save]').href, oldUrl);
+  assert.equal(liveUrls.size, 1);
+  assert.equal(requests.filter(request => request.action === 'aulaMaterialFile').length, 1, 'same authorized in-memory bytes need no second transfer');
+  assert.equal(anchorClicks.length, 3);
+  assert.equal(revoked.includes(oldUrl), false);
+}));
+
+for (const change of ['token', 'revision', 'course', 'session', 'slot', 'resource']) {
+  await test(`prepared file is not reused after its ${change} changes`, () => withFixture({}, async ({ window, buttons, liveUrls, requests, revoked }) => {
+    const button = buttons()[0]; button.click();
+    await waitFor(() => window.document.querySelector('[data-material-save]'), 'initial prepared file');
+    const originalUrl = window.document.querySelector('[data-material-save]').href;
+    if (change === 'token') {
+      const session = window.AltumAuth.getSession();
+      window.sessionStorage.setItem('altum_aula_session_v7', JSON.stringify({ ...session, token: 'synthetic-new-token' }));
+    } else if (change === 'resource') button.dataset.materialResource = 'MAIN';
+    else button.dataset[change] += '-changed';
+    button.click();
+    await waitFor(() => window.document.querySelector('[data-material-save]')?.href !== originalUrl && liveUrls.size === 1, 'fresh authorized transfer');
+    assert.equal(requests.filter(request => request.action === 'aulaMaterialFile').length, 2);
+    assert.ok(revoked.includes(originalUrl));
+    if (change === 'token') assert.equal(requests.at(-1).token, 'synthetic-new-token');
+    if (change === 'resource') assert.equal(requests.at(-1).resource, 'MAIN');
+  }));
+}
+
+await test('expired prepared bytes cannot be reused even before a suspended expiry timer runs', () => withFixture({}, async ({ window, buttons, liveUrls, requests, revoked }) => {
+  const button = buttons()[0]; button.click();
+  await waitFor(() => window.document.querySelector('[data-material-save]'), 'initial file before suspended timer');
+  const oldUrl = window.document.querySelector('[data-material-save]').href;
+  const now = window.Date.now(); window.Date.now = () => now + 300001;
+  button.click();
+  await waitFor(() => window.document.querySelector('[data-material-save]')?.href !== oldUrl && liveUrls.size === 1, 'fresh file after expiry');
+  assert.equal(requests.filter(request => request.action === 'aulaMaterialFile').length, 2);
   assert.ok(revoked.includes(oldUrl));
+}));
+
+await test('a response for an old token does not prepare a file for a changed session', () => {
+  let release;
+  return withFixture({ replyMaterial: () => new Promise(resolve => { release = resolve; }) }, async ({ window, buttons, feedback, liveUrls }) => {
+    buttons()[0].click(); await waitFor(() => release, 'pending old-session transfer');
+    const session = window.AltumAuth.getSession();
+    window.sessionStorage.setItem('altum_aula_session_v7', JSON.stringify({ ...session, token: 'synthetic-new-token' }));
+    release(filePayload());
+    await waitFor(() => !buttons()[0].disabled, 'changed-session response ignored');
+    assert.equal(liveUrls.size, 0);
+    assert.equal(window.document.querySelector('[data-material-save]'), null);
+    assert.match(feedback().textContent, /sesión o el material cambió/);
+  });
+});
+
+await test('the explicit save link retires prepared bytes when its user changes', () => withFixture({}, async ({ window, buttons, liveUrls, requests }) => {
+  buttons()[0].click(); await waitFor(() => window.document.querySelector('[data-material-save]'), 'save link before user change');
+  const link = window.document.querySelector('[data-material-save]');
+  const session = window.AltumAuth.getSession();
+  window.sessionStorage.setItem('altum_aula_session_v7', JSON.stringify({ ...session, token: 'synthetic-other-user-token' }));
+  link.click();
+  assert.equal(link.isConnected, false);
+  assert.equal(liveUrls.size, 0);
+  assert.equal(requests.filter(request => request.action === 'aulaMaterialFile').length, 1);
+}));
+
+await test('repeated principal download also reuses its verified prepared bytes', () => withFixture({ replyCourse: () => {
+  const course = courseFixture();
+  Object.assign(course.sessions[0], { materialState: 'DISPONIBLE', materialDelivery: 'SIRA', materialRevision: 'main-revision' });
+  return { ok: true, course };
+} }, async ({ window, liveUrls, requests, anchorClicks }) => {
+  const button = window.document.querySelector('[data-material-resource="MAIN"]'); button.click();
+  await waitFor(() => window.document.querySelector('[data-material-save]'), 'prepared principal');
+  const url = window.document.querySelector('[data-material-save]').href;
+  button.click();
+  assert.equal(requests.filter(request => request.action === 'aulaMaterialFile').length, 1);
+  assert.equal(window.document.querySelector('[data-material-save]').href, url);
+  assert.equal(liveUrls.size, 1);
+  assert.equal(anchorClicks.length, 2);
 }));
 
 for (const code of ['ACCESS_DENIED', 'MATERIAL_UNAVAILABLE', 'PRIVATE_REQUIRED']) {
