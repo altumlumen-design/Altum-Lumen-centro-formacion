@@ -252,14 +252,15 @@
     return requestSira('aulaCourse', { token: current.token, courseId: String(courseId || '') });
   }
 
-  async function fetchAdditionalMaterial(courseId, sessionNumber, slot, existingSession) {
+  async function fetchAdditionalMaterial(courseId, sessionNumber, slot, revision, existingSession) {
     const current = existingSession || readSession();
     if (!current?.token) return { ok: false, message: 'Debes iniciar sesión nuevamente.' };
     return requestSira('aulaMaterialFile', {
       token: current.token,
       courseId: String(courseId || ''),
       sessionNumber: Number(sessionNumber || 0),
-      slot: String(slot || '')
+      slot: String(slot || ''),
+      revision: String(revision || '')
     });
   }
 

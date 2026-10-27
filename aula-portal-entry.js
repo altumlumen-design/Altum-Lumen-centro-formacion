@@ -31,5 +31,5 @@ await Promise.all([
   import('./aula-datos.js?v=20260810-final-r2'),
   import('./aula-clean-routes.js?v=20260810-final-r2')
 ]);
-await import('./aula-auth.js?v=20261025-materiales-protegidos-r1');
+await import('./aula-auth.js?v=20261026-anexos-r4');
 await import('./aula-portal.js?v=20261017-aula347-sections-r2');

@@ -151,10 +151,11 @@
       return `<div class="session-additional-row ${isReading ? 'is-required-reading' : 'is-annex'}">
         <div class="session-additional-mark">${isReading ? 'L' : 'A'}</div>
         <div class="session-additional-copy"><small>${esc(typeLabel)}</small><strong>${esc(title)}</strong>${filename ? `<span>${esc(filename)}</span>` : ''}</div>
-        <div class="session-additional-actions"><button class="class-resource is-material" type="button" data-additional-action="view" data-course="${esc(courseId)}" data-session="${esc(session?.number || '')}" data-slot="${esc(item?.slot || '')}" data-name="${esc(filename || title)}">Ver</button><button class="class-resource is-material" type="button" data-additional-action="download" data-course="${esc(courseId)}" data-session="${esc(session?.number || '')}" data-slot="${esc(item?.slot || '')}" data-name="${esc(filename || title)}">Descargar</button></div>
+        <div class="session-additional-actions"><button class="class-resource is-material" type="button" aria-label="Descargar: ${esc(title)}" data-additional-action="download" data-course="${esc(courseId)}" data-session="${esc(session?.number || '')}" data-slot="${esc(item?.slot || '')}" data-revision="${esc(item?.revision || '')}" data-name="${esc(filename || title)}">Descargar</button></div>
       </div>`;
     };
     if (!items.length) return '';
+    if (items.length <= 2) return items.map(row).join('');
     const names = items.map(item => String(item?.name || item?.title || 'Archivo').trim()).filter(Boolean).join(' · ');
     return `<details class="session-additional-disclosure"><summary><span>Ver anexos</span><strong>${items.length} ${items.length === 1 ? 'archivo' : 'archivos'}</strong><small>${esc(names)}</small></summary><div class="session-additional-list">${items.map(row).join('')}</div></details>`;
   }
@@ -445,39 +446,25 @@
     root.querySelectorAll('[data-additional-action]').forEach(button => {
       button.addEventListener('click', async () => {
         if (button.disabled) return;
-        const download = button.dataset.additionalAction === 'download';
         const name = button.dataset.name || 'material adicional';
-        if (download && !window.confirm(`¿Descargar “${name}” en este dispositivo?`)) return;
-        const popup = download ? null : window.open('about:blank', '_blank');
-        if (popup) popup.opener = null;
         const original = button.textContent;
         button.disabled = true;
-        button.textContent = download ? 'Preparando…' : 'Abriendo…';
+        button.textContent = 'Preparando…';
         try {
           const result = await window.AltumAuth.fetchAdditionalMaterial(
             button.dataset.course,
             Number(button.dataset.session || 0),
-            button.dataset.slot
+            button.dataset.slot,
+            button.dataset.revision || ''
           );
           if (!result?.ok || !result?.base64) throw new Error(result?.message || 'El archivo no pudo entregarse.');
           const url = URL.createObjectURL(blobFromMaterialPayload(result));
-          if (download) {
-            const link = document.createElement('a');
-            link.href = url; link.download = result.name || name;
-            document.body.appendChild(link); link.click(); link.remove();
-            button.textContent = 'Descarga iniciada ✓';
-          } else if (popup) {
-            popup.location.href = url;
-            button.textContent = 'Abierto ✓';
-          } else {
-            const link = document.createElement('a');
-            link.href = url; link.download = result.name || name;
-            document.body.appendChild(link); link.click(); link.remove();
-            button.textContent = 'Vista bloqueada · descargado ✓';
-          }
+          const link = document.createElement('a');
+          link.href = url; link.download = result.name || name;
+          document.body.appendChild(link); link.click(); link.remove();
+          button.textContent = 'Descarga iniciada ✓';
           window.setTimeout(() => URL.revokeObjectURL(url), 120000);
         } catch (error) {
-          if (popup) popup.close();
           button.textContent = error?.message || 'Error de red · reintentar';
         } finally {
           window.setTimeout(() => { button.disabled = false; button.textContent = original; }, 2800);

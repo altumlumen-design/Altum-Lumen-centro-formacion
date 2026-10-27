@@ -1,7 +1,7 @@
 import './aula-datos.js?v=20260810-final-r2';
 import './aula-schedule.js?v=20260810-final-r2';
 import './aula-config.js?v=20260915-aula24';
-import './aula-auth.js?v=20261025-materiales-protegidos-r1';
+import './aula-auth.js?v=20261026-anexos-r4';
 import './aula-course-ux.js?v=20260810-final-r2';
 
 import './aula-clean-routes.js?v=20260810-final-r2';
