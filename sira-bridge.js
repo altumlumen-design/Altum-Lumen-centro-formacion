@@ -16,7 +16,8 @@
   }
 
   function isHeavy(method, args) {
-    if (/upload|export|process|sync|migrate|publish|normalize|install|recover|createPedaBatch/i.test(method)) return true;
+    const operation = method === 'siraApi' ? String(args && args[1] || '') : method;
+    if (/upload|export|process|sync|migrate|publish|normalize|install|recover|createPedaBatch/i.test(operation)) return true;
     try { return JSON.stringify(args || []).length > 2 * 1024 * 1024; } catch (_error) { return false; }
   }
 
@@ -81,7 +82,7 @@
       };
 
       const timeout = method === 'login' ? LOGIN_TIMEOUT : (isHeavy(method, args) ? HEAVY_TIMEOUT : NORMAL_TIMEOUT);
-      const timer = window.setTimeout(() => finish(new Error('La operación está tardando demasiado. Puedes volver a intentarlo sin duplicar la acción.')), timeout);
+      const timer = window.setTimeout(() => finish(new Error('La operación está tardando demasiado. Comprueba si el cambio quedó guardado antes de reintentarlo.')), timeout);
       window.addEventListener('message', onMessage);
       document.body.append(frame, form);
       try { form.submit(); } catch (err) {

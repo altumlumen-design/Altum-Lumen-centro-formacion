@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "node test-aula.mjs && node test-portal.mjs && node test-directorios.mjs"
+    "test": "node test-aula.mjs && node test-portal.mjs && node test-directorios.mjs",
+    "test:sira": "node test-sira-access.mjs",
+    "sync:sira": "node scripts/sync-sira-access.mjs"
   },
   "devDependencies": {
     "jsdom": "^26.1.0",
