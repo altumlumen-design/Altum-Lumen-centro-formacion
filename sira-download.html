@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Guardar material · SIRA</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#edf3f8;color:#173047;font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:20px}main{width:min(100%,520px);padding:28px;background:white;border:1px solid #d7e3ee;border-radius:20px;box-shadow:0 16px 46px #17304715}small{color:#537087;font-weight:700;letter-spacing:.05em}h1{font-size:27px;line-height:1.2;margin:10px 0 18px}p{margin:10px 0;overflow-wrap:anywhere}#status{color:#39664e}#status.is-error{color:#9a2634}#fileName{font-weight:700}#fileSize{color:#5b7084;font-size:14px}a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;width:100%;margin-top:12px;padding:11px 18px;background:#156ba9;color:white;text-decoration:none;border-radius:10px;font-weight:750}a:focus-visible{outline:3px solid #173047;outline-offset:4px}.note{font-size:13px;color:#65798b;margin-top:20px}[hidden]{display:none!important}@media(max-width:420px){main{padding:22px}h1{font-size:24px}}
+  </style>
+  <script src="sira-download.js?v=20261027-3753" defer></script>
+</head>
+<body>
+  <main aria-labelledby="heading">
+    <small>ALTUM LUMEN · SIRA</small>
+    <h1 id="heading">Guardar material</h1>
+    <p id="status" role="status" aria-live="polite">Recibiendo el archivo autorizado desde SIRA…</p>
+    <p id="fileName" hidden></p>
+    <p id="fileSize" hidden></p>
+    <a id="saveFile" hidden>Guardar archivo</a>
+    <p class="note">Si la descarga no comienza, pulsa «Guardar archivo». Cuando termines, puedes cerrar esta ventana y regresar a SIRA.</p>
+    <noscript>Activa JavaScript para recibir el archivo desde SIRA y vuelve a pulsar Guardar archivo en el portal.</noscript>
+  </main>
+</body>
+</html>

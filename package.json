@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "test": "node test-aula.mjs && node test-portal.mjs && node test-directorios.mjs",
-    "test:sira": "node test-sira-access.mjs && node test-aula-downloads.mjs",
+    "test:sira": "node test-sira-access.mjs && node test-aula-downloads.mjs && node test-sira-download-handoff.mjs",
     "sync:sira": "node scripts/sync-sira-access.mjs"
   },
   "devDependencies": {

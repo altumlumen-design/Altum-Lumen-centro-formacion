@@ -9,7 +9,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="sira-source-sha256" content="1cc01a9bba1b6f45503351f08947a17518014d381a9861821a432236601ada69">
+  <meta name="sira-source-sha256" content="5dd8b63914589ad5bc3728c84822e5be3c8c1bd2448d73ea83e0ee7dcdb81e16">
   <title>SIRA 3.7.53 | Centro de Formación y Capacitación Profesional</title>
   <meta name="description" content="SIRA · Sistema Institucional de Registros Académicos de ALTUM LUMEN S.A.C. Acceso institucional para personal autorizado.">
   <link rel="canonical" href="https://altumlumen-design.github.io/Altum-Lumen-centro-formacion/sira-acceso.html">
@@ -135,8 +135,8 @@
 @media(prefers-reduced-motion:reduce){#pedaV170ProgramPanel .peda-disclosure>summary::after{transition:none}}
 
 </style>
-  <script src="aula-config.js?v=20261027-sira-3753-r1"></script>
-  <script src="sira-bridge.js?v=20261027-sira-3753-r1"></script>
+  <script src="aula-config.js?v=20261027-sira-3753-r2"></script>
+  <script src="sira-bridge.js?v=20261027-sira-3753-r2"></script>
 </head>
 
 <body>
@@ -947,10 +947,29 @@ function aulaValidateAdditionalSlot_(slot,sessionNumber){const file=slot?.queryS
 function aulaValidateAdditionalCollection_(form,sessionNumber){const active=[...form.querySelectorAll('[data-additional-slot]')].map(x=>aulaValidateAdditionalSlot_(x,sessionNumber)).filter(x=>x.file||x.exists);if(active.length>15)throw new Error('La sesión '+sessionNumber+' supera el máximo de 15 materiales adicionales.');const titles=new Set(),names=new Set();active.forEach(x=>{const tk=x.data.title.toLocaleLowerCase('es-PE').replace(/\s+/g,' ').trim();if(titles.has(tk))throw new Error('Hay nombres visibles duplicados en los materiales adicionales de la sesión '+sessionNumber+'.');titles.add(tk);if(x.file){const nk=String(x.file.name||'').toLocaleLowerCase('es-PE').trim();if(names.has(nk))throw new Error('Hay nombres de archivo duplicados en los materiales adicionales de la sesión '+sessionNumber+'.');names.add(nk)}});return active}
 async function aulaUploadAdditionalSlot_(slot,programId,sessionNumber){const identity=siraSessionIdentity_(),checked=aulaValidateAdditionalSlot_(slot,sessionNumber);if(!checked.file)throw new Error('Selecciona el archivo adicional.');const payload=await siraFilePayload_(checked.file);if(!siraSessionCurrent_(identity))throw new Error('La sesión cambió. Vuelve a abrir el curso para subir el archivo.');return gs('uploadAulaAdditionalMaterialPayload',programId,Number(sessionNumber),checked.slot,checked.data,payload)}
 function aulaBlobFromPayload_(payload){const max=15*1024*1024,size=Number(payload?.size),encoded=String(payload?.base64||'');if(!Number.isSafeInteger(size)||size<=0||size>max||!encoded||encoded.length>Math.ceil(max/3)*4)throw new Error('El archivo recibido no es válido. Vuelve a pulsar Descargar.');let raw;try{raw=atob(encoded)}catch(_e){throw new Error('El archivo recibido está incompleto. Vuelve a pulsar Descargar.')}if(raw.length!==size)throw new Error('El archivo llegó incompleto. Vuelve a pulsar Descargar.');const bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);const blob=new Blob([bytes],{type:payload?.mime||'application/octet-stream'});if(blob.size!==size)throw new Error('No fue posible preparar el archivo completo. Vuelve a pulsar Descargar.');return blob}
+function aulaAdditionalNeedsDownloadBridge_(){try{return window.self!==window.top&&/^(?:script\.google\.com|[a-z0-9-]+\.googleusercontent\.com)$/i.test(location.hostname)}catch(_e){return false}}
+function aulaAdditionalDownloadBridge_(notice,link,payload){
+  const origin='https://altumlumen-design.github.io',path='/Altum-Lumen-centro-formacion/sira-download.html',message=notice.querySelector('.additional-download-message');
+  link.addEventListener('click',event=>{
+    event.preventDefault();notice.__siraDownloadCleanup?.();let popup=null,timer=null;
+    const nonce=Array.from(crypto.getRandomValues(new Uint8Array(16)),byte=>byte.toString(16).padStart(2,'0')).join('');
+    const cleanup=()=>{window.removeEventListener('message',receive);if(timer!==null)clearTimeout(timer);if(notice.__siraDownloadCleanup===cleanup)notice.__siraDownloadCleanup=null};
+    const receive=event=>{if(!popup||event.source!==popup||event.origin!==origin||event.data?.nonce!==nonce)return;
+      if(event.data.source==='SIRA_DOWNLOAD_READY'){popup.postMessage({source:'SIRA_DOWNLOAD_PAYLOAD',nonce,payload:{name:payload.name||'material',mime:payload.mime||'application/octet-stream',size:Number(payload.size),base64:String(payload.base64)}},origin)}
+      else if(event.data.source==='SIRA_DOWNLOAD_ACCEPTED'){cleanup();message.textContent='Archivo enviado a la ventana de descarga. Allí puedes guardarlo. ';}
+      else if(event.data.source==='SIRA_DOWNLOAD_ERROR'){cleanup();message.textContent='La ventana no pudo preparar el archivo. Pulsa Guardar archivo para reintentar. ';}
+    };
+    notice.__siraDownloadCleanup=cleanup;window.addEventListener('message',receive);
+    try{popup=window.open(origin+path+'#'+nonce,'_blank')}catch(_e){}
+    if(!popup){cleanup();message.textContent='El navegador bloqueó la ventana. Permite abrirla y vuelve a pulsar Guardar archivo. ';return}
+    message.textContent='Ventana de descarga abierta. Esperando la preparación del archivo. ';
+    timer=setTimeout(()=>{cleanup();if(notice.isConnected)message.textContent='La ventana no respondió. Pulsa Guardar archivo para reintentar. ';},90000);
+  });
+}
 function aulaAdditionalDownloadReady_(slot,payload){
-  const blob=aulaBlobFromPayload_(payload),urls=window.__aulaAdditionalDownloadUrls||(window.__aulaAdditionalDownloadUrls=new Map()),old=slot.querySelector('.additional-download-ready');if(old){if(old.dataset.downloadUrl){URL.revokeObjectURL(old.dataset.downloadUrl);urls.delete(old.dataset.downloadUrl)}old.remove()}
-  if(!window.__aulaAdditionalDownloadObserver){window.__aulaAdditionalDownloadObserver=new MutationObserver(()=>{for(const [url,node] of urls)if(!node.isConnected){URL.revokeObjectURL(url);urls.delete(url)}});window.__aulaAdditionalDownloadObserver.observe(document.body,{childList:true,subtree:true})}
-  const url=URL.createObjectURL(blob),notice=document.createElement('div'),link=document.createElement('a');notice.className='soft-note additional-download-ready';notice.dataset.downloadUrl=url;notice.setAttribute('role','status');notice.append('Archivo preparado. Si el navegador no muestra la descarga, pulsa ');link.href=url;link.target='_self';link.download=payload.name||'material';link.textContent='Guardar archivo';link.className='btn ghost';notice.appendChild(link);slot.appendChild(notice);urls.set(url,notice);link.click();return url;
+  const blob=aulaBlobFromPayload_(payload),urls=window.__aulaAdditionalDownloadUrls||(window.__aulaAdditionalDownloadUrls=new Map()),old=slot.querySelector('.additional-download-ready');if(old){old.__siraDownloadCleanup?.();if(old.dataset.downloadUrl){URL.revokeObjectURL(old.dataset.downloadUrl);urls.delete(old.dataset.downloadUrl)}old.remove()}
+  if(!window.__aulaAdditionalDownloadObserver){window.__aulaAdditionalDownloadObserver=new MutationObserver(()=>{for(const [url,node] of urls)if(!node.isConnected){node.__siraDownloadCleanup?.();URL.revokeObjectURL(url);urls.delete(url)}});window.__aulaAdditionalDownloadObserver.observe(document.body,{childList:true,subtree:true});window.addEventListener('pagehide',()=>{for(const [url,node] of urls){node.__siraDownloadCleanup?.();URL.revokeObjectURL(url)}urls.clear()})}
+  const bridge=aulaAdditionalNeedsDownloadBridge_(),url=URL.createObjectURL(blob),notice=document.createElement('div'),message=document.createElement('span'),link=document.createElement('a');notice.className='soft-note additional-download-ready';notice.dataset.downloadUrl=url;notice.setAttribute('role','status');message.className='additional-download-message';message.textContent=bridge?'Archivo preparado. Pulsa Guardar archivo para descargarlo. ':'Archivo preparado. Si el navegador no muestra la descarga, pulsa ';notice.appendChild(message);link.href=url;link.target='_self';link.download=payload.name||'material';link.textContent='Guardar archivo';link.className='btn ghost';notice.appendChild(link);slot.appendChild(notice);urls.set(url,notice);if(bridge)aulaAdditionalDownloadBridge_(notice,link,payload);else link.click();return url;
 }
 async function aulaOpenAdditional_(button,programId,sessionNumber,slotId){const identity=siraSessionIdentity_(),slot=button?.closest('[data-additional-slot]'),revision=slot?.dataset?.additionalRevision||'',previous=button?.textContent||'Descargar';if(!slot)return;button.disabled=true;button.textContent='Preparando…';try{const p=await gs('getAulaAdditionalMaterialPayload',programId,Number(sessionNumber),slotId,revision);if(!siraSessionCurrent_(identity)||!slot.isConnected)return;aulaAdditionalDownloadReady_(slot,p)}catch(e){if(siraSessionCurrent_(identity))toast('No se pudo preparar el archivo. '+e.message,true)}finally{button.disabled=false;button.textContent=previous}}
 async function aulaSaveAdditionalMeta_(button,programId,sessionNumber,slotId,teacherMode){const identity=siraSessionIdentity_(),slot=button?.closest('[data-additional-slot]'),data=aulaAdditionalData_(slot);if(data.title.length<3)return toast('Escribe un nombre visible de al menos 3 caracteres.',true);loading(true,'Guardando nombre y tipo…');try{const r=await gs('saveAulaAdditionalMaterialMeta',programId,Number(sessionNumber),slotId,data);if(!siraSessionCurrent_(identity)||!slot.isConnected)return;aulaRefreshAdditionalSession_(slot,r.additionalMaterials||[],programId,sessionNumber,teacherMode,{item:r.item});toast('Nombre y tipo actualizados.')}catch(e){if(siraSessionCurrent_(identity))toast(e.message,true)}finally{if(siraSessionCurrent_(identity))loading(false)}}
