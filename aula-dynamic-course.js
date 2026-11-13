@@ -292,6 +292,9 @@
   }
 
   function certificateCard(certificate) {
+    if (certificate?.physicalPickup) {
+      return `<div class="student-summary-card"><small>${esc(certificate.title)}</small><strong>Disponible para recojo</strong><span>${esc(certificate.message)}</span></div>`;
+    }
     if (certificate?.expired) return `<div class="student-summary-card is-debt"><small>Certificado</small><strong>Plazo de descarga finalizado</strong><span>${esc(certificate.message || 'Solicita el duplicado del certificado.')}</span></div>`;
     if (!certificate?.available) return '';
     const download = safeUrl(certificate.downloadUrl) || safeUrl(certificate.viewUrl);
