@@ -3,6 +3,7 @@
 
   const TZ = 'America/Lima';
   const COURSE_CACHE_TTL_MS = 0; // Datos financieros y permisos siempre se validan en SIRA.
+  const COURSE_RECHECK_MS = 5 * 60 * 1000;
   const MATERIAL_MAX_BYTES = 15 * 1024 * 1024;
   const MATERIAL_READY_MS = 5 * 60 * 1000;
   const MATERIAL_READY_LIMIT = 3;
@@ -10,12 +11,28 @@
   const courseCountdownTimers = [];
   let materialFeedbackId = 0;
   let materialPageHidden = false;
+  let courseCheck = null;
+  let courseCheckVersion = 0;
+  let courseVerifiedAt = 0;
 
-  window.addEventListener('pagehide', () => {
+  window.addEventListener('pagehide', event => {
     materialPageHidden = true;
     clearPreparedMaterials();
+    if (event.persisted) {
+      courseCheckVersion += 1;
+      courseCheck = null;
+      document.getElementById('dynamicCourse').hidden = true;
+    }
   });
-  window.addEventListener('pageshow', () => { materialPageHidden = false; });
+  window.addEventListener('pageshow', event => {
+    materialPageHidden = false;
+    if (event.persisted) checkDynamicCourse();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && courseVerifiedAt && Date.now() - courseVerifiedAt >= COURSE_RECHECK_MS) {
+      checkDynamicCourse();
+    }
+  });
 
   function esc(value) {
     return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -714,29 +731,15 @@
     }));
   }
 
-  function optimizePortalReturn() {
-    const link = document.querySelector('.aula-nav-link');
-    if (!link) return;
-    try {
-      if (document.referrer && window.history.length > 1) {
-        const ref = new URL(document.referrer);
-        if (ref.origin === window.location.origin && /\/aula-virtual\.html$/i.test(ref.pathname)) {
-          link.addEventListener('click', event => { event.preventDefault(); window.history.back(); });
-        }
-      }
-      const prefetch = document.createElement('link'); prefetch.rel = 'prefetch'; prefetch.href = 'aula-virtual.html'; document.head.appendChild(prefetch);
-    } catch (_error) {}
-  }
-
   function showError(message) {
+    document.title = 'Aula Virtual | ALTUM LUMEN';
     document.getElementById('dynamicLoading').hidden = true;
     document.getElementById('dynamicCourse').hidden = true;
     document.getElementById('dynamicErrorMessage').textContent = message || 'Inténtalo nuevamente desde tu Aula Virtual.';
     document.getElementById('dynamicError').hidden = false;
   }
 
-  async function initDynamicCourse() {
-    optimizePortalReturn();
+  async function loadDynamicCourse(version) {
     const courseId = new URLSearchParams(window.location.search).get('id') || '';
     if (!/^[a-z0-9][a-z0-9-]{1,95}$/i.test(courseId)) { showError('El identificador del curso no es válido.'); return; }
 
@@ -745,6 +748,7 @@
 
     if (!window.AltumAuth.hasCourse(session, courseId)) {
       const refreshed = await window.AltumAuth.refreshSession(session, { force: true });
+      if (version !== courseCheckVersion) return;
       if (!refreshed.ok) {
         if (window.AltumAuth.isDefinitiveSessionFailure(refreshed)) window.AltumAuth.clearSession();
         window.location.replace(`aula-virtual.html?error=sesion&nextCourse=${encodeURIComponent(courseId)}`); return;
@@ -755,9 +759,8 @@
 
     window.AltumAuth.mountUserMenu(document.getElementById('courseUserArea'), session);
 
-    const cachedCourse = null;
-
     const result = await window.AltumAuth.fetchCourse(courseId, session);
+    if (version !== courseCheckVersion || materialPageHidden) return;
     if (!result?.ok) {
       if (window.AltumAuth.isDefinitiveSessionFailure(result)) window.AltumAuth.clearSession();
       showError(result?.message || 'No fue posible cargar los recursos del curso.'); return;
@@ -769,12 +772,31 @@
       showError('Esta aula todavía no está disponible en el formato actualizado.'); return;
     }
 
-    const course = result.course || {};
+    const course = result.course;
+    if (String(course?.id || '') !== courseId || window.AltumAuth.getSession()?.token !== session.token) {
+      showError('No pudimos verificar el aula solicitada. Vuelve a Mis cursos y ábrela desde allí.'); return;
+    }
+    courseVerifiedAt = Date.now();
     writeCourseCache(courseId, session, course);
     document.getElementById('dynamicLoading').hidden = true;
     renderCourse(course);
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDynamicCourse, { once: true });
-  else initDynamicCourse();
+  function checkDynamicCourse() {
+    if (courseCheck) return courseCheck;
+    document.getElementById('dynamicCourse').hidden = true;
+    document.getElementById('dynamicError').hidden = true;
+    document.getElementById('dynamicLoading').hidden = false;
+    document.title = 'Aula Virtual | ALTUM LUMEN';
+    const version = ++courseCheckVersion;
+    courseCheck = loadDynamicCourse(version)
+      .catch(() => {
+        if (version === courseCheckVersion) showError('No fue posible verificar el acceso. Inténtalo nuevamente desde Mis cursos.');
+      })
+      .finally(() => { if (version === courseCheckVersion) courseCheck = null; });
+    return courseCheck;
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', checkDynamicCourse, { once: true });
+  else checkDynamicCourse();
 })();

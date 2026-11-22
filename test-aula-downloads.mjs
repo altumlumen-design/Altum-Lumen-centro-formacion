@@ -104,6 +104,45 @@ async function withFixture(options, run) {
 let passed = 0;
 async function test(name, run) { await run(); passed += 1; process.stdout.write(`PASS ${name}\n`); }
 
+await test('restored browser page hides the old course until SIRA verifies current access', () => {
+  let resolveRecheck;
+  return withFixture({ replyCourse: round => round === 1
+    ? { ok: true, course: courseFixture() }
+    : new Promise(resolve => { resolveRecheck = resolve; })
+  }, async ({ window, requests }) => {
+    const content = window.document.getElementById('dynamicCourse');
+    assert.equal(content.hidden, false);
+    window.dispatchEvent(new window.PageTransitionEvent('pagehide', { persisted: true }));
+    assert.equal(content.hidden, true);
+    window.dispatchEvent(new window.PageTransitionEvent('pageshow', { persisted: true }));
+    await waitFor(() => resolveRecheck, 'authorization recheck');
+    assert.equal(content.hidden, true);
+    assert.equal(requests.filter(request => request.action === 'aulaCourse').length, 2);
+    resolveRecheck({ ok: false, message: 'Ese curso no se encuentra asignado a tu matrícula.' });
+    await waitFor(() => !window.document.getElementById('dynamicError').hidden, 'membership denied');
+    assert.equal(content.hidden, true);
+    assert.match(window.document.getElementById('dynamicErrorMessage').textContent, /no se encuentra asignado/);
+  });
+});
+
+await test('a restored course stays hidden if the response belongs to a different course', () => withFixture({
+  replyCourse: round => ({ ok: true, course: round === 1 ? courseFixture() : { ...courseFixture(), id: 'other-course' } })
+}, async ({ window }) => {
+  window.dispatchEvent(new window.PageTransitionEvent('pagehide', { persisted: true }));
+  window.dispatchEvent(new window.PageTransitionEvent('pageshow', { persisted: true }));
+  await waitFor(() => !window.document.getElementById('dynamicError').hidden, 'course identity mismatch');
+  assert.equal(window.document.getElementById('dynamicCourse').hidden, true);
+}));
+
+await test('a restored page can reopen the same authorized course with updated resources', () => withFixture({
+  replyCourse: round => ({ ok: true, course: courseFixture(round) })
+}, async ({ window, buttons }) => {
+  window.dispatchEvent(new window.PageTransitionEvent('pagehide', { persisted: true }));
+  window.dispatchEvent(new window.PageTransitionEvent('pageshow', { persisted: true }));
+  await waitFor(() => buttons().length === 2, 'updated resources');
+  assert.equal(window.document.getElementById('dynamicCourse').hidden, false);
+}));
+
 for (const count of [16, 40]) {
   await test(`student sees all ${count} session annexes with accessible list and download actions`, () => withFixture({ count }, async ({ window, buttons }) => {
     assert.equal(buttons().length, count);

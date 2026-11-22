@@ -32,4 +32,4 @@ await Promise.all([
   import('./aula-clean-routes.js?v=20260810-final-r2')
 ]);
 await import('./aula-auth.js?v=20261027-descargas-r1');
-await import('./aula-portal.js?v=20261017-aula347-sections-r2');
+await import('./aula-portal.js?v=20261122-acceso-aula');

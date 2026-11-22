@@ -288,20 +288,31 @@
     return summaries.some(item => item?.dynamic && String(item.catalogVersion || '') !== CATALOG_VERSION);
   }
 
+  async function refreshDashboard(session) {
+    const refreshed = await window.AltumAuth.refreshSession(session, { force: true });
+    if (refreshed.ok) updateDashboardData(refreshed.session);
+    else if (window.AltumAuth.isDefinitiveSessionFailure(refreshed)) {
+      window.AltumAuth.clearSession();
+      showLogin(refreshed.message || 'Tu sesión venció. Inicia sesión nuevamente.');
+    }
+  }
+
   async function initPortal() {
     loadPortalUxStyles(); addLoginEnhancements();
     const form = document.getElementById('loginForm'), error = document.getElementById('loginError'), submit = document.getElementById('loginSubmit');
     const stored = window.AltumAuth.getSession();
     if (stored) {
       showDashboard(stored);
-      if (!window.AltumAuth.isSessionFresh(stored) || sessionNeedsCatalog32(stored)) {
-        runInBackground(async () => {
-          const refreshed = await window.AltumAuth.refreshSession(stored, { force: true });
-          if (refreshed.ok) updateDashboardData(refreshed.session);
-          else if (window.AltumAuth.isDefinitiveSessionFailure(refreshed)) { window.AltumAuth.clearSession(); showLogin(refreshed.message || 'Tu sesión venció. Inicia sesión nuevamente.'); }
-        });
+      const deniedCourse = new URLSearchParams(window.location.search).get('error') === 'sin-acceso';
+      if (deniedCourse || !window.AltumAuth.isSessionFresh(stored) || sessionNeedsCatalog32(stored)) {
+        runInBackground(() => refreshDashboard(stored));
       }
     } else showLogin();
+
+    window.addEventListener('pageshow', event => {
+      const session = event.persisted && window.AltumAuth.getSession();
+      if (session) runInBackground(() => refreshDashboard(session));
+    });
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault(); error.hidden = true; submit.disabled = true; submit.setAttribute('aria-busy', 'true'); submit.textContent = 'Iniciando sesión...';
