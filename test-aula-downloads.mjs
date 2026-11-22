@@ -4,6 +4,8 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 
 const authSource = await readFile(new URL('./aula-auth.js', import.meta.url), 'utf8');
 const courseSource = await readFile(new URL('./aula-dynamic-course.js', import.meta.url), 'utf8');
+const portalSource = await readFile(new URL('./aula-portal.js', import.meta.url), 'utf8');
+const portalMarkup = await readFile(new URL('./aula-virtual.html', import.meta.url), 'utf8');
 const pdfBytes = Buffer.from('%PDF-1.7\nSynthetic classroom download\n');
 const filePayload = () => ({ ok: true, name: 'synthetic-material.pdf', mime: 'application/pdf', size: pdfBytes.length, base64: pdfBytes.toString('base64') });
 const courseId = 'synthetic-course';
@@ -29,8 +31,9 @@ async function waitFor(predicate, label) {
 async function withFixture(options, run) {
   const errors = [], console = new VirtualConsole();
   console.on('jsdomError', error => { if (!/navigation \(except hash changes\)/.test(error.message)) errors.push(error); });
-  const dom = new JSDOM('<!doctype html><body><div id="courseUserArea"></div><div id="dynamicLoading"></div><div id="dynamicError" hidden></div><p id="dynamicErrorMessage"></p><div id="dynamicCourse" hidden></div></body>', {
-    url: `https://classroom.example.test/curso.html?id=${courseId}`, runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: console
+  const markup = options.portal ? portalMarkup : '<!doctype html><body><div id="courseUserArea"></div><div id="dynamicLoading"></div><div id="dynamicError" hidden></div><p id="dynamicErrorMessage"></p><div id="dynamicCourse" hidden></div></body>';
+  const dom = new JSDOM(markup, {
+    url: `https://classroom.example.test/${options.portal || `curso.html?id=${courseId}`}`, runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: console
   });
   const { window } = dom;
   await new Promise(resolve => window.document.readyState === 'complete' ? resolve() : window.addEventListener('load', resolve, { once: true }));
@@ -89,7 +92,8 @@ async function withFixture(options, run) {
   };
   try {
     window.eval(authSource);
-    if (options.dynamic !== false) {
+    if (options.portal) window.eval(portalSource);
+    else if (options.dynamic !== false) {
       window.eval(courseSource);
       await waitFor(() => fixture.buttons().length, 'dynamic classroom');
     }
@@ -103,6 +107,32 @@ async function withFixture(options, run) {
 
 let passed = 0;
 async function test(name, run) { await run(); passed += 1; process.stdout.write(`PASS ${name}\n`); }
+
+await test('a targeted sign-in discards the previous account and keeps login visible if another account lacks the course', () => withFixture({
+  portal: 'aula-virtual.html?reiniciar=1&nextCourse=course-for-other-account'
+}, async ({ window, requests }) => {
+  const doc = window.document;
+  assert.equal(window.AltumAuth.getSession(), null);
+  assert.equal(doc.getElementById('loginView').hidden, false);
+  assert.equal(doc.getElementById('dashboardView').hidden, true);
+  doc.getElementById('studentDni').value = '00000000';
+  doc.getElementById('studentPassword').value = '00000000';
+  doc.getElementById('loginForm').dispatchEvent(new window.Event('submit', { cancelable: true }));
+  await waitFor(() => !doc.getElementById('loginError').hidden, 'course-specific login error');
+  assert.match(doc.getElementById('loginError').textContent, /DNI ingresado no tiene acceso/);
+  assert.equal(window.AltumAuth.getSession(), null);
+  assert.equal(doc.getElementById('dashboardView').hidden, true);
+  assert.deepEqual(requests.map(request => request.action), ['aulaAuth']);
+}));
+
+await test('ordinary authenticated access shows only the last four DNI digits and keeps the session', () => withFixture({
+  portal: 'aula-virtual.html'
+}, async ({ window, requests }) => {
+  assert.equal(window.document.getElementById('dashboardView').hidden, false);
+  assert.equal(window.document.getElementById('dashboardIdentity').textContent, 'DNI terminado en 0000');
+  assert.equal(window.AltumAuth.getSession().token, 'synthetic-student-token');
+  assert.equal(requests.length, 0);
+}));
 
 await test('restored browser page hides the old course until SIRA verifies current access', () => {
   let resolveRecheck;

@@ -262,6 +262,9 @@
 
   function updateDashboardData(session) {
     document.getElementById('welcomeName').textContent = session.role === 'master' ? 'Usuario maestro' : session.displayName;
+    const identity = document.getElementById('dashboardIdentity');
+    identity.hidden = session.role !== 'student' || !/^\d{8}$/.test(session.dni);
+    identity.textContent = identity.hidden ? '' : 'DNI terminado en ' + session.dni.slice(-4);
     renderCourses(session);
   }
 
@@ -300,10 +303,17 @@
   async function initPortal() {
     loadPortalUxStyles(); addLoginEnhancements();
     const form = document.getElementById('loginForm'), error = document.getElementById('loginError'), submit = document.getElementById('loginSubmit');
+    const params = new URLSearchParams(window.location.search);
+    const switchAccount = params.get('reiniciar') === '1';
+    const requireRequestedCourse = switchAccount && /^[a-z0-9][a-z0-9-]{1,95}$/i.test(params.get('nextCourse') || '');
+    if (switchAccount) {
+      window.AltumAuth.clearSession();
+      document.getElementById('loginHelp').textContent = 'Escribe el DNI de la matrícula que quieres abrir. Usa los ocho dígitos en ambos campos.';
+    }
     const stored = window.AltumAuth.getSession();
     if (stored) {
       showDashboard(stored);
-      const deniedCourse = new URLSearchParams(window.location.search).get('error') === 'sin-acceso';
+      const deniedCourse = params.get('error') === 'sin-acceso';
       if (deniedCourse || !window.AltumAuth.isSessionFresh(stored) || sessionNeedsCatalog32(stored)) {
         runInBackground(() => refreshDashboard(stored));
       }
@@ -320,6 +330,12 @@
       submit.disabled = false; submit.removeAttribute('aria-busy'); submit.textContent = 'Ingresar al aula';
       if (!result.ok) { showMessage(error, result.message || 'No fue posible iniciar sesión.'); document.getElementById('studentPassword').select(); return; }
       const requestedCourse = getRequestedCourse(result.session);
+      if (requireRequestedCourse && requestedCourse?.id !== params.get('nextCourse')) {
+        window.AltumAuth.clearSession();
+        showMessage(error, 'El DNI ingresado no tiene acceso a este curso. Verifica el DNI que usaste para matricularte.');
+        document.getElementById('studentDni').select();
+        return;
+      }
       if (requestedCourse) { window.location.replace(requestedCourse.file); return; }
       window.history.replaceState({}, '', 'aula-virtual.html'); showDashboard(result.session);
     });
