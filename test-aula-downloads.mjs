@@ -173,6 +173,23 @@ await test('a restored page can reopen the same authorized course with updated r
   assert.equal(window.document.getElementById('dynamicCourse').hidden, false);
 }));
 
+await test('unverified zero is not displayed as an attempt count, and a closed exam shows the refreshed count', () => withFixture({
+  replyCourse: round => ({ ok: true, course: { ...courseFixture(), evaluations: [{
+    id: 'synthetic-exam', title: 'Evaluación final', requiresAttemptCheck: true, available: false, accepting: false,
+    maxAttempts: 3, attemptsUsed: round === 1 ? 0 : 2, attemptsVerified: round > 1,
+    attemptMessage: round === 1 ? 'Aún no registras intentos.' : 'Último intento: 16/20 · Mejor nota: 18/20.'
+  }] } })
+}, async ({ window, requests }) => {
+  const panel = () => window.document.querySelector('.evaluation-panel');
+  assert.match(panel().textContent, /Intentos pendientes de verificación/);
+  assert.doesNotMatch(panel().textContent, /Aún no registras intentos/);
+  panel().querySelector('[data-refresh-attempts]').click();
+  await waitFor(() => panel().textContent.includes('Intentos registrados: 2 de 3'), 'refreshed attempts');
+  assert.match(panel().textContent, /Último intento: 16\/20/);
+  assert.equal(panel().querySelector('[data-eval-id]'), null);
+  assert.equal(requests.filter(request => request.action === 'aulaCourse').length, 2);
+}));
+
 for (const count of [16, 40]) {
   await test(`student sees all ${count} session annexes with accessible list and download actions`, () => withFixture({ count }, async ({ window, buttons }) => {
     assert.equal(buttons().length, count);

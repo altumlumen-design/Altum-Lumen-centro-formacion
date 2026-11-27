@@ -383,6 +383,12 @@
       const open = !expired && evaluation.available !== false && evaluation.accepting !== false && (href || evaluation.requiresAttemptCheck);
       const moduleLabel = Number(evaluation.moduleNumber || 0) ? `Módulo ${Number(evaluation.moduleNumber)}` : (evaluation.type === 'FINAL' ? 'Evaluación final' : 'Evaluación');
       const minGrade = Number(evaluation.minGrade || 13), attempts = Number(evaluation.maxAttempts || 3), pdf = safeUrl(evaluation.pdfUrl), countdown = evaluationCountdownLabel(evaluation.deadline, now);
+      const count = evaluation.attemptsUsed;
+      const verified = evaluation.attemptsVerified === true && Number.isInteger(count) && count >= 0;
+      const tracking = evaluation.requiresAttemptCheck && !evaluation.masterAccess;
+      const attemptSummary = tracking
+        ? `<div class="evaluation-comment"><strong>${verified ? `Intentos registrados: ${esc(count)} de ${esc(attempts)}` : 'Intentos pendientes de verificación'}${!verified && Number.isInteger(count) && count > 0 ? ` · último conteo disponible: ${esc(count)}` : ''}</strong>${(verified || count > 0) && evaluation.attemptMessage ? `<br>${esc(evaluation.attemptMessage)}` : ''}</div>`
+        : evaluation.attemptMessage ? `<div class="evaluation-comment">${esc(evaluation.attemptMessage)}</div>` : '';
       return `<article class="evaluation-card ${open ? 'is-open' : 'is-closed'}" data-evaluation-card data-eval-deadline="${esc(evaluation.deadline || '')}">
         <div class="evaluation-icon" aria-hidden="true">${String(index + 1).padStart(2, '0')}</div>
         <div class="evaluation-copy">
@@ -390,7 +396,7 @@
           <h3>${esc(evaluation.title || moduleLabel)}</h3>
           <p>${esc(evaluation.description || (open ? 'Evaluación habilitada para participantes matriculados.' : 'La evaluación se encuentra cerrada.'))}</p>
           <div class="evaluation-rules"><span>✓ Nota mínima: <b>${esc(minGrade)}</b></span><span>↻ Hasta <b>${esc(attempts)} intentos</b></span></div>
-          ${evaluation.attemptMessage ? `<div class="evaluation-comment">${esc(evaluation.attemptMessage)}${evaluation.attemptsUsed !== null && evaluation.attemptsUsed !== undefined ? ` (${esc(evaluation.attemptsUsed)}/3)` : ''}</div>` : ''}
+          ${attemptSummary}
           ${evaluation.comment ? `<div class="evaluation-comment">${esc(evaluation.comment)}</div>` : ''}
           ${evaluation.deadline ? `<div class="evaluation-deadline ${expired ? 'is-expired' : ''}"><span>⏱</span><div><small>Cierre: ${esc(evaluation.deadlineText || formatDate(evaluation.deadline, true))}</small><strong data-eval-countdown>${esc(countdown)}</strong></div></div>` : ''}
           ${Number(evaluation.totalPoints || 0) ? `<small>${esc(evaluation.totalPoints)} punto(s)</small>` : ''}
@@ -700,7 +706,7 @@
           </section>
         </div>
 
-        ${evaluations.length ? `<section class="class-panel evaluation-panel"><div class="class-section-head"><div><span class="eyebrow">Evaluación académica</span><h2>Evaluaciones del curso</h2></div><p>Accede únicamente a las evaluaciones que se encuentren habilitadas.</p></div>${renderEvaluations(evaluations)}</section>` : ''}
+        ${evaluations.length ? `<section class="class-panel evaluation-panel"><div class="class-section-head"><div><span class="eyebrow">Evaluación académica</span><h2>Evaluaciones del curso</h2></div>${evaluations.some(e => e.requiresAttemptCheck && !e.masterAccess) ? '<button type="button" class="class-btn secondary" data-refresh-attempts>Actualizar intentos</button>' : ''}</div>${renderEvaluations(evaluations)}</section>` : ''}
       </div>`;
 
     root.hidden = false;
@@ -708,6 +714,10 @@
     bindMaterialDownloadButtons(root);
     bindCountdowns(root);
     bindEvaluationCountdowns(root);
+    root.querySelector('[data-refresh-attempts]')?.addEventListener('click', event => {
+      event.currentTarget.disabled = true;
+      checkDynamicCourse();
+    });
     root.querySelectorAll('[data-eval-id]').forEach(button => button.addEventListener('click', async () => {
       if (button.disabled) return;
       button.disabled = true; button.textContent = 'Verificando intentos…';
